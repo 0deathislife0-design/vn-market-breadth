@@ -96,7 +96,7 @@
 
   <div id="content">
     <div class="loading" id="loadingScreen">
-      Đang tải dữ liệu từ GitHub...<br>
+      Đang tải dữ liệu...<br>
       <span id="percent" style="color:var(--neutral); font-size:16px; font-weight:600;">0%</span>
       <div class="progress-bar">
         <div class="progress" id="progressBar"></div>
@@ -119,22 +119,20 @@ function setProgress(p) {
 
 async function loadData(){
   try {
-    const base = '/vn-market-breadth';
-
     setProgress(25);
 
-    const latestRes = await fetch(base + '/data/breadth_latest.json');
+    // Dùng đường dẫn tương đối (phù hợp với GitHub Pages serve từ /docs)
+    const latestRes = await fetch('../data/breadth_latest.json');
     if (!latestRes.ok) throw new Error('latest not found');
     LATEST = await latestRes.json();
 
     setProgress(65);
 
-    const historyRes = await fetch(base + '/data/breadth_history.json');
+    const historyRes = await fetch('../data/breadth_history.json');
     HISTORY = historyRes.ok ? await historyRes.json() : [];
 
     setProgress(100);
 
-    // Hiển thị dữ liệu
     document.getElementById('metaLine').textContent =
       `Cập nhật: ${new Date(LATEST.generated_at).toLocaleString('vi-VN')} · Ngày dữ liệu: ${LATEST.markets.ALL.date}`;
 
@@ -147,7 +145,7 @@ async function loadData(){
       <div class="err">
         ❌ Không tải được dữ liệu<br><br>
         Lỗi: ${e.message}<br><br>
-        <small>Hãy chắc chắn GitHub Actions đã chạy và file data đã được commit.</small>
+        <small>Hãy chắc chắn GitHub Actions đã chạy thành công.</small>
       </div>`;
   }
 }
@@ -215,7 +213,7 @@ function render(){
         <thead><tr><th>Phiên</th><th>Tăng</th><th>Giảm</th><th>A/D Ratio</th><th>Nhận xét</th></tr></thead>
         <tbody>
           ${hist.map(h => {
-            const row = h.markets?.[activeMarket];
+            const row = h.markets?.[activeMarket] || h.markets?.ALL;
             if (!row) return '';
             const ratio = row.ad_ratio;
             let tagClass = 'mixed', tagText = 'Trung tính';
