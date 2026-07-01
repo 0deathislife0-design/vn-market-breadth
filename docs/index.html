@@ -89,10 +89,30 @@ let LATEST = null, HISTORY = null;
 
 async function loadData(){
   try {
+    const basePath = document.baseURI.includes('github.io') ? '' : '../';
+    
     const [latestRes, historyRes] = await Promise.all([
-      fetch('/data/breadth_latest.json').then(r => { if(!r.ok) throw new Error('latest not found'); return r.json(); }),
-      fetch('/data/breadth_history.json').then(r => r.ok ? r.json() : []).catch(() => [])
+      fetch(basePath + 'data/breadth_latest.json').then(r => { 
+        if(!r.ok) throw new Error('latest not found'); 
+        return r.json(); 
+      }),
+      fetch(basePath + 'data/breadth_history.json').then(r => r.ok ? r.json() : []).catch(() => [])
     ]);
+    
+    LATEST = latestRes;
+    HISTORY = historyRes;
+    
+    document.getElementById('metaLine').textContent =
+      `Cập nhật: ${new Date(LATEST.generated_at).toLocaleString('vi-VN')} · Ngày dữ liệu: ${LATEST.markets.ALL.date}`;
+    
+    renderTabs();
+    render();
+  } catch (e) {
+    console.error(e);
+    document.getElementById('content').innerHTML =
+      `<div class="err">Không tải được dữ liệu.<br><br>Lỗi: ${e.message}</div>`;
+  }
+}
     LATEST = latestRes;
     HISTORY = historyRes;
     document.getElementById('metaLine').textContent =
