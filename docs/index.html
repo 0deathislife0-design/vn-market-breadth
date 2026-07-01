@@ -61,8 +61,27 @@
   .tag.mixed{background:#C97A3A22; color:#E8A23E;}
   .tag.good{background:#2EA76C22; color:#2EA76C;}
 
-  footer{font-family:var(--font-mono); font-size:11px; color:var(--faint); text-align:center; margin-top:20px;}
-  .loading, .err{font-family:var(--font-mono); font-size:13px; color:var(--muted); padding:30px; text-align:center;}
+  .loading, .err {
+    font-family: var(--font-mono); 
+    font-size: 14px; 
+    color: var(--muted); 
+    padding: 50px 20px; 
+    text-align: center;
+  }
+  .progress-bar {
+    height: 6px;
+    background: var(--panel-alt);
+    border-radius: 4px;
+    margin: 16px auto;
+    max-width: 320px;
+    overflow: hidden;
+  }
+  .progress {
+    height: 100%;
+    background: linear-gradient(90deg, var(--neutral), #ffffff);
+    width: 0%;
+    transition: width 0.4s ease;
+  }
 </style>
 </head>
 <body>
@@ -76,7 +95,13 @@
   </header>
 
   <div id="content">
-    <div class="loading">Đang tải dữ liệu…</div>
+    <div class="loading" id="loadingScreen">
+      Đang tải dữ liệu từ GitHub...<br>
+      <span id="percent" style="color:var(--neutral); font-size:16px; font-weight:600;">0%</span>
+      <div class="progress-bar">
+        <div class="progress" id="progressBar"></div>
+      </div>
+    </div>
   </div>
 
   <footer>Dữ liệu: SSI FastConnect · Cập nhật tự động qua GitHub Actions</footer>
@@ -87,39 +112,27 @@ const MARKETS = ['ALL','HOSE','HNX','UPCOM'];
 let activeMarket = 'HOSE';
 let LATEST = null, HISTORY = null;
 
+function setProgress(p) {
+  document.getElementById('percent').textContent = Math.round(p) + '%';
+  document.getElementById('progressBar').style.width = p + '%';
+}
+
 async function loadData(){
-  const loadingEl = document.getElementById('content');
-  let progress = 0;
-
-  const updateProgress = (percent) => {
-    progress = percent;
-    loadingEl.innerHTML = `
-      <div class="loading">
-        Đang tải dữ liệu... <span style="color:var(--neutral); font-family:monospace;">${Math.round(percent)}%</span>
-        <div style="height:4px; background:var(--panel-alt); border-radius:4px; margin-top:12px; overflow:hidden;">
-          <div style="height:100%; width:${percent}%; background:var(--neutral); transition:width 0.3s;"></div>
-        </div>
-      </div>`;
-  };
-
   try {
-    updateProgress(10);
-
     const base = '/vn-market-breadth';
 
-    // Tải latest
-    updateProgress(40);
+    setProgress(25);
+
     const latestRes = await fetch(base + '/data/breadth_latest.json');
-    if(!latestRes.ok) throw new Error('latest not found');
+    if (!latestRes.ok) throw new Error('latest not found');
     LATEST = await latestRes.json();
 
-    updateProgress(70);
+    setProgress(65);
 
-    // Tải history
     const historyRes = await fetch(base + '/data/breadth_history.json');
     HISTORY = historyRes.ok ? await historyRes.json() : [];
 
-    updateProgress(100);
+    setProgress(100);
 
     // Hiển thị dữ liệu
     document.getElementById('metaLine').textContent =
@@ -130,37 +143,12 @@ async function loadData(){
 
   } catch (e) {
     console.error(e);
-    loadingEl.innerHTML = `
+    document.getElementById('content').innerHTML = `
       <div class="err">
-        ❌ Không tải được dữ liệu.<br><br>
+        ❌ Không tải được dữ liệu<br><br>
         Lỗi: ${e.message}<br><br>
         <small>Hãy chắc chắn GitHub Actions đã chạy và file data đã được commit.</small>
       </div>`;
-  }
-}
-    LATEST = latestRes;
-    HISTORY = historyRes;
-    
-    document.getElementById('metaLine').textContent =
-      `Cập nhật: ${new Date(LATEST.generated_at).toLocaleString('vi-VN')} · Ngày dữ liệu: ${LATEST.markets.ALL.date}`;
-    
-    renderTabs();
-    render();
-  } catch (e) {
-    console.error(e);
-    document.getElementById('content').innerHTML =
-      `<div class="err">Không tải được dữ liệu.<br><br>Lỗi: ${e.message}</div>`;
-  }
-}
-    LATEST = latestRes;
-    HISTORY = historyRes;
-    document.getElementById('metaLine').textContent =
-      `Cập nhật: ${new Date(LATEST.generated_at).toLocaleString('vi-VN')} · Ngày dữ liệu: ${LATEST.markets.ALL.date}`;
-    renderTabs();
-    render();
-  } catch (e) {
-    document.getElementById('content').innerHTML =
-      `<div class="err">Không tải được dữ liệu (data/breadth_latest.json). Hãy chắc chắn GitHub Actions đã chạy ít nhất 1 lần và file đã được commit.<br><br>Lỗi: ${e.message}</div>`;
   }
 }
 
@@ -183,9 +171,9 @@ function render(){
   const contentEl = document.getElementById('content');
 
   const total = m.total_symbols || 0;
-  const upW = total ? (m.advances_pct) : 0;
-  const flatW = total ? (m.unchanged_pct) : 0;
-  const downW = total ? (m.declines_pct) : 0;
+  const upW = total ? m.advances_pct : 0;
+  const flatW = total ? m.unchanged_pct : 0;
+  const downW = total ? m.declines_pct : 0;
 
   const hist = (HISTORY || []).slice(-6).reverse();
 
@@ -209,7 +197,6 @@ function render(){
       </div>
       <div class="note">
         <b>A/D Ratio: ${m.ad_ratio ?? '—'}</b> — tỉ lệ số mã tăng trên số mã giảm phiên ${m.date}.
-        ${m.ad_ratio !== null && m.ad_ratio > 1 ? 'Số mã tăng đang vượt số mã giảm.' : m.ad_ratio !== null ? 'Số mã giảm đang chiếm ưu thế.' : ''}
       </div>
     </div>
 
@@ -228,7 +215,7 @@ function render(){
         <thead><tr><th>Phiên</th><th>Tăng</th><th>Giảm</th><th>A/D Ratio</th><th>Nhận xét</th></tr></thead>
         <tbody>
           ${hist.map(h => {
-            const row = h.markets[activeMarket];
+            const row = h.markets?.[activeMarket];
             if (!row) return '';
             const ratio = row.ad_ratio;
             let tagClass = 'mixed', tagText = 'Trung tính';
