@@ -121,14 +121,14 @@ async function loadData(){
   try {
     setProgress(25);
 
-    // Dùng đường dẫn tương đối (phù hợp với GitHub Pages serve từ /docs)
-    const latestRes = await fetch('../data/breadth_latest.json');
+    // Dùng đường dẫn trực tiếp từ GitHub (ổn định nhất)
+    const latestRes = await fetch('https://raw.githubusercontent.com/0deathislife0-design/vn-market-breadth/main/data/breadth_latest.json');
     if (!latestRes.ok) throw new Error('latest not found');
     LATEST = await latestRes.json();
 
     setProgress(65);
 
-    const historyRes = await fetch('../data/breadth_history.json');
+    const historyRes = await fetch('https://raw.githubusercontent.com/0deathislife0-design/vn-market-breadth/main/data/breadth_history.json');
     HISTORY = historyRes.ok ? await historyRes.json() : [];
 
     setProgress(100);
