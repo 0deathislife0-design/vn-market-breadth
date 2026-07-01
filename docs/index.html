@@ -7,237 +7,270 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --bg:#0A0D12; --panel:#12161D; --panel-alt:#171C24; --border:#232935;
-    --text:#EDEFF2; --muted:#8A93A3; --faint:#545D6C;
-    --up:#22c55e; /* Xanh - Tăng */
-    --down:#ef4444; /* Đỏ - Giảm */
-    --neutral:#eab308;
-    --font-display:'Space Grotesk',sans-serif; --font-mono:'JetBrains Mono',monospace; --font-body:'Inter',sans-serif;
-  }
-  *{box-sizing:border-box; margin:0; padding:0;}
-  html,body{background:var(--bg); color:var(--text); font-family:var(--font-body);}
-  body{min-height:100vh; padding:20px clamp(16px,4vw,40px) 60px;}
-  .wrap{max-width:1100px; margin:0 auto;}
-  header{display:flex; justify-content:space-between; align-items:flex-end; gap:16px; flex-wrap:wrap; margin-bottom:18px;}
-  h1{font-family:var(--font-display); font-size:clamp(18px,2.4vw,24px);}
-  .sub{font-family:var(--font-mono); font-size:11.5px; color:var(--faint); margin-top:4px;}
-  .tabs{display:flex; gap:2px; background:var(--panel-alt); border:1px solid var(--border); border-radius:8px; padding:3px;}
-  .tabs button{font-family:var(--font-mono); font-size:12px; font-weight:600; color:var(--muted); background:transparent; border:none; padding:7px 13px; border-radius:6px; cursor:pointer;}
-  .tabs button.active{background:var(--neutral); color:#0A0D12;}
-  .panel{background:var(--panel); border:1px solid var(--border); border-radius:12px; padding:18px; margin-bottom:18px;}
-  .panel h2{font-family:var(--font-mono); font-size:12px; text-transform:uppercase; letter-spacing:0.06em; color:var(--faint); margin-bottom:14px;}
-  .stat-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:12px;}
-  .stat{background:var(--panel-alt); border:1px solid var(--border); border-radius:10px; padding:14px; text-align:center;}
-  .stat .lab{font-size:12px; color:var(--muted);}
-  .stat .num{font-family:var(--font-mono); font-size:26px; font-weight:700; margin-top:6px;}
-  .stat .pct{font-size:11.5px; color:var(--faint); margin-top:2px;}
-  .stat.up .num{color:var(--up);}
-  .stat.down .num{color:var(--down);}
-  .stat.flat .num{color:var(--neutral);}
-  .breadth-bar{display:flex; height:26px; border-radius:6px; overflow:hidden; margin:16px 0 8px;}
-  .breadth-bar span{display:flex; align-items:center; justify-content:center; font-family:var(--font-mono); font-size:11px; font-weight:600; color:#0A0D12;}
-  .bar-labels{display:flex; justify-content:space-between; font-family:var(--font-mono); font-size:11px;}
-  .bar-labels .up-l{color:var(--up);} .bar-labels .down-l{color:var(--down);}
-  .note{background:var(--panel-alt); border-left:3px solid var(--neutral); border-radius:6px; padding:12px 14px; font-size:13px; color:var(--muted); margin-top:14px; line-height:1.55;}
-  .note b{color:var(--text);}
-  .ma-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:12px;}
-  .ma-stat{background:var(--panel-alt); border:1px solid var(--border); border-radius:10px; padding:14px; text-align:center;}
-  .ma-stat .lab{font-size:12px; color:var(--muted);}
-  .ma-stat .num{font-family:var(--font-mono); font-size:24px; font-weight:700; margin-top:6px; color:var(--neutral);}
-  .ma-stat .sub2{font-size:11px; color:var(--faint); margin-top:2px;}
-  table{width:100%; border-collapse:collapse; margin-top:6px;}
-  th{text-align:left; font-size:10.5px; text-transform:uppercase; letter-spacing:0.05em; color:var(--faint); font-family:var(--font-mono); padding:8px 10px; border-bottom:1px solid var(--border);}
-  td{padding:9px 10px; font-size:13px; border-bottom:1px solid var(--border);}
-  td.mono{font-family:var(--font-mono);}
-  .up-txt{color:var(--up); font-weight:600;}
-  .down-txt{color:var(--down); font-weight:600;}
-  .tag{font-family:var(--font-mono); font-size:10.5px; padding:3px 8px; border-radius:5px; font-weight:600;}
-  .tag.weak{background:#C9463A22; color:#E4433A;}
-  .tag.mixed{background:#C97A3A22; color:#E8A23E;}
-  .tag.good{background:#2EA76C22; color:#2EA76C;}
-  .loading, .err {
-    font-family: var(--font-mono);
-    font-size: 14px;
-    color: var(--muted);
-    padding: 50px 20px;
-    text-align: center;
-  }
-  .progress-bar {
-    height: 6px;
-    background: var(--panel-alt);
-    border-radius: 4px;
-    margin: 16px auto;
-    max-width: 320px;
-    overflow: hidden;
-  }
-  .progress {
-    height: 100%;
-    background: linear-gradient(90deg, var(--neutral), #ffffff);
-    width: 0%;
-    transition: width 0.4s ease;
-  }
+  :root{
+    --bg:#0A0D12; --panel:#12161D; --panel-alt:#171C24; --border:#232935;
+    --text:#EDEFF2; --muted:#8A93A3; --faint:#545D6C;
+    --up:#22c55e;     /* Xanh - Tăng */
+    --down:#ef4444;   /* Đỏ - Giảm */
+    --neutral:#eab308;
+    --font-display:'Space Grotesk',sans-serif; --font-mono:'JetBrains Mono',monospace; --font-body:'Inter',sans-serif;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html,body{background:var(--bg); color:var(--text); font-family:var(--font-body);}
+  body{min-height:100vh; padding:20px clamp(16px,4vw,40px) 60px;}
+  .wrap{max-width:1100px; margin:0 auto;}
+  header{display:flex; justify-content:space-between; align-items:flex-end; gap:16px; flex-wrap:wrap; margin-bottom:18px;}
+  h1{font-family:var(--font-display); font-size:clamp(18px,2.4vw,24px);}
+  .sub{font-family:var(--font-mono); font-size:11.5px; color:var(--faint); margin-top:4px;}
+  .tabs{display:flex; gap:2px; background:var(--panel-alt); border:1px solid var(--border); border-radius:8px; padding:3px;}
+  .tabs button{font-family:var(--font-mono); font-size:12px; font-weight:600; color:var(--muted); background:transparent; border:none; padding:7px 13px; border-radius:6px; cursor:pointer;}
+  .tabs button.active{background:var(--neutral); color:#0A0D12;}
+
+  .panel{background:var(--panel); border:1px solid var(--border); border-radius:12px; padding:18px; margin-bottom:18px;}
+  .panel h2{font-family:var(--font-mono); font-size:12px; text-transform:uppercase; letter-spacing:0.06em; color:var(--faint); margin-bottom:14px;}
+
+  .stat-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:12px;}
+  .stat{background:var(--panel-alt); border:1px solid var(--border); border-radius:10px; padding:14px; text-align:center;}
+  .stat .lab{font-size:12px; color:var(--muted);}
+  .stat .num{font-family:var(--font-mono); font-size:26px; font-weight:700; margin-top:6px;}
+  .stat .pct{font-size:11.5px; color:var(--faint); margin-top:2px;}
+  .stat.up .num{color:var(--up);}
+  .stat.down .num{color:var(--down);}
+  .stat.flat .num{color:var(--neutral);}
+
+  .breadth-bar{display:flex; height:26px; border-radius:6px; overflow:hidden; margin:16px 0 8px;}
+  .breadth-bar span{display:flex; align-items:center; justify-content:center; font-family:var(--font-mono); font-size:11px; font-weight:600; color:#0A0D12;}
+  .bar-labels{display:flex; justify-content:space-between; font-family:var(--font-mono); font-size:11px;}
+  .bar-labels .up-l{color:var(--up);} .bar-labels .down-l{color:var(--down);}
+
+  .note{background:var(--panel-alt); border-left:3px solid var(--neutral); border-radius:6px; padding:12px 14px; font-size:13px; color:var(--muted); margin-top:14px; line-height:1.55;}
+  .note b{color:var(--text);}
+
+  .ma-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:12px;}
+  .ma-stat{background:var(--panel-alt); border:1px solid var(--border); border-radius:10px; padding:14px; text-align:center;}
+  .ma-stat .lab{font-size:12px; color:var(--muted);}
+  .ma-stat .num{font-family:var(--font-mono); font-size:24px; font-weight:700; margin-top:6px; color:var(--neutral);}
+  .ma-stat .sub2{font-size:11px; color:var(--faint); margin-top:2px;}
+
+  table{width:100%; border-collapse:collapse; margin-top:6px;}
+  th{text-align:left; font-size:10.5px; text-transform:uppercase; letter-spacing:0.05em; color:var(--faint); font-family:var(--font-mono); padding:8px 10px; border-bottom:1px solid var(--border);}
+  td{padding:9px 10px; font-size:13px; border-bottom:1px solid var(--border);}
+  td.mono{font-family:var(--font-mono);}
+  .up-txt{color:var(--up); font-weight:600;}
+  .down-txt{color:var(--down); font-weight:600;}
+  .tag{font-family:var(--font-mono); font-size:10.5px; padding:3px 8px; border-radius:5px; font-weight:600;}
+  .tag.weak{background:#C9463A22; color:#E4433A;}
+  .tag.mixed{background:#C97A3A22; color:#E8A23E;}
+  .tag.good{background:#2EA76C22; color:#2EA76C;}
+
+  .loading, .err {
+    font-family: var(--font-mono); 
+    font-size: 14px; 
+    color: var(--muted); 
+    padding: 50px 20px; 
+    text-align: center;
+  }
+  .progress-bar {
+    height: 6px;
+    background: var(--panel-alt);
+    border-radius: 4px;
+    margin: 16px auto;
+    max-width: 320px;
+    overflow: hidden;
+  }
+  .progress {
+    height: 100%;
+    background: linear-gradient(90deg, var(--neutral), #ffffff);
+    width: 0%;
+    transition: width 0.4s ease;
+  }
 </style>
 </head>
 <body>
 <div class="wrap">
-  <header>
-    <div>
-      <h1>Độ rộng thị trường chứng khoán Việt Nam</h1>
-      <div class="sub" id="metaLine">Đang tải...</div>
-    </div>
-    <div class="tabs" id="tabs"></div>
-  </header>
-  <div id="content">
-    <div class="loading" id="loadingScreen">
-      Đang tải dữ liệu...<br>
-      <span id="percent" style="color:var(--neutral); font-size:16px; font-weight:600;">0%</span>
-      <div class="progress-bar">
-        <div class="progress" id="progressBar"></div>
-      </div>
-    </div>
-  </div>
-  <footer>Dữ liệu: SSI FastConnect · Cập nhật tự động qua GitHub Actions</footer>
+  <header>
+    <div>
+      <h1>Độ rộng thị trường chứng khoán Việt Nam</h1>
+      <div class="sub" id="metaLine">Đang tải...</div>
+    </div>
+    <div class="tabs" id="tabs"></div>
+  </header>
+
+  <div id="content">
+    <div class="loading" id="loadingScreen">
+      Đang tải dữ liệu...<br>
+      <span id="percent" style="color:var(--neutral); font-size:16px; font-weight:600;">0%</span>
+      <div class="progress-bar">
+        <div class="progress" id="progressBar"></div>
+      </div>
+    </div>
+  </div>
+
+  <footer>Dữ liệu: SSI FastConnect · Cập nhật tự động qua GitHub Actions</footer>
 </div>
+
 <script>
 const MARKETS = ['ALL','HOSE','HNX','UPCOM'];
 let activeMarket = 'HOSE';
 let LATEST = null, HISTORY = null;
+
 function setProgress(p) {
-  document.getElementById('percent').textContent = Math.round(p) + '%';
-  document.getElementById('progressBar').style.width = p + '%';
+  document.getElementById('percent').textContent = Math.round(p) + '%';
+  document.getElementById('progressBar').style.width = p + '%';
 }
+
 function getCountChangeHTML(key, currentCount) {
-  if (!HISTORY || HISTORY.length < 2) return '';
-  const prevData = HISTORY[HISTORY.length - 2].markets?.[activeMarket];
-  if (!prevData) return '';
-  const prevCount = key === 'ma20' ? prevData.above_ma20_count :
-                    key === 'ma50' ? prevData.above_ma50_count :
-                    prevData.above_ma200_count;
-  if (prevCount === undefined) return '';
-  const change = currentCount - prevCount;
-  if (change === 0) return '<div style="font-size:11px; margin-top:4px; color:#888;">= Không đổi</div>';
-  const sign = change > 0 ? '↑' : '↓';
-  const color = change > 0 ? 'color:var(--up);' : 'color:var(--down);';
- 
-  return `<div style="font-size:11px; margin-top:4px; ${color}">${sign} ${change > 0 ? '+' : ''}${change} mã</div>`;
+  if (!HISTORY || HISTORY.length < 2) return '';
+  const prevData = HISTORY[HISTORY.length - 2].markets?.[activeMarket];
+  if (!prevData) return '';
+
+  const prevCount = key === 'ma20' ? prevData.above_ma20_count :
+                    key === 'ma50' ? prevData.above_ma50_count :
+                    prevData.above_ma200_count;
+
+  if (prevCount === undefined) return '';
+
+  const change = currentCount - prevCount;
+  if (change === 0) return '<div style="font-size:11px; margin-top:4px; color:#888;">= Không đổi</div>';
+
+  const sign = change > 0 ? '↑' : '↓';
+  const color = change > 0 ? 'color:var(--up);' : 'color:var(--down);';
+  
+  return `<div style="font-size:11px; margin-top:4px; ${color}">${sign} ${change > 0 ? '+' : ''}${change} mã</div>`;
 }
+
 async function loadData(){
-  try {
-    setProgress(25);
-    const latestRes = await fetch('https://raw.githubusercontent.com/0deathislife0-design/vn-market-breadth/main/data/breadth_latest.json');
-    if (!latestRes.ok) throw new Error('latest not found');
-    LATEST = await latestRes.json();
-    setProgress(65);
-    const historyRes = await fetch('https://raw.githubusercontent.com/0deathislife0-design/vn-market-breadth/main/data/breadth_history.json');
-    HISTORY = historyRes.ok ? await historyRes.json() : [];
-    setProgress(100);
-    document.getElementById('metaLine').textContent =
-      `Cập nhật: ${new Date(LATEST.generated_at).toLocaleString('vi-VN')} · Ngày dữ liệu: ${LATEST.markets.ALL.date}`;
-    renderTabs();
-    render();
-  } catch (e) {
-    console.error(e);
-    document.getElementById('content').innerHTML = `
-      <div class="err">
-        ❌ Không tải được dữ liệu<br><br>
-        Lỗi: ${e.message}<br><br>
-        <small>Hãy chắc chắn GitHub Actions đã chạy thành công.</small>
-      </div>`;
-  }
+  try {
+    setProgress(25);
+
+    const latestRes = await fetch('https://raw.githubusercontent.com/0deathislife0-design/vn-market-breadth/main/data/breadth_latest.json');
+    if (!latestRes.ok) throw new Error('latest not found');
+    LATEST = await latestRes.json();
+
+    setProgress(65);
+
+    const historyRes = await fetch('https://raw.githubusercontent.com/0deathislife0-design/vn-market-breadth/main/data/breadth_history.json');
+    HISTORY = historyRes.ok ? await historyRes.json() : [];
+
+    setProgress(100);
+
+    document.getElementById('metaLine').textContent =
+      `Cập nhật: ${new Date(LATEST.generated_at).toLocaleString('vi-VN')} · Ngày dữ liệu: ${LATEST.markets.ALL.date}`;
+
+    renderTabs();
+    render();
+
+  } catch (e) {
+    console.error(e);
+    document.getElementById('content').innerHTML = `
+      <div class="err">
+        ❌ Không tải được dữ liệu<br><br>
+        Lỗi: ${e.message}<br><br>
+        <small>Hãy chắc chắn GitHub Actions đã chạy thành công.</small>
+      </div>`;
+  }
 }
+
 function renderTabs(){
-  const tabsEl = document.getElementById('tabs');
-  tabsEl.innerHTML = '';
-  MARKETS.forEach(m => {
-    const btn = document.createElement('button');
-    btn.textContent = m;
-    if (m === activeMarket) btn.classList.add('active');
-    btn.onclick = () => { activeMarket = m; renderTabs(); render(); };
-    tabsEl.appendChild(btn);
-  });
+  const tabsEl = document.getElementById('tabs');
+  tabsEl.innerHTML = '';
+  MARKETS.forEach(m => {
+    const btn = document.createElement('button');
+    btn.textContent = m;
+    if (m === activeMarket) btn.classList.add('active');
+    btn.onclick = () => { activeMarket = m; renderTabs(); render(); };
+    tabsEl.appendChild(btn);
+  });
 }
+
 function fmt1(n){ return (n === null || n === undefined) ? '—' : Number(n).toFixed(1); }
+
 function render(){
-  const m = LATEST.markets[activeMarket];
-  const contentEl = document.getElementById('content');
-  const total = m.total_symbols || 0;
-  const upW = total ? m.advances_pct : 0;
-  const flatW = total ? m.unchanged_pct : 0;
-  const downW = total ? m.declines_pct : 0;
-  const hist = (HISTORY || []).slice(-6).reverse();
-  contentEl.innerHTML = `
-    <div class="panel">
-      <h2>Phân bố tăng-giảm giá — ${total} mã $$   {activeMarket} (   $${m.date})</h2>
-      <div class="stat-grid">
-        <div class="stat up"><div class="lab">Tăng giá</div><div class="num">$$   {m.advances}</div><div class="pct">   $${fmt1(m.advances_pct)}%</div></div>
-        <div class="stat flat"><div class="lab">Không đổi</div><div class="num">$$   {m.unchanged}</div><div class="pct">   $${fmt1(m.unchanged_pct)}%</div></div>
-        <div class="stat down"><div class="lab">Giảm giá</div><div class="num">$$   {m.declines}</div><div class="pct">   $${fmt1(m.declines_pct)}%</div></div>
-      </div>
-      <div class="bar-labels" style="margin-top:16px;">
-        <span class="up-l">Tăng: $$   {m.advances} (   $${fmt1(m.advances_pct)}%)</span>
-        <span>Không đổi: ${m.unchanged}</span>
-        <span class="down-l">Giảm: $$   {m.declines} (   $${fmt1(m.declines_pct)}%)</span>
-      </div>
-      <div class="breadth-bar">
-        <span style="width:${upW}%; background:var(--up);"></span>
-        <span style="width:${flatW}%; background:var(--neutral);"></span>
-        <span style="width:${downW}%; background:var(--down);"></span>
-      </div>
-      <div class="note">
-        <b>A/D Ratio: ${m.ad_ratio ?? '—'}</b> — tỉ lệ số mã tăng trên số mã giảm phiên ${m.date}.
-      </div>
-    </div>
-    <div class="panel">
-      <h2>% cổ phiếu ${activeMarket} trên đường trung bình — so sánh các mốc</h2>
-      <div class="ma-grid">
-        <div class="ma-stat">
-          <div class="lab">Trên MA20 (ngắn hạn)</div>
-          <div class="num">${fmt1(m.pct_above_ma20)}%</div>
-          <div class="sub2">${m.above_ma20_count} / ${m.ma_total_symbols} mã</div>
-          ${getCountChangeHTML('ma20', m.above_ma20_count)}
-        </div>
-        <div class="ma-stat">
-          <div class="lab">Trên MA50 (trung hạn)</div>
-          <div class="num">${fmt1(m.pct_above_ma50)}%</div>
-          <div class="sub2">${m.above_ma50_count} / ${m.ma_total_symbols} mã</div>
-          ${getCountChangeHTML('ma50', m.above_ma50_count)}
-        </div>
-        <div class="ma-stat">
-          <div class="lab">Trên MA200 (dài hạn)</div>
-          <div class="num">${fmt1(m.pct_above_ma200)}%</div>
-          <div class="sub2">${m.above_ma200_count} / ${m.ma_total_symbols} mã</div>
-          ${getCountChangeHTML('ma200', m.above_ma200_count)}
-        </div>
-      </div>
-    </div>
-    <div class="panel">
-      <h2>Chuỗi độ rộng thị trường ${activeMarket} — các phiên gần nhất</h2>
-      <table>
-        <thead><tr><th>Phiên</th><th>Tăng</th><th>Giảm</th><th>A/D Ratio</th><th>Nhận xét</th></tr></thead>
-        <tbody>
-          ${hist.map(h => {
-            const row = h.markets?.[activeMarket] || h.markets?.ALL;
-            if (!row) return '';
-            const ratio = row.ad_ratio;
-            let tagClass = 'mixed', tagText = 'Trung tính';
-            if (ratio !== null) {
-              if (ratio >= 1.2) { tagClass = 'good'; tagText = 'Tích cực'; }
-              else if (ratio <= 0.8) { tagClass = 'weak'; tagText = 'Yếu'; }
-            }
-            return `<tr>
-              <td>${row.date}</td>
-              <td class="mono up-txt">${row.advances}</td>
-              <td class="mono down-txt">${row.declines}</td>
-              <td class="mono">${ratio ?? '—'}</td>
-              <td><span class="tag $$   {tagClass}">   $${tagText}</span></td>
-            </tr>`;
-          }).join('')}
-        </tbody>
-      </table>
-    </div>
-  `;
+  const m = LATEST.markets[activeMarket];
+  const contentEl = document.getElementById('content');
+
+  const total = m.total_symbols || 0;
+  const upW = total ? m.advances_pct : 0;
+  const flatW = total ? m.unchanged_pct : 0;
+  const downW = total ? m.declines_pct : 0;
+
+  const hist = (HISTORY || []).slice(-6).reverse();
+
+  contentEl.innerHTML = `
+    <div class="panel">
+      <h2>Phân bố tăng-giảm giá — ${total} mã ${activeMarket} (${m.date})</h2>
+      <div class="stat-grid">
+        <div class="stat up"><div class="lab">Tăng giá</div><div class="num">${m.advances}</div><div class="pct">${fmt1(m.advances_pct)}%</div></div>
+        <div class="stat flat"><div class="lab">Không đổi</div><div class="num">${m.unchanged}</div><div class="pct">${fmt1(m.unchanged_pct)}%</div></div>
+        <div class="stat down"><div class="lab">Giảm giá</div><div class="num">${m.declines}</div><div class="pct">${fmt1(m.declines_pct)}%</div></div>
+      </div>
+      <div class="bar-labels" style="margin-top:16px;">
+        <span class="up-l">Tăng: ${m.advances} (${fmt1(m.advances_pct)}%)</span>
+        <span>Không đổi: ${m.unchanged}</span>
+        <span class="down-l">Giảm: ${m.declines} (${fmt1(m.declines_pct)}%)</span>
+      </div>
+      <div class="breadth-bar">
+        <span style="width:${upW}%; background:var(--up);"></span>
+        <span style="width:${flatW}%; background:var(--neutral);"></span>
+        <span style="width:${downW}%; background:var(--down);"></span>
+      </div>
+      <div class="note">
+        <b>A/D Ratio: ${m.ad_ratio ?? '—'}</b> — tỉ lệ số mã tăng trên số mã giảm phiên ${m.date}.
+      </div>
+    </div>
+
+    <div class="panel">
+      <h2>% cổ phiếu ${activeMarket} trên đường trung bình — so sánh các mốc</h2>
+      <div class="ma-grid">
+        <div class="ma-stat">
+          <div class="lab">Trên MA20 (ngắn hạn)</div>
+          <div class="num">${fmt1(m.pct_above_ma20)}%</div>
+          <div class="sub2">${m.above_ma20_count} / ${m.ma_total_symbols} mã</div>
+          ${getCountChangeHTML('ma20', m.above_ma20_count)}
+        </div>
+        <div class="ma-stat">
+          <div class="lab">Trên MA50 (trung hạn)</div>
+          <div class="num">${fmt1(m.pct_above_ma50)}%</div>
+          <div class="sub2">${m.above_ma50_count} / ${m.ma_total_symbols} mã</div>
+          ${getCountChangeHTML('ma50', m.above_ma50_count)}
+        </div>
+        <div class="ma-stat">
+          <div class="lab">Trên MA200 (dài hạn)</div>
+          <div class="num">${fmt1(m.pct_above_ma200)}%</div>
+          <div class="sub2">${m.above_ma200_count} / ${m.ma_total_symbols} mã</div>
+          ${getCountChangeHTML('ma200', m.above_ma200_count)}
+        </div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h2>Chuỗi độ rộng thị trường ${activeMarket} — các phiên gần nhất</h2>
+      <table>
+        <thead><tr><th>Phiên</th><th>Tăng</th><th>Giảm</th><th>A/D Ratio</th><th>Nhận xét</th></tr></thead>
+        <tbody>
+          ${hist.map(h => {
+            const row = h.markets?.[activeMarket] || h.markets?.ALL;
+            if (!row) return '';
+            const ratio = row.ad_ratio;
+            let tagClass = 'mixed', tagText = 'Trung tính';
+            if (ratio !== null) {
+              if (ratio >= 1.2) { tagClass = 'good'; tagText = 'Tích cực'; }
+              else if (ratio <= 0.8) { tagClass = 'weak'; tagText = 'Yếu'; }
+            }
+            return `<tr>
+              <td>${row.date}</td>
+              <td class="mono up-txt">${row.advances}</td>
+              <td class="mono down-txt">${row.declines}</td>
+              <td class="mono">${ratio ?? '—'}</td>
+              <td><span class="tag ${tagClass}">${tagText}</span></td>
+            </tr>`;
+          }).join('')}
+        </tbody>
+      </table>
+    </div>
+  `;
 }
+
 loadData();
 </script>
 </body>
