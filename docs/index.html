@@ -88,17 +88,56 @@ let activeMarket = 'HOSE';
 let LATEST = null, HISTORY = null;
 
 async function loadData(){
+  const loadingEl = document.getElementById('content');
+  let progress = 0;
+
+  const updateProgress = (percent) => {
+    progress = percent;
+    loadingEl.innerHTML = `
+      <div class="loading">
+        Đang tải dữ liệu... <span style="color:var(--neutral); font-family:monospace;">${Math.round(percent)}%</span>
+        <div style="height:4px; background:var(--panel-alt); border-radius:4px; margin-top:12px; overflow:hidden;">
+          <div style="height:100%; width:${percent}%; background:var(--neutral); transition:width 0.3s;"></div>
+        </div>
+      </div>`;
+  };
+
   try {
-    const basePath = document.baseURI.includes('github.io') ? '' : '../';
-    
-    const [latestRes, historyRes] = await Promise.all([
-      fetch(basePath + 'data/breadth_latest.json').then(r => { 
-        if(!r.ok) throw new Error('latest not found'); 
-        return r.json(); 
-      }),
-      fetch(basePath + 'data/breadth_history.json').then(r => r.ok ? r.json() : []).catch(() => [])
-    ]);
-    
+    updateProgress(10);
+
+    const base = '/vn-market-breadth';
+
+    // Tải latest
+    updateProgress(40);
+    const latestRes = await fetch(base + '/data/breadth_latest.json');
+    if(!latestRes.ok) throw new Error('latest not found');
+    LATEST = await latestRes.json();
+
+    updateProgress(70);
+
+    // Tải history
+    const historyRes = await fetch(base + '/data/breadth_history.json');
+    HISTORY = historyRes.ok ? await historyRes.json() : [];
+
+    updateProgress(100);
+
+    // Hiển thị dữ liệu
+    document.getElementById('metaLine').textContent =
+      `Cập nhật: ${new Date(LATEST.generated_at).toLocaleString('vi-VN')} · Ngày dữ liệu: ${LATEST.markets.ALL.date}`;
+
+    renderTabs();
+    render();
+
+  } catch (e) {
+    console.error(e);
+    loadingEl.innerHTML = `
+      <div class="err">
+        ❌ Không tải được dữ liệu.<br><br>
+        Lỗi: ${e.message}<br><br>
+        <small>Hãy chắc chắn GitHub Actions đã chạy và file data đã được commit.</small>
+      </div>`;
+  }
+}
     LATEST = latestRes;
     HISTORY = historyRes;
     
