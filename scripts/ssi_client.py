@@ -9,10 +9,11 @@ BASE_URL = "https://fc-data.ssi.com.vn/api/v2/Market"
 
 
 class SSIClient:
-def init(self):
-self.consumer_id = os.environ["SSI_CONSUMER_ID"]
-self.consumer_secret = os.environ["SSI_CONSUMER_SECRET"]
-self._token = None
+    def __init__(self):
+        self.consumer_id = os.environ.get("SSI_CONSUMER_ID")
+        self.consumer_secret = os.environ.get("SSI_CONSUMER_SECRET")
+        self._token = None
+
 def _get_token(self):
 if self._token:
 return self._token
