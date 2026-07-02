@@ -137,6 +137,8 @@ def ma_breadth_for_market(client: SSIClient, symbols: list[str], today: datetime
         "newly_above_ma50": sorted(newly_above[50]),
         "newly_below_ma50": sorted(newly_below[50]),
     }
+
+
 def advance_decline_for_market(client: SSIClient, market: str, today: datetime) -> dict:
     index_id = MARKET_INDEX_ID[market]
     from_date = today - timedelta(days=5)
@@ -173,7 +175,8 @@ def build_market_snapshot(client: SSIClient, market: str, today: datetime) -> di
     snapshot = {
         "exchange": market,
         "date": today.strftime("%d/%m/%Y"),
-        "total_symbols": total or ma["total_symbols"],
+        # ✅ SỬA: dùng ma["ma_total_symbols"] thay vì ma["total_symbols"] (key không tồn tại)
+        "total_symbols": total or ma["ma_total_symbols"],
         "advances": ad["advances"],
         "declines": ad["declines"],
         "unchanged": ad["unchanged"],
@@ -184,12 +187,15 @@ def build_market_snapshot(client: SSIClient, market: str, today: datetime) -> di
         "pct_above_ma20": ma["pct_above_ma20"],
         "pct_above_ma50": ma["pct_above_ma50"],
         "pct_above_ma200": ma["pct_above_ma200"],
-        "above_ma20_count": ma["above_ma20"],
-        "above_ma50_count": ma["above_ma50"],
-        "above_ma200_count": ma["above_ma200"],
-        "ma_total_symbols": ma["total_symbols"],
-        "above_ma20_symbols": ma["above_ma20_symbols"],
-        "above_ma50_symbols": ma["above_ma50_symbols"],
+        # ✅ SỬA: 3 dòng dưới trước đây dùng sai key "above_ma20" / "above_ma50" / "above_ma200" / "total_symbols"
+        "above_ma20_count":  ma["above_ma20_count"],
+        "above_ma50_count":  ma["above_ma50_count"],
+        "above_ma200_count": ma["above_ma200_count"],
+        "ma_total_symbols":  ma["ma_total_symbols"],
+        "above_ma20_symbols":  ma["above_ma20_symbols"],
+        "above_ma50_symbols":  ma["above_ma50_symbols"],
+        # ✅ THÊM: dòng này bị thiếu hoàn toàn trong bản cũ
+        "above_ma200_symbols": ma["above_ma200_symbols"],
         "newly_above_ma20": ma["newly_above_ma20"],
         "newly_below_ma20": ma["newly_below_ma20"],
         "newly_above_ma50": ma["newly_above_ma50"],
@@ -234,6 +240,7 @@ def combine_all_markets(snapshots: list[dict], today: datetime) -> dict:
         "ma_total_symbols": ma_total,
         "above_ma20_symbols": merge("above_ma20_symbols"),
         "above_ma50_symbols": merge("above_ma50_symbols"),
+        "above_ma200_symbols": merge("above_ma200_symbols"),
         "newly_above_ma20": merge("newly_above_ma20"),
         "newly_below_ma20": merge("newly_below_ma20"),
         "newly_above_ma50": merge("newly_above_ma50"),
