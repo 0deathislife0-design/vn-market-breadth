@@ -1,10 +1,5 @@
 """
-Pipeline chính: chạy hàng ngày (qua GitHub Actions) để:
-  1. Lấy/khớp danh sách mã theo sàn (HOSE/HNX/UPCOM)
-  2. Cập nhật cache OHLC cục bộ cho từng mã
-  3. Tính MA20/MA50/MA200 + danh sách mã trên từng đường MA
-  4. Lấy Advances/Declines/Nochanges
-  5. Ghi JSON
+Pipeline chính: chạy hàng ngày để tính độ rộng thị trường VN
 """
 
 from __future__ import annotations
@@ -73,7 +68,6 @@ def update_symbol_ohlc(client: SSIClient, symbol: str, today: datetime) -> pd.Da
 
 
 def ma_breadth_for_market(client: SSIClient, symbols: list[str], today: datetime) -> dict:
-    """Tính MA + danh sách mã"""
     counts = {w: 0 for w in MA_WINDOWS}
     above_symbols = {w: [] for w in MA_WINDOWS}
     total_valid = 0
@@ -93,7 +87,6 @@ def ma_breadth_for_market(client: SSIClient, symbols: list[str], today: datetime
                 if last_close >= ma_val:
                     counts[w] += 1
                     above_symbols[w].append(sym)
-
         total_valid += 1
 
     pct = {w: (round(counts[w] / total_valid * 100, 1) if total_valid else 0.0) for w in MA_WINDOWS}
@@ -112,43 +105,6 @@ def ma_breadth_for_market(client: SSIClient, symbols: list[str], today: datetime
     }
 
 
-def build_market_snapshot(client: SSIClient, market: str, today: datetime) -> dict:
-    print(f"[{market}] fetching securities list...")
-    securities = client.securities(market)
-    symbols = [s["Symbol"] for s in securities if s.get("Symbol")]
-    print(f"[{market}] {len(symbols)} symbols.")
-
-    ad = advance_decline_for_market(client, market, today)
-    print(f"[{market}] A/D done.")
-
-    print(f"[{market}] Computing MA breadth...")
-    ma = ma_breadth_for_market(client, symbols, today)
-
-    total = ad["advances"] + ad["declines"] + ad["unchanged"]
-
-    snapshot = {
-        "exchange": market,
-        "date": today.strftime("%d/%m/%Y"),
-        "total_symbols": total,                       # Ưu tiên số từ A/D
-        "advances": ad["advances"],
-        "declines": ad["declines"],
-        "unchanged": ad["unchanged"],
-        "advances_pct": round(ad["advances"] / total * 100, 1) if total else 0.0,
-        "declines_pct": round(ad["declines"] / total * 100, 1) if total else 0.0,
-        "unchanged_pct": round(ad["unchanged"] / total * 100, 1) if total else 0.0,
-        "ad_ratio": ad["ad_ratio"],
-        "pct_above_ma20": ma["pct_above_ma20"],
-        "pct_above_ma50": ma["pct_above_ma50"],
-        "pct_above_ma200": ma["pct_above_ma200"],
-        "above_ma20_count": ma["above_ma20_count"],
-        "above_ma50_count": ma["above_ma50_count"],
-        "above_ma200_count": ma["above_ma200_count"],
-        "ma_total_symbols": ma["ma_total_symbols"],   # Giữ để tính %, nhưng frontend sẽ ưu tiên total_symbols
-        "above_ma20_symbols": ma["above_ma20_symbols"],
-        "above_ma50_symbols": ma["above_ma50_symbols"],
-        "above_ma200_symbols": ma["above_ma200_symbols"],
-    }
-    return snapshot
 def advance_decline_for_market(client: SSIClient, market: str, today: datetime) -> dict:
     index_id = MARKET_INDEX_ID[market]
     from_date = today - timedelta(days=5)
@@ -167,7 +123,6 @@ def advance_decline_for_market(client: SSIClient, market: str, today: datetime) 
         "declines": dec,
         "unchanged": unc,
         "ad_ratio": ad_ratio,
-        "trading_date": latest.get("TradingDate"),
     }
 
 
@@ -188,7 +143,7 @@ def build_market_snapshot(client: SSIClient, market: str, today: datetime) -> di
     snapshot = {
         "exchange": market,
         "date": today.strftime("%d/%m/%Y"),
-        "total_symbols": total or len(symbols),
+        "total_symbols": total,
         "advances": ad["advances"],
         "declines": ad["declines"],
         "unchanged": ad["unchanged"],
@@ -202,15 +157,14 @@ def build_market_snapshot(client: SSIClient, market: str, today: datetime) -> di
         "above_ma20_count": ma["above_ma20_count"],
         "above_ma50_count": ma["above_ma50_count"],
         "above_ma200_count": ma["above_ma200_count"],
-        "ma_total_symbols": ma["ma_total_symbols"],
-        "above_ma20_symbols": ma["above_ma20_symbols"],      # ← Thêm
-        "above_ma50_symbols": ma["above_ma50_symbols"],      # ← Thêm
-        "above_ma200_symbols": ma["above_ma200_symbols"],    # ← Thêm
+        "ma_total_symbols": total,                                 # ← Sửa quan trọng: ép bằng total_symbols
+        "above_ma20_symbols": ma["above_ma20_symbols"],
+        "above_ma50_symbols": ma["above_ma50_symbols"],
+        "above_ma200_symbols": ma["above_ma200_symbols"],
     }
     return snapshot
 
 
-# Phần còn lại giữ nguyên
 def combine_all_markets(snapshots: list[dict], today: datetime) -> dict:
     adv = sum(s["advances"] for s in snapshots)
     dec = sum(s["declines"] for s in snapshots)
@@ -240,7 +194,7 @@ def combine_all_markets(snapshots: list[dict], today: datetime) -> dict:
         "above_ma50_count": ma50,
         "above_ma200_count": ma200,
         "ma_total_symbols": ma_total,
-        "above_ma20_symbols": [],   # ALL không cần list chi tiết
+        "above_ma20_symbols": [],
         "above_ma50_symbols": [],
         "above_ma200_symbols": [],
     }
