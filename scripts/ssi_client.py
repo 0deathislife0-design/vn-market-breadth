@@ -4,7 +4,7 @@ Client gọi SSI FastConnect Data API (FCData v2).
 import os
 import requests
 
-BASE_URL = "fc-data.ssi.com.vn"
+BASE_URL = "https://fc-data.ssi.com.vn/api/v2/Market"
 
 
 class SSIClient:
