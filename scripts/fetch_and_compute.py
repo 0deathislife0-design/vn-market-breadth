@@ -1,19 +1,27 @@
 """
-Pipeline chính: chạy hàng ngày qua GitHub Actions.
-  1. Lấy danh sách mã theo sàn (HOSE/HNX/UPCOM)
-  2. Cập nhật cache OHLC cục bộ cho từng mã
-  3. Tính MA20/MA50/MA200
-  4. Lấy Advances/Declines/Unchanged từ DailyIndex
-  5. Ghi ra data/breadth_latest.json + data/breadth_history.json
+Pipeline chinh: chay hang ngay qua GitHub Actions.
+  1. Lay danh sach ma theo san (HOSE/HNX/UPCOM)
+     - Bo ma co chu so trong ten (CW, phai sinh, ...)
+  2. Cap nhat cache OHLC cuc bo cho tung ma (Close + Volume)
+  3. Loc thanh khoan: bo ma co KL khop TB 20 phien < 300,000 cp
+  4. Tinh MA20/MA50/MA200
+  5. Lay Advances/Declines/Unchanged tu DailyIndex
+  6. Ghi ra data/breadth_latest.json + data/breadth_history.json
 """
 from __future__ import annotations
 
 import json
 import time
-from datetime import datetime, timedelta
+import warnings
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 import pandas as pd
+from tqdm import tqdm
+
+# Suppress pandas FutureWarning va Python DeprecationWarning
+warnings.filterwarnings("ignore", category=FutureWarning)
+warnings.filterwarnings("ignore", category=DeprecationWarning)
 
 from ssi_client import SSIClient
 
@@ -30,28 +38,34 @@ MARKET_INDEX_ID = {
     "UPCOM": "UPCOMIndex",
 }
 MA_WINDOWS = [20, 50, 200]
-HISTORY_DAYS_LOOKBACK = 380   # đủ ~260 phiên để tính MA200
-INCREMENTAL_LOOKBACK = 7      # chỉ lấy 7 ngày gần nhất nếu đã có cache
-REQUEST_SLEEP_SEC = 0.3       # tránh rate limit
+HISTORY_DAYS_LOOKBACK = 380   # du ~260 phien de tinh MA200
+INCREMENTAL_LOOKBACK = 7      # chi lay 7 ngay gan nhat neu da co cache
+REQUEST_SLEEP_SEC = 0.3       # tranh rate limit
 DATE_FMT = "%d/%m/%Y"
+MIN_AVG_VOLUME = 300_000      # loc thanh khoan: TB 20 phien >= 300,000 cp
 
 
 def vn_today() -> datetime:
-    return datetime.utcnow() + timedelta(hours=7)
+    return datetime.now(timezone.utc).replace(tzinfo=None) + timedelta(hours=7)
 
 
-# ─── Cache OHLC ───────────────────────────────────────────────
+# --- Cache OHLC ---------------------------------------------------------------
 
 def load_cache(symbol: str) -> pd.DataFrame:
     path = CACHE_DIR / f"{symbol}.csv"
     if path.exists():
         try:
-            df = pd.read_csv(path, parse_dates=["TradingDate"], dayfirst=True)
+            df = pd.read_csv(path)
+            df["TradingDate"] = pd.to_datetime(df["TradingDate"], format="mixed", dayfirst=True, errors="coerce")
             df["Close"] = pd.to_numeric(df["Close"], errors="coerce")
+            if "Volume" in df.columns:
+                df["Volume"] = pd.to_numeric(df["Volume"], errors="coerce")
+            else:
+                df["Volume"] = float("nan")
             return df.dropna(subset=["Close"])
         except Exception:
             pass
-    return pd.DataFrame(columns=["TradingDate", "Close"])
+    return pd.DataFrame(columns=["TradingDate", "Close", "Volume"])
 
 
 def save_cache(symbol: str, df: pd.DataFrame) -> None:
@@ -75,23 +89,41 @@ def update_ohlc(client: SSIClient, symbol: str, today: datetime) -> pd.DataFrame
 
     if rows:
         new_df = pd.DataFrame(rows)
-        # Đổi tên cột nếu API trả về tên khác
         col_map = {}
         for c in new_df.columns:
-            if c.lower() in ("tradingdate", "trading_date", "date"):
+            cl = c.lower()
+            if cl in ("tradingdate", "trading_date", "date"):
                 col_map[c] = "TradingDate"
-            if c.lower() in ("close", "closeprice", "close_price"):
+            elif cl in ("close", "closeprice", "close_price"):
                 col_map[c] = "Close"
+            elif cl in ("volume", "totalvolume", "total_volume", "matchvolume",
+                        "match_volume", "tradingvolume", "trading_volume", "vol"):
+                col_map[c] = "Volume"
         new_df = new_df.rename(columns=col_map)
 
         if "TradingDate" in new_df.columns and "Close" in new_df.columns:
-            new_df = new_df[["TradingDate", "Close"]]
+            cols = ["TradingDate", "Close"]
+            if "Volume" in new_df.columns:
+                cols.append("Volume")
+            new_df = new_df[cols]
             new_df["TradingDate"] = pd.to_datetime(new_df["TradingDate"], dayfirst=True, errors="coerce")
             new_df["Close"] = pd.to_numeric(new_df["Close"], errors="coerce")
-            new_df = new_df.dropna()
+            if "Volume" in new_df.columns:
+                new_df["Volume"] = pd.to_numeric(new_df["Volume"], errors="coerce")
+            else:
+                new_df["Volume"] = float("nan")
+            new_df = new_df.dropna(subset=["Close"])
+
+            # Align columns truoc khi concat
+            for col in ["Volume"]:
+                if col in cached.columns and col not in new_df.columns:
+                    new_df[col] = float("nan")
+                if col in new_df.columns and col not in cached.columns:
+                    cached[col] = float("nan")
+
             merged = pd.concat([cached, new_df], ignore_index=True)
         else:
-            print(f"  [WARN] {symbol}: không tìm thấy cột TradingDate/Close, columns={list(new_df.columns)}")
+            tqdm.write(f"  [WARN] {symbol}: khong tim thay cot TradingDate/Close")
             merged = cached
     else:
         merged = cached
@@ -101,30 +133,47 @@ def update_ohlc(client: SSIClient, symbol: str, today: datetime) -> pd.DataFrame
     return merged
 
 
-# ─── Tính MA ──────────────────────────────────────────────────
+# --- Tinh MA ------------------------------------------------------------------
 
-def compute_ma_breadth(client: SSIClient, symbols: list[str], today: datetime) -> dict:
+def compute_ma_breadth(client: SSIClient, symbols: list[str], today: datetime, market: str) -> dict:
     counts = {w: 0 for w in MA_WINDOWS}
     above_syms = {w: [] for w in MA_WINDOWS}
     newly_above = {20: [], 50: []}
     newly_below = {20: [], 50: []}
     total_valid = 0
+    skipped_volume = 0
+    skipped_data = 0
 
-    print(f"[MA] Bắt đầu tính cho {len(symbols)} mã...")
+    bar = tqdm(
+        symbols,
+        desc=f"[{market}] OHLC+MA",
+        unit="ma",
+        ncols=80,
+        bar_format="{l_bar}{bar}| {n_fmt}/{total_fmt} [{elapsed}<{remaining}, {rate_fmt}]",
+        dynamic_ncols=False,
+    )
 
-    for i, sym in enumerate(symbols):
-        if i % 50 == 0:
-            print(f"[MA] Đang xử lý {i}/{len(symbols)}...")
+    for sym in bar:
+        bar.set_postfix_str(sym, refresh=True)
 
         try:
             df = update_ohlc(client, sym, today)
             time.sleep(REQUEST_SLEEP_SEC)
         except Exception as e:
-            print(f"  [WARN] {sym}: lỗi khi tải OHLC: {e}")
+            tqdm.write(f"  [WARN] {sym}: loi khi tai OHLC: {e}")
             continue
 
         if df.empty or len(df) < 20:
+            skipped_data += 1
             continue
+
+        # Loc thanh khoan: TB 20 phien gan nhat
+        if "Volume" in df.columns:
+            recent_vol = df["Volume"].iloc[-20:]
+            avg_vol = recent_vol.dropna().mean()
+            if pd.isna(avg_vol) or avg_vol < MIN_AVG_VOLUME:
+                skipped_volume += 1
+                continue
 
         close = df["Close"].values
         last_close = close[-1]
@@ -139,7 +188,6 @@ def compute_ma_breadth(client: SSIClient, symbols: list[str], today: datetime) -
                     counts[w] += 1
                     above_syms[w].append(sym)
 
-                # Tín hiệu chuyển đổi MA20/MA50
                 if w in (20, 50) and len(close) >= w + 1:
                     prev_close = close[-2]
                     prev_ma = close[-(w + 1):-1].mean()
@@ -149,12 +197,15 @@ def compute_ma_breadth(client: SSIClient, symbols: list[str], today: datetime) -
                     elif not is_above and was_above:
                         newly_below[w].append(sym)
 
+    bar.close()
+
     pct = {
         w: round(counts[w] / total_valid * 100, 1) if total_valid > 0 else 0.0
         for w in MA_WINDOWS
     }
 
-    print(f"[MA] Xong. Valid={total_valid}, MA20={counts[20]}, MA50={counts[50]}, MA200={counts[200]}")
+    tqdm.write(f"[{market}] Xong: valid={total_valid} | bo_kl={skipped_volume} | it_data={skipped_data}")
+    tqdm.write(f"[{market}] MA20={counts[20]} ({pct[20]}%) | MA50={counts[50]} ({pct[50]}%) | MA200={counts[200]} ({pct[200]}%)")
 
     return {
         "ma_total_symbols":   total_valid,
@@ -174,7 +225,7 @@ def compute_ma_breadth(client: SSIClient, symbols: list[str], today: datetime) -
     }
 
 
-# ─── A/D Ratio ────────────────────────────────────────────────
+# --- A/D Ratio ----------------------------------------------------------------
 
 def get_advance_decline(client: SSIClient, market: str, today: datetime) -> dict:
     index_id = MARKET_INDEX_ID[market]
@@ -185,11 +236,11 @@ def get_advance_decline(client: SSIClient, market: str, today: datetime) -> dict
         today.strftime(DATE_FMT),
     )
     if not rows:
-        print(f"[{market}] WARN: daily_index trả về rỗng")
+        print(f"[{market}] WARN: daily_index tra ve rong")
         return {"advances": 0, "declines": 0, "unchanged": 0, "ad_ratio": None}
 
     latest = rows[-1]
-    print(f"[{market}] DailyIndex row: {latest}")
+    print(f"[{market}] DailyIndex: {latest}")
 
     adv = int(float(latest.get("Advances") or latest.get("advances") or 0))
     dec = int(float(latest.get("Declines") or latest.get("declines") or 0))
@@ -208,20 +259,20 @@ def get_advance_decline(client: SSIClient, market: str, today: datetime) -> dict
     }
 
 
-# ─── Snapshot mỗi sàn ─────────────────────────────────────────
+# --- Snapshot moi san ---------------------------------------------------------
 
 def build_snapshot(client: SSIClient, market: str, today: datetime) -> dict:
-    print(f"\n{'='*40}")
-    print(f"[{market}] Bắt đầu xử lý...")
+    print(f"\n{'='*50}")
+    print(f"[{market}] Bat dau xu ly...")
 
     symbols = client.common_stock_symbols(market)
     if not symbols:
-        print(f"[{market}] WARN: không lấy được mã nào!")
+        print(f"[{market}] WARN: khong lay duoc ma nao!")
 
     ad = get_advance_decline(client, market, today)
-    print(f"[{market}] A/D: {ad}")
+    print(f"[{market}] A/D: adv={ad['advances']} dec={ad['declines']} unc={ad['unchanged']}")
 
-    ma = compute_ma_breadth(client, symbols, today)
+    ma = compute_ma_breadth(client, symbols, today, market)
 
     total_ad = ad["advances"] + ad["declines"] + ad["unchanged"]
 
@@ -253,7 +304,7 @@ def build_snapshot(client: SSIClient, market: str, today: datetime) -> dict:
     }
 
 
-# ─── Gộp ALL ──────────────────────────────────────────────────
+# --- Gop ALL ------------------------------------------------------------------
 
 def combine_all(snapshots: list[dict], today: datetime) -> dict:
     adv  = sum(s["advances"] for s in snapshots)
@@ -299,7 +350,7 @@ def combine_all(snapshots: list[dict], today: datetime) -> dict:
     }
 
 
-# ─── History ──────────────────────────────────────────────────
+# --- History ------------------------------------------------------------------
 
 def append_history(markets_dict: dict) -> None:
     HISTORY_JSON.parent.mkdir(parents=True, exist_ok=True)
@@ -313,7 +364,7 @@ def append_history(markets_dict: dict) -> None:
     today_date = markets_dict["ALL"]["date"]
     history = [h for h in history if h.get("date") != today_date]
     history.append({"date": today_date, "markets": markets_dict})
-    history = history[-120:]  # giữ 120 phiên gần nhất
+    history = history[-120:]  # giu 120 phien gan nhat
 
     HISTORY_JSON.write_text(
         json.dumps(history, ensure_ascii=False, indent=2),
@@ -321,12 +372,13 @@ def append_history(markets_dict: dict) -> None:
     )
 
 
-# ─── Main ─────────────────────────────────────────────────────
+# --- Main ---------------------------------------------------------------------
 
 def main():
     client = SSIClient()
     today = vn_today()
-    print(f"Ngày xử lý: {today.strftime(DATE_FMT)}")
+    print(f"Ngay xu ly: {today.strftime(DATE_FMT)}")
+    print(f"Nguong thanh khoan: TB 20 phien >= {MIN_AVG_VOLUME:,} cp\n")
 
     markets_dict = {}
     all_list = []
@@ -348,11 +400,11 @@ def main():
         json.dumps(output, ensure_ascii=False, indent=2),
         encoding="utf-8",
     )
-    print(f"\nĐã ghi: {LATEST_JSON}")
+    print(f"\nDa ghi: {LATEST_JSON}")
 
     append_history(markets_dict)
-    print(f"Đã cập nhật history.")
-    print("\nHoàn tất.")
+    print(f"Da cap nhat history.")
+    print("\nHoan tat.")
 
 
 if __name__ == "__main__":

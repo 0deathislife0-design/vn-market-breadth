@@ -1,4 +1,5 @@
 import os
+import re
 import time
 import requests
 
@@ -74,6 +75,7 @@ class SSIClient:
         # Lọc chỉ lấy cổ phiếu thường
         exclude = {"CW", "ETF", "BOND", "BO", "FU", "MF", "OF", "EF", "FUND"}
         symbols = []
+        skipped_digit = 0
         for r in out:
             symbol = str(r.get("Symbol") or r.get("symbol") or "").strip()
             sec_type = str(r.get("SecType") or r.get("secType") or r.get("type") or "").strip().upper()
@@ -81,7 +83,12 @@ class SSIClient:
                 continue
             if any(kw in sec_type for kw in exclude):
                 continue
+            # Bỏ mã có chứa chữ số (CW, bond, phái sinh thường có số trong mã)
+            if re.search(r"\d", symbol):
+                skipped_digit += 1
+                continue
             symbols.append(symbol)
+        print("[" + market + "] Bỏ " + str(skipped_digit) + " mã có chữ số trong tên")
         print("[" + market + "] Sau lọc còn: " + str(len(symbols)) + " mã")
         return symbols
 
