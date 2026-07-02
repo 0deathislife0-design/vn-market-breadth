@@ -5,85 +5,101 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Độ rộng thị trường — TTCK Việt Nam</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#0A0D12; --panel:#12161D; --panel-alt:#171C24; --border:#232935;
-    --text:#EDEFF2; --muted:#8A93A3; --faint:#545D6C;
-    --up:#22c55e;     /* Xanh - Tăng */
-    --down:#ef4444;   /* Đỏ - Giảm */
-    --neutral:#eab308;
-    --font-display:'Space Grotesk',sans-serif; --font-mono:'JetBrains Mono',monospace; --font-body:'Inter',sans-serif;
+    --bg-a:#EEF3FF; --bg-b:#F3EEFF; --bg-c:#FFF6E9;
+    --panel:#FFFFFF; --panel-tint:#F7F9FF; --border:#E4E9F7;
+    --text:#1B2140; --muted:#6B7395; --faint:#9AA1C0;
+    --up:#F0473E;        /* tăng — đỏ theo quy ước VN */
+    --down:#0FAE72;      /* giảm — xanh theo quy ước VN */
+    --neutral:#F5A524;
+    --accent-1:#4F46E5; --accent-2:#06B6D4;
+    --accent-grad: linear-gradient(120deg, var(--accent-1), var(--accent-2));
+    --shadow-sm: 0 2px 10px rgba(31,41,102,0.06);
+    --shadow-md: 0 10px 30px rgba(31,41,102,0.10);
+    --font-display:'Sora',sans-serif; --font-mono:'JetBrains Mono',monospace; --font-body:'Inter',sans-serif;
   }
   *{box-sizing:border-box; margin:0; padding:0;}
-  html,body{background:var(--bg); color:var(--text); font-family:var(--font-body);}
-  body{min-height:100vh; padding:20px clamp(16px,4vw,40px) 60px;}
-  .wrap{max-width:1100px; margin:0 auto;}
-  header{display:flex; justify-content:space-between; align-items:flex-end; gap:16px; flex-wrap:wrap; margin-bottom:18px;}
-  h1{font-family:var(--font-display); font-size:clamp(18px,2.4vw,24px);}
-  .sub{font-family:var(--font-mono); font-size:11.5px; color:var(--faint); margin-top:4px;}
-  .tabs{display:flex; gap:2px; background:var(--panel-alt); border:1px solid var(--border); border-radius:8px; padding:3px;}
-  .tabs button{font-family:var(--font-mono); font-size:12px; font-weight:600; color:var(--muted); background:transparent; border:none; padding:7px 13px; border-radius:6px; cursor:pointer;}
-  .tabs button.active{background:var(--neutral); color:#0A0D12;}
+  html,body{color:var(--text); font-family:var(--font-body);}
+  body{
+    min-height:100vh; padding:24px clamp(16px,4vw,40px) 60px;
+    background:
+      radial-gradient(1100px 600px at 8% -10%, var(--bg-c) 0%, transparent 55%),
+      radial-gradient(900px 600px at 100% 0%, var(--bg-b) 0%, transparent 50%),
+      linear-gradient(180deg, var(--bg-a) 0%, #FBFCFF 60%);
+    background-attachment:fixed;
+  }
+  .wrap{max-width:1120px; margin:0 auto;}
+  header{display:flex; justify-content:space-between; align-items:flex-end; gap:16px; flex-wrap:wrap; margin-bottom:22px;}
+  h1{font-family:var(--font-display); font-weight:700; font-size:clamp(20px,2.6vw,27px); letter-spacing:-0.01em; color:#141834;}
+  .sub{font-family:var(--font-mono); font-size:11.5px; color:var(--muted); margin-top:6px;}
 
-  .panel{background:var(--panel); border:1px solid var(--border); border-radius:12px; padding:18px; margin-bottom:18px;}
-  .panel h2{font-family:var(--font-mono); font-size:12px; text-transform:uppercase; letter-spacing:0.06em; color:var(--faint); margin-bottom:14px;}
+  .tabs{display:flex; gap:4px; background:var(--panel); border:1px solid var(--border); border-radius:999px; padding:5px; box-shadow:var(--shadow-sm);}
+  .tabs button{
+    font-family:var(--font-display); font-size:12.5px; font-weight:600; color:var(--muted);
+    background:transparent; border:none; padding:9px 18px; border-radius:999px; cursor:pointer;
+    transition:all .18s ease; letter-spacing:0.01em;
+  }
+  .tabs button:hover{color:var(--accent-1); background:var(--panel-tint);}
+  .tabs button.active{
+    background:var(--accent-grad); color:#fff;
+    box-shadow:0 6px 16px rgba(79,70,229,0.35);
+    transform:translateY(-1px);
+  }
 
-  .stat-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:12px;}
-  .stat{background:var(--panel-alt); border:1px solid var(--border); border-radius:10px; padding:14px; text-align:center;}
-  .stat .lab{font-size:12px; color:var(--muted);}
-  .stat .num{font-family:var(--font-mono); font-size:26px; font-weight:700; margin-top:6px;}
+  .panel{background:var(--panel); border:1px solid var(--border); border-radius:18px; padding:22px; margin-bottom:18px; box-shadow:var(--shadow-sm);}
+  .panel h2{font-family:var(--font-display); font-weight:600; font-size:13px; text-transform:uppercase; letter-spacing:0.06em; color:#3A4270; margin-bottom:16px;}
+
+  .stat-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:14px;}
+  .stat{border:1px solid var(--border); border-radius:14px; padding:16px; text-align:center; background:var(--panel-tint);}
+  .stat .lab{font-size:12px; color:var(--muted); font-weight:600;}
+  .stat .num{font-family:var(--font-mono); font-size:28px; font-weight:700; margin-top:7px;}
   .stat .pct{font-size:11.5px; color:var(--faint); margin-top:2px;}
+  .stat.up{background:linear-gradient(180deg, rgba(240,71,62,0.07), rgba(240,71,62,0.02));}
   .stat.up .num{color:var(--up);}
+  .stat.down{background:linear-gradient(180deg, rgba(15,174,114,0.08), rgba(15,174,114,0.02));}
   .stat.down .num{color:var(--down);}
+  .stat.flat{background:linear-gradient(180deg, rgba(245,165,36,0.08), rgba(245,165,36,0.02));}
   .stat.flat .num{color:var(--neutral);}
 
-  .breadth-bar{display:flex; height:26px; border-radius:6px; overflow:hidden; margin:16px 0 8px;}
-  .breadth-bar span{display:flex; align-items:center; justify-content:center; font-family:var(--font-mono); font-size:11px; font-weight:600; color:#0A0D12;}
-  .bar-labels{display:flex; justify-content:space-between; font-family:var(--font-mono); font-size:11px;}
-  .bar-labels .up-l{color:var(--up);} .bar-labels .down-l{color:var(--down);}
+  .breadth-bar{display:flex; height:28px; border-radius:8px; overflow:hidden; margin:18px 0 8px; box-shadow:inset 0 0 0 1px var(--border);}
+  .breadth-bar span{display:flex; align-items:center; justify-content:center; font-family:var(--font-mono); font-size:11px; font-weight:700; color:#fff;}
+  .bar-labels{display:flex; justify-content:space-between; font-family:var(--font-mono); font-size:11px; color:var(--muted);}
+  .bar-labels .up-l{color:var(--up); font-weight:600;} .bar-labels .down-l{color:var(--down); font-weight:600;}
 
-  .note{background:var(--panel-alt); border-left:3px solid var(--neutral); border-radius:6px; padding:12px 14px; font-size:13px; color:var(--muted); margin-top:14px; line-height:1.55;}
+  .note{background:linear-gradient(90deg, rgba(79,70,229,0.06), rgba(6,182,212,0.05)); border-left:3px solid var(--accent-1); border-radius:8px; padding:13px 15px; font-size:13px; color:var(--muted); margin-top:16px; line-height:1.6;}
   .note b{color:var(--text);}
 
-  .ma-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:12px;}
-  .ma-stat{background:var(--panel-alt); border:1px solid var(--border); border-radius:10px; padding:14px; text-align:center;}
-  .ma-stat .lab{font-size:12px; color:var(--muted);}
-  .ma-stat .num{font-family:var(--font-mono); font-size:24px; font-weight:700; margin-top:6px; color:var(--neutral);}
-  .ma-stat .sub2{font-size:11px; color:var(--faint); margin-top:2px;}
+  .ma-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:14px;}
+  .ma-stat{border:1px solid var(--border); border-radius:14px; padding:16px; text-align:center; background:var(--panel-tint);}
+  .ma-stat .lab{font-size:12px; color:var(--muted); font-weight:600;}
+  .ma-stat .num{font-family:var(--font-mono); font-size:25px; font-weight:700; margin-top:7px; color:var(--accent-1);}
+  .ma-stat .sub2{font-size:11px; color:var(--faint); margin-top:3px;}
 
   table{width:100%; border-collapse:collapse; margin-top:6px;}
-  th{text-align:left; font-size:10.5px; text-transform:uppercase; letter-spacing:0.05em; color:var(--faint); font-family:var(--font-mono); padding:8px 10px; border-bottom:1px solid var(--border);}
-  td{padding:9px 10px; font-size:13px; border-bottom:1px solid var(--border);}
+  th{text-align:left; font-size:10.5px; text-transform:uppercase; letter-spacing:0.05em; color:var(--faint); font-family:var(--font-mono); font-weight:600; padding:10px 12px; border-bottom:2px solid var(--border);}
+  td{padding:11px 12px; font-size:13px; border-bottom:1px solid var(--border);}
+  tr:hover td{background:var(--panel-tint);}
   td.mono{font-family:var(--font-mono);}
-  .up-txt{color:var(--up); font-weight:600;}
-  .down-txt{color:var(--down); font-weight:600;}
-  .tag{font-family:var(--font-mono); font-size:10.5px; padding:3px 8px; border-radius:5px; font-weight:600;}
-  .tag.weak{background:#C9463A22; color:#E4433A;}
-  .tag.mixed{background:#C97A3A22; color:#E8A23E;}
-  .tag.good{background:#2EA76C22; color:#2EA76C;}
+  .up-txt{color:var(--up); font-weight:700;}
+  .down-txt{color:var(--down); font-weight:700;}
+  .tag{font-family:var(--font-display); font-size:10.5px; padding:4px 10px; border-radius:999px; font-weight:700;}
+  .tag.weak{background:rgba(240,71,62,0.12); color:var(--up);}
+  .tag.mixed{background:rgba(245,165,36,0.14); color:#B9760F;}
+  .tag.good{background:rgba(15,174,114,0.12); color:var(--down);}
 
-  .loading, .err {
-    font-family: var(--font-mono); 
-    font-size: 14px; 
-    color: var(--muted); 
-    padding: 50px 20px; 
-    text-align: center;
-  }
-  .progress-bar {
-    height: 6px;
-    background: var(--panel-alt);
-    border-radius: 4px;
-    margin: 16px auto;
-    max-width: 320px;
-    overflow: hidden;
-  }
-  .progress {
-    height: 100%;
-    background: linear-gradient(90deg, var(--neutral), #ffffff);
-    width: 0%;
-    transition: width 0.4s ease;
-  }
+  footer{font-family:var(--font-mono); font-size:11px; color:var(--faint); text-align:center; margin-top:24px;}
+  .loading, .err{font-family:var(--font-mono); font-size:13px; color:var(--muted); padding:30px; text-align:center;}
+
+  .signal-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:14px;}
+  @media (max-width:800px){ .signal-grid{grid-template-columns:1fr 1fr;} }
+  .signal-title{font-size:12px; font-weight:700; margin-bottom:9px;}
+  .chip-wrap{display:flex; flex-wrap:wrap; gap:6px; max-height:180px; overflow-y:auto; padding-right:4px;}
+  .chip{font-family:var(--font-mono); font-size:11px; background:var(--panel-tint); border:1px solid var(--border); border-radius:999px; padding:4px 10px; color:var(--muted); font-weight:500;}
+  .chip.up{color:var(--up); border-color:rgba(240,71,62,0.25); background:rgba(240,71,62,0.07);}
+  .chip.down{color:var(--down); border-color:rgba(15,174,114,0.25); background:rgba(15,174,114,0.07);}
+  .empty-note{font-size:12px; color:var(--faint); font-style:italic;}
 </style>
 </head>
 <body>
@@ -97,13 +113,7 @@
   </header>
 
   <div id="content">
-    <div class="loading" id="loadingScreen">
-      Đang tải dữ liệu...<br>
-      <span id="percent" style="color:var(--neutral); font-size:16px; font-weight:600;">0%</span>
-      <div class="progress-bar">
-        <div class="progress" id="progressBar"></div>
-      </div>
-    </div>
+    <div class="loading">Đang tải dữ liệu…</div>
   </div>
 
   <footer>Dữ liệu: SSI FastConnect · Cập nhật tự động qua GitHub Actions</footer>
@@ -114,60 +124,21 @@ const MARKETS = ['ALL','HOSE','HNX','UPCOM'];
 let activeMarket = 'HOSE';
 let LATEST = null, HISTORY = null;
 
-function setProgress(p) {
-  document.getElementById('percent').textContent = Math.round(p) + '%';
-  document.getElementById('progressBar').style.width = p + '%';
-}
-
-function getCountChangeHTML(key, currentCount) {
-  if (!HISTORY || HISTORY.length < 2) return '';
-  const prevData = HISTORY[HISTORY.length - 2].markets?.[activeMarket];
-  if (!prevData) return '';
-
-  const prevCount = key === 'ma20' ? prevData.above_ma20_count :
-                    key === 'ma50' ? prevData.above_ma50_count :
-                    prevData.above_ma200_count;
-
-  if (prevCount === undefined) return '';
-
-  const change = currentCount - prevCount;
-  if (change === 0) return '<div style="font-size:11px; margin-top:4px; color:#888;">= Không đổi</div>';
-
-  const sign = change > 0 ? '↑' : '↓';
-  const color = change > 0 ? 'color:var(--up);' : 'color:var(--down);';
-  
-  return `<div style="font-size:11px; margin-top:4px; ${color}">${sign} ${change > 0 ? '+' : ''}${change} mã</div>`;
-}
-
 async function loadData(){
   try {
-    setProgress(25);
-
-    const latestRes = await fetch('https://raw.githubusercontent.com/0deathislife0-design/vn-market-breadth/main/data/breadth_latest.json');
-    if (!latestRes.ok) throw new Error('latest not found');
-    LATEST = await latestRes.json();
-
-    setProgress(65);
-
-    const historyRes = await fetch('https://raw.githubusercontent.com/0deathislife0-design/vn-market-breadth/main/data/breadth_history.json');
-    HISTORY = historyRes.ok ? await historyRes.json() : [];
-
-    setProgress(100);
-
+    const [latestRes, historyRes] = await Promise.all([
+      fetch('../data/breadth_latest.json').then(r => { if(!r.ok) throw new Error('latest not found'); return r.json(); }),
+      fetch('../data/breadth_history.json').then(r => r.ok ? r.json() : []).catch(() => [])
+    ]);
+    LATEST = latestRes;
+    HISTORY = historyRes;
     document.getElementById('metaLine').textContent =
       `Cập nhật: ${new Date(LATEST.generated_at).toLocaleString('vi-VN')} · Ngày dữ liệu: ${LATEST.markets.ALL.date}`;
-
     renderTabs();
     render();
-
   } catch (e) {
-    console.error(e);
-    document.getElementById('content').innerHTML = `
-      <div class="err">
-        ❌ Không tải được dữ liệu<br><br>
-        Lỗi: ${e.message}<br><br>
-        <small>Hãy chắc chắn GitHub Actions đã chạy thành công.</small>
-      </div>`;
+    document.getElementById('content').innerHTML =
+      `<div class="err">Không tải được dữ liệu (data/breadth_latest.json). Hãy chắc chắn GitHub Actions đã chạy ít nhất 1 lần và file đã được commit.<br><br>Lỗi: ${e.message}</div>`;
   }
 }
 
@@ -185,14 +156,20 @@ function renderTabs(){
 
 function fmt1(n){ return (n === null || n === undefined) ? '—' : Number(n).toFixed(1); }
 
+function renderChips(list, kind){
+  if (!list || list.length === 0) return '<span class="empty-note">Không có mã nào</span>';
+  const cls = kind === 'up' ? 'chip up' : kind === 'down' ? 'chip down' : 'chip';
+  return list.map(sym => `<span class="${cls}">${sym}</span>`).join('');
+}
+
 function render(){
   const m = LATEST.markets[activeMarket];
   const contentEl = document.getElementById('content');
 
   const total = m.total_symbols || 0;
-  const upW = total ? m.advances_pct : 0;
-  const flatW = total ? m.unchanged_pct : 0;
-  const downW = total ? m.declines_pct : 0;
+  const upW = total ? (m.advances_pct) : 0;
+  const flatW = total ? (m.unchanged_pct) : 0;
+  const downW = total ? (m.declines_pct) : 0;
 
   const hist = (HISTORY || []).slice(-6).reverse();
 
@@ -216,30 +193,16 @@ function render(){
       </div>
       <div class="note">
         <b>A/D Ratio: ${m.ad_ratio ?? '—'}</b> — tỉ lệ số mã tăng trên số mã giảm phiên ${m.date}.
+        ${m.ad_ratio !== null && m.ad_ratio > 1 ? 'Số mã tăng đang vượt số mã giảm.' : m.ad_ratio !== null ? 'Số mã giảm đang chiếm ưu thế.' : ''}
       </div>
     </div>
 
     <div class="panel">
       <h2>% cổ phiếu ${activeMarket} trên đường trung bình — so sánh các mốc</h2>
       <div class="ma-grid">
-        <div class="ma-stat">
-          <div class="lab">Trên MA20 (ngắn hạn)</div>
-          <div class="num">${fmt1(m.pct_above_ma20)}%</div>
-          <div class="sub2">${m.above_ma20_count} / ${m.ma_total_symbols} mã</div>
-          ${getCountChangeHTML('ma20', m.above_ma20_count)}
-        </div>
-        <div class="ma-stat">
-          <div class="lab">Trên MA50 (trung hạn)</div>
-          <div class="num">${fmt1(m.pct_above_ma50)}%</div>
-          <div class="sub2">${m.above_ma50_count} / ${m.ma_total_symbols} mã</div>
-          ${getCountChangeHTML('ma50', m.above_ma50_count)}
-        </div>
-        <div class="ma-stat">
-          <div class="lab">Trên MA200 (dài hạn)</div>
-          <div class="num">${fmt1(m.pct_above_ma200)}%</div>
-          <div class="sub2">${m.above_ma200_count} / ${m.ma_total_symbols} mã</div>
-          ${getCountChangeHTML('ma200', m.above_ma200_count)}
-        </div>
+        <div class="ma-stat"><div class="lab">Trên MA20 (ngắn hạn)</div><div class="num">${fmt1(m.pct_above_ma20)}%</div><div class="sub2">${m.above_ma20_count} / ${m.ma_total_symbols} mã</div></div>
+        <div class="ma-stat"><div class="lab">Trên MA50 (trung hạn)</div><div class="num">${fmt1(m.pct_above_ma50)}%</div><div class="sub2">${m.above_ma50_count} / ${m.ma_total_symbols} mã</div></div>
+        <div class="ma-stat"><div class="lab">Trên MA200 (dài hạn)</div><div class="num">${fmt1(m.pct_above_ma200)}%</div><div class="sub2">${m.above_ma200_count} / ${m.ma_total_symbols} mã</div></div>
       </div>
     </div>
 
@@ -249,7 +212,7 @@ function render(){
         <thead><tr><th>Phiên</th><th>Tăng</th><th>Giảm</th><th>A/D Ratio</th><th>Nhận xét</th></tr></thead>
         <tbody>
           ${hist.map(h => {
-            const row = h.markets?.[activeMarket] || h.markets?.ALL;
+            const row = h.markets[activeMarket];
             if (!row) return '';
             const ratio = row.ad_ratio;
             let tagClass = 'mixed', tagText = 'Trung tính';
@@ -267,6 +230,45 @@ function render(){
           }).join('')}
         </tbody>
       </table>
+    </div>
+
+    <div class="panel">
+      <h2>Mã cổ phiếu vừa chuyển tín hiệu — ${activeMarket} (${m.date})</h2>
+      <div class="signal-grid">
+        <div class="signal-col">
+          <div class="signal-title up-txt">↑ Vừa vượt lên MA20 (${(m.newly_above_ma20||[]).length})</div>
+          <div class="chip-wrap">${renderChips(m.newly_above_ma20, 'up')}</div>
+        </div>
+        <div class="signal-col">
+          <div class="signal-title down-txt">↓ Vừa rớt xuống MA20 (${(m.newly_below_ma20||[]).length})</div>
+          <div class="chip-wrap">${renderChips(m.newly_below_ma20, 'down')}</div>
+        </div>
+        <div class="signal-col">
+          <div class="signal-title up-txt">↑ Vừa vượt lên MA50 (${(m.newly_above_ma50||[]).length})</div>
+          <div class="chip-wrap">${renderChips(m.newly_above_ma50, 'up')}</div>
+        </div>
+        <div class="signal-col">
+          <div class="signal-title down-txt">↓ Vừa rớt xuống MA50 (${(m.newly_below_ma50||[]).length})</div>
+          <div class="chip-wrap">${renderChips(m.newly_below_ma50, 'down')}</div>
+        </div>
+      </div>
+      <div class="note" style="margin-top:14px;">
+        "Vừa vượt lên/rớt xuống" nghĩa là mã đó <b>mới đổi trạng thái so với phiên trước</b> — hôm qua còn ở dưới đường MA, hôm nay đã lên trên (hoặc ngược lại). Đây là tín hiệu sớm cho thấy dòng tiền đang cải thiện hoặc suy yếu ở mã đó.
+      </div>
+    </div>
+
+    <div class="panel">
+      <h2>Toàn bộ mã đang trên MA20 / MA50 — ${activeMarket}</h2>
+      <div class="signal-grid" style="grid-template-columns:1fr 1fr;">
+        <div class="signal-col">
+          <div class="signal-title">Trên MA20 (${(m.above_ma20_symbols||[]).length} mã)</div>
+          <div class="chip-wrap">${renderChips(m.above_ma20_symbols, 'neutral')}</div>
+        </div>
+        <div class="signal-col">
+          <div class="signal-title">Trên MA50 (${(m.above_ma50_symbols||[]).length} mã)</div>
+          <div class="chip-wrap">${renderChips(m.above_ma50_symbols, 'neutral')}</div>
+        </div>
+      </div>
     </div>
   `;
 }
