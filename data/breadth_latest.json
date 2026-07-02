@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-02T15:05:25.885628",
+  "generated_at": "2026-07-02T15:21:21.936449",
   "markets": {
     "HOSE": {
       "exchange": "HOSE",
@@ -21,6 +21,7 @@
       "ma_total_symbols": 0,
       "above_ma20_symbols": [],
       "above_ma50_symbols": [],
+      "above_ma200_symbols": [],
       "newly_above_ma20": [],
       "newly_below_ma20": [],
       "newly_above_ma50": [],
@@ -46,6 +47,7 @@
       "ma_total_symbols": 0,
       "above_ma20_symbols": [],
       "above_ma50_symbols": [],
+      "above_ma200_symbols": [],
       "newly_above_ma20": [],
       "newly_below_ma20": [],
       "newly_above_ma50": [],
@@ -71,6 +73,7 @@
       "ma_total_symbols": 0,
       "above_ma20_symbols": [],
       "above_ma50_symbols": [],
+      "above_ma200_symbols": [],
       "newly_above_ma20": [],
       "newly_below_ma20": [],
       "newly_above_ma50": [],
@@ -96,6 +99,7 @@
       "ma_total_symbols": 0,
       "above_ma20_symbols": [],
       "above_ma50_symbols": [],
+      "above_ma200_symbols": [],
       "newly_above_ma20": [],
       "newly_below_ma20": [],
       "newly_above_ma50": [],
