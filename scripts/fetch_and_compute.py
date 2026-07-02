@@ -1,9 +1,18 @@
 """
-Pipeline chính: chạy hàng ngày để tính độ rộng thị trường VN
-"""
+Pipeline chính: chạy hàng ngày (qua GitHub Actions) để:
+  1. Lấy/khớp danh sách mã theo sàn (HOSE/HNX/UPCOM)
+  2. Cập nhật cache OHLC cục bộ cho từng mã (chỉ tải phần dữ liệu còn thiếu)
+  3. Tính MA20/MA50/MA200 -> % mã trên từng đường MA theo sàn
+  4. Lấy Advances/Declines/Nochanges từ DailyIndex (VNINDEX/HNXIndex/UPCOMIndex)
+  5. Ghi ra data/breadth_latest.json + append vào data/breadth_history.json
 
+Chạy: python scripts/fetch_and_compute.py
+Biến môi trường cần có: SSI_CONSUMER_ID, SSI_CONSUMER_SECRET
+"""
 from __future__ import annotations
+
 import json
+import os
 import time
 from datetime import datetime, timedelta
 from pathlib import Path
@@ -21,15 +30,15 @@ HISTORY_JSON = DATA_DIR / "breadth_history.json"
 MARKETS = ["HOSE", "HNX", "UPCOM"]
 MARKET_INDEX_ID = {"HOSE": "VNINDEX", "HNX": "HNXIndex", "UPCOM": "UPCOMIndex"}
 MA_WINDOWS = [20, 50, 200]
-HISTORY_DAYS_LOOKBACK = 260
-INCREMENTAL_LOOKBACK = 7
-REQUEST_SLEEP_SEC = 0.25
+HISTORY_DAYS_LOOKBACK = 380  # ~380 ngày lịch mới đủ ~260 phiên giao dịch (trừ T7/CN/lễ), dư cho MA200
+INCREMENTAL_LOOKBACK = 7     # mỗi lần chạy chỉ cần lấy vài phiên gần nhất để bù vào cache
+REQUEST_SLEEP_SEC = 0.25     # giãn cách giữa các lần gọi để tránh rate limit
 
 DATE_FMT = "%d/%m/%Y"
 
 
 def vn_today() -> datetime:
-    return datetime.utcnow() + timedelta(hours=7)
+    return datetime.utcnow() + timedelta(hours=7)  # UTC+7
 
 
 def load_symbol_cache(symbol: str) -> pd.DataFrame:
@@ -68,40 +77,63 @@ def update_symbol_ohlc(client: SSIClient, symbol: str, today: datetime) -> pd.Da
 
 
 def ma_breadth_for_market(client: SSIClient, symbols: list[str], today: datetime) -> dict:
+    """% số mã đang đóng cửa trên MA20/50/200, tính trên toàn bộ danh sách symbols.
+    Đồng thời trả về danh sách mã cụ thể đang trên MA20/50, và danh sách mã vừa
+    mới vượt lên (bullish flip) hoặc vừa mới rớt xuống (bearish flip) so với phiên trước.
+    """
     counts = {w: 0 for w in MA_WINDOWS}
-    above_symbols = {w: [] for w in MA_WINDOWS}
     total_valid = 0
+    above_symbols = {20: [], 50: []}
+    newly_above = {20: [], 50: []}
+    newly_below = {20: [], 50: []}
 
     for sym in symbols:
         df = update_symbol_ohlc(client, sym, today)
         time.sleep(REQUEST_SLEEP_SEC)
 
-        df = df.sort_values("TradingDate")
+        df = df.sort_values("TradingDate").reset_index(drop=True)
         if df.empty or df["Close"].isna().all():
             continue
 
         last_close = df["Close"].iloc[-1]
+        has_any_window = False
         for w in MA_WINDOWS:
             if len(df) >= w:
-                ma_val = df["Close"].tail(w).mean()
-                if last_close >= ma_val:
+                ma_today = df["Close"].tail(w).mean()
+                has_any_window = True
+                is_above = last_close >= ma_today
+                if is_above:
                     counts[w] += 1
-                    above_symbols[w].append(sym)
-        total_valid += 1
+                    if w in above_symbols:
+                        above_symbols[w].append(sym)
+
+                # So sánh với trạng thái phiên trước để biết mã vừa "chuyển tín hiệu"
+                if w in (20, 50) and len(df) >= w + 1:
+                    prev_close = df["Close"].iloc[-2]
+                    prev_ma = df["Close"].iloc[-(w + 1):-1].mean()
+                    was_above = prev_close >= prev_ma
+                    if is_above and not was_above:
+                        newly_above[w].append(sym)
+                    elif not is_above and was_above:
+                        newly_below[w].append(sym)
+        if has_any_window:
+            total_valid += 1
 
     pct = {w: (round(counts[w] / total_valid * 100, 1) if total_valid else 0.0) for w in MA_WINDOWS}
-
     return {
-        "ma_total_symbols": total_valid,
-        "above_ma20_count": counts[20],
-        "above_ma50_count": counts[50],
-        "above_ma200_count": counts[200],
-        "above_ma20_symbols": above_symbols[20],
-        "above_ma50_symbols": above_symbols[50],
-        "above_ma200_symbols": above_symbols[200],
+        "total_symbols": total_valid,
+        "above_ma20": counts[20],
+        "above_ma50": counts[50],
+        "above_ma200": counts[200],
         "pct_above_ma20": pct[20],
         "pct_above_ma50": pct[50],
         "pct_above_ma200": pct[200],
+        "above_ma20_symbols": sorted(above_symbols[20]),
+        "above_ma50_symbols": sorted(above_symbols[50]),
+        "newly_above_ma20": sorted(newly_above[20]),
+        "newly_below_ma20": sorted(newly_below[20]),
+        "newly_above_ma50": sorted(newly_above[50]),
+        "newly_below_ma50": sorted(newly_below[50]),
     }
 
 
@@ -117,33 +149,31 @@ def advance_decline_for_market(client: SSIClient, market: str, today: datetime) 
     dec = int(float(latest.get("Declines", 0) or 0))
     unc = int(float(latest.get("Nochanges", latest.get("NoChanges", 0)) or 0))
     ad_ratio = round(adv / dec, 2) if dec else None
-
     return {
         "advances": adv,
         "declines": dec,
         "unchanged": unc,
         "ad_ratio": ad_ratio,
+        "trading_date": latest.get("TradingDate"),
     }
 
 
 def build_market_snapshot(client: SSIClient, market: str, today: datetime) -> dict:
-    print(f"[{market}] fetching securities list...")
-    securities = client.securities(market)
-    symbols = [s["Symbol"] for s in securities if s.get("Symbol")]
-    print(f"[{market}] {len(symbols)} symbols.")
+    print(f"[{market}] fetching common stock symbols (loại CW/ETF/Bond)...")
+    symbols = client.common_stock_symbols(market)
+    print(f"[{market}] {len(symbols)} symbols. Computing A/D...")
 
     ad = advance_decline_for_market(client, market, today)
-    print(f"[{market}] A/D done.")
+    print(f"[{market}] A/D done: {ad}")
 
-    print(f"[{market}] Computing MA breadth...")
+    print(f"[{market}] Computing MA breadth for {len(symbols)} symbols (this can take a while)...")
     ma = ma_breadth_for_market(client, symbols, today)
 
     total = ad["advances"] + ad["declines"] + ad["unchanged"]
-
     snapshot = {
         "exchange": market,
         "date": today.strftime("%d/%m/%Y"),
-        "total_symbols": total,
+        "total_symbols": total or ma["total_symbols"],
         "advances": ad["advances"],
         "declines": ad["declines"],
         "unchanged": ad["unchanged"],
@@ -154,13 +184,16 @@ def build_market_snapshot(client: SSIClient, market: str, today: datetime) -> di
         "pct_above_ma20": ma["pct_above_ma20"],
         "pct_above_ma50": ma["pct_above_ma50"],
         "pct_above_ma200": ma["pct_above_ma200"],
-        "above_ma20_count": ma["above_ma20_count"],
-        "above_ma50_count": ma["above_ma50_count"],
-        "above_ma200_count": ma["above_ma200_count"],
-        "ma_total_symbols": total,                                 # ← Sửa quan trọng: ép bằng total_symbols
+        "above_ma20_count": ma["above_ma20"],
+        "above_ma50_count": ma["above_ma50"],
+        "above_ma200_count": ma["above_ma200"],
+        "ma_total_symbols": ma["total_symbols"],
         "above_ma20_symbols": ma["above_ma20_symbols"],
         "above_ma50_symbols": ma["above_ma50_symbols"],
-        "above_ma200_symbols": ma["above_ma200_symbols"],
+        "newly_above_ma20": ma["newly_above_ma20"],
+        "newly_below_ma20": ma["newly_below_ma20"],
+        "newly_above_ma50": ma["newly_above_ma50"],
+        "newly_below_ma50": ma["newly_below_ma50"],
     }
     return snapshot
 
@@ -170,11 +203,16 @@ def combine_all_markets(snapshots: list[dict], today: datetime) -> dict:
     dec = sum(s["declines"] for s in snapshots)
     unc = sum(s["unchanged"] for s in snapshots)
     total = adv + dec + unc
-
     ma20 = sum(s["above_ma20_count"] for s in snapshots)
     ma50 = sum(s["above_ma50_count"] for s in snapshots)
     ma200 = sum(s["above_ma200_count"] for s in snapshots)
     ma_total = sum(s["ma_total_symbols"] for s in snapshots)
+
+    def merge(key: str) -> list[str]:
+        out = []
+        for s in snapshots:
+            out.extend(s.get(key, []))
+        return sorted(out)
 
     return {
         "exchange": "ALL",
@@ -194,9 +232,12 @@ def combine_all_markets(snapshots: list[dict], today: datetime) -> dict:
         "above_ma50_count": ma50,
         "above_ma200_count": ma200,
         "ma_total_symbols": ma_total,
-        "above_ma20_symbols": [],
-        "above_ma50_symbols": [],
-        "above_ma200_symbols": [],
+        "above_ma20_symbols": merge("above_ma20_symbols"),
+        "above_ma50_symbols": merge("above_ma50_symbols"),
+        "newly_above_ma20": merge("newly_above_ma20"),
+        "newly_below_ma20": merge("newly_below_ma20"),
+        "newly_above_ma50": merge("newly_above_ma50"),
+        "newly_below_ma50": merge("newly_below_ma50"),
     }
 
 
@@ -204,34 +245,20 @@ def append_history(snapshots_by_market: dict) -> None:
     HISTORY_JSON.parent.mkdir(parents=True, exist_ok=True)
     history = []
     if HISTORY_JSON.exists():
-        try:
-            history = json.loads(HISTORY_JSON.read_text(encoding="utf-8"))
-        except:
-            history = []
+        history = json.loads(HISTORY_JSON.read_text(encoding="utf-8"))
 
     today_date = snapshots_by_market["ALL"]["date"]
-
-    # Xóa bản ghi cũ nếu có (tránh trùng)
-    history = [h for h in history if h.get("date") != today_date]
-
-    # Thêm dữ liệu mới
+    history = [h for h in history if h.get("date") != today_date]  # tránh trùng nếu chạy lại cùng ngày
     history.append({"date": today_date, "markets": snapshots_by_market})
 
-    # Sắp xếp theo ngày giảm dần
-    history.sort(key=lambda x: datetime.strptime(x["date"], "%d/%m/%Y"), reverse=True)
-
-    # Giữ tối đa 120 phiên
-    history = history[:120]
-
+    # Giữ tối đa ~120 phiên gần nhất để file không phình to
+    history = history[-120:]
     HISTORY_JSON.write_text(json.dumps(history, ensure_ascii=False, indent=2), encoding="utf-8")
-    print(f"Updated history with {len(history)} records")
 
 
 def main():
     client = SSIClient()
     today = vn_today()
-
-    print(f"Starting update for date: {today.strftime('%d/%m/%Y')}")
 
     snapshots_by_market = {}
     per_market_list = []
@@ -252,10 +279,10 @@ def main():
         ),
         encoding="utf-8",
     )
-    print(f"Wrote latest data {LATEST_JSON}")
+    print(f"Wrote {LATEST_JSON}")
 
     append_history(snapshots_by_market)
-    print("Update completed successfully")
+    print(f"Updated {HISTORY_JSON}")
 
 
 if __name__ == "__main__":
