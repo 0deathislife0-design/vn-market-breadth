@@ -17,7 +17,34 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 import pandas as pd
-from tqdm import tqdm
+try:
+    from tqdm import tqdm
+    _HAS_TQDM = True
+except ImportError:
+    # Fallback khi chay tren CI/GitHub Actions khong co tqdm
+    _HAS_TQDM = False
+    class tqdm:
+        def __init__(self, iterable, **kwargs):
+            self._it = iterable
+            self._desc = kwargs.get('desc', '')
+            self._total = kwargs.get('total', None)
+            try:
+                self._total = self._total or len(iterable)
+            except Exception:
+                self._total = '?'
+            self._n = 0
+            print(f"{self._desc}: 0/{self._total}")
+        def __iter__(self):
+            for item in self._it:
+                yield item
+                self._n += 1
+                if self._n % 50 == 0:
+                    print(f"{self._desc}: {self._n}/{self._total}")
+        def set_postfix_str(self, s, **kw): pass
+        def close(self):
+            print(f"{self._desc}: {self._n}/{self._total} - Done")
+        @staticmethod
+        def write(msg): print(msg)
 
 # Suppress pandas FutureWarning va Python DeprecationWarning
 warnings.filterwarnings("ignore", category=FutureWarning)
