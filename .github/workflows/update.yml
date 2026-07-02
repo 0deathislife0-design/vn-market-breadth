@@ -2,9 +2,9 @@ name: Update market breadth data
 
 on:
   schedule:
-    # 08:45 UTC = 15:45 giờ VN (UTC+7), sau khi phiên chiều HOSE/HNX/UPCOM đóng cửa
+    # 08:45 UTC = 15:45 giờ VN, chỉ chạy từ Thứ 2 đến Thứ 6
     - cron: "45 8 * * 1-5"
-  workflow_dispatch: {}   # cho phép bấm chạy tay từ tab Actions
+  workflow_dispatch: {}   # Cho phép chạy thủ công
 
 permissions:
   contents: write
@@ -12,6 +12,7 @@ permissions:
 jobs:
   update-data:
     runs-on: ubuntu-latest
+    
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
