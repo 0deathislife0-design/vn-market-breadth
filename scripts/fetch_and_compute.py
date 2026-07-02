@@ -258,7 +258,37 @@ def append_history(snapshots_by_market: dict) -> None:
 
 def main():
     client = SSIClient()
+    
+    # ==================== BACKFILL 3 NGÀY CŨ ====================
+    dates_to_backfill = [
+        "29/06/2026",
+        "30/06/2026",
+        "01/07/2026"
+    ]
+    
+    print("=== BẮT ĐẦU BACKFILL 3 NGÀY ===")
+    for date_str in dates_to_backfill:
+        today = datetime.strptime(date_str, "%d/%m/%Y")
+        print(f"\n→ Đang backfill ngày: {date_str}")
+        
+        snapshots_by_market = {}
+        per_market_list = []
+        for market in MARKETS:
+            snap = build_market_snapshot(client, market, today)
+            snapshots_by_market[market] = snap
+            per_market_list.append(snap)
+
+        all_snap = combine_all_markets(per_market_list, today)
+        snapshots_by_market["ALL"] = all_snap
+
+        append_history(snapshots_by_market)
+        print(f"✓ Đã thêm ngày {date_str} vào history")
+
+    print("\n=== HOÀN TẤT BACKFILL ===\n")
+
+    # ==================== CHẠY NGÀY HIỆN TẠI (Bình thường) ====================
     today = vn_today()
+    print(f"Đang chạy dữ liệu ngày hiện tại: {today.strftime('%d/%m/%Y')}")
 
     snapshots_by_market = {}
     per_market_list = []
@@ -279,10 +309,10 @@ def main():
         ),
         encoding="utf-8",
     )
-    print(f"Wrote {LATEST_JSON}")
+    print(f"Wrote latest data: {LATEST_JSON}")
 
     append_history(snapshots_by_market)
-    print(f"Updated {HISTORY_JSON}")
+    print("Hoàn tất cập nhật ngày hiện tại.")
 
 
 if __name__ == "__main__":
