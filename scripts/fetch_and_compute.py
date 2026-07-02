@@ -77,66 +77,66 @@ def update_symbol_ohlc(client: SSIClient, symbol: str, today: datetime) -> pd.Da
 
 
 def ma_breadth_for_market(client: SSIClient, symbols: list[str], today: datetime) -> dict:
-    """% số mã đang đóng cửa trên MA20/50/200, tính trên toàn bộ danh sách symbols.
-    Đồng thời trả về danh sách mã cụ thể đang trên MA20/50, và danh sách mã vừa
-    mới vượt lên (bullish flip) hoặc vừa mới rớt xuống (bearish flip) so với phiên trước.
-    """
+    """Tính MA20/50/200 + danh sách mã trên MA và tín hiệu chuyển đổi"""
     counts = {w: 0 for w in MA_WINDOWS}
+    above_symbols = {w: [] for w in MA_WINDOWS}
+    newly_above = {w: [] for w in MA_WINDOWS}
+    newly_below = {w: [] for w in MA_WINDOWS}
     total_valid = 0
-    above_symbols = {20: [], 50: []}
-    newly_above = {20: [], 50: []}
-    newly_below = {20: [], 50: []}
+
+    print(f"[MA] Bắt đầu tính cho {len(symbols)} mã...")
 
     for sym in symbols:
         df = update_symbol_ohlc(client, sym, today)
         time.sleep(REQUEST_SLEEP_SEC)
 
         df = df.sort_values("TradingDate").reset_index(drop=True)
-        if df.empty or df["Close"].isna().all():
+        if df.empty or len(df) < 20 or df["Close"].isna().all():
             continue
 
         last_close = df["Close"].iloc[-1]
-        has_any_window = False
+        total_valid += 1
+
         for w in MA_WINDOWS:
             if len(df) >= w:
                 ma_today = df["Close"].tail(w).mean()
-                has_any_window = True
                 is_above = last_close >= ma_today
+
                 if is_above:
                     counts[w] += 1
-                    if w in above_symbols:
-                        above_symbols[w].append(sym)
+                    above_symbols[w].append(sym)
 
-                # So sánh với trạng thái phiên trước để biết mã vừa "chuyển tín hiệu"
+                # Tính tín hiệu chuyển đổi (chỉ cho MA20 và MA50)
                 if w in (20, 50) and len(df) >= w + 1:
                     prev_close = df["Close"].iloc[-2]
-                    prev_ma = df["Close"].iloc[-(w + 1):-1].mean()
+                    prev_ma = df["Close"].iloc[-(w+1):-1].mean()
                     was_above = prev_close >= prev_ma
+
                     if is_above and not was_above:
                         newly_above[w].append(sym)
                     elif not is_above and was_above:
                         newly_below[w].append(sym)
-        if has_any_window:
-            total_valid += 1
 
-    pct = {w: (round(counts[w] / total_valid * 100, 1) if total_valid else 0.0) for w in MA_WINDOWS}
+    pct = {w: (round(counts[w] / total_valid * 100, 1) if total_valid > 0 else 0.0) for w in MA_WINDOWS}
+
+    print(f"[MA] Hoàn tất. Total valid: {total_valid}, MA20: {counts[20]}, MA50: {counts[50]}")
+
     return {
-        "total_symbols": total_valid,
-        "above_ma20": counts[20],
-        "above_ma50": counts[50],
-        "above_ma200": counts[200],
+        "ma_total_symbols": total_valid,
+        "above_ma20_count": counts[20],
+        "above_ma50_count": counts[50],
+        "above_ma200_count": counts[200],
         "pct_above_ma20": pct[20],
         "pct_above_ma50": pct[50],
         "pct_above_ma200": pct[200],
         "above_ma20_symbols": sorted(above_symbols[20]),
         "above_ma50_symbols": sorted(above_symbols[50]),
+        "above_ma200_symbols": sorted(above_symbols[200]),
         "newly_above_ma20": sorted(newly_above[20]),
         "newly_below_ma20": sorted(newly_below[20]),
         "newly_above_ma50": sorted(newly_above[50]),
         "newly_below_ma50": sorted(newly_below[50]),
     }
-
-
 def advance_decline_for_market(client: SSIClient, market: str, today: datetime) -> dict:
     index_id = MARKET_INDEX_ID[market]
     from_date = today - timedelta(days=5)
