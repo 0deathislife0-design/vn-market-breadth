@@ -89,6 +89,18 @@
   footer{font-family:var(--font-mono); font-size:11px; color:var(--faint); text-align:center; margin-top:24px;}
   .loading, .err{font-family:var(--font-mono); font-size:13px; color:var(--muted); padding:30px; text-align:center;}
 
+  .session-badge{display:inline-block; font-family:var(--font-mono); font-size:11px; padding:3px 10px; border-radius:999px; font-weight:600; margin-left:8px;}
+  .session-badge.midday{background:rgba(245,165,36,0.14); color:#B9760F;}
+  .session-badge.close{background:rgba(79,70,229,0.12); color:var(--accent-1);}
+  .cmp-grid{display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px;}
+  .cmp-card{border:1px solid var(--border); border-radius:14px; padding:14px; text-align:center; background:var(--panel-tint);}
+  .cmp-card .lab{font-size:11px; color:var(--muted); font-weight:600;}
+  .cmp-card .row{display:flex; justify-content:space-between; padding:6px 0; font-family:var(--font-mono); font-size:13px; border-bottom:1px solid var(--border);}
+  .cmp-card .row:last-child{border-bottom:none;}
+  .cmp-card .val{font-weight:700;}
+  .delta{font-size:11px; font-weight:700; margin-left:6px;}
+  .delta.up{color:var(--up);} .delta.down{color:var(--down);} .delta.flat{color:var(--neutral);}
+
   .signal-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:14px;}
   @media (max-width:800px){ .signal-grid{grid-template-columns:1fr 1fr;} }
   .signal-title{font-size:12px; font-weight:700; margin-bottom:9px;}
@@ -119,7 +131,7 @@
 <script>
 let MARKETS = ['ALL'];
 let activeMarket = 'HOSE';
-let LATEST = null, HISTORY = null;
+let LATEST = null, HISTORY = null, MIDDAY = null;
 
 async function loadData(){
   try {
@@ -131,8 +143,18 @@ async function loadData(){
     const historyRes = await fetch(`./data/breadth_history.json?t=${timestamp}`);
     HISTORY = historyRes.ok ? await historyRes.json() : [];
 
-    document.getElementById('metaLine').textContent =
-      `Cập nhật: ${new Date(LATEST.generated_at).toLocaleString('vi-VN')} · Ngày dữ liệu: ${LATEST.markets.ALL.date}`;
+    const middayRes = await fetch(`./data/breadth_midday.json?t=${timestamp}`);
+    MIDDAY = middayRes.ok ? await middayRes.json() : null;
+    // Chỉ dùng midday nếu cùng ngày với latest
+    if (MIDDAY && MIDDAY.markets.ALL.date !== LATEST.markets.ALL.date) {
+      MIDDAY = null;
+    }
+
+    const sessionLabel = LATEST.session === 'midday'
+      ? '<span class="session-badge midday">Phiên sáng 11:30</span>'
+      : '<span class="session-badge close">Đóng cửa 15:10</span>';
+    document.getElementById('metaLine').innerHTML =
+      `Cập nhật: ${new Date(LATEST.generated_at).toLocaleString('vi-VN')} · Ngày dữ liệu: ${LATEST.markets.ALL.date} ${sessionLabel}`;
 
     // Xác định danh sách market từ dữ liệu JSON (loại trừ ALL)
     MARKETS = ['ALL', ...Object.keys(LATEST.markets).filter(k => k !== 'ALL')];
@@ -161,11 +183,58 @@ function renderTabs(){
 }
 
 function fmt1(n){ return (n === null || n === undefined) ? '—' : Number(n).toFixed(1); }
+function deltaStr(cur, prev, rev){
+  if (cur === null || cur === undefined || prev === null || prev === undefined) return '';
+  const d = cur - prev;
+  if (Math.abs(d) < 0.01) return '<span class="delta flat">0</span>';
+  const cls = rev ? (d < 0 ? 'up' : 'down') : (d > 0 ? 'up' : 'down');
+  const sign = d > 0 ? '+' : '';
+  return `<span class="delta ${cls}">${sign}${Number(d).toFixed(typeof d === 'number' && Number.isInteger(d) ? 0 : 2)}</span>`;
+}
 
 function renderChips(list, kind){
   if (!list || list.length === 0) return '<span class="empty-note">Không có mã nào</span>';
   const cls = kind === 'up' ? 'chip up' : kind === 'down' ? 'chip down' : 'chip';
   return list.map(sym => `<span class="${cls}">${sym}</span>`).join('');
+}
+
+function cmpHTML(){
+  if (!MIDDAY || LATEST.session !== 'close') return '';
+  const mm = MIDDAY.markets[activeMarket];
+  const m = LATEST.markets[activeMarket];
+  if (!mm || !m || mm.date !== m.date) return '';
+  const d = (v) => v === null || v === undefined ? 0 : v;
+  const advDelta = d(m.advances) - d(mm.advances);
+  const decDelta = d(m.declines) - d(mm.declines);
+  const adDelta = d(m.ad_ratio) - d(mm.ad_ratio);
+  const ma20Delta = d(m.pct_above_ma20) - d(mm.pct_above_ma20);
+  const advCls = advDelta > 0 ? 'up' : advDelta < 0 ? 'down' : 'flat';
+  const decCls = decDelta < 0 ? 'up' : decDelta > 0 ? 'down' : 'flat';
+  const adCls = adDelta > 0 ? 'up' : adDelta < 0 ? 'down' : 'flat';
+  const maCls = ma20Delta > 0 ? 'up' : ma20Delta < 0 ? 'down' : 'flat';
+  return `<div class="panel">
+    <h2>So sánh với phiên sáng — ${activeMarket}</h2>
+    <div class="cmp-grid">
+      <div class="cmp-card">
+        <div class="lab">Tăng / Giảm</div>
+        <div class="row"><span>11:30</span><span class="val">${mm.advances} / ${mm.declines}</span></div>
+        <div class="row"><span>15:10</span><span class="val">${m.advances} / ${m.declines}</span></div>
+        <div class="row"><span>Δ</span><span class="val"><span class="delta ${advCls}">${advDelta > 0 ? '+' : ''}${advDelta}</span> / <span class="delta ${decCls}">${decDelta > 0 ? '+' : ''}${decDelta}</span></span></div>
+      </div>
+      <div class="cmp-card">
+        <div class="lab">A/D Ratio</div>
+        <div class="row"><span>11:30</span><span class="val">${fmt1(mm.ad_ratio)}</span></div>
+        <div class="row"><span>15:10</span><span class="val">${fmt1(m.ad_ratio)}</span></div>
+        <div class="row"><span>Δ</span><span class="val"><span class="delta ${adCls}">${adDelta > 0 ? '+' : ''}${fmt1(adDelta)}</span></span></div>
+      </div>
+      <div class="cmp-card">
+        <div class="lab">% trên MA20</div>
+        <div class="row"><span>11:30</span><span class="val">${fmt1(mm.pct_above_ma20)}%</span></div>
+        <div class="row"><span>15:10</span><span class="val">${fmt1(m.pct_above_ma20)}%</span></div>
+        <div class="row"><span>Δ</span><span class="val"><span class="delta ${maCls}">${ma20Delta > 0 ? '+' : ''}${fmt1(ma20Delta)}%</span></span></div>
+      </div>
+    </div>
+  </div>`;
 }
 
 function render(){
@@ -202,6 +271,8 @@ function render(){
         ${m.ad_ratio !== null && m.ad_ratio > 1 ? 'Số mã tăng đang vượt số mã giảm.' : m.ad_ratio !== null ? 'Số mã giảm đang chiếm ưu thế.' : ''}
       </div>
     </div>
+
+    ${cmpHTML()}
 
     <div class="panel">
       <h2>% cổ phiếu ${activeMarket} trên đường trung bình — so sánh các mốc</h2>

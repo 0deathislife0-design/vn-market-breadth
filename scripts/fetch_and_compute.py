@@ -57,6 +57,7 @@ DATA_DIR = ROOT / "data"
 CACHE_DIR = DATA_DIR / "ohlc_cache"
 DOCS_DATA_DIR = ROOT / "docs" / "data"
 LATEST_JSON = DATA_DIR / "breadth_latest.json"
+MIDDAY_JSON = DATA_DIR / "breadth_midday.json"
 HISTORY_JSON = DATA_DIR / "breadth_history.json"
 
 MARKETS = ["HOSE", "HNX"]
@@ -406,7 +407,7 @@ def _write_json(path: Path, data) -> None:
 def _sync_docs_data():
     """Đồng bộ dữ liệu sang docs/data/ cho GitHub Pages."""
     DOCS_DATA_DIR.mkdir(parents=True, exist_ok=True)
-    for f in ("breadth_latest.json", "breadth_history.json"):
+    for f in ("breadth_latest.json", "breadth_history.json", "breadth_midday.json"):
         src = DATA_DIR / f
         dst = DOCS_DATA_DIR / f
         if src.exists():
@@ -448,13 +449,21 @@ def main():
     all_snap = combine_all(all_list, today)
     markets_dict["ALL"] = all_snap
 
+    session = "midday" if today.hour < 14 else "close"
+
     output = {
         "generated_at": today.isoformat(),
+        "session": session,
         "markets": markets_dict,
     }
     _write_json(LATEST_JSON, output)
+
+    if session == "midday":
+        # Giữ nguyên file midday để closing run so sánh
+        _write_json(MIDDAY_JSON, output)
+
     _sync_docs_data()
-    print(f"\nDa ghi: {LATEST_JSON}")
+    print(f"\nDa ghi: {LATEST_JSON} ({session})")
 
     append_history(markets_dict)
     _sync_docs_data()
