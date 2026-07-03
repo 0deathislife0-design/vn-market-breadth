@@ -117,7 +117,7 @@
 </div>
 
 <script>
-const MARKETS = ['ALL','HOSE','HNX','UPCOM'];
+let MARKETS = ['ALL'];
 let activeMarket = 'HOSE';
 let LATEST = null, HISTORY = null;
 
@@ -134,6 +134,8 @@ async function loadData(){
     document.getElementById('metaLine').textContent =
       `Cập nhật: ${new Date(LATEST.generated_at).toLocaleString('vi-VN')} · Ngày dữ liệu: ${LATEST.markets.ALL.date}`;
 
+    // Xác định danh sách market từ dữ liệu JSON (loại trừ ALL)
+    MARKETS = ['ALL', ...Object.keys(LATEST.markets).filter(k => k !== 'ALL')];
     renderTabs();
     render();
   } catch (e) {
