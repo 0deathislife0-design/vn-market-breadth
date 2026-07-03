@@ -491,8 +491,16 @@ def main():
 
     # Generate market commentary
     try:
-        generate_commentary(output)
-        print("Da sinh nhan xet thi truong.")
+        commentary_text = generate_commentary(output)
+        commentary_output = {
+            "generated_at": datetime.now().isoformat(),
+            "session": session,
+            "date": output["markets"]["ALL"]["date"],
+            "content": commentary_text,
+        }
+        _write_json(DATA_DIR / "market_commentary.json", commentary_output)
+        _write_json(DOCS_DATA_DIR / "market_commentary.json", commentary_output)
+        print(f"Da ghi nhan xet thi truong.")
     except Exception as e:
         print(f"Loi sinh nhan xet: {e}")
 
