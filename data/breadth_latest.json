@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-03T16:39:32.831641",
+  "generated_at": "2026-07-03T19:20:50.131305",
   "session": "close",
   "markets": {
     "HOSE": {
@@ -13,11 +13,11 @@
       "declines_pct": 55.3,
       "unchanged_pct": 15.8,
       "ad_ratio": 0.52,
-      "pct_above_ma20": 47.6,
-      "pct_above_ma50": 39.5,
+      "pct_above_ma20": 46.0,
+      "pct_above_ma50": 38.7,
       "pct_above_ma200": 31.5,
-      "above_ma20_count": 59,
-      "above_ma50_count": 49,
+      "above_ma20_count": 57,
+      "above_ma50_count": 48,
       "above_ma200_count": 39,
       "ma_total_symbols": 124,
       "above_ma20_symbols": [
@@ -26,7 +26,6 @@
         "AGR",
         "APG",
         "BAF",
-        "BCG",
         "BID",
         "BSI",
         "CTG",
@@ -62,7 +61,6 @@
         "SSI",
         "STB",
         "TCB",
-        "TCD",
         "TPB",
         "TTA",
         "VCB",
@@ -87,7 +85,6 @@
         "AGR",
         "APG",
         "BAF",
-        "BCG",
         "BID",
         "BSI",
         "CTS",
@@ -201,7 +198,6 @@
         "NLG",
         "PHR",
         "PVP",
-        "TCD",
         "VGC"
       ],
       "volume_breakout_symbols": [
@@ -303,11 +299,11 @@
       "declines_pct": 48.9,
       "unchanged_pct": 22.1,
       "ad_ratio": 0.59,
-      "pct_above_ma20": 49.0,
-      "pct_above_ma50": 41.7,
+      "pct_above_ma20": 47.7,
+      "pct_above_ma50": 41.1,
       "pct_above_ma200": 33.1,
-      "above_ma20_count": 74,
-      "above_ma50_count": 63,
+      "above_ma20_count": 72,
+      "above_ma50_count": 62,
       "above_ma200_count": 50,
       "ma_total_symbols": 151,
       "above_ma20_symbols": [
@@ -319,7 +315,6 @@
         "API",
         "APS",
         "BAF",
-        "BCG",
         "BID",
         "BSI",
         "BVS",
@@ -364,7 +359,6 @@
         "SSI",
         "STB",
         "TCB",
-        "TCD",
         "TNG",
         "TPB",
         "TTA",
@@ -394,7 +388,6 @@
         "API",
         "APS",
         "BAF",
-        "BCG",
         "BID",
         "BSI",
         "BVS",
@@ -536,7 +529,6 @@
         "NLG",
         "PHR",
         "PVP",
-        "TCD",
         "VGC"
       ],
       "volume_breakout_symbols": [
