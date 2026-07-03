@@ -31,9 +31,9 @@ jobs:
         uses: actions/cache@v4
         with:
           path: data/ohlc_cache
-          key: ohlc-cache-${{ github.run_id }}
+          key: ohlc-cache-v1-${{ hashFiles('scripts/**/*.py', '.github/workflows/update.yml') }}
           restore-keys: |
-            ohlc-cache-
+            ohlc-cache-v1-
 
       - name: Run fetch + compute
         env:

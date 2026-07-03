@@ -55,19 +55,19 @@ from ssi_client import SSIClient
 ROOT = Path(__file__).resolve().parent.parent
 DATA_DIR = ROOT / "data"
 CACHE_DIR = DATA_DIR / "ohlc_cache"
+DOCS_DATA_DIR = ROOT / "docs" / "data"
 LATEST_JSON = DATA_DIR / "breadth_latest.json"
 HISTORY_JSON = DATA_DIR / "breadth_history.json"
 
-MARKETS = ["HOSE", "HNX", "UPCOM"]
+MARKETS = ["HOSE", "HNX"]
 MARKET_INDEX_ID = {
     "HOSE": "VNINDEX",
     "HNX": "HNXIndex",
-    "UPCOM": "UPCOMIndex",
 }
 MA_WINDOWS = [20, 50, 200]
 HISTORY_DAYS_LOOKBACK = 380   # du ~260 phien de tinh MA200
-INCREMENTAL_LOOKBACK = 7      # chi lay 7 ngay gan nhat neu da co cache
-REQUEST_SLEEP_SEC = 0.3       # tranh rate limit
+INCREMENTAL_LOOKBACK = 21     # lay 21 ngay gan nhat neu da co cache (tránh thiếu sau kỳ nghỉ dài)
+REQUEST_SLEEP_SEC = 0.5       # chờ giữa các lần gọi API để tránh rate limit
 DATE_FMT = "%d/%m/%Y"
 MIN_AVG_VOLUME = 300_000      # loc thanh khoan: TB 20 phien >= 300,000 cp
 
@@ -101,11 +101,30 @@ def save_cache(symbol: str, df: pd.DataFrame) -> None:
     df.to_csv(CACHE_DIR / f"{symbol}.csv", index=False)
 
 
+def cache_max_date(symbol: str) -> datetime | None:
+    """Trả về ngày giao dịch gần nhất trong cache của symbol, None nếu chưa có."""
+    path = CACHE_DIR / f"{symbol}.csv"
+    if not path.exists():
+        return None
+    try:
+        dates = pd.read_csv(path, usecols=["TradingDate"])["TradingDate"]
+        max_dt = pd.to_datetime(dates, dayfirst=True, errors="coerce").max()
+        if pd.isna(max_dt):
+            return None
+        return max_dt
+    except Exception:
+        return None
+
+
 def update_ohlc(client: SSIClient, symbol: str, today: datetime) -> pd.DataFrame:
     cached = load_cache(symbol)
     if cached.empty:
         from_date = today - timedelta(days=HISTORY_DAYS_LOOKBACK)
     else:
+        # Nếu cache đã có dữ liệu đến hôm nay thì không cần gọi API
+        latest_cached = cached["TradingDate"].max()
+        if latest_cached is not None and latest_cached.date() >= today.date():
+            return cached
         from_date = today - timedelta(days=INCREMENTAL_LOOKBACK)
 
     rows = client.daily_ohlc(
@@ -161,7 +180,6 @@ def update_ohlc(client: SSIClient, symbol: str, today: datetime) -> pd.DataFrame
 
 
 # --- Tinh MA ------------------------------------------------------------------
-
 def compute_ma_breadth(client: SSIClient, symbols: list[str], today: datetime, market: str) -> dict:
     counts = {w: 0 for w in MA_WINDOWS}
     above_syms = {w: [] for w in MA_WINDOWS}
@@ -194,7 +212,6 @@ def compute_ma_breadth(client: SSIClient, symbols: list[str], today: datetime, m
             skipped_data += 1
             continue
 
-        # Loc thanh khoan: TB 20 phien gan nhat
         if "Volume" in df.columns:
             recent_vol = df["Volume"].iloc[-20:]
             avg_vol = recent_vol.dropna().mean()
@@ -379,8 +396,22 @@ def combine_all(snapshots: list[dict], today: datetime) -> dict:
 
 # --- History ------------------------------------------------------------------
 
+def _write_json(path: Path, data) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
+
+
+def _sync_docs_data():
+    """Đồng bộ dữ liệu sang docs/data/ cho GitHub Pages."""
+    DOCS_DATA_DIR.mkdir(parents=True, exist_ok=True)
+    for f in ("breadth_latest.json", "breadth_history.json"):
+        src = DATA_DIR / f
+        dst = DOCS_DATA_DIR / f
+        if src.exists():
+            dst.write_bytes(src.read_bytes())
+
+
 def append_history(markets_dict: dict) -> None:
-    HISTORY_JSON.parent.mkdir(parents=True, exist_ok=True)
     history = []
     if HISTORY_JSON.exists():
         try:
@@ -393,10 +424,7 @@ def append_history(markets_dict: dict) -> None:
     history.append({"date": today_date, "markets": markets_dict})
     history = history[-120:]  # giu 120 phien gan nhat
 
-    HISTORY_JSON.write_text(
-        json.dumps(history, ensure_ascii=False, indent=2),
-        encoding="utf-8",
-    )
+    _write_json(HISTORY_JSON, history)
 
 
 # --- Main ---------------------------------------------------------------------
@@ -418,18 +446,16 @@ def main():
     all_snap = combine_all(all_list, today)
     markets_dict["ALL"] = all_snap
 
-    DATA_DIR.mkdir(parents=True, exist_ok=True)
     output = {
         "generated_at": today.isoformat(),
         "markets": markets_dict,
     }
-    LATEST_JSON.write_text(
-        json.dumps(output, ensure_ascii=False, indent=2),
-        encoding="utf-8",
-    )
+    _write_json(LATEST_JSON, output)
+    _sync_docs_data()
     print(f"\nDa ghi: {LATEST_JSON}")
 
     append_history(markets_dict)
+    _sync_docs_data()
     print(f"Da cap nhat history.")
     print("\nHoan tat.")
 
