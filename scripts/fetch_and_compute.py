@@ -455,6 +455,8 @@ def main():
     print(f"Ngay xu ly: {today.strftime(DATE_FMT)}")
     print(f"Nguong thanh khoan: TB 20 phien >= {MIN_AVG_VOLUME:,} cp\n")
 
+    session = "midday" if today.hour < 14 else "close"
+
     markets_dict = {}
     all_list = []
 
@@ -465,8 +467,6 @@ def main():
 
     all_snap = combine_all(all_list, today)
     markets_dict["ALL"] = all_snap
-
-    session = "midday" if today.hour < 14 else "close"
 
     output = {
         "generated_at": today.isoformat(),
