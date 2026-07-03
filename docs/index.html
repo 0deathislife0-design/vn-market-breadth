@@ -347,6 +347,19 @@ function render(){
         </div>
       </div>
     </div>
+
+    <div class="panel">
+      <h2>Breakout volume — ${activeMarket} (${m.date})</h2>
+      <div class="note" style="margin-bottom:12px;">
+        Mã ≥ MA20 và khối lượng vượt ngưỡng: ${LATEST.session === 'midday' ? '50%' : '130%'} trung bình 20 phiên.
+        Hiện có <b>${m.volume_breakout_count || 0}</b> mã.
+      </div>
+      <div class="signal-grid" style="grid-template-columns:1fr;">
+        <div class="signal-col">
+          <div class="chip-wrap">${renderChips(m.volume_breakout_symbols, 'up')}</div>
+        </div>
+      </div>
+    </div>
   `;
 }
 

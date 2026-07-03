@@ -183,14 +183,16 @@ def update_ohlc(client: SSIClient, symbol: str, today: datetime) -> pd.DataFrame
 
 
 # --- Tinh MA ------------------------------------------------------------------
-def compute_ma_breadth(client: SSIClient, symbols: list[str], today: datetime, market: str) -> dict:
+def compute_ma_breadth(client: SSIClient, symbols: list[str], today: datetime, market: str, session: str = "close") -> dict:
     counts = {w: 0 for w in MA_WINDOWS}
     above_syms = {w: [] for w in MA_WINDOWS}
     newly_above = {20: [], 50: []}
     newly_below = {20: [], 50: []}
+    volume_breakout = []
     total_valid = 0
     skipped_volume = 0
     skipped_data = 0
+    volume_threshold = 0.5 if session == "midday" else 1.3
 
     bar = tqdm(
         symbols,
@@ -215,9 +217,12 @@ def compute_ma_breadth(client: SSIClient, symbols: list[str], today: datetime, m
             skipped_data += 1
             continue
 
+        avg_vol = None
+        volume_today = None
         if "Volume" in df.columns:
             recent_vol = df["Volume"].iloc[-20:]
             avg_vol = recent_vol.dropna().mean()
+            volume_today = df["Volume"].iloc[-1]
             if pd.isna(avg_vol) or avg_vol < MIN_AVG_VOLUME:
                 skipped_volume += 1
                 continue
@@ -234,6 +239,9 @@ def compute_ma_breadth(client: SSIClient, symbols: list[str], today: datetime, m
                 if is_above:
                     counts[w] += 1
                     above_syms[w].append(sym)
+                    # Volume breakout: >= MA20 + volume > ngưỡng * TB 20 phiên
+                    if w == 20 and avg_vol is not None and volume_today is not None and avg_vol > 0 and volume_today > avg_vol * volume_threshold:
+                        volume_breakout.append(sym)
 
                 if w in (20, 50) and len(close) >= w + 1:
                     prev_close = close[-2]
@@ -253,6 +261,7 @@ def compute_ma_breadth(client: SSIClient, symbols: list[str], today: datetime, m
 
     tqdm.write(f"[{market}] Xong: valid={total_valid} | bo_kl={skipped_volume} | it_data={skipped_data}")
     tqdm.write(f"[{market}] MA20={counts[20]} ({pct[20]}%) | MA50={counts[50]} ({pct[50]}%) | MA200={counts[200]} ({pct[200]}%)")
+    tqdm.write(f"[{market}] Volume breakout={len(volume_breakout)} (nguong={volume_threshold}x TB20)")
 
     return {
         "ma_total_symbols":   total_valid,
@@ -269,6 +278,8 @@ def compute_ma_breadth(client: SSIClient, symbols: list[str], today: datetime, m
         "newly_below_ma20":   sorted(newly_below[20]),
         "newly_above_ma50":   sorted(newly_above[50]),
         "newly_below_ma50":   sorted(newly_below[50]),
+        "volume_breakout_symbols": sorted(volume_breakout),
+        "volume_breakout_count": len(volume_breakout),
     }
 
 
@@ -308,7 +319,7 @@ def get_advance_decline(client: SSIClient, market: str, today: datetime) -> dict
 
 # --- Snapshot moi san ---------------------------------------------------------
 
-def build_snapshot(client: SSIClient, market: str, today: datetime) -> dict:
+def build_snapshot(client: SSIClient, market: str, today: datetime, session: str = "close") -> dict:
     print(f"\n{'='*50}")
     print(f"[{market}] Bat dau xu ly...")
 
@@ -319,7 +330,7 @@ def build_snapshot(client: SSIClient, market: str, today: datetime) -> dict:
     ad = get_advance_decline(client, market, today)
     print(f"[{market}] A/D: adv={ad['advances']} dec={ad['declines']} unc={ad['unchanged']}")
 
-    ma = compute_ma_breadth(client, symbols, today, market)
+    ma = compute_ma_breadth(client, symbols, today, market, session)
 
     total_ad = ad["advances"] + ad["declines"] + ad["unchanged"]
 
@@ -348,6 +359,8 @@ def build_snapshot(client: SSIClient, market: str, today: datetime) -> dict:
         "newly_below_ma20":   ma["newly_below_ma20"],
         "newly_above_ma50":   ma["newly_above_ma50"],
         "newly_below_ma50":   ma["newly_below_ma50"],
+        "volume_breakout_symbols": ma["volume_breakout_symbols"],
+        "volume_breakout_count": ma["volume_breakout_count"],
     }
 
 
@@ -368,6 +381,8 @@ def combine_all(snapshots: list[dict], today: datetime) -> dict:
         for s in snapshots:
             out.extend(s.get(key, []))
         return sorted(out)
+
+    volume_breakout = merge("volume_breakout_symbols")
 
     return {
         "exchange":        "ALL",
@@ -394,6 +409,8 @@ def combine_all(snapshots: list[dict], today: datetime) -> dict:
         "newly_below_ma20":   merge("newly_below_ma20"),
         "newly_above_ma50":   merge("newly_above_ma50"),
         "newly_below_ma50":   merge("newly_below_ma50"),
+        "volume_breakout_symbols": volume_breakout,
+        "volume_breakout_count": len(volume_breakout),
     }
 
 
@@ -442,7 +459,7 @@ def main():
     all_list = []
 
     for market in MARKETS:
-        snap = build_snapshot(client, market, today)
+        snap = build_snapshot(client, market, today, session)
         markets_dict[market] = snap
         all_list.append(snap)
 
