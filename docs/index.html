@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
@@ -141,7 +141,7 @@
 <script>
 let MARKETS = ['ALL'];
 let activeMarket = 'HOSE';
-let LATEST = null, HISTORY = null, MIDDAY = null, COMMENTARY = null, SIGNALS = null;
+let LATEST = null, HISTORY = null, MIDDAY = null, COMMENTARY = null, SIGNALS = null, ENSEMBLE = null;
 
 async function loadData(){
   try {
@@ -165,6 +165,9 @@ async function loadData(){
 
     const signalsRes = await fetch(`./data/strategy_signals.json?t=${timestamp}`);
     SIGNALS = signalsRes.ok ? await signalsRes.json() : null;
+
+    const ensembleRes = await fetch(`./data/ensemble_signals.json?t=${timestamp}`);
+    ENSEMBLE = ensembleRes.ok ? await ensembleRes.json() : null;
 
     const sessionLabel = LATEST.session === 'midday'
       ? '<span class="session-badge midday">Phiên sáng 11:30</span>'
@@ -191,10 +194,11 @@ function renderTabs(){
   tabsEl.innerHTML = '';
   const tabs = [...MARKETS];
   if (SIGNALS) tabs.push('TIN_HIEU');
+  if (ENSEMBLE) tabs.push('DONG_THUAT');
   if (COMMENTARY) tabs.push('NHAN_DINH');
   tabs.forEach(m => {
     const btn = document.createElement('button');
-    const labels = { NHAN_DINH: 'Nhận định', TIN_HIEU: 'Pre-Breakout' };
+    const labels = { NHAN_DINH: 'Nhận định', TIN_HIEU: 'Pre-Breakout', DONG_THUAT: 'Ensemble' };
     btn.textContent = labels[m] || m;
     if (m === activeMarket) btn.classList.add('active');
     btn.onclick = () => { activeMarket = m; renderTabs(); render(); };
@@ -277,6 +281,10 @@ function render(){
   }
   if (activeMarket === 'TIN_HIEU') {
     renderSignals();
+    return;
+  }
+  if (activeMarket === 'DONG_THUAT') {
+    renderEnsemble();
     return;
   }
   const m = LATEST.markets[activeMarket];
@@ -472,6 +480,60 @@ function renderBreadthChart(){
 }
 let _crt;
 window.addEventListener('resize',()=>{clearTimeout(_crt);_crt=setTimeout(renderBreadthChart,150);});
+
+
+function renderEnsemble(){
+  const el = document.getElementById('content');
+  if (!ENSEMBLE || !ENSEMBLE.all_signals) {
+    el.innerHTML = '<div class="panel"><h2>Ensemble Strategy</h2><div class="loading">Chua co du lieu.</div></div>';
+    return;
+  }
+  const s = ENSEMBLE;
+  const all = s.all_signals || [];
+  const tbody = all.map(row => {
+    const sigs = [];
+    if (row.ma_crossover) sigs.push('MA');
+    if (row.pullback) sigs.push('PB');
+    if (row.breakout) sigs.push('BO');
+    if (row.momentum) sigs.push('ROC');
+    const cls = row.total_score >= 3 ? 'good' : 'mixed';
+    const label = row.total_score >= 3 ? 'Strong' : 'Weak';
+    return '<tr><td class="mono" style="font-weight:700;">' + row.symbol + '</td>'
+      + '<td class="mono">' + row.total_score + '/4</td>'
+      + '<td class="mono">' + (sigs.join('+') || '\u2014') + '</td>'
+      + '<td class="mono">' + (row.rsi14 != null ? row.rsi14.toFixed(1) : '\u2014') + '</td>'
+      + '<td class="mono">' + (row.vol_ratio != null ? row.vol_ratio.toFixed(1) + 'x' : '\u2014') + '</td>'
+      + '<td class="mono">' + (row.roc10 != null ? row.roc10.toFixed(1) + '%' : '\u2014') + '</td>'
+      + '<td class="mono">' + (row.last_price || 0).toLocaleString('vi-VN') + '</td>'
+      + '<td><span class="tag ' + cls + '">' + label + '</span></td></tr>';
+  }).join('');
+
+  const maC = all.filter(r => r.ma_crossover).length;
+  const pbC = all.filter(r => r.pullback).length;
+  const boC = all.filter(r => r.breakout).length;
+  const rocC = all.filter(r => r.momentum).length;
+
+  el.innerHTML = '<div class="panel">'
+    + '<h2>Ensemble Strategy \u2014 ' + s.date + '</h2>'
+    + '<div style="display:flex;gap:14px;margin-bottom:16px;flex-wrap:wrap;">'
+    + '<div class="stat good" style="flex:1;min-width:120px;"><div class="lab">Strong (3-4/4)</div><div class="num" style="font-size:22px;">' + s.strong_buy + '</div></div>'
+    + '<div class="stat flat" style="flex:1;min-width:120px;"><div class="lab">Weak (2/4)</div><div class="num" style="font-size:22px;">' + s.weak_buy + '</div></div>'
+    + '<div style="flex:1;min-width:120px;border:1px solid var(--border);border-radius:14px;padding:16px;text-align:center;background:var(--panel-tint);">'
+    + '<div class="lab">Tong</div><div class="num" style="font-size:22px;color:var(--accent-1);">' + s.total_signals + '</div>'
+    + '<div class="sub2" style="font-size:11px;color:var(--faint);margin-top:3px;">/' + s.total_symbols_analyzed + ' ma</div></div></div></div>'
+
+    + '<div class="panel"><h2>Danh sach \u2014 ' + all.length + ' ma</h2>'
+    + '<div class="note" style="margin-bottom:14px;">'
+    + '<b>4 tin hieu</b> moi cai +1: MA Crossover (MA10>MA50+RSI>50), Pullback (uptrend+gan MA50+RSI>45), '
+    + 'Breakout (20d high+vol>1.5x avg), Momentum (ROC10>ROC20+vol tang).'
+    + ' <b>Strong Buy >= 3/4, Weak Buy = 2/4.</b></div>'
+    + '<table><thead><tr><th>Ma</th><th>Score</th><th>Signals</th><th>RSI</th><th>Vol</th><th>ROC10</th><th>Gia</th><th>Muc</th></tr></thead>'
+    + '<tbody>' + tbody + '</tbody></table></div>'
+
+    + '<div class="panel"><h2>Phan bo theo loai</h2>'
+    + '<div class="note"><b>MA:</b> ' + maC + ' &middot; <b>PB:</b> ' + pbC + ' &middot; <b>BO:</b> ' + boC + ' &middot; <b>ROC:</b> ' + rocC + '</div></div>';
+}
+
 
 function renderSignals(){
   const el = document.getElementById('content');
