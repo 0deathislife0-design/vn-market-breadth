@@ -600,9 +600,9 @@ function renderSignals(){
       <td class="mono" style="font-weight:700;">${row.symbol}</td>
       <td class="mono">${row.composite_score.toFixed(1)}</td>
       <td class="mono">${row.base_score.toFixed(1)}</td>
-      <td class="mono">${(row.mf_score || 0).toFixed(1)}</td>
+      <td class="mono">${(row.obv_score || 0).toFixed(1)}</td>
       <td class="mono">${(row.vol_gradient || 0) > 0 ? '+' : ''}${(row.vol_gradient || 0).toFixed(2)}</td>
-      <td class="mono">${row.vol_ratio !== null ? row.vol_ratio.toFixed(2) : '—'}</td>
+      <td class="mono">${(row.vol_ratio ?? null) != null ? row.vol_ratio.toFixed(2) : '—'}</td>
       <td class="mono">${(row.last_price || 0).toLocaleString('vi-VN')}</td>
       <td><span class="tag ${cls}">${label}</span></td>
     </tr>`;
