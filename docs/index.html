@@ -141,7 +141,7 @@
 <script>
 let MARKETS = ['ALL'];
 let activeMarket = 'HOSE';
-let LATEST = null, HISTORY = null, MIDDAY = null, COMMENTARY = null;
+let LATEST = null, HISTORY = null, MIDDAY = null, COMMENTARY = null, SIGNALS = null;
 
 async function loadData(){
   try {
@@ -162,6 +162,9 @@ async function loadData(){
 
     const commentaryRes = await fetch(`./data/market_commentary.json?t=${timestamp}`);
     COMMENTARY = commentaryRes.ok ? await commentaryRes.json() : null;
+
+    const signalsRes = await fetch(`./data/strategy_signals.json?t=${timestamp}`);
+    SIGNALS = signalsRes.ok ? await signalsRes.json() : null;
 
     const sessionLabel = LATEST.session === 'midday'
       ? '<span class="session-badge midday">Phiên sáng 11:30</span>'
@@ -187,10 +190,12 @@ function renderTabs(){
   const tabsEl = document.getElementById('tabs');
   tabsEl.innerHTML = '';
   const tabs = [...MARKETS];
+  if (SIGNALS) tabs.push('TIN_HIEU');
   if (COMMENTARY) tabs.push('NHAN_DINH');
   tabs.forEach(m => {
     const btn = document.createElement('button');
-    btn.textContent = m === 'NHAN_DINH' ? 'Nhận định' : m;
+    const labels = { NHAN_DINH: 'Nhận định', TIN_HIEU: 'Pre-Breakout' };
+    btn.textContent = labels[m] || m;
     if (m === activeMarket) btn.classList.add('active');
     btn.onclick = () => { activeMarket = m; renderTabs(); render(); };
     tabsEl.appendChild(btn);
@@ -268,6 +273,10 @@ function cmpHTML(){
 function render(){
   if (activeMarket === 'NHAN_DINH') {
     renderCommentary();
+    return;
+  }
+  if (activeMarket === 'TIN_HIEU') {
+    renderSignals();
     return;
   }
   const m = LATEST.markets[activeMarket];
@@ -463,6 +472,96 @@ function renderBreadthChart(){
 }
 let _crt;
 window.addEventListener('resize',()=>{clearTimeout(_crt);_crt=setTimeout(renderBreadthChart,150);});
+
+function renderSignals(){
+  const el = document.getElementById('content');
+  if (!SIGNALS || !SIGNALS.all_signals) {
+    el.innerHTML = `<div class="panel"><h2>Pre-Breakout Signals</h2><div class="loading">Chưa có dữ liệu tín hiệu.</div></div>`;
+    return;
+  }
+  const s = SIGNALS;
+  const all = s.all_signals || [];
+  const tbody = all.map(row => {
+    const cls = row.composite_score >= 75 ? 'good' : row.composite_score >= 60 ? 'mixed' : 'weak';
+    const label = row.composite_score >= 75 ? 'Mạnh' : row.composite_score >= 60 ? 'TB' : 'Yếu';
+    return `<tr>
+      <td class="mono" style="font-weight:700;">${row.symbol}</td>
+      <td class="mono">${row.composite_score.toFixed(1)}</td>
+      <td class="mono">${row.base_score.toFixed(1)}</td>
+      <td class="mono">${(row.mf_score || 0).toFixed(1)}</td>
+      <td class="mono">${(row.vol_gradient || 0) > 0 ? '+' : ''}${(row.vol_gradient || 0).toFixed(2)}</td>
+      <td class="mono">${row.vol_ratio !== null ? row.vol_ratio.toFixed(2) : '—'}</td>
+      <td class="mono">${(row.last_price || 0).toLocaleString('vi-VN')}</td>
+      <td><span class="tag ${cls}">${label}</span></td>
+    </tr>`;
+  }).join('');
+
+  el.innerHTML = `
+    <div class="panel">
+      <h2>Pre-Breakout Signals — ${s.date}</h2>
+      <div style="display:flex;gap:14px;margin-bottom:16px;flex-wrap:wrap;">
+        <div class="stat good" style="flex:1;min-width:120px;">
+          <div class="lab">Mạnh (≥75)</div>
+          <div class="num" style="font-size:22px;">${s.strong_signals}</div>
+        </div>
+        <div class="stat flat" style="flex:1;min-width:120px;">
+          <div class="lab">TB (60-74)</div>
+          <div class="num" style="font-size:22px;">${s.moderate_signals}</div>
+        </div>
+        <div class="stat down" style="flex:1;min-width:120px;">
+          <div class="lab">Yếu (50-59)</div>
+          <div class="num" style="font-size:22px;">${s.weak_signals}</div>
+        </div>
+        <div style="flex:1;min-width:120px;border:1px solid var(--border);border-radius:14px;padding:16px;text-align:center;background:var(--panel-tint);">
+          <div class="lab">Tổng tín hiệu</div>
+          <div class="num" style="font-size:22px;color:var(--accent-1);">${s.total_signals}</div>
+          <div class="sub2" style="font-size:11px;color:var(--faint);margin-top:3px;">/${s.total_symbols_analyzed} mã</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h2>Danh sách tín hiệu — xếp hạng theo Composite Score</h2>
+      <div class="note" style="margin-bottom:14px;">
+        <b>Composite Score</b> = 40% Base + 30% Money Flow + 30% Vol Gradient.
+        Base: accumulation base detection (range + higher lows + volume dry-up).
+        Money Flow: OBV slope normalized.
+        Vol Gradient: tốc độ co hẹp của biến động ngắn hạn.
+      </div>
+      <table>
+        <thead><tr>
+          <th>Mã</th>
+          <th>Score</th>
+          <th>Base</th>
+          <th>MF</th>
+          <th>Grad</th>
+          <th>VolRatio</th>
+          <th>Giá</th>
+          <th>Mức</th>
+        </tr></thead>
+        <tbody>${tbody}</tbody>
+      </table>
+    </div>
+
+    <div class="panel">
+      <h2>Chi tiết theo mức — Pre-Breakout</h2>
+      <div class="signal-grid">
+        <div class="signal-col">
+          <div class="signal-title up-txt">Mạnh — ${s.strong_signals} mã</div>
+          <div class="chip-wrap">${renderChips(s.strong.map(r => r.symbol), 'up')}</div>
+        </div>
+        <div class="signal-col">
+          <div class="signal-title" style="color:#B9760F;">Trung bình — ${s.moderate_signals} mã</div>
+          <div class="chip-wrap">${renderChips(s.moderate.map(r => r.symbol))}</div>
+        </div>
+        <div class="signal-col">
+          <div class="signal-title down-txt">Yếu — ${s.weak_signals} mã</div>
+          <div class="chip-wrap">${renderChips(s.weak.map(r => r.symbol), 'down')}</div>
+        </div>
+      </div>
+    </div>
+  `;
+}
 
 function renderCommentary(){
   const contentEl = document.getElementById('content');
