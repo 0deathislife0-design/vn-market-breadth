@@ -555,7 +555,6 @@ function renderEnsemble(){
     el.innerHTML = '<div class="panel"><h2>Ensemble Strategy</h2><div class="loading">Chua co du lieu.</div></div>';
     return;
   }
-  const s = ENSEMBLE;
   const all = s.all_signals || [];
   const tbody = all.map(row => {
     const sigs = [];
