@@ -660,15 +660,15 @@ function renderSignals(){
       <div class="signal-grid">
         <div class="signal-col">
           <div class="signal-title up-txt">Mạnh — ${s.strong_signals} mã</div>
-          <div class="chip-wrap">${renderChips(s.strong.map(r => r.symbol), 'up')}</div>
+          <div class="chip-wrap">${renderChips((s.strong||[]).map(r => r.symbol), 'up')}</div>
         </div>
         <div class="signal-col">
           <div class="signal-title" style="color:#B9760F;">Trung bình — ${s.moderate_signals} mã</div>
-          <div class="chip-wrap">${renderChips(s.moderate.map(r => r.symbol))}</div>
+          <div class="chip-wrap">${renderChips((s.moderate||[]).map(r => r.symbol))}</div>
         </div>
         <div class="signal-col">
           <div class="signal-title down-txt">Yếu — ${s.weak_signals} mã</div>
-          <div class="chip-wrap">${renderChips(s.weak.map(r => r.symbol), 'down')}</div>
+          <div class="chip-wrap">${renderChips((s.weak||[]).map(r => r.symbol), 'down')}</div>
         </div>
       </div>
     </div>
