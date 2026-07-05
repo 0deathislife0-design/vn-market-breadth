@@ -185,7 +185,7 @@ def compute_vol_regime(df: pd.DataFrame) -> dict:
 
 def analyze_symbol(symbol: str) -> dict | None:
     """Phan tich 1 symbol, tra ve signal data neu dat, None neu khong."""
-    df = _load_cache(symbol)
+    df = _load_cache(symbol, CACHE_DIR)
     if len(df) < 63:
         return None
 
@@ -245,7 +245,7 @@ def get_filtered_symbols() -> list[str]:
         sym = path.stem
         if sym == ".gitkeep":
             continue
-        df = _load_cache(sym)
+        df = _load_cache(sym, CACHE_DIR)
         if len(df) < 20:
             continue
         if "Volume" in df.columns:
