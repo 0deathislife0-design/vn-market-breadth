@@ -5,25 +5,25 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Độ rộng thị trường — TTCK Việt Nam</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root{
     --bg-a:#EEF3FF; --bg-b:#F3EEFF; --bg-c:#FFF6E9;
     --panel:#FFFFFF; --panel-tint:#F7F9FF; --border:#E4E9F7;
     --text:#1B2140; --muted:#6B7395; --faint:#9AA1C0;
-    --up:#0FAE72;        /* tăng — xanh theo quy ước VN */
-    --down:#F0473E;      /* giảm — đỏ theo quy ước VN */
+    --up:#0FAE72; --down:#F0473E;
     --neutral:#F5A524;
     --accent-1:#4F46E5; --accent-2:#06B6D4;
     --accent-grad: linear-gradient(120deg, var(--accent-1), var(--accent-2));
     --shadow-sm: 0 2px 10px rgba(31,41,102,0.06);
     --shadow-md: 0 10px 30px rgba(31,41,102,0.10);
-    --font-display:'Sora',sans-serif; --font-mono:'JetBrains Mono',monospace; --font-body:'Inter',sans-serif;
+    --font-all:'Inter',sans-serif;
   }
-  *{box-sizing:border-box; margin:0; padding:0;}
-  html,body{color:var(--text); font-family:var(--font-body);}
+  *{box-sizing:border-box; margin:0; padding:0; font-family:'Inter',sans-serif !important;}
+  html{scroll-behavior:smooth;}
+  body{color:var(--text);}
   body{
-    min-height:100vh; padding:24px clamp(16px,4vw,40px) 60px;
+    min-height:100vh; padding:20px clamp(12px,3vw,36px) 40px;
     background:
       radial-gradient(1100px 600px at 8% -10%, var(--bg-c) 0%, transparent 55%),
       radial-gradient(900px 600px at 100% 0%, var(--bg-b) 0%, transparent 50%),
@@ -31,135 +31,138 @@
     background-attachment:fixed;
   }
   .wrap{max-width:1120px; margin:0 auto;}
-  header{display:flex; justify-content:space-between; align-items:flex-end; gap:16px; flex-wrap:wrap; margin-bottom:22px;}
-  h1{font-family:var(--font-display); font-weight:700; font-size:clamp(20px,2.6vw,27px); letter-spacing:-0.01em; color:#141834;}
-  .sub{font-family:var(--font-mono); font-size:11.5px; color:var(--muted); margin-top:6px;}
+  header{display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom:10px;}
+  h1{font-weight:700; font-size:clamp(17px,2.2vw,23px); letter-spacing:-0.01em; color:#141834; display:inline-flex; align-items:center; gap:8px;}
+  h1 small{font-size:11px; font-weight:500; color:var(--faint); letter-spacing:0; display:inline-block; margin-left:4px;}
+  .sub{font-family:var(--font-all); font-size:11px; color:var(--muted); margin-top:2px;}
 
-  .tabs{display:flex; gap:4px; background:var(--panel); border:1px solid var(--border); border-radius:999px; padding:5px; box-shadow:var(--shadow-sm);}
-  .tabs button{
-    font-family:var(--font-display); font-size:12.5px; font-weight:600; color:var(--muted);
-    background:transparent; border:none; padding:9px 18px; border-radius:999px; cursor:pointer;
-    transition:all .18s ease; letter-spacing:0.01em;
+  .market-tabs{display:flex; gap:3px; background:var(--panel); border:1px solid var(--border); border-radius:999px; padding:4px; box-shadow:var(--shadow-sm);}
+  .market-tabs button{
+    font-family:var(--font-all); font-size:11.5px; font-weight:600; color:var(--muted);
+    background:transparent; border:none; padding:7px 16px; border-radius:999px; cursor:pointer;
+    transition:all .15s ease;
   }
-  .tabs button:hover{color:var(--accent-1); background:var(--panel-tint);}
-  .tabs button.active{
-    background:var(--accent-grad); color:#fff;
-    box-shadow:0 6px 16px rgba(79,70,229,0.35);
-    transform:translateY(-1px);
-  }
+  .market-tabs button:hover{color:var(--accent-1); background:var(--panel-tint);}
+  .market-tabs button.active{background:var(--accent-grad); color:#fff; box-shadow:0 4px 12px rgba(79,70,229,0.3);}
 
-  .panel{background:var(--panel); border:1px solid var(--border); border-radius:18px; padding:22px; margin-bottom:18px; box-shadow:var(--shadow-sm);}
-  .panel h2{font-family:var(--font-display); font-weight:600; font-size:13px; text-transform:uppercase; letter-spacing:0.06em; color:#3A4270; margin-bottom:16px;}
+  .panel{background:var(--panel); border:1px solid var(--border); border-radius:14px; padding:18px; margin-bottom:12px; box-shadow:var(--shadow-sm);}
+  .panel h2{font-family:var(--font-all); font-weight:600; font-size:12px; text-transform:uppercase; letter-spacing:0.05em; color:#3A4270; margin-bottom:12px; display:flex; align-items:center; gap:8px;}
 
-  .stat-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:14px;}
-  .stat{border:1px solid var(--border); border-radius:14px; padding:16px; text-align:center; background:var(--panel-tint);}
-  .stat .lab{font-size:12px; color:var(--muted); font-weight:600;}
-  .stat .num{font-family:var(--font-mono); font-size:28px; font-weight:700; margin-top:7px;}
-  .stat .pct{font-size:11.5px; color:var(--faint); margin-top:2px;}
-  .stat.up{background:linear-gradient(180deg, rgba(16,185,129,0.08), rgba(16,185,129,0.03));}   /* Tăng = Xanh nhạt */
-  .stat.down{background:linear-gradient(180deg, rgba(239,68,68,0.08), rgba(239,68,68,0.03));}   /* Giảm = Đỏ nhạt */
-  .stat.flat{background:linear-gradient(180deg, rgba(245,158,11,0.08), rgba(245,158,11,0.03));} /* Không đổi = Vàng nhạt */
+  .kpi-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;}
+  @media (max-width:700px){.kpi-grid{grid-template-columns:repeat(3,1fr);}}
+  .kpi-card{border:1px solid var(--border);border-radius:10px;padding:10px;text-align:center;background:var(--panel);}
+  .kpi-card .lab{font-size:9px;text-transform:uppercase;letter-spacing:0.04em;color:var(--faint);font-weight:600;}
+  .kpi-card .num{font-family:var(--font-all);font-size:20px;font-weight:700;margin-top:2px;}
+  .kpi-card .sub{font-size:10px;color:var(--muted);margin-top:1px;}
+  .kpi-card.up .num{color:var(--up);}
+  .kpi-card.down .num{color:var(--down);}
+  .kpi-card.primary .num{color:var(--accent-1);}
 
-  .breadth-bar{display:flex; height:28px; border-radius:8px; overflow:hidden; margin:18px 0 8px; box-shadow:inset 0 0 0 1px var(--border);}
-  .breadth-bar span{display:flex; align-items:center; justify-content:center; font-family:var(--font-mono); font-size:11px; font-weight:700; color:#fff;}
-  .bar-labels{display:flex; justify-content:space-between; font-family:var(--font-mono); font-size:11px; color:var(--muted);}
-  .bar-labels .up-l{color:var(--up); font-weight:600;} .bar-labels .down-l{color:var(--down); font-weight:600;}
+  .summary-bar{background:var(--panel-tint);border:1px solid var(--border);border-radius:12px;padding:14px 16px;margin-bottom:12px;}
+  .summary-top{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;}
+  .summary-badges{display:flex;gap:6px;flex-wrap:wrap;}
+  .s-badge{font-family:var(--font-all);font-size:10.5px;font-weight:600;padding:4px 12px;border-radius:999px;cursor:pointer;transition:all .15s;border:1px solid transparent;}
+  .s-badge:hover{opacity:0.8;}
+  .s-badge.str{background:rgba(15,174,114,0.12);color:var(--up);border-color:rgba(15,174,114,0.25);}
+  .s-badge.wat{background:rgba(245,165,36,0.14);color:#B9760F;border-color:rgba(245,165,36,0.25);}
+  .s-badge.pre{background:rgba(79,70,229,0.10);color:var(--accent-1);border-color:rgba(79,70,229,0.2);}
+  .s-badge.ens{background:rgba(6,182,212,0.10);color:var(--accent-2);border-color:rgba(6,182,212,0.2);}
+  .s-badge.ensw{background:rgba(128,128,128,0.10);color:var(--muted);border-color:rgba(128,128,128,0.2);}
+  .s-badge.active{opacity:1;box-shadow:0 0 0 2px var(--accent-1);}
+  .summary-count{font-family:var(--font-all);font-size:14px;font-weight:600;color:var(--text);}
 
-  .note{background:linear-gradient(90deg, rgba(79,70,229,0.06), rgba(6,182,212,0.05)); border-left:3px solid var(--accent-1); border-radius:8px; padding:13px 15px; font-size:13px; color:var(--muted); margin-top:16px; line-height:1.6;}
-  .note b{color:var(--text);}
+  .filter-bar{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-bottom:10px;}
+  .filter-bar input,.filter-bar select{padding:7px 12px;border-radius:8px;border:1px solid var(--border);background:var(--panel-tint);color:var(--text);font-size:12px;font-family:var(--font-all);outline:none;}
+  .filter-bar input:focus,.filter-bar select:focus{border-color:var(--accent-1);}
+  .filter-bar input{flex:1;min-width:120px;}
+  .btn-copy{font-family:var(--font-all);font-size:11px;padding:6px 14px;border-radius:8px;border:1px solid var(--border);background:var(--panel-tint);color:var(--muted);cursor:pointer;transition:all .15s;white-space:nowrap;}
+  .btn-copy:hover{background:var(--accent-1);color:#fff;border-color:var(--accent-1);}
 
-  .ma-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:14px;}
-  .ma-stat{border:1px solid var(--border); border-radius:14px; padding:16px; text-align:center; background:var(--panel-tint);}
-  .ma-stat .lab{font-size:12px; color:var(--muted); font-weight:600;}
-  .ma-stat .num{font-family:var(--font-mono); font-size:25px; font-weight:700; margin-top:7px; color:var(--accent-1);}
-  .ma-stat .sub2{font-size:11px; color:var(--faint); margin-top:3px;}
-
-  table{width:100%; border-collapse:collapse; margin-top:6px;}
-  th{text-align:left; font-size:10.5px; text-transform:uppercase; letter-spacing:0.05em; color:var(--faint); font-family:var(--font-mono); font-weight:600; padding:10px 12px; border-bottom:2px solid var(--border);}
-  td{padding:11px 12px; font-size:13px; border-bottom:1px solid var(--border);}
+  table{width:100%;border-collapse:collapse;font-size:12px;}
+  th{text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:0.04em;color:var(--faint);font-weight:600;padding:8px 8px;border-bottom:2px solid var(--border);}
+  td{padding:9px 8px;border-bottom:1px solid var(--border);vertical-align:top;}
   tr:hover td{background:var(--panel-tint);}
-  td.mono{font-family:var(--font-mono);}
+  td.mono{font-family:var(--font-all);}
   .up-txt{color:var(--up); font-weight:700;}
   .down-txt{color:var(--down); font-weight:700;}
-  .tag{font-family:var(--font-display); font-size:10.5px; padding:4px 10px; border-radius:999px; font-weight:700;}
-  .tag.weak{background:rgba(240,71,62,0.12); color:var(--down);}
-  .tag.mixed{background:rgba(245,165,36,0.14); color:#B9760F;}
-  .tag.good{background:rgba(15,174,114,0.12); color:var(--up);}
 
-  footer{font-family:var(--font-mono); font-size:11px; color:var(--faint); text-align:center; margin-top:24px;}
-  .loading, .err{font-family:var(--font-mono); font-size:13px; color:var(--muted); padding:30px; text-align:center;}
+  .tag{font-family:var(--font-all);font-size:9.5px;padding:3px 9px;border-radius:999px;font-weight:600;white-space:nowrap;display:inline-block;}
+  .tag.str{background:rgba(15,174,114,0.12);color:var(--up);}
+  .tag.wat{background:rgba(245,165,36,0.14);color:#B9760F;}
+  .tag.pre{background:rgba(79,70,229,0.10);color:var(--accent-1);}
+  .tag.ens{background:rgba(6,182,212,0.10);color:var(--accent-2);}
+  .tag.ens-w{background:rgba(128,128,128,0.12);color:var(--muted);}
 
-  .session-badge{display:inline-block; font-family:var(--font-mono); font-size:11px; padding:3px 10px; border-radius:999px; font-weight:600; margin-left:8px;}
-  .session-badge.midday{background:rgba(245,165,36,0.14); color:#B9760F;}
-  .session-badge.close{background:rgba(79,70,229,0.12); color:var(--accent-1);}
-  .cmp-grid{display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px;}
-  .cmp-card{border:1px solid var(--border); border-radius:14px; padding:14px; text-align:center; background:var(--panel-tint);}
-  .cmp-card .lab{font-size:11px; color:var(--muted); font-weight:600;}
-  .cmp-card .row{display:flex; justify-content:space-between; padding:6px 0; font-family:var(--font-mono); font-size:13px; border-bottom:1px solid var(--border);}
+  .sig-expl{font-size:10.5px;color:var(--muted);line-height:1.4;max-width:240px;}
+  .sig-source{display:flex;gap:3px;flex-wrap:wrap;}
+  .src-tag{font-family:var(--font-all);font-size:9px;padding:2px 7px;border-radius:4px;background:var(--panel-tint);border:1px solid var(--border);color:var(--muted);}
+  .src-tag.hy{color:#d946ef;border-color:rgba(217,70,239,0.25);background:rgba(217,70,239,0.06);}
+  .src-tag.ma{color:#8884d8;border-color:rgba(136,132,216,0.25);background:rgba(136,132,216,0.06);}
+  .src-tag.bo{color:#82ca9d;border-color:rgba(130,202,157,0.25);background:rgba(130,202,157,0.06);}
+  .src-tag.roc{color:#ffc658;border-color:rgba(255,198,88,0.25);background:rgba(255,198,88,0.06);}
+  .src-tag.pb{color:#ff8042;border-color:rgba(255,128,66,0.25);background:rgba(255,128,66,0.06);}
+
+  .badge-repeat{font-size:9px;padding:1px 6px;border-radius:4px;background:rgba(239,68,68,0.1);color:#dc2626;font-weight:600;margin-left:4px;}
+
+  .winrate{font-size:9px;color:var(--faint);margin-left:4px;}
+
+  .accordion{cursor:pointer;user-select:none;}
+  .accordion::after{content:' \25BC';font-size:9px;color:var(--faint);margin-left:6px;}
+  .accordion.collapsed::after{content:' \25B6';}
+  .accordion-body{overflow:hidden;transition:max-height .25s;}
+  .accordion-body.collapsed{max-height:0 !important;padding:0 18px !important;margin:0 !important;border:none !important;}
+
+  .chip-wrap{display:flex;flex-wrap:wrap;gap:4px;}
+  .chip{font-family:var(--font-all);font-size:10px;background:var(--panel-tint);border:1px solid var(--border);border-radius:999px;padding:3px 8px;color:var(--muted);}
+  .chip.up{color:var(--up);border-color:rgba(240,71,62,0.2);background:rgba(240,71,62,0.05);}
+  .chip.down{color:var(--down);border-color:rgba(15,174,114,0.2);background:rgba(15,174,114,0.05);}
+  .chip.dual{background:linear-gradient(135deg,#c084fc,#d946ef);color:#fff;border-color:#d8b4fe;}
+
+  .cmp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+  .cmp-card{border:1px solid var(--border);border-radius:10px;padding:12px;background:var(--panel-tint);}
+  .cmp-card .lab{font-size:10px;color:var(--muted);font-weight:600;margin-bottom:6px;}
+  .cmp-card .row{display:flex;justify-content:space-between;padding:4px 0;font-family:var(--font-all);font-size:12px;border-bottom:1px solid var(--border);}
   .cmp-card .row:last-child{border-bottom:none;}
   .cmp-card .val{font-weight:700;}
-  .delta{font-size:11px; font-weight:700; margin-left:6px;}
+  .delta{font-size:10px;font-weight:700;margin-left:4px;}
   .delta.up{color:var(--up);} .delta.down{color:var(--down);} .delta.flat{color:var(--neutral);}
 
-  .signal-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:14px;}
-  @media (max-width:800px){ .signal-grid{grid-template-columns:1fr 1fr;} }
-  .signal-title{font-size:12px; font-weight:700; margin-bottom:9px;}
-  .chip-wrap{display:flex; flex-wrap:wrap; gap:6px; max-height:180px; overflow-y:auto; padding-right:4px;}
-  .chip{font-family:var(--font-mono); font-size:11px; background:var(--panel-tint); border:1px solid var(--border); border-radius:999px; padding:4px 10px; color:var(--muted); font-weight:500;}
-  .chip.up{color:var(--up); border-color:rgba(240,71,62,0.25); background:rgba(240,71,62,0.07);}
-  .chip.down{color:var(--down); border-color:rgba(15,174,114,0.25); background:rgba(15,174,114,0.07);}
-  .chip.dual{background:linear-gradient(135deg,#c084fc,#d946ef);color:#fff;border-color:#d8b4fe;box-shadow:0 0 6px #c084fc;}
-  .empty-note{font-size:12px; color:var(--faint); font-style:italic;}
-  .commentary{font-size:14px;line-height:1.8;color:var(--text);padding:4px 0;}
-  .commentary h1{font-size:20px;font-weight:700;margin:0 0 14px;color:#141834;}
-  .commentary h2{font-size:16px;font-weight:600;margin:20px 0 10px;color:var(--accent-1);}
-  .commentary h3{font-size:14px;font-weight:600;margin:16px 0 8px;color:var(--text);}
+  .note{font-size:12px;color:var(--muted);line-height:1.6;padding:10px 14px;background:rgba(79,70,229,0.04);border-left:3px solid var(--accent-1);border-radius:6px;margin-top:8px;}
+  .note b{color:var(--text);}
+
+  .breadth-bar{display:flex;height:22px;border-radius:6px;overflow:hidden;margin:8px 0;box-shadow:inset 0 0 0 1px var(--border);}
+  .breadth-bar span{display:flex;align-items:center;justify-content:center;font-family:var(--font-all);font-size:10px;font-weight:700;color:#fff;}
+  .chart-wrap{position:relative;width:100%;}
+  .chart-wrap canvas{width:100%;display:block;border-radius:10px;}
+  .chart-tooltip{position:absolute;pointer-events:none;z-index:50;background:rgba(255,255,255,0.97);border:1px solid var(--border);border-radius:8px;padding:8px 12px;font-size:10.5px;box-shadow:var(--shadow-md);font-family:var(--font-all);display:none;white-space:nowrap;line-height:1.5;}
+
+  .commentary{font-size:13px;line-height:1.7;color:var(--text);padding:2px 0;}
+  .commentary h2{font-size:15px;font-weight:600;margin:14px 0 8px;color:var(--accent-1);}
+  .commentary h3{font-size:13px;font-weight:600;margin:12px 0 6px;color:var(--text);}
   .commentary strong{color:var(--text);}
-  .commentary br{margin-bottom:6px;}
-.chart-wrap{position:relative;width:100%;}
-.chart-wrap canvas{width:100%;display:block;border-radius:12px;}
-.chart-tooltip{position:absolute;pointer-events:none;z-index:50;background:rgba(255,255,255,0.97);border:1px solid var(--border);border-radius:10px;padding:9px 13px;font-size:11.5px;box-shadow:var(--shadow-md);font-family:var(--font-mono);display:none;white-space:nowrap;line-height:1.5;}
 
-/* COMPACT LAYOUT */
-.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:10px;}
-.kpi-card{border:1px solid var(--border);border-radius:12px;padding:12px 14px;text-align:center;background:var(--panel);}
-.kpi-card .lab{font-size:10px;text-transform:uppercase;letter-spacing:0.04em;color:var(--faint);font-weight:600;}
-.kpi-card .num{font-family:var(--font-mono);font-size:22px;font-weight:700;margin-top:3px;letter-spacing:-0.02em;}
-.kpi-card .sub{font-size:10.5px;color:var(--muted);margin-top:2px;}
-.kpi-card.primary .num{color:var(--accent-1);}
-.kpi-card.up .num{color:var(--up);}
-.kpi-card.down .num{color:var(--down);}
-.kpi-card.neutral .num{color:var(--neutral);}
-.kpi-trend{display:flex;gap:8px;align-items:center;justify-content:center;font-size:10.5px;font-weight:600;margin-top:2px;}
-.section-title{font-family:var(--font-display);font-weight:600;font-size:13px;text-transform:uppercase;letter-spacing:0.06em;color:#3A4270;margin-bottom:12px;}
-.two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
-.two-col .panel{margin-bottom:0;}
-@media (max-width:700px){.kpi-grid{grid-template-columns:repeat(2,1fr);}.two-col{grid-template-columns:1fr;}}
-.tag-row{display:flex;flex-wrap:wrap;gap:4px;}
-.tag-row .chip{font-size:10px;padding:3px 8px;}
-.sec-compact{margin-bottom:12px;}
-.sec-compact .section-title{margin-bottom:8px;}
+  .loading,.err{font-family:var(--font-all);font-size:12px;color:var(--muted);padding:30px;text-align:center;}
+  footer{font-family:var(--font-all);font-size:10.5px;color:var(--faint);text-align:center;margin-top:20px;}
 
-/* ENSEMBLE WEIGHTED */
-.weight-bar{display:flex;height:6px;border-radius:4px;overflow:hidden;margin:6px 0 10px;gap:2px;}
-.weight-bar span{height:100%;border-radius:4px;}
-.weight-label{display:flex;justify-content:space-between;font-size:10px;color:var(--faint);margin-bottom:4px;}
-.signal-breakdown{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px;}
-.sig-stat{border:1px solid var(--border);border-radius:10px;padding:10px;text-align:center;background:var(--panel-tint);}
-.sig-stat .lab{font-size:9.5px;text-transform:uppercase;letter-spacing:0.03em;color:var(--faint);font-weight:600;}
-.sig-stat .num{font-family:var(--font-mono);font-size:20px;font-weight:700;margin-top:2px;}
-.sig-stat .pct{font-size:10px;color:var(--muted);margin-top:1px;}
+  .empty-note{font-size:11px;color:var(--faint);font-style:italic;}
+
+  .signal-count{font-family:var(--font-all);font-weight:700;font-size:22px;}
+
+  .session-badge{display:inline-block;font-family:var(--font-all);font-size:10px;padding:2px 8px;border-radius:999px;font-weight:600;margin-left:6px;}
+  .session-badge.midday{background:rgba(245,165,36,0.14);color:#B9760F;}
+  .session-badge.close{background:rgba(79,70,229,0.12);color:var(--accent-1);}
 </style>
 
 <script>
-const EMBEDDED_LATEST = {"generated_at": "2026-07-06T09:15:02.181285", "session": "midday", "markets": {"HOSE": {"exchange": "HOSE", "date": "06/07/2026", "total_symbols": 360, "advances": 104, "declines": 199, "unchanged": 57, "advances_pct": 28.9, "declines_pct": 55.3, "unchanged_pct": 15.8, "ad_ratio": 0.52, "pct_above_ma20": 47.6, "pct_above_ma50": 39.5, "pct_above_ma200": 31.5, "above_ma20_count": 59, "above_ma50_count": 49, "above_ma200_count": 39, "ma_total_symbols": 124, "above_ma20_symbols": ["AAA", "ACB", "AGR", "APG", "BAF", "BCG", "BID", "BSI", "CTG", "CTS", "DCL", "DGW", "DSE", "ELC", "FIT", "FPT", "FTS", "GEG", "HCM", "HDB", "HSL", "HVN", "LCG", "LPB", "MBB", "MCH", "MSB", "MWG", "NAB", "OCB", "ORS", "PET", "PHR", "POW", "PVD", "PVT", "SAB", "SSB", "SSI", "STB", "TCB", "TCD", "TPB", "TTA", "VCB", "VCG", "VCI", "VDS", "VGC", "VHM", "VIB", "VIC", "VJC", "VND", "VNE", "VOS", "VPB", "VPI", "YEG"], "above_ma50_symbols": ["AAA", "ACB", "AGR", "APG", "BAF", "BCG", "BID", "BSI", "CTS", "DCL", "DSE", "ELC", "FTS", "GEG", "HCM", "HDB", "HHP", "HSL", "HVN", "KDC", "LPB", "MBB", "MCH", "MSB", "NAB", "OCB", "ORS", "PET", "POW", "PVD", "SAB", "SBT", "SSB", "STB", "TCB", "TPB", "TTA", "VCB", "VCG", "VCI", "VDS", "VHM", "VIB", "VIC", "VJC", "VND", "VPB", "VPI", "YEG"], "above_ma200_symbols": ["ACB", "AGR", "BAF", "BID", "BSI", "BSR", "CTS", "EVF", "FTS", "GEX", "GMD", "GVR", "HCM", "HDB", "HHP", "HSL", "LPB", "MSB", "NAB", "NAF", "OCB", "ORS", "PET", "PHR", "POW", "PVD", "PVP", "PVT", "SAB", "SSB", "STB", "TTA", "VCB", "VHM", "VIC", "VJC", "VND", "VPB", "VPI"], "newly_above_ma20": ["VJC", "VNE"], "newly_below_ma20": ["ANV", "CII", "CRC", "DGC", "EIB", "GEX", "HHP", "MSN", "NLG", "PAN", "PVP", "TCM"], "newly_above_ma50": ["SBT", "VCI", "VHM"], "newly_below_ma50": ["LDG", "NLG", "PHR", "PVP", "TCD", "VGC"], "volume_breakout_symbols": ["AGR", "APG", "BCG", "BID", "BSI", "CTG", "CTS", "DCL", "DGW", "DSE", "FIT", "FPT", "FTS", "HCM", "HDB", "HSL", "HVN", "LCG", "LPB", "MBB", "MCH", "MSB", "MWG", "NAB", "ORS", "PHR", "POW", "PVT", "SAB", "SSB", "SSI", "TCB", "TCD", "VCG", "VCI", "VDS", "VHM", "VIB", "VJC", "VND", "VNE", "VPB", "YEG"], "volume_breakout_count": 43}, "HNX": {"exchange": "HNX", "date": "06/07/2026", "total_symbols": 90, "advances": 43, "declines": 16, "unchanged": 31, "advances_pct": 47.8, "declines_pct": 17.8, "unchanged_pct": 34.4, "ad_ratio": 2.69, "pct_above_ma20": 55.6, "pct_above_ma50": 51.9, "pct_above_ma200": 40.7, "above_ma20_count": 15, "above_ma50_count": 14, "above_ma200_count": 11, "ma_total_symbols": 27, "above_ma20_symbols": ["AAV", "API", "APS", "BVS", "CVN", "DDG", "DST", "MBG", "MBS", "NRC", "NVB", "SHS", "TNG", "TVC", "VFS"], "above_ma50_symbols": ["API", "APS", "BVS", "CVN", "DST", "IDJ", "MBG", "MBS", "MST", "NRC", "NVB", "SHS", "SVN", "TVC"], "above_ma200_symbols": ["AAV", "APS", "BVS", "DST", "MST", "NRC", "NVB", "PVS", "SVN", "TVC", "VTZ"], "newly_above_ma20": ["API", "DDG"], "newly_below_ma20": ["PVS", "SVN"], "newly_above_ma50": ["IDJ"], "newly_below_ma50": [], "volume_breakout_symbols": [], "volume_breakout_count": 0}, "ALL": {"exchange": "ALL", "date": "06/07/2026", "total_symbols": 450, "advances": 147, "declines": 215, "unchanged": 88, "advances_pct": 32.7, "declines_pct": 47.8, "unchanged_pct": 19.6, "ad_ratio": 0.68, "pct_above_ma20": 49.0, "pct_above_ma50": 41.7, "pct_above_ma200": 33.1, "above_ma20_count": 74, "above_ma50_count": 63, "above_ma200_count": 50, "ma_total_symbols": 151, "above_ma20_symbols": ["AAA", "AAV", "ACB", "AGR", "APG", "API", "APS", "BAF", "BCG", "BID", "BSI", "BVS", "CTG", "CTS", "CVN", "DCL", "DDG", "DGW", "DSE", "DST", "ELC", "FIT", "FPT", "FTS", "GEG", "HCM", "HDB", "HSL", "HVN", "LCG", "LPB", "MBB", "MBG", "MBS", "MCH", "MSB", "MWG", "NAB", "NRC", "NVB", "OCB", "ORS", "PET", "PHR", "POW", "PVD", "PVT", "SAB", "SHS", "SSB", "SSI", "STB", "TCB", "TCD", "TNG", "TPB", "TTA", "TVC", "VCB", "VCG", "VCI", "VDS", "VFS", "VGC", "VHM", "VIB", "VIC", "VJC", "VND", "VNE", "VOS", "VPB", "VPI", "YEG"], "above_ma50_symbols": ["AAA", "ACB", "AGR", "APG", "API", "APS", "BAF", "BCG", "BID", "BSI", "BVS", "CTS", "CVN", "DCL", "DSE", "DST", "ELC", "FTS", "GEG", "HCM", "HDB", "HHP", "HSL", "HVN", "IDJ", "KDC", "LPB", "MBB", "MBG", "MBS", "MCH", "MSB", "MST", "NAB", "NRC", "NVB", "OCB", "ORS", "PET", "POW", "PVD", "SAB", "SBT", "SHS", "SSB", "STB", "SVN", "TCB", "TPB", "TTA", "TVC", "VCB", "VCG", "VCI", "VDS", "VHM", "VIB", "VIC", "VJC", "VND", "VPB", "VPI", "YEG"], "above_ma200_symbols": ["AAV", "ACB", "AGR", "APS", "BAF", "BID", "BSI", "BSR", "BVS", "CTS", "DST", "EVF", "FTS", "GEX", "GMD", "GVR", "HCM", "HDB", "HHP", "HSL", "LPB", "MSB", "MST", "NAB", "NAF", "NRC", "NVB", "OCB", "ORS", "PET", "PHR", "POW", "PVD", "PVP", "PVS", "PVT", "SAB", "SSB", "STB", "SVN", "TTA", "TVC", "VCB", "VHM", "VIC", "VJC", "VND", "VPB", "VPI", "VTZ"], "newly_above_ma20": ["API", "DDG", "VJC", "VNE"], "newly_below_ma20": ["ANV", "CII", "CRC", "DGC", "EIB", "GEX", "HHP", "MSN", "NLG", "PAN", "PVP", "PVS", "SVN", "TCM"], "newly_above_ma50": ["IDJ", "SBT", "VCI", "VHM"], "newly_below_ma50": ["LDG", "NLG", "PHR", "PVP", "TCD", "VGC"], "volume_breakout_symbols": ["AGR", "APG", "BCG", "BID", "BSI", "CTG", "CTS", "DCL", "DGW", "DSE", "FIT", "FPT", "FTS", "HCM", "HDB", "HSL", "HVN", "LCG", "LPB", "MBB", "MCH", "MSB", "MWG", "NAB", "ORS", "PHR", "POW", "PVT", "SAB", "SSB", "SSI", "TCB", "TCD", "VCG", "VCI", "VDS", "VHM", "VIB", "VJC", "VND", "VNE", "VPB", "YEG"], "volume_breakout_count": 43}}};
-const EMBEDDED_HISTORY = [{"date": "02/07/2026", "markets": {"HOSE": {"exchange": "HOSE", "date": "02/07/2026", "total_symbols": 356, "advances": 117, "declines": 162, "unchanged": 77, "advances_pct": 32.9, "declines_pct": 45.5, "unchanged_pct": 21.6, "ad_ratio": 0.72, "pct_above_ma20": 54.8, "pct_above_ma50": 40.5, "pct_above_ma200": 28.6, "above_ma20_count": 69, "above_ma50_count": 51, "above_ma200_count": 36, "ma_total_symbols": 126, "above_ma20_symbols": ["AAA", "ACB", "AGR", "ANV", "APG", "BAF", "BID", "BSI", "CII", "CRC", "CTG", "CTS", "DCL", "DGC", "DGW", "DSE", "EIB", "ELC", "FIT", "FPT", "FTS", "FUEVFVND", "GEG", "GEX", "HCM", "HDB", "HHP", "HSL", "HVN", "LCG", "LPB", "MBB", "MCH", "MSB", "MSN", "MWG", "NAB", "NLG", "OCB", "ORS", "PAN", "PET", "PHR", "POW", "PVD", "PVP", "PVT", "SAB", "SSB", "SSI", "STB", "TCB", "TCM", "TPB", "TTA", "VCB", "VCG", "VCI", "VDS", "VGC", "VHM", "VIB", "VIC", "VND", "VNE", "VOS", "VPB", "VPI", "YEG"], "above_ma50_symbols": ["AAA", "ACB", "AGR", "APG", "BAF", "BID", "BSI", "CTS", "DCL", "DSE", "ELC", "FTS", "FUEVFVND", "GEG", "HCM", "HDB", "HHP", "HSL", "HVN", "KDC", "LDG", "LPB", "MBB", "MCH", "MSB", "NAB", "NLG", "OCB", "ORS", "PET", "PHR", "POW", "PVD", "PVP", "SAB", "SSB", "STB", "TCB", "TPB", "TTA", "VCB", "VCG", "VDS", "VGC", "VIB", "VIC", "VJC", "VND", "VPB", "VPI", "YEG"], "above_ma200_symbols": ["ACB", "BAF", "BID", "BSI", "BSR", "CTS", "EVF", "FTS", "GEX", "GMD", "GVR", "HCM", "HDB", "HHP", "HSL", "LPB", "MSB", "NAB", "NAF", "OCB", "ORS", "PET", "PHR", "POW", "PVD", "PVP", "PVT", "SAB", "SSB", "STB", "TTA", "VCB", "VHM", "VIC", "VJC", "VPI"], "newly_above_ma20": ["FIT", "PHR", "TCM", "VNE"], "newly_below_ma20": ["CTD", "FCN", "HHV", "VJC"], "newly_above_ma50": ["PHR"], "newly_below_ma50": ["FPT", "SBT", "VOS"]}, "HNX": {"exchange": "HNX", "date": "02/07/2026", "total_symbols": 179, "advances": 63, "declines": 58, "unchanged": 58, "advances_pct": 35.2, "declines_pct": 32.4, "unchanged_pct": 32.4, "ad_ratio": 1.09, "pct_above_ma20": 55.6, "pct_above_ma50": 48.1, "pct_above_ma200": 37.0, "above_ma20_count": 15, "above_ma50_count": 13, "above_ma200_count": 10, "ma_total_symbols": 27, "above_ma20_symbols": ["AAV", "APS", "BVS", "CVN", "DST", "MBG", "MBS", "NRC", "NVB", "PVS", "SHS", "SVN", "TNG", "TVC", "VFS"], "above_ma50_symbols": ["API", "APS", "BVS", "CVN", "DST", "MBG", "MBS", "MST", "NRC", "NVB", "SHS", "SVN", "TVC"], "above_ma200_symbols": ["AAV", "BVS", "DST", "MST", "NRC", "NVB", "PVS", "SVN", "TVC", "VTZ"], "newly_above_ma20": ["APS", "SVN", "VFS"], "newly_below_ma20": ["API", "MST", "VTZ"], "newly_above_ma50": [], "newly_below_ma50": ["PVS", "TNG", "VTZ"]}, "ALL": {"exchange": "ALL", "date": "02/07/2026", "total_symbols": 535, "advances": 180, "declines": 220, "unchanged": 135, "advances_pct": 33.6, "declines_pct": 41.1, "unchanged_pct": 25.2, "ad_ratio": 0.82, "pct_above_ma20": 54.9, "pct_above_ma50": 41.8, "pct_above_ma200": 30.1, "above_ma20_count": 84, "above_ma50_count": 64, "above_ma200_count": 46, "ma_total_symbols": 153, "above_ma20_symbols": ["AAA", "AAV", "ACB", "AGR", "ANV", "APG", "APS", "BAF", "BID", "BSI", "BVS", "CII", "CRC", "CTG", "CTS", "CVN", "DCL", "DGC", "DGW", "DSE", "DST", "EIB", "ELC", "FIT", "FPT", "FTS", "FUEVFVND", "GEG", "GEX", "HCM", "HDB", "HHP", "HSL", "HVN", "LCG", "LPB", "MBB", "MBG", "MBS", "MCH", "MSB", "MSN", "MWG", "NAB", "NLG", "NRC", "NVB", "OCB", "ORS", "PAN", "PET", "PHR", "POW", "PVD", "PVP", "PVS", "PVT", "SAB", "SHS", "SSB", "SSI", "STB", "SVN", "TCB", "TCM", "TNG", "TPB", "TTA", "TVC", "VCB", "VCG", "VCI", "VDS", "VFS", "VGC", "VHM", "VIB", "VIC", "VND", "VNE", "VOS", "VPB", "VPI", "YEG"], "above_ma50_symbols": ["AAA", "ACB", "AGR", "APG", "API", "APS", "BAF", "BID", "BSI", "BVS", "CTS", "CVN", "DCL", "DSE", "DST", "ELC", "FTS", "FUEVFVND", "GEG", "HCM", "HDB", "HHP", "HSL", "HVN", "KDC", "LDG", "LPB", "MBB", "MBG", "MBS", "MCH", "MSB", "MST", "NAB", "NLG", "NRC", "NVB", "OCB", "ORS", "PET", "PHR", "POW", "PVD", "PVP", "SAB", "SHS", "SSB", "STB", "SVN", "TCB", "TPB", "TTA", "TVC", "VCB", "VCG", "VDS", "VGC", "VIB", "VIC", "VJC", "VND", "VPB", "VPI", "YEG"], "above_ma200_symbols": ["AAV", "ACB", "BAF", "BID", "BSI", "BSR", "BVS", "CTS", "DST", "EVF", "FTS", "GEX", "GMD", "GVR", "HCM", "HDB", "HHP", "HSL", "LPB", "MSB", "MST", "NAB", "NAF", "NRC", "NVB", "OCB", "ORS", "PET", "PHR", "POW", "PVD", "PVP", "PVS", "PVT", "SAB", "SSB", "STB", "SVN", "TTA", "TVC", "VCB", "VHM", "VIC", "VJC", "VPI", "VTZ"], "newly_above_ma20": ["APS", "FIT", "PHR", "SVN", "TCM", "VFS", "VNE"], "newly_below_ma20": ["API", "CTD", "FCN", "HHV", "MST", "VJC", "VTZ"], "newly_above_ma50": ["PHR"], "newly_below_ma50": ["FPT", "PVS", "SBT", "TNG", "VOS", "VTZ"]}}}, {"date": "03/07/2026", "markets": {"HOSE": {"exchange": "HOSE", "date": "03/07/2026", "total_symbols": 360, "advances": 104, "declines": 199, "unchanged": 57, "advances_pct": 28.9, "declines_pct": 55.3, "unchanged_pct": 15.8, "ad_ratio": 0.52, "pct_above_ma20": 46.0, "pct_above_ma50": 38.7, "pct_above_ma200": 31.5, "above_ma20_count": 57, "above_ma50_count": 48, "above_ma200_count": 39, "ma_total_symbols": 124, "above_ma20_symbols": ["AAA", "ACB", "AGR", "APG", "BAF", "BID", "BSI", "CTG", "CTS", "DCL", "DGW", "DSE", "ELC", "FIT", "FPT", "FTS", "GEG", "HCM", "HDB", "HSL", "HVN", "LCG", "LPB", "MBB", "MCH", "MSB", "MWG", "NAB", "OCB", "ORS", "PET", "PHR", "POW", "PVD", "PVT", "SAB", "SSB", "SSI", "STB", "TCB", "TPB", "TTA", "VCB", "VCG", "VCI", "VDS", "VGC", "VHM", "VIB", "VIC", "VJC", "VND", "VNE", "VOS", "VPB", "VPI", "YEG"], "above_ma50_symbols": ["AAA", "ACB", "AGR", "APG", "BAF", "BID", "BSI", "CTS", "DCL", "DSE", "ELC", "FTS", "GEG", "HCM", "HDB", "HHP", "HSL", "HVN", "KDC", "LPB", "MBB", "MCH", "MSB", "NAB", "OCB", "ORS", "PET", "POW", "PVD", "SAB", "SBT", "SSB", "STB", "TCB", "TPB", "TTA", "VCB", "VCG", "VCI", "VDS", "VHM", "VIB", "VIC", "VJC", "VND", "VPB", "VPI", "YEG"], "above_ma200_symbols": ["ACB", "AGR", "BAF", "BID", "BSI", "BSR", "CTS", "EVF", "FTS", "GEX", "GMD", "GVR", "HCM", "HDB", "HHP", "HSL", "LPB", "MSB", "NAB", "NAF", "OCB", "ORS", "PET", "PHR", "POW", "PVD", "PVP", "PVT", "SAB", "SSB", "STB", "TTA", "VCB", "VHM", "VIC", "VJC", "VND", "VPB", "VPI"], "newly_above_ma20": ["VJC", "VNE"], "newly_below_ma20": ["ANV", "CII", "CRC", "DGC", "EIB", "GEX", "HHP", "MSN", "NLG", "PAN", "PVP", "TCM"], "newly_above_ma50": ["SBT", "VCI", "VHM"], "newly_below_ma50": ["LDG", "NLG", "PHR", "PVP", "VGC"], "volume_breakout_symbols": ["AGR", "DCL", "DSE", "ORS", "VDS"], "volume_breakout_count": 5}, "HNX": {"exchange": "HNX", "date": "03/07/2026", "total_symbols": 170, "advances": 50, "declines": 60, "unchanged": 60, "advances_pct": 29.4, "declines_pct": 35.3, "unchanged_pct": 35.3, "ad_ratio": 0.83, "pct_above_ma20": 55.6, "pct_above_ma50": 51.9, "pct_above_ma200": 40.7, "above_ma20_count": 15, "above_ma50_count": 14, "above_ma200_count": 11, "ma_total_symbols": 27, "above_ma20_symbols": ["AAV", "API", "APS", "BVS", "CVN", "DDG", "DST", "MBG", "MBS", "NRC", "NVB", "SHS", "TNG", "TVC", "VFS"], "above_ma50_symbols": ["API", "APS", "BVS", "CVN", "DST", "IDJ", "MBG", "MBS", "MST", "NRC", "NVB", "SHS", "SVN", "TVC"], "above_ma200_symbols": ["AAV", "APS", "BVS", "DST", "MST", "NRC", "NVB", "PVS", "SVN", "TVC", "VTZ"], "newly_above_ma20": ["API", "DDG"], "newly_below_ma20": ["PVS", "SVN"], "newly_above_ma50": ["IDJ"], "newly_below_ma50": [], "volume_breakout_symbols": [], "volume_breakout_count": 0}, "ALL": {"exchange": "ALL", "date": "03/07/2026", "total_symbols": 530, "advances": 154, "declines": 259, "unchanged": 117, "advances_pct": 29.1, "declines_pct": 48.9, "unchanged_pct": 22.1, "ad_ratio": 0.59, "pct_above_ma20": 47.7, "pct_above_ma50": 41.1, "pct_above_ma200": 33.1, "above_ma20_count": 72, "above_ma50_count": 62, "above_ma200_count": 50, "ma_total_symbols": 151, "above_ma20_symbols": ["AAA", "AAV", "ACB", "AGR", "APG", "API", "APS", "BAF", "BID", "BSI", "BVS", "CTG", "CTS", "CVN", "DCL", "DDG", "DGW", "DSE", "DST", "ELC", "FIT", "FPT", "FTS", "GEG", "HCM", "HDB", "HSL", "HVN", "LCG", "LPB", "MBB", "MBG", "MBS", "MCH", "MSB", "MWG", "NAB", "NRC", "NVB", "OCB", "ORS", "PET", "PHR", "POW", "PVD", "PVT", "SAB", "SHS", "SSB", "SSI", "STB", "TCB", "TNG", "TPB", "TTA", "TVC", "VCB", "VCG", "VCI", "VDS", "VFS", "VGC", "VHM", "VIB", "VIC", "VJC", "VND", "VNE", "VOS", "VPB", "VPI", "YEG"], "above_ma50_symbols": ["AAA", "ACB", "AGR", "APG", "API", "APS", "BAF", "BID", "BSI", "BVS", "CTS", "CVN", "DCL", "DSE", "DST", "ELC", "FTS", "GEG", "HCM", "HDB", "HHP", "HSL", "HVN", "IDJ", "KDC", "LPB", "MBB", "MBG", "MBS", "MCH", "MSB", "MST", "NAB", "NRC", "NVB", "OCB", "ORS", "PET", "POW", "PVD", "SAB", "SBT", "SHS", "SSB", "STB", "SVN", "TCB", "TPB", "TTA", "TVC", "VCB", "VCG", "VCI", "VDS", "VHM", "VIB", "VIC", "VJC", "VND", "VPB", "VPI", "YEG"], "above_ma200_symbols": ["AAV", "ACB", "AGR", "APS", "BAF", "BID", "BSI", "BSR", "BVS", "CTS", "DST", "EVF", "FTS", "GEX", "GMD", "GVR", "HCM", "HDB", "HHP", "HSL", "LPB", "MSB", "MST", "NAB", "NAF", "NRC", "NVB", "OCB", "ORS", "PET", "PHR", "POW", "PVD", "PVP", "PVS", "PVT", "SAB", "SSB", "STB", "SVN", "TTA", "TVC", "VCB", "VHM", "VIC", "VJC", "VND", "VPB", "VPI", "VTZ"], "newly_above_ma20": ["API", "DDG", "VJC", "VNE"], "newly_below_ma20": ["ANV", "CII", "CRC", "DGC", "EIB", "GEX", "HHP", "MSN", "NLG", "PAN", "PVP", "PVS", "SVN", "TCM"], "newly_above_ma50": ["IDJ", "SBT", "VCI", "VHM"], "newly_below_ma50": ["LDG", "NLG", "PHR", "PVP", "VGC"], "volume_breakout_symbols": ["AGR", "DCL", "DSE", "ORS", "VDS"], "volume_breakout_count": 5}}}, {"date": "05/07/2026", "markets": {"HOSE": {"exchange": "HOSE", "date": "05/07/2026", "total_symbols": 360, "advances": 104, "declines": 199, "unchanged": 57, "advances_pct": 28.9, "declines_pct": 55.3, "unchanged_pct": 15.8, "ad_ratio": 0.52, "pct_above_ma20": 47.6, "pct_above_ma50": 39.5, "pct_above_ma200": 31.5, "above_ma20_count": 59, "above_ma50_count": 49, "above_ma200_count": 39, "ma_total_symbols": 124, "above_ma20_symbols": ["AAA", "ACB", "AGR", "APG", "BAF", "BCG", "BID", "BSI", "CTG", "CTS", "DCL", "DGW", "DSE", "ELC", "FIT", "FPT", "FTS", "GEG", "HCM", "HDB", "HSL", "HVN", "LCG", "LPB", "MBB", "MCH", "MSB", "MWG", "NAB", "OCB", "ORS", "PET", "PHR", "POW", "PVD", "PVT", "SAB", "SSB", "SSI", "STB", "TCB", "TCD", "TPB", "TTA", "VCB", "VCG", "VCI", "VDS", "VGC", "VHM", "VIB", "VIC", "VJC", "VND", "VNE", "VOS", "VPB", "VPI", "YEG"], "above_ma50_symbols": ["AAA", "ACB", "AGR", "APG", "BAF", "BCG", "BID", "BSI", "CTS", "DCL", "DSE", "ELC", "FTS", "GEG", "HCM", "HDB", "HHP", "HSL", "HVN", "KDC", "LPB", "MBB", "MCH", "MSB", "NAB", "OCB", "ORS", "PET", "POW", "PVD", "SAB", "SBT", "SSB", "STB", "TCB", "TPB", "TTA", "VCB", "VCG", "VCI", "VDS", "VHM", "VIB", "VIC", "VJC", "VND", "VPB", "VPI", "YEG"], "above_ma200_symbols": ["ACB", "AGR", "BAF", "BID", "BSI", "BSR", "CTS", "EVF", "FTS", "GEX", "GMD", "GVR", "HCM", "HDB", "HHP", "HSL", "LPB", "MSB", "NAB", "NAF", "OCB", "ORS", "PET", "PHR", "POW", "PVD", "PVP", "PVT", "SAB", "SSB", "STB", "TTA", "VCB", "VHM", "VIC", "VJC", "VND", "VPB", "VPI"], "newly_above_ma20": ["VJC", "VNE"], "newly_below_ma20": ["ANV", "CII", "CRC", "DGC", "EIB", "GEX", "HHP", "MSN", "NLG", "PAN", "PVP", "TCM"], "newly_above_ma50": ["SBT", "VCI", "VHM"], "newly_below_ma50": ["LDG", "NLG", "PHR", "PVP", "TCD", "VGC"], "volume_breakout_symbols": ["AGR", "DCL", "DSE", "ORS", "VDS"], "volume_breakout_count": 5}, "HNX": {"exchange": "HNX", "date": "05/07/2026", "total_symbols": 170, "advances": 50, "declines": 60, "unchanged": 60, "advances_pct": 29.4, "declines_pct": 35.3, "unchanged_pct": 35.3, "ad_ratio": 0.83, "pct_above_ma20": 55.6, "pct_above_ma50": 51.9, "pct_above_ma200": 40.7, "above_ma20_count": 15, "above_ma50_count": 14, "above_ma200_count": 11, "ma_total_symbols": 27, "above_ma20_symbols": ["AAV", "API", "APS", "BVS", "CVN", "DDG", "DST", "MBG", "MBS", "NRC", "NVB", "SHS", "TNG", "TVC", "VFS"], "above_ma50_symbols": ["API", "APS", "BVS", "CVN", "DST", "IDJ", "MBG", "MBS", "MST", "NRC", "NVB", "SHS", "SVN", "TVC"], "above_ma200_symbols": ["AAV", "APS", "BVS", "DST", "MST", "NRC", "NVB", "PVS", "SVN", "TVC", "VTZ"], "newly_above_ma20": ["API", "DDG"], "newly_below_ma20": ["PVS", "SVN"], "newly_above_ma50": ["IDJ"], "newly_below_ma50": [], "volume_breakout_symbols": [], "volume_breakout_count": 0}, "ALL": {"exchange": "ALL", "date": "05/07/2026", "total_symbols": 530, "advances": 154, "declines": 259, "unchanged": 117, "advances_pct": 29.1, "declines_pct": 48.9, "unchanged_pct": 22.1, "ad_ratio": 0.59, "pct_above_ma20": 49.0, "pct_above_ma50": 41.7, "pct_above_ma200": 33.1, "above_ma20_count": 74, "above_ma50_count": 63, "above_ma200_count": 50, "ma_total_symbols": 151, "above_ma20_symbols": ["AAA", "AAV", "ACB", "AGR", "APG", "API", "APS", "BAF", "BCG", "BID", "BSI", "BVS", "CTG", "CTS", "CVN", "DCL", "DDG", "DGW", "DSE", "DST", "ELC", "FIT", "FPT", "FTS", "GEG", "HCM", "HDB", "HSL", "HVN", "LCG", "LPB", "MBB", "MBG", "MBS", "MCH", "MSB", "MWG", "NAB", "NRC", "NVB", "OCB", "ORS", "PET", "PHR", "POW", "PVD", "PVT", "SAB", "SHS", "SSB", "SSI", "STB", "TCB", "TCD", "TNG", "TPB", "TTA", "TVC", "VCB", "VCG", "VCI", "VDS", "VFS", "VGC", "VHM", "VIB", "VIC", "VJC", "VND", "VNE", "VOS", "VPB", "VPI", "YEG"], "above_ma50_symbols": ["AAA", "ACB", "AGR", "APG", "API", "APS", "BAF", "BCG", "BID", "BSI", "BVS", "CTS", "CVN", "DCL", "DSE", "DST", "ELC", "FTS", "GEG", "HCM", "HDB", "HHP", "HSL", "HVN", "IDJ", "KDC", "LPB", "MBB", "MBG", "MBS", "MCH", "MSB", "MST", "NAB", "NRC", "NVB", "OCB", "ORS", "PET", "POW", "PVD", "SAB", "SBT", "SHS", "SSB", "STB", "SVN", "TCB", "TPB", "TTA", "TVC", "VCB", "VCG", "VCI", "VDS", "VHM", "VIB", "VIC", "VJC", "VND", "VPB", "VPI", "YEG"], "above_ma200_symbols": ["AAV", "ACB", "AGR", "APS", "BAF", "BID", "BSI", "BSR", "BVS", "CTS", "DST", "EVF", "FTS", "GEX", "GMD", "GVR", "HCM", "HDB", "HHP", "HSL", "LPB", "MSB", "MST", "NAB", "NAF", "NRC", "NVB", "OCB", "ORS", "PET", "PHR", "POW", "PVD", "PVP", "PVS", "PVT", "SAB", "SSB", "STB", "SVN", "TTA", "TVC", "VCB", "VHM", "VIC", "VJC", "VND", "VPB", "VPI", "VTZ"], "newly_above_ma20": ["API", "DDG", "VJC", "VNE"], "newly_below_ma20": ["ANV", "CII", "CRC", "DGC", "EIB", "GEX", "HHP", "MSN", "NLG", "PAN", "PVP", "PVS", "SVN", "TCM"], "newly_above_ma50": ["IDJ", "SBT", "VCI", "VHM"], "newly_below_ma50": ["LDG", "NLG", "PHR", "PVP", "TCD", "VGC"], "volume_breakout_symbols": ["AGR", "DCL", "DSE", "ORS", "VDS"], "volume_breakout_count": 5}}}, {"date": "06/07/2026", "markets": {"HOSE": {"exchange": "HOSE", "date": "06/07/2026", "total_symbols": 360, "advances": 104, "declines": 199, "unchanged": 57, "advances_pct": 28.9, "declines_pct": 55.3, "unchanged_pct": 15.8, "ad_ratio": 0.52, "pct_above_ma20": 47.6, "pct_above_ma50": 39.5, "pct_above_ma200": 31.5, "above_ma20_count": 59, "above_ma50_count": 49, "above_ma200_count": 39, "ma_total_symbols": 124, "above_ma20_symbols": ["AAA", "ACB", "AGR", "APG", "BAF", "BCG", "BID", "BSI", "CTG", "CTS", "DCL", "DGW", "DSE", "ELC", "FIT", "FPT", "FTS", "GEG", "HCM", "HDB", "HSL", "HVN", "LCG", "LPB", "MBB", "MCH", "MSB", "MWG", "NAB", "OCB", "ORS", "PET", "PHR", "POW", "PVD", "PVT", "SAB", "SSB", "SSI", "STB", "TCB", "TCD", "TPB", "TTA", "VCB", "VCG", "VCI", "VDS", "VGC", "VHM", "VIB", "VIC", "VJC", "VND", "VNE", "VOS", "VPB", "VPI", "YEG"], "above_ma50_symbols": ["AAA", "ACB", "AGR", "APG", "BAF", "BCG", "BID", "BSI", "CTS", "DCL", "DSE", "ELC", "FTS", "GEG", "HCM", "HDB", "HHP", "HSL", "HVN", "KDC", "LPB", "MBB", "MCH", "MSB", "NAB", "OCB", "ORS", "PET", "POW", "PVD", "SAB", "SBT", "SSB", "STB", "TCB", "TPB", "TTA", "VCB", "VCG", "VCI", "VDS", "VHM", "VIB", "VIC", "VJC", "VND", "VPB", "VPI", "YEG"], "above_ma200_symbols": ["ACB", "AGR", "BAF", "BID", "BSI", "BSR", "CTS", "EVF", "FTS", "GEX", "GMD", "GVR", "HCM", "HDB", "HHP", "HSL", "LPB", "MSB", "NAB", "NAF", "OCB", "ORS", "PET", "PHR", "POW", "PVD", "PVP", "PVT", "SAB", "SSB", "STB", "TTA", "VCB", "VHM", "VIC", "VJC", "VND", "VPB", "VPI"], "newly_above_ma20": ["VJC", "VNE"], "newly_below_ma20": ["ANV", "CII", "CRC", "DGC", "EIB", "GEX", "HHP", "MSN", "NLG", "PAN", "PVP", "TCM"], "newly_above_ma50": ["SBT", "VCI", "VHM"], "newly_below_ma50": ["LDG", "NLG", "PHR", "PVP", "TCD", "VGC"], "volume_breakout_symbols": ["AGR", "APG", "BCG", "BID", "BSI", "CTG", "CTS", "DCL", "DGW", "DSE", "FIT", "FPT", "FTS", "HCM", "HDB", "HSL", "HVN", "LCG", "LPB", "MBB", "MCH", "MSB", "MWG", "NAB", "ORS", "PHR", "POW", "PVT", "SAB", "SSB", "SSI", "TCB", "TCD", "VCG", "VCI", "VDS", "VHM", "VIB", "VJC", "VND", "VNE", "VPB", "YEG"], "volume_breakout_count": 43}, "HNX": {"exchange": "HNX", "date": "06/07/2026", "total_symbols": 90, "advances": 43, "declines": 16, "unchanged": 31, "advances_pct": 47.8, "declines_pct": 17.8, "unchanged_pct": 34.4, "ad_ratio": 2.69, "pct_above_ma20": 55.6, "pct_above_ma50": 51.9, "pct_above_ma200": 40.7, "above_ma20_count": 15, "above_ma50_count": 14, "above_ma200_count": 11, "ma_total_symbols": 27, "above_ma20_symbols": ["AAV", "API", "APS", "BVS", "CVN", "DDG", "DST", "MBG", "MBS", "NRC", "NVB", "SHS", "TNG", "TVC", "VFS"], "above_ma50_symbols": ["API", "APS", "BVS", "CVN", "DST", "IDJ", "MBG", "MBS", "MST", "NRC", "NVB", "SHS", "SVN", "TVC"], "above_ma200_symbols": ["AAV", "APS", "BVS", "DST", "MST", "NRC", "NVB", "PVS", "SVN", "TVC", "VTZ"], "newly_above_ma20": ["API", "DDG"], "newly_below_ma20": ["PVS", "SVN"], "newly_above_ma50": ["IDJ"], "newly_below_ma50": [], "volume_breakout_symbols": [], "volume_breakout_count": 0}, "ALL": {"exchange": "ALL", "date": "06/07/2026", "total_symbols": 450, "advances": 147, "declines": 215, "unchanged": 88, "advances_pct": 32.7, "declines_pct": 47.8, "unchanged_pct": 19.6, "ad_ratio": 0.68, "pct_above_ma20": 49.0, "pct_above_ma50": 41.7, "pct_above_ma200": 33.1, "above_ma20_count": 74, "above_ma50_count": 63, "above_ma200_count": 50, "ma_total_symbols": 151, "above_ma20_symbols": ["AAA", "AAV", "ACB", "AGR", "APG", "API", "APS", "BAF", "BCG", "BID", "BSI", "BVS", "CTG", "CTS", "CVN", "DCL", "DDG", "DGW", "DSE", "DST", "ELC", "FIT", "FPT", "FTS", "GEG", "HCM", "HDB", "HSL", "HVN", "LCG", "LPB", "MBB", "MBG", "MBS", "MCH", "MSB", "MWG", "NAB", "NRC", "NVB", "OCB", "ORS", "PET", "PHR", "POW", "PVD", "PVT", "SAB", "SHS", "SSB", "SSI", "STB", "TCB", "TCD", "TNG", "TPB", "TTA", "TVC", "VCB", "VCG", "VCI", "VDS", "VFS", "VGC", "VHM", "VIB", "VIC", "VJC", "VND", "VNE", "VOS", "VPB", "VPI", "YEG"], "above_ma50_symbols": ["AAA", "ACB", "AGR", "APG", "API", "APS", "BAF", "BCG", "BID", "BSI", "BVS", "CTS", "CVN", "DCL", "DSE", "DST", "ELC", "FTS", "GEG", "HCM", "HDB", "HHP", "HSL", "HVN", "IDJ", "KDC", "LPB", "MBB", "MBG", "MBS", "MCH", "MSB", "MST", "NAB", "NRC", "NVB", "OCB", "ORS", "PET", "POW", "PVD", "SAB", "SBT", "SHS", "SSB", "STB", "SVN", "TCB", "TPB", "TTA", "TVC", "VCB", "VCG", "VCI", "VDS", "VHM", "VIB", "VIC", "VJC", "VND", "VPB", "VPI", "YEG"], "above_ma200_symbols": ["AAV", "ACB", "AGR", "APS", "BAF", "BID", "BSI", "BSR", "BVS", "CTS", "DST", "EVF", "FTS", "GEX", "GMD", "GVR", "HCM", "HDB", "HHP", "HSL", "LPB", "MSB", "MST", "NAB", "NAF", "NRC", "NVB", "OCB", "ORS", "PET", "PHR", "POW", "PVD", "PVP", "PVS", "PVT", "SAB", "SSB", "STB", "SVN", "TTA", "TVC", "VCB", "VHM", "VIC", "VJC", "VND", "VPB", "VPI", "VTZ"], "newly_above_ma20": ["API", "DDG", "VJC", "VNE"], "newly_below_ma20": ["ANV", "CII", "CRC", "DGC", "EIB", "GEX", "HHP", "MSN", "NLG", "PAN", "PVP", "PVS", "SVN", "TCM"], "newly_above_ma50": ["IDJ", "SBT", "VCI", "VHM"], "newly_below_ma50": ["LDG", "NLG", "PHR", "PVP", "TCD", "VGC"], "volume_breakout_symbols": ["AGR", "APG", "BCG", "BID", "BSI", "CTG", "CTS", "DCL", "DGW", "DSE", "FIT", "FPT", "FTS", "HCM", "HDB", "HSL", "HVN", "LCG", "LPB", "MBB", "MCH", "MSB", "MWG", "NAB", "ORS", "PHR", "POW", "PVT", "SAB", "SSB", "SSI", "TCB", "TCD", "VCG", "VCI", "VDS", "VHM", "VIB", "VJC", "VND", "VNE", "VPB", "YEG"], "volume_breakout_count": 43}}}];
-const EMBEDDED_MIDDAY = {"generated_at": "2026-07-06T09:15:02.181285", "session": "midday", "markets": {"HOSE": {"exchange": "HOSE", "date": "06/07/2026", "total_symbols": 360, "advances": 104, "declines": 199, "unchanged": 57, "advances_pct": 28.9, "declines_pct": 55.3, "unchanged_pct": 15.8, "ad_ratio": 0.52, "pct_above_ma20": 47.6, "pct_above_ma50": 39.5, "pct_above_ma200": 31.5, "above_ma20_count": 59, "above_ma50_count": 49, "above_ma200_count": 39, "ma_total_symbols": 124, "above_ma20_symbols": ["AAA", "ACB", "AGR", "APG", "BAF", "BCG", "BID", "BSI", "CTG", "CTS", "DCL", "DGW", "DSE", "ELC", "FIT", "FPT", "FTS", "GEG", "HCM", "HDB", "HSL", "HVN", "LCG", "LPB", "MBB", "MCH", "MSB", "MWG", "NAB", "OCB", "ORS", "PET", "PHR", "POW", "PVD", "PVT", "SAB", "SSB", "SSI", "STB", "TCB", "TCD", "TPB", "TTA", "VCB", "VCG", "VCI", "VDS", "VGC", "VHM", "VIB", "VIC", "VJC", "VND", "VNE", "VOS", "VPB", "VPI", "YEG"], "above_ma50_symbols": ["AAA", "ACB", "AGR", "APG", "BAF", "BCG", "BID", "BSI", "CTS", "DCL", "DSE", "ELC", "FTS", "GEG", "HCM", "HDB", "HHP", "HSL", "HVN", "KDC", "LPB", "MBB", "MCH", "MSB", "NAB", "OCB", "ORS", "PET", "POW", "PVD", "SAB", "SBT", "SSB", "STB", "TCB", "TPB", "TTA", "VCB", "VCG", "VCI", "VDS", "VHM", "VIB", "VIC", "VJC", "VND", "VPB", "VPI", "YEG"], "above_ma200_symbols": ["ACB", "AGR", "BAF", "BID", "BSI", "BSR", "CTS", "EVF", "FTS", "GEX", "GMD", "GVR", "HCM", "HDB", "HHP", "HSL", "LPB", "MSB", "NAB", "NAF", "OCB", "ORS", "PET", "PHR", "POW", "PVD", "PVP", "PVT", "SAB", "SSB", "STB", "TTA", "VCB", "VHM", "VIC", "VJC", "VND", "VPB", "VPI"], "newly_above_ma20": ["VJC", "VNE"], "newly_below_ma20": ["ANV", "CII", "CRC", "DGC", "EIB", "GEX", "HHP", "MSN", "NLG", "PAN", "PVP", "TCM"], "newly_above_ma50": ["SBT", "VCI", "VHM"], "newly_below_ma50": ["LDG", "NLG", "PHR", "PVP", "TCD", "VGC"], "volume_breakout_symbols": ["AGR", "APG", "BCG", "BID", "BSI", "CTG", "CTS", "DCL", "DGW", "DSE", "FIT", "FPT", "FTS", "HCM", "HDB", "HSL", "HVN", "LCG", "LPB", "MBB", "MCH", "MSB", "MWG", "NAB", "ORS", "PHR", "POW", "PVT", "SAB", "SSB", "SSI", "TCB", "TCD", "VCG", "VCI", "VDS", "VHM", "VIB", "VJC", "VND", "VNE", "VPB", "YEG"], "volume_breakout_count": 43}, "HNX": {"exchange": "HNX", "date": "06/07/2026", "total_symbols": 90, "advances": 43, "declines": 16, "unchanged": 31, "advances_pct": 47.8, "declines_pct": 17.8, "unchanged_pct": 34.4, "ad_ratio": 2.69, "pct_above_ma20": 55.6, "pct_above_ma50": 51.9, "pct_above_ma200": 40.7, "above_ma20_count": 15, "above_ma50_count": 14, "above_ma200_count": 11, "ma_total_symbols": 27, "above_ma20_symbols": ["AAV", "API", "APS", "BVS", "CVN", "DDG", "DST", "MBG", "MBS", "NRC", "NVB", "SHS", "TNG", "TVC", "VFS"], "above_ma50_symbols": ["API", "APS", "BVS", "CVN", "DST", "IDJ", "MBG", "MBS", "MST", "NRC", "NVB", "SHS", "SVN", "TVC"], "above_ma200_symbols": ["AAV", "APS", "BVS", "DST", "MST", "NRC", "NVB", "PVS", "SVN", "TVC", "VTZ"], "newly_above_ma20": ["API", "DDG"], "newly_below_ma20": ["PVS", "SVN"], "newly_above_ma50": ["IDJ"], "newly_below_ma50": [], "volume_breakout_symbols": [], "volume_breakout_count": 0}, "ALL": {"exchange": "ALL", "date": "06/07/2026", "total_symbols": 450, "advances": 147, "declines": 215, "unchanged": 88, "advances_pct": 32.7, "declines_pct": 47.8, "unchanged_pct": 19.6, "ad_ratio": 0.68, "pct_above_ma20": 49.0, "pct_above_ma50": 41.7, "pct_above_ma200": 33.1, "above_ma20_count": 74, "above_ma50_count": 63, "above_ma200_count": 50, "ma_total_symbols": 151, "above_ma20_symbols": ["AAA", "AAV", "ACB", "AGR", "APG", "API", "APS", "BAF", "BCG", "BID", "BSI", "BVS", "CTG", "CTS", "CVN", "DCL", "DDG", "DGW", "DSE", "DST", "ELC", "FIT", "FPT", "FTS", "GEG", "HCM", "HDB", "HSL", "HVN", "LCG", "LPB", "MBB", "MBG", "MBS", "MCH", "MSB", "MWG", "NAB", "NRC", "NVB", "OCB", "ORS", "PET", "PHR", "POW", "PVD", "PVT", "SAB", "SHS", "SSB", "SSI", "STB", "TCB", "TCD", "TNG", "TPB", "TTA", "TVC", "VCB", "VCG", "VCI", "VDS", "VFS", "VGC", "VHM", "VIB", "VIC", "VJC", "VND", "VNE", "VOS", "VPB", "VPI", "YEG"], "above_ma50_symbols": ["AAA", "ACB", "AGR", "APG", "API", "APS", "BAF", "BCG", "BID", "BSI", "BVS", "CTS", "CVN", "DCL", "DSE", "DST", "ELC", "FTS", "GEG", "HCM", "HDB", "HHP", "HSL", "HVN", "IDJ", "KDC", "LPB", "MBB", "MBG", "MBS", "MCH", "MSB", "MST", "NAB", "NRC", "NVB", "OCB", "ORS", "PET", "POW", "PVD", "SAB", "SBT", "SHS", "SSB", "STB", "SVN", "TCB", "TPB", "TTA", "TVC", "VCB", "VCG", "VCI", "VDS", "VHM", "VIB", "VIC", "VJC", "VND", "VPB", "VPI", "YEG"], "above_ma200_symbols": ["AAV", "ACB", "AGR", "APS", "BAF", "BID", "BSI", "BSR", "BVS", "CTS", "DST", "EVF", "FTS", "GEX", "GMD", "GVR", "HCM", "HDB", "HHP", "HSL", "LPB", "MSB", "MST", "NAB", "NAF", "NRC", "NVB", "OCB", "ORS", "PET", "PHR", "POW", "PVD", "PVP", "PVS", "PVT", "SAB", "SSB", "STB", "SVN", "TTA", "TVC", "VCB", "VHM", "VIC", "VJC", "VND", "VPB", "VPI", "VTZ"], "newly_above_ma20": ["API", "DDG", "VJC", "VNE"], "newly_below_ma20": ["ANV", "CII", "CRC", "DGC", "EIB", "GEX", "HHP", "MSN", "NLG", "PAN", "PVP", "PVS", "SVN", "TCM"], "newly_above_ma50": ["IDJ", "SBT", "VCI", "VHM"], "newly_below_ma50": ["LDG", "NLG", "PHR", "PVP", "TCD", "VGC"], "volume_breakout_symbols": ["AGR", "APG", "BCG", "BID", "BSI", "CTG", "CTS", "DCL", "DGW", "DSE", "FIT", "FPT", "FTS", "HCM", "HDB", "HSL", "HVN", "LCG", "LPB", "MBB", "MCH", "MSB", "MWG", "NAB", "ORS", "PHR", "POW", "PVT", "SAB", "SSB", "SSI", "TCB", "TCD", "VCG", "VCI", "VDS", "VHM", "VIB", "VJC", "VND", "VNE", "VPB", "YEG"], "volume_breakout_count": 43}}};
-const EMBEDDED_COMMENTARY = {"generated_at": "2026-07-06T02:20:49.258451", "session": "midday", "date": "06/07/2026", "content": "# Nhận định phiên Phiên sáng (11:30) — 06/07/2026\n\n## 1. Độ rộng thị trường\n- A/D Ratio = **0.68** | % trên MA20 = **49.0%** | MA50 = **41.7%** | MA200 = **33.1%**\n- Tiền rút lại, bán áp đảo.\n- % trên MA20 30-50% → chao đảo, chờ tín hiệu.\n\n## 3. Tín hiệu mới trong phiên\n- **Mới > MA20 (HOSE)**: VJC, VNE\n- **Mới < MA20 (HOSE)**: ANV, CII, CRC, DGC, EIB, GEX, HHP, MSN, NLG, PAN, PVP, TCM\n- **Mới > MA50 (HOSE)**: SBT, VCI, VHM\n- **Mới < MA50 (HOSE)**: LDG, NLG, PHR, PVP, TCD, VGC\n\n## 4. Volume breakout (giá ≥ MA20 + KL đột biến)\n- **HOSE**: AGR, APG, BCG, BID, BSI, CTG, CTS, DCL, DGW, DSE, FIT, FPT, FTS, HCM, HDB, HSL, HVN, LCG, LPB, MBB\n\n## 5. Gợi ý hành động\n⚠️ Giảm vị thế, chờ A/D hồi về > 1.0\n👀 Theo dõi volume breakout: AGR, APG, BCG, BID, BSI"};
+const EMBEDDED_LATEST = {"generated_at": "2026-07-06T12:08:42.588106", "session": "midday", "markets": {"HOSE": {"exchange": "HOSE", "date": "06/07/2026", "total_symbols": 341, "advances": 92, "declines": 182, "unchanged": 67, "advances_pct": 27.0, "declines_pct": 53.4, "unchanged_pct": 19.6, "ad_ratio": 0.51, "pct_above_ma20": 46.0, "pct_above_ma50": 38.7, "pct_above_ma200": 31.5, "above_ma20_count": 57, "above_ma50_count": 48, "above_ma200_count": 39, "ma_total_symbols": 124, "above_ma20_symbols": ["AAA", "ACB", "AGR", "APG", "BAF", "BID", "BSI", "CTG", "CTS", "DCL", "DGW", "DSE", "ELC", "FIT", "FPT", "FTS", "GEG", "HCM", "HDB", "HSL", "HVN", "LCG", "LPB", "MBB", "MCH", "MSB", "MWG", "NAB", "OCB", "ORS", "PET", "PHR", "POW", "PVD", "PVT", "SAB", "SSB", "SSI", "STB", "TCB", "TPB", "TTA", "VCB", "VCG", "VCI", "VDS", "VGC", "VHM", "VIB", "VIC", "VJC", "VND", "VNE", "VOS", "VPB", "VPI", "YEG"], "above_ma50_symbols": ["AAA", "ACB", "AGR", "APG", "BAF", "BID", "BSI", "CTS", "DCL", "DSE", "ELC", "FTS", "GEG", "HCM", "HDB", "HHP", "HSL", "HVN", "KDC", "LPB", "MBB", "MCH", "MSB", "NAB", "OCB", "ORS", "PET", "POW", "PVD", "SAB", "SBT", "SSB", "STB", "TCB", "TPB", "TTA", "VCB", "VCG", "VCI", "VDS", "VHM", "VIB", "VIC", "VJC", "VND", "VPB", "VPI", "YEG"], "above_ma200_symbols": ["ACB", "AGR", "BAF", "BID", "BSI", "BSR", "CTS", "EVF", "FTS", "GEX", "GMD", "GVR", "HCM", "HDB", "HHP", "HSL", "LPB", "MSB", "NAB", "NAF", "OCB", "ORS", "PET", "PHR", "POW", "PVD", "PVP", "PVT", "SAB", "SSB", "STB", "TTA", "VCB", "VHM", "VIC", "VJC", "VND", "VPB", "VPI"], "newly_above_ma20": ["VJC", "VNE"], "newly_below_ma20": ["ANV", "CII", "CRC", "DGC", "EIB", "GEX", "HHP", "MSN", "NLG", "PAN", "PVP", "TCM"], "newly_above_ma50": ["SBT", "VCI", "VHM"], "newly_below_ma50": ["LDG", "NLG", "PHR", "PVP", "VGC"], "volume_breakout_symbols": ["AGR", "APG", "BID", "BSI", "CTG", "CTS", "DCL", "DGW", "DSE", "FIT", "FPT", "FTS", "HCM", "HDB", "HSL", "HVN", "LCG", "LPB", "MBB", "MCH", "MSB", "MWG", "NAB", "ORS", "PHR", "POW", "PVT", "SAB", "SSB", "SSI", "TCB", "VCG", "VCI", "VDS", "VHM", "VIB", "VJC", "VND", "VNE", "VPB", "YEG"], "volume_breakout_count": 41}, "HNX": {"exchange": "HNX", "date": "06/07/2026", "total_symbols": 146, "advances": 36, "declines": 64, "unchanged": 46, "advances_pct": 24.7, "declines_pct": 43.8, "unchanged_pct": 31.5, "ad_ratio": 0.56, "pct_above_ma20": 55.6, "pct_above_ma50": 51.9, "pct_above_ma200": 40.7, "above_ma20_count": 15, "above_ma50_count": 14, "above_ma200_count": 11, "ma_total_symbols": 27, "above_ma20_symbols": ["AAV", "API", "APS", "BVS", "CVN", "DDG", "DST", "MBG", "MBS", "NRC", "NVB", "SHS", "TNG", "TVC", "VFS"], "above_ma50_symbols": ["API", "APS", "BVS", "CVN", "DST", "IDJ", "MBG", "MBS", "MST", "NRC", "NVB", "SHS", "SVN", "TVC"], "above_ma200_symbols": ["AAV", "APS", "BVS", "DST", "MST", "NRC", "NVB", "PVS", "SVN", "TVC", "VTZ"], "newly_above_ma20": ["API", "DDG"], "newly_below_ma20": ["PVS", "SVN"], "newly_above_ma50": ["IDJ"], "newly_below_ma50": [], "volume_breakout_symbols": [], "volume_breakout_count": 0}, "ALL": {"exchange": "ALL", "date": "06/07/2026", "total_symbols": 487, "advances": 128, "declines": 246, "unchanged": 113, "advances_pct": 26.3, "declines_pct": 50.5, "unchanged_pct": 23.2, "ad_ratio": 0.52, "pct_above_ma20": 47.7, "pct_above_ma50": 41.1, "pct_above_ma200": 33.1, "above_ma20_count": 72, "above_ma50_count": 62, "above_ma200_count": 50, "ma_total_symbols": 151, "above_ma20_symbols": ["AAA", "AAV", "ACB", "AGR", "APG", "API", "APS", "BAF", "BID", "BSI", "BVS", "CTG", "CTS", "CVN", "DCL", "DDG", "DGW", "DSE", "DST", "ELC", "FIT", "FPT", "FTS", "GEG", "HCM", "HDB", "HSL", "HVN", "LCG", "LPB", "MBB", "MBG", "MBS", "MCH", "MSB", "MWG", "NAB", "NRC", "NVB", "OCB", "ORS", "PET", "PHR", "POW", "PVD", "PVT", "SAB", "SHS", "SSB", "SSI", "STB", "TCB", "TNG", "TPB", "TTA", "TVC", "VCB", "VCG", "VCI", "VDS", "VFS", "VGC", "VHM", "VIB", "VIC", "VJC", "VND", "VNE", "VOS", "VPB", "VPI", "YEG"], "above_ma50_symbols": ["AAA", "ACB", "AGR", "APG", "API", "APS", "BAF", "BID", "BSI", "BVS", "CTS", "CVN", "DCL", "DSE", "DST", "ELC", "FTS", "GEG", "HCM", "HDB", "HHP", "HSL", "HVN", "IDJ", "KDC", "LPB", "MBB", "MBG", "MBS", "MCH", "MSB", "MST", "NAB", "NRC", "NVB", "OCB", "ORS", "PET", "POW", "PVD", "SAB", "SBT", "SHS", "SSB", "STB", "SVN", "TCB", "TPB", "TTA", "TVC", "VCB", "VCG", "VCI", "VDS", "VHM", "VIB", "VIC", "VJC", "VND", "VPB", "VPI", "YEG"], "above_ma200_symbols": ["AAV", "ACB", "AGR", "APS", "BAF", "BID", "BSI", "BSR", "BVS", "CTS", "DST", "EVF", "FTS", "GEX", "GMD", "GVR", "HCM", "HDB", "HHP", "HSL", "LPB", "MSB", "MST", "NAB", "NAF", "NRC", "NVB", "OCB", "ORS", "PET", "PHR", "POW", "PVD", "PVP", "PVS", "PVT", "SAB", "SSB", "STB", "SVN", "TTA", "TVC", "VCB", "VHM", "VIC", "VJC", "VND", "VPB", "VPI", "VTZ"], "newly_above_ma20": ["API", "DDG", "VJC", "VNE"], "newly_below_ma20": ["ANV", "CII", "CRC", "DGC", "EIB", "GEX", "HHP", "MSN", "NLG", "PAN", "PVP", "PVS", "SVN", "TCM"], "newly_above_ma50": ["IDJ", "SBT", "VCI", "VHM"], "newly_below_ma50": ["LDG", "NLG", "PHR", "PVP", "VGC"], "volume_breakout_symbols": ["AGR", "APG", "BID", "BSI", "CTG", "CTS", "DCL", "DGW", "DSE", "FIT", "FPT", "FTS", "HCM", "HDB", "HSL", "HVN", "LCG", "LPB", "MBB", "MCH", "MSB", "MWG", "NAB", "ORS", "PHR", "POW", "PVT", "SAB", "SSB", "SSI", "TCB", "VCG", "VCI", "VDS", "VHM", "VIB", "VJC", "VND", "VNE", "VPB", "YEG"], "volume_breakout_count": 41}}};
+const EMBEDDED_HISTORY = [{"date": "02/07/2026", "markets": {"HOSE": {"exchange": "HOSE", "date": "02/07/2026", "total_symbols": 356, "advances": 117, "declines": 162, "unchanged": 77, "advances_pct": 32.9, "declines_pct": 45.5, "unchanged_pct": 21.6, "ad_ratio": 0.72, "pct_above_ma20": 54.8, "pct_above_ma50": 40.5, "pct_above_ma200": 28.6, "above_ma20_count": 69, "above_ma50_count": 51, "above_ma200_count": 36, "ma_total_symbols": 126, "above_ma20_symbols": ["AAA", "ACB", "AGR", "ANV", "APG", "BAF", "BID", "BSI", "CII", "CRC", "CTG", "CTS", "DCL", "DGC", "DGW", "DSE", "EIB", "ELC", "FIT", "FPT", "FTS", "FUEVFVND", "GEG", "GEX", "HCM", "HDB", "HHP", "HSL", "HVN", "LCG", "LPB", "MBB", "MCH", "MSB", "MSN", "MWG", "NAB", "NLG", "OCB", "ORS", "PAN", "PET", "PHR", "POW", "PVD", "PVP", "PVT", "SAB", "SSB", "SSI", "STB", "TCB", "TCM", "TPB", "TTA", "VCB", "VCG", "VCI", "VDS", "VGC", "VHM", "VIB", "VIC", "VND", "VNE", "VOS", "VPB", "VPI", "YEG"], "above_ma50_symbols": ["AAA", "ACB", "AGR", "APG", "BAF", "BID", "BSI", "CTS", "DCL", "DSE", "ELC", "FTS", "FUEVFVND", "GEG", "HCM", "HDB", "HHP", "HSL", "HVN", "KDC", "LDG", "LPB", "MBB", "MCH", "MSB", "NAB", "NLG", "OCB", "ORS", "PET", "PHR", "POW", "PVD", "PVP", "SAB", "SSB", "STB", "TCB", "TPB", "TTA", "VCB", "VCG", "VDS", "VGC", "VIB", "VIC", "VJC", "VND", "VPB", "VPI", "YEG"], "above_ma200_symbols": ["ACB", "BAF", "BID", "BSI", "BSR", "CTS", "EVF", "FTS", "GEX", "GMD", "GVR", "HCM", "HDB", "HHP", "HSL", "LPB", "MSB", "NAB", "NAF", "OCB", "ORS", "PET", "PHR", "POW", "PVD", "PVP", "PVT", "SAB", "SSB", "STB", "TTA", "VCB", "VHM", "VIC", "VJC", "VPI"], "newly_above_ma20": ["FIT", "PHR", "TCM", "VNE"], "newly_below_ma20": ["CTD", "FCN", "HHV", "VJC"], "newly_above_ma50": ["PHR"], "newly_below_ma50": ["FPT", "SBT", "VOS"]}, "HNX": {"exchange": "HNX", "date": "02/07/2026", "total_symbols": 179, "advances": 63, "declines": 58, "unchanged": 58, "advances_pct": 35.2, "declines_pct": 32.4, "unchanged_pct": 32.4, "ad_ratio": 1.09, "pct_above_ma20": 55.6, "pct_above_ma50": 48.1, "pct_above_ma200": 37.0, "above_ma20_count": 15, "above_ma50_count": 13, "above_ma200_count": 10, "ma_total_symbols": 27, "above_ma20_symbols": ["AAV", "APS", "BVS", "CVN", "DST", "MBG", "MBS", "NRC", "NVB", "PVS", "SHS", "SVN", "TNG", "TVC", "VFS"], "above_ma50_symbols": ["API", "APS", "BVS", "CVN", "DST", "MBG", "MBS", "MST", "NRC", "NVB", "SHS", "SVN", "TVC"], "above_ma200_symbols": ["AAV", "BVS", "DST", "MST", "NRC", "NVB", "PVS", "SVN", "TVC", "VTZ"], "newly_above_ma20": ["APS", "SVN", "VFS"], "newly_below_ma20": ["API", "MST", "VTZ"], "newly_above_ma50": [], "newly_below_ma50": ["PVS", "TNG", "VTZ"]}, "ALL": {"exchange": "ALL", "date": "02/07/2026", "total_symbols": 535, "advances": 180, "declines": 220, "unchanged": 135, "advances_pct": 33.6, "declines_pct": 41.1, "unchanged_pct": 25.2, "ad_ratio": 0.82, "pct_above_ma20": 54.9, "pct_above_ma50": 41.8, "pct_above_ma200": 30.1, "above_ma20_count": 84, "above_ma50_count": 64, "above_ma200_count": 46, "ma_total_symbols": 153, "above_ma20_symbols": ["AAA", "AAV", "ACB", "AGR", "ANV", "APG", "APS", "BAF", "BID", "BSI", "BVS", "CII", "CRC", "CTG", "CTS", "CVN", "DCL", "DGC", "DGW", "DSE", "DST", "EIB", "ELC", "FIT", "FPT", "FTS", "FUEVFVND", "GEG", "GEX", "HCM", "HDB", "HHP", "HSL", "HVN", "LCG", "LPB", "MBB", "MBG", "MBS", "MCH", "MSB", "MSN", "MWG", "NAB", "NLG", "NRC", "NVB", "OCB", "ORS", "PAN", "PET", "PHR", "POW", "PVD", "PVP", "PVS", "PVT", "SAB", "SHS", "SSB", "SSI", "STB", "SVN", "TCB", "TCM", "TNG", "TPB", "TTA", "TVC", "VCB", "VCG", "VCI", "VDS", "VFS", "VGC", "VHM", "VIB", "VIC", "VND", "VNE", "VOS", "VPB", "VPI", "YEG"], "above_ma50_symbols": ["AAA", "ACB", "AGR", "APG", "API", "APS", "BAF", "BID", "BSI", "BVS", "CTS", "CVN", "DCL", "DSE", "DST", "ELC", "FTS", "FUEVFVND", "GEG", "HCM", "HDB", "HHP", "HSL", "HVN", "KDC", "LDG", "LPB", "MBB", "MBG", "MBS", "MCH", "MSB", "MST", "NAB", "NLG", "NRC", "NVB", "OCB", "ORS", "PET", "PHR", "POW", "PVD", "PVP", "SAB", "SHS", "SSB", "STB", "SVN", "TCB", "TPB", "TTA", "TVC", "VCB", "VCG", "VDS", "VGC", "VIB", "VIC", "VJC", "VND", "VPB", "VPI", "YEG"], "above_ma200_symbols": ["AAV", "ACB", "BAF", "BID", "BSI", "BSR", "BVS", "CTS", "DST", "EVF", "FTS", "GEX", "GMD", "GVR", "HCM", "HDB", "HHP", "HSL", "LPB", "MSB", "MST", "NAB", "NAF", "NRC", "NVB", "OCB", "ORS", "PET", "PHR", "POW", "PVD", "PVP", "PVS", "PVT", "SAB", "SSB", "STB", "SVN", "TTA", "TVC", "VCB", "VHM", "VIC", "VJC", "VPI", "VTZ"], "newly_above_ma20": ["APS", "FIT", "PHR", "SVN", "TCM", "VFS", "VNE"], "newly_below_ma20": ["API", "CTD", "FCN", "HHV", "MST", "VJC", "VTZ"], "newly_above_ma50": ["PHR"], "newly_below_ma50": ["FPT", "PVS", "SBT", "TNG", "VOS", "VTZ"]}}}, {"date": "03/07/2026", "markets": {"HOSE": {"exchange": "HOSE", "date": "03/07/2026", "total_symbols": 360, "advances": 104, "declines": 199, "unchanged": 57, "advances_pct": 28.9, "declines_pct": 55.3, "unchanged_pct": 15.8, "ad_ratio": 0.52, "pct_above_ma20": 46.0, "pct_above_ma50": 38.7, "pct_above_ma200": 31.5, "above_ma20_count": 57, "above_ma50_count": 48, "above_ma200_count": 39, "ma_total_symbols": 124, "above_ma20_symbols": ["AAA", "ACB", "AGR", "APG", "BAF", "BID", "BSI", "CTG", "CTS", "DCL", "DGW", "DSE", "ELC", "FIT", "FPT", "FTS", "GEG", "HCM", "HDB", "HSL", "HVN", "LCG", "LPB", "MBB", "MCH", "MSB", "MWG", "NAB", "OCB", "ORS", "PET", "PHR", "POW", "PVD", "PVT", "SAB", "SSB", "SSI", "STB", "TCB", "TPB", "TTA", "VCB", "VCG", "VCI", "VDS", "VGC", "VHM", "VIB", "VIC", "VJC", "VND", "VNE", "VOS", "VPB", "VPI", "YEG"], "above_ma50_symbols": ["AAA", "ACB", "AGR", "APG", "BAF", "BID", "BSI", "CTS", "DCL", "DSE", "ELC", "FTS", "GEG", "HCM", "HDB", "HHP", "HSL", "HVN", "KDC", "LPB", "MBB", "MCH", "MSB", "NAB", "OCB", "ORS", "PET", "POW", "PVD", "SAB", "SBT", "SSB", "STB", "TCB", "TPB", "TTA", "VCB", "VCG", "VCI", "VDS", "VHM", "VIB", "VIC", "VJC", "VND", "VPB", "VPI", "YEG"], "above_ma200_symbols": ["ACB", "AGR", "BAF", "BID", "BSI", "BSR", "CTS", "EVF", "FTS", "GEX", "GMD", "GVR", "HCM", "HDB", "HHP", "HSL", "LPB", "MSB", "NAB", "NAF", "OCB", "ORS", "PET", "PHR", "POW", "PVD", "PVP", "PVT", "SAB", "SSB", "STB", "TTA", "VCB", "VHM", "VIC", "VJC", "VND", "VPB", "VPI"], "newly_above_ma20": ["VJC", "VNE"], "newly_below_ma20": ["ANV", "CII", "CRC", "DGC", "EIB", "GEX", "HHP", "MSN", "NLG", "PAN", "PVP", "TCM"], "newly_above_ma50": ["SBT", "VCI", "VHM"], "newly_below_ma50": ["LDG", "NLG", "PHR", "PVP", "VGC"], "volume_breakout_symbols": ["AGR", "DCL", "DSE", "ORS", "VDS"], "volume_breakout_count": 5}, "HNX": {"exchange": "HNX", "date": "03/07/2026", "total_symbols": 170, "advances": 50, "declines": 60, "unchanged": 60, "advances_pct": 29.4, "declines_pct": 35.3, "unchanged_pct": 35.3, "ad_ratio": 0.83, "pct_above_ma20": 55.6, "pct_above_ma50": 51.9, "pct_above_ma200": 40.7, "above_ma20_count": 15, "above_ma50_count": 14, "above_ma200_count": 11, "ma_total_symbols": 27, "above_ma20_symbols": ["AAV", "API", "APS", "BVS", "CVN", "DDG", "DST", "MBG", "MBS", "NRC", "NVB", "SHS", "TNG", "TVC", "VFS"], "above_ma50_symbols": ["API", "APS", "BVS", "CVN", "DST", "IDJ", "MBG", "MBS", "MST", "NRC", "NVB", "SHS", "SVN", "TVC"], "above_ma200_symbols": ["AAV", "APS", "BVS", "DST", "MST", "NRC", "NVB", "PVS", "SVN", "TVC", "VTZ"], "newly_above_ma20": ["API", "DDG"], "newly_below_ma20": ["PVS", "SVN"], "newly_above_ma50": ["IDJ"], "newly_below_ma50": [], "volume_breakout_symbols": [], "volume_breakout_count": 0}, "ALL": {"exchange": "ALL", "date": "03/07/2026", "total_symbols": 530, "advances": 154, "declines": 259, "unchanged": 117, "advances_pct": 29.1, "declines_pct": 48.9, "unchanged_pct": 22.1, "ad_ratio": 0.59, "pct_above_ma20": 47.7, "pct_above_ma50": 41.1, "pct_above_ma200": 33.1, "above_ma20_count": 72, "above_ma50_count": 62, "above_ma200_count": 50, "ma_total_symbols": 151, "above_ma20_symbols": ["AAA", "AAV", "ACB", "AGR", "APG", "API", "APS", "BAF", "BID", "BSI", "BVS", "CTG", "CTS", "CVN", "DCL", "DDG", "DGW", "DSE", "DST", "ELC", "FIT", "FPT", "FTS", "GEG", "HCM", "HDB", "HSL", "HVN", "LCG", "LPB", "MBB", "MBG", "MBS", "MCH", "MSB", "MWG", "NAB", "NRC", "NVB", "OCB", "ORS", "PET", "PHR", "POW", "PVD", "PVT", "SAB", "SHS", "SSB", "SSI", "STB", "TCB", "TNG", "TPB", "TTA", "TVC", "VCB", "VCG", "VCI", "VDS", "VFS", "VGC", "VHM", "VIB", "VIC", "VJC", "VND", "VNE", "VOS", "VPB", "VPI", "YEG"], "above_ma50_symbols": ["AAA", "ACB", "AGR", "APG", "API", "APS", "BAF", "BID", "BSI", "BVS", "CTS", "CVN", "DCL", "DSE", "DST", "ELC", "FTS", "GEG", "HCM", "HDB", "HHP", "HSL", "HVN", "IDJ", "KDC", "LPB", "MBB", "MBG", "MBS", "MCH", "MSB", "MST", "NAB", "NRC", "NVB", "OCB", "ORS", "PET", "POW", "PVD", "SAB", "SBT", "SHS", "SSB", "STB", "SVN", "TCB", "TPB", "TTA", "TVC", "VCB", "VCG", "VCI", "VDS", "VHM", "VIB", "VIC", "VJC", "VND", "VPB", "VPI", "YEG"], "above_ma200_symbols": ["AAV", "ACB", "AGR", "APS", "BAF", "BID", "BSI", "BSR", "BVS", "CTS", "DST", "EVF", "FTS", "GEX", "GMD", "GVR", "HCM", "HDB", "HHP", "HSL", "LPB", "MSB", "MST", "NAB", "NAF", "NRC", "NVB", "OCB", "ORS", "PET", "PHR", "POW", "PVD", "PVP", "PVS", "PVT", "SAB", "SSB", "STB", "SVN", "TTA", "TVC", "VCB", "VHM", "VIC", "VJC", "VND", "VPB", "VPI", "VTZ"], "newly_above_ma20": ["API", "DDG", "VJC", "VNE"], "newly_below_ma20": ["ANV", "CII", "CRC", "DGC", "EIB", "GEX", "HHP", "MSN", "NLG", "PAN", "PVP", "PVS", "SVN", "TCM"], "newly_above_ma50": ["IDJ", "SBT", "VCI", "VHM"], "newly_below_ma50": ["LDG", "NLG", "PHR", "PVP", "VGC"], "volume_breakout_symbols": ["AGR", "DCL", "DSE", "ORS", "VDS"], "volume_breakout_count": 5}}}, {"date": "05/07/2026", "markets": {"HOSE": {"exchange": "HOSE", "date": "05/07/2026", "total_symbols": 360, "advances": 104, "declines": 199, "unchanged": 57, "advances_pct": 28.9, "declines_pct": 55.3, "unchanged_pct": 15.8, "ad_ratio": 0.52, "pct_above_ma20": 47.6, "pct_above_ma50": 39.5, "pct_above_ma200": 31.5, "above_ma20_count": 59, "above_ma50_count": 49, "above_ma200_count": 39, "ma_total_symbols": 124, "above_ma20_symbols": ["AAA", "ACB", "AGR", "APG", "BAF", "BCG", "BID", "BSI", "CTG", "CTS", "DCL", "DGW", "DSE", "ELC", "FIT", "FPT", "FTS", "GEG", "HCM", "HDB", "HSL", "HVN", "LCG", "LPB", "MBB", "MCH", "MSB", "MWG", "NAB", "OCB", "ORS", "PET", "PHR", "POW", "PVD", "PVT", "SAB", "SSB", "SSI", "STB", "TCB", "TCD", "TPB", "TTA", "VCB", "VCG", "VCI", "VDS", "VGC", "VHM", "VIB", "VIC", "VJC", "VND", "VNE", "VOS", "VPB", "VPI", "YEG"], "above_ma50_symbols": ["AAA", "ACB", "AGR", "APG", "BAF", "BCG", "BID", "BSI", "CTS", "DCL", "DSE", "ELC", "FTS", "GEG", "HCM", "HDB", "HHP", "HSL", "HVN", "KDC", "LPB", "MBB", "MCH", "MSB", "NAB", "OCB", "ORS", "PET", "POW", "PVD", "SAB", "SBT", "SSB", "STB", "TCB", "TPB", "TTA", "VCB", "VCG", "VCI", "VDS", "VHM", "VIB", "VIC", "VJC", "VND", "VPB", "VPI", "YEG"], "above_ma200_symbols": ["ACB", "AGR", "BAF", "BID", "BSI", "BSR", "CTS", "EVF", "FTS", "GEX", "GMD", "GVR", "HCM", "HDB", "HHP", "HSL", "LPB", "MSB", "NAB", "NAF", "OCB", "ORS", "PET", "PHR", "POW", "PVD", "PVP", "PVT", "SAB", "SSB", "STB", "TTA", "VCB", "VHM", "VIC", "VJC", "VND", "VPB", "VPI"], "newly_above_ma20": ["VJC", "VNE"], "newly_below_ma20": ["ANV", "CII", "CRC", "DGC", "EIB", "GEX", "HHP", "MSN", "NLG", "PAN", "PVP", "TCM"], "newly_above_ma50": ["SBT", "VCI", "VHM"], "newly_below_ma50": ["LDG", "NLG", "PHR", "PVP", "TCD", "VGC"], "volume_breakout_symbols": ["AGR", "DCL", "DSE", "ORS", "VDS"], "volume_breakout_count": 5}, "HNX": {"exchange": "HNX", "date": "05/07/2026", "total_symbols": 170, "advances": 50, "declines": 60, "unchanged": 60, "advances_pct": 29.4, "declines_pct": 35.3, "unchanged_pct": 35.3, "ad_ratio": 0.83, "pct_above_ma20": 55.6, "pct_above_ma50": 51.9, "pct_above_ma200": 40.7, "above_ma20_count": 15, "above_ma50_count": 14, "above_ma200_count": 11, "ma_total_symbols": 27, "above_ma20_symbols": ["AAV", "API", "APS", "BVS", "CVN", "DDG", "DST", "MBG", "MBS", "NRC", "NVB", "SHS", "TNG", "TVC", "VFS"], "above_ma50_symbols": ["API", "APS", "BVS", "CVN", "DST", "IDJ", "MBG", "MBS", "MST", "NRC", "NVB", "SHS", "SVN", "TVC"], "above_ma200_symbols": ["AAV", "APS", "BVS", "DST", "MST", "NRC", "NVB", "PVS", "SVN", "TVC", "VTZ"], "newly_above_ma20": ["API", "DDG"], "newly_below_ma20": ["PVS", "SVN"], "newly_above_ma50": ["IDJ"], "newly_below_ma50": [], "volume_breakout_symbols": [], "volume_breakout_count": 0}, "ALL": {"exchange": "ALL", "date": "05/07/2026", "total_symbols": 530, "advances": 154, "declines": 259, "unchanged": 117, "advances_pct": 29.1, "declines_pct": 48.9, "unchanged_pct": 22.1, "ad_ratio": 0.59, "pct_above_ma20": 49.0, "pct_above_ma50": 41.7, "pct_above_ma200": 33.1, "above_ma20_count": 74, "above_ma50_count": 63, "above_ma200_count": 50, "ma_total_symbols": 151, "above_ma20_symbols": ["AAA", "AAV", "ACB", "AGR", "APG", "API", "APS", "BAF", "BCG", "BID", "BSI", "BVS", "CTG", "CTS", "CVN", "DCL", "DDG", "DGW", "DSE", "DST", "ELC", "FIT", "FPT", "FTS", "GEG", "HCM", "HDB", "HSL", "HVN", "LCG", "LPB", "MBB", "MBG", "MBS", "MCH", "MSB", "MWG", "NAB", "NRC", "NVB", "OCB", "ORS", "PET", "PHR", "POW", "PVD", "PVT", "SAB", "SHS", "SSB", "SSI", "STB", "TCB", "TCD", "TNG", "TPB", "TTA", "TVC", "VCB", "VCG", "VCI", "VDS", "VFS", "VGC", "VHM", "VIB", "VIC", "VJC", "VND", "VNE", "VOS", "VPB", "VPI", "YEG"], "above_ma50_symbols": ["AAA", "ACB", "AGR", "APG", "API", "APS", "BAF", "BCG", "BID", "BSI", "BVS", "CTS", "CVN", "DCL", "DSE", "DST", "ELC", "FTS", "GEG", "HCM", "HDB", "HHP", "HSL", "HVN", "IDJ", "KDC", "LPB", "MBB", "MBG", "MBS", "MCH", "MSB", "MST", "NAB", "NRC", "NVB", "OCB", "ORS", "PET", "POW", "PVD", "SAB", "SBT", "SHS", "SSB", "STB", "SVN", "TCB", "TPB", "TTA", "TVC", "VCB", "VCG", "VCI", "VDS", "VHM", "VIB", "VIC", "VJC", "VND", "VPB", "VPI", "YEG"], "above_ma200_symbols": ["AAV", "ACB", "AGR", "APS", "BAF", "BID", "BSI", "BSR", "BVS", "CTS", "DST", "EVF", "FTS", "GEX", "GMD", "GVR", "HCM", "HDB", "HHP", "HSL", "LPB", "MSB", "MST", "NAB", "NAF", "NRC", "NVB", "OCB", "ORS", "PET", "PHR", "POW", "PVD", "PVP", "PVS", "PVT", "SAB", "SSB", "STB", "SVN", "TTA", "TVC", "VCB", "VHM", "VIC", "VJC", "VND", "VPB", "VPI", "VTZ"], "newly_above_ma20": ["API", "DDG", "VJC", "VNE"], "newly_below_ma20": ["ANV", "CII", "CRC", "DGC", "EIB", "GEX", "HHP", "MSN", "NLG", "PAN", "PVP", "PVS", "SVN", "TCM"], "newly_above_ma50": ["IDJ", "SBT", "VCI", "VHM"], "newly_below_ma50": ["LDG", "NLG", "PHR", "PVP", "TCD", "VGC"], "volume_breakout_symbols": ["AGR", "DCL", "DSE", "ORS", "VDS"], "volume_breakout_count": 5}}}, {"date": "06/07/2026", "markets": {"HOSE": {"exchange": "HOSE", "date": "06/07/2026", "total_symbols": 341, "advances": 92, "declines": 182, "unchanged": 67, "advances_pct": 27.0, "declines_pct": 53.4, "unchanged_pct": 19.6, "ad_ratio": 0.51, "pct_above_ma20": 46.0, "pct_above_ma50": 38.7, "pct_above_ma200": 31.5, "above_ma20_count": 57, "above_ma50_count": 48, "above_ma200_count": 39, "ma_total_symbols": 124, "above_ma20_symbols": ["AAA", "ACB", "AGR", "APG", "BAF", "BID", "BSI", "CTG", "CTS", "DCL", "DGW", "DSE", "ELC", "FIT", "FPT", "FTS", "GEG", "HCM", "HDB", "HSL", "HVN", "LCG", "LPB", "MBB", "MCH", "MSB", "MWG", "NAB", "OCB", "ORS", "PET", "PHR", "POW", "PVD", "PVT", "SAB", "SSB", "SSI", "STB", "TCB", "TPB", "TTA", "VCB", "VCG", "VCI", "VDS", "VGC", "VHM", "VIB", "VIC", "VJC", "VND", "VNE", "VOS", "VPB", "VPI", "YEG"], "above_ma50_symbols": ["AAA", "ACB", "AGR", "APG", "BAF", "BID", "BSI", "CTS", "DCL", "DSE", "ELC", "FTS", "GEG", "HCM", "HDB", "HHP", "HSL", "HVN", "KDC", "LPB", "MBB", "MCH", "MSB", "NAB", "OCB", "ORS", "PET", "POW", "PVD", "SAB", "SBT", "SSB", "STB", "TCB", "TPB", "TTA", "VCB", "VCG", "VCI", "VDS", "VHM", "VIB", "VIC", "VJC", "VND", "VPB", "VPI", "YEG"], "above_ma200_symbols": ["ACB", "AGR", "BAF", "BID", "BSI", "BSR", "CTS", "EVF", "FTS", "GEX", "GMD", "GVR", "HCM", "HDB", "HHP", "HSL", "LPB", "MSB", "NAB", "NAF", "OCB", "ORS", "PET", "PHR", "POW", "PVD", "PVP", "PVT", "SAB", "SSB", "STB", "TTA", "VCB", "VHM", "VIC", "VJC", "VND", "VPB", "VPI"], "newly_above_ma20": ["VJC", "VNE"], "newly_below_ma20": ["ANV", "CII", "CRC", "DGC", "EIB", "GEX", "HHP", "MSN", "NLG", "PAN", "PVP", "TCM"], "newly_above_ma50": ["SBT", "VCI", "VHM"], "newly_below_ma50": ["LDG", "NLG", "PHR", "PVP", "VGC"], "volume_breakout_symbols": ["AGR", "APG", "BID", "BSI", "CTG", "CTS", "DCL", "DGW", "DSE", "FIT", "FPT", "FTS", "HCM", "HDB", "HSL", "HVN", "LCG", "LPB", "MBB", "MCH", "MSB", "MWG", "NAB", "ORS", "PHR", "POW", "PVT", "SAB", "SSB", "SSI", "TCB", "VCG", "VCI", "VDS", "VHM", "VIB", "VJC", "VND", "VNE", "VPB", "YEG"], "volume_breakout_count": 41}, "HNX": {"exchange": "HNX", "date": "06/07/2026", "total_symbols": 146, "advances": 36, "declines": 64, "unchanged": 46, "advances_pct": 24.7, "declines_pct": 43.8, "unchanged_pct": 31.5, "ad_ratio": 0.56, "pct_above_ma20": 55.6, "pct_above_ma50": 51.9, "pct_above_ma200": 40.7, "above_ma20_count": 15, "above_ma50_count": 14, "above_ma200_count": 11, "ma_total_symbols": 27, "above_ma20_symbols": ["AAV", "API", "APS", "BVS", "CVN", "DDG", "DST", "MBG", "MBS", "NRC", "NVB", "SHS", "TNG", "TVC", "VFS"], "above_ma50_symbols": ["API", "APS", "BVS", "CVN", "DST", "IDJ", "MBG", "MBS", "MST", "NRC", "NVB", "SHS", "SVN", "TVC"], "above_ma200_symbols": ["AAV", "APS", "BVS", "DST", "MST", "NRC", "NVB", "PVS", "SVN", "TVC", "VTZ"], "newly_above_ma20": ["API", "DDG"], "newly_below_ma20": ["PVS", "SVN"], "newly_above_ma50": ["IDJ"], "newly_below_ma50": [], "volume_breakout_symbols": [], "volume_breakout_count": 0}, "ALL": {"exchange": "ALL", "date": "06/07/2026", "total_symbols": 487, "advances": 128, "declines": 246, "unchanged": 113, "advances_pct": 26.3, "declines_pct": 50.5, "unchanged_pct": 23.2, "ad_ratio": 0.52, "pct_above_ma20": 47.7, "pct_above_ma50": 41.1, "pct_above_ma200": 33.1, "above_ma20_count": 72, "above_ma50_count": 62, "above_ma200_count": 50, "ma_total_symbols": 151, "above_ma20_symbols": ["AAA", "AAV", "ACB", "AGR", "APG", "API", "APS", "BAF", "BID", "BSI", "BVS", "CTG", "CTS", "CVN", "DCL", "DDG", "DGW", "DSE", "DST", "ELC", "FIT", "FPT", "FTS", "GEG", "HCM", "HDB", "HSL", "HVN", "LCG", "LPB", "MBB", "MBG", "MBS", "MCH", "MSB", "MWG", "NAB", "NRC", "NVB", "OCB", "ORS", "PET", "PHR", "POW", "PVD", "PVT", "SAB", "SHS", "SSB", "SSI", "STB", "TCB", "TNG", "TPB", "TTA", "TVC", "VCB", "VCG", "VCI", "VDS", "VFS", "VGC", "VHM", "VIB", "VIC", "VJC", "VND", "VNE", "VOS", "VPB", "VPI", "YEG"], "above_ma50_symbols": ["AAA", "ACB", "AGR", "APG", "API", "APS", "BAF", "BID", "BSI", "BVS", "CTS", "CVN", "DCL", "DSE", "DST", "ELC", "FTS", "GEG", "HCM", "HDB", "HHP", "HSL", "HVN", "IDJ", "KDC", "LPB", "MBB", "MBG", "MBS", "MCH", "MSB", "MST", "NAB", "NRC", "NVB", "OCB", "ORS", "PET", "POW", "PVD", "SAB", "SBT", "SHS", "SSB", "STB", "SVN", "TCB", "TPB", "TTA", "TVC", "VCB", "VCG", "VCI", "VDS", "VHM", "VIB", "VIC", "VJC", "VND", "VPB", "VPI", "YEG"], "above_ma200_symbols": ["AAV", "ACB", "AGR", "APS", "BAF", "BID", "BSI", "BSR", "BVS", "CTS", "DST", "EVF", "FTS", "GEX", "GMD", "GVR", "HCM", "HDB", "HHP", "HSL", "LPB", "MSB", "MST", "NAB", "NAF", "NRC", "NVB", "OCB", "ORS", "PET", "PHR", "POW", "PVD", "PVP", "PVS", "PVT", "SAB", "SSB", "STB", "SVN", "TTA", "TVC", "VCB", "VHM", "VIC", "VJC", "VND", "VPB", "VPI", "VTZ"], "newly_above_ma20": ["API", "DDG", "VJC", "VNE"], "newly_below_ma20": ["ANV", "CII", "CRC", "DGC", "EIB", "GEX", "HHP", "MSN", "NLG", "PAN", "PVP", "PVS", "SVN", "TCM"], "newly_above_ma50": ["IDJ", "SBT", "VCI", "VHM"], "newly_below_ma50": ["LDG", "NLG", "PHR", "PVP", "VGC"], "volume_breakout_symbols": ["AGR", "APG", "BID", "BSI", "CTG", "CTS", "DCL", "DGW", "DSE", "FIT", "FPT", "FTS", "HCM", "HDB", "HSL", "HVN", "LCG", "LPB", "MBB", "MCH", "MSB", "MWG", "NAB", "ORS", "PHR", "POW", "PVT", "SAB", "SSB", "SSI", "TCB", "VCG", "VCI", "VDS", "VHM", "VIB", "VJC", "VND", "VNE", "VPB", "YEG"], "volume_breakout_count": 41}}}];
+const EMBEDDED_MIDDAY = {"generated_at": "2026-07-06T12:08:42.588106", "session": "midday", "markets": {"HOSE": {"exchange": "HOSE", "date": "06/07/2026", "total_symbols": 341, "advances": 92, "declines": 182, "unchanged": 67, "advances_pct": 27.0, "declines_pct": 53.4, "unchanged_pct": 19.6, "ad_ratio": 0.51, "pct_above_ma20": 46.0, "pct_above_ma50": 38.7, "pct_above_ma200": 31.5, "above_ma20_count": 57, "above_ma50_count": 48, "above_ma200_count": 39, "ma_total_symbols": 124, "above_ma20_symbols": ["AAA", "ACB", "AGR", "APG", "BAF", "BID", "BSI", "CTG", "CTS", "DCL", "DGW", "DSE", "ELC", "FIT", "FPT", "FTS", "GEG", "HCM", "HDB", "HSL", "HVN", "LCG", "LPB", "MBB", "MCH", "MSB", "MWG", "NAB", "OCB", "ORS", "PET", "PHR", "POW", "PVD", "PVT", "SAB", "SSB", "SSI", "STB", "TCB", "TPB", "TTA", "VCB", "VCG", "VCI", "VDS", "VGC", "VHM", "VIB", "VIC", "VJC", "VND", "VNE", "VOS", "VPB", "VPI", "YEG"], "above_ma50_symbols": ["AAA", "ACB", "AGR", "APG", "BAF", "BID", "BSI", "CTS", "DCL", "DSE", "ELC", "FTS", "GEG", "HCM", "HDB", "HHP", "HSL", "HVN", "KDC", "LPB", "MBB", "MCH", "MSB", "NAB", "OCB", "ORS", "PET", "POW", "PVD", "SAB", "SBT", "SSB", "STB", "TCB", "TPB", "TTA", "VCB", "VCG", "VCI", "VDS", "VHM", "VIB", "VIC", "VJC", "VND", "VPB", "VPI", "YEG"], "above_ma200_symbols": ["ACB", "AGR", "BAF", "BID", "BSI", "BSR", "CTS", "EVF", "FTS", "GEX", "GMD", "GVR", "HCM", "HDB", "HHP", "HSL", "LPB", "MSB", "NAB", "NAF", "OCB", "ORS", "PET", "PHR", "POW", "PVD", "PVP", "PVT", "SAB", "SSB", "STB", "TTA", "VCB", "VHM", "VIC", "VJC", "VND", "VPB", "VPI"], "newly_above_ma20": ["VJC", "VNE"], "newly_below_ma20": ["ANV", "CII", "CRC", "DGC", "EIB", "GEX", "HHP", "MSN", "NLG", "PAN", "PVP", "TCM"], "newly_above_ma50": ["SBT", "VCI", "VHM"], "newly_below_ma50": ["LDG", "NLG", "PHR", "PVP", "VGC"], "volume_breakout_symbols": ["AGR", "APG", "BID", "BSI", "CTG", "CTS", "DCL", "DGW", "DSE", "FIT", "FPT", "FTS", "HCM", "HDB", "HSL", "HVN", "LCG", "LPB", "MBB", "MCH", "MSB", "MWG", "NAB", "ORS", "PHR", "POW", "PVT", "SAB", "SSB", "SSI", "TCB", "VCG", "VCI", "VDS", "VHM", "VIB", "VJC", "VND", "VNE", "VPB", "YEG"], "volume_breakout_count": 41}, "HNX": {"exchange": "HNX", "date": "06/07/2026", "total_symbols": 146, "advances": 36, "declines": 64, "unchanged": 46, "advances_pct": 24.7, "declines_pct": 43.8, "unchanged_pct": 31.5, "ad_ratio": 0.56, "pct_above_ma20": 55.6, "pct_above_ma50": 51.9, "pct_above_ma200": 40.7, "above_ma20_count": 15, "above_ma50_count": 14, "above_ma200_count": 11, "ma_total_symbols": 27, "above_ma20_symbols": ["AAV", "API", "APS", "BVS", "CVN", "DDG", "DST", "MBG", "MBS", "NRC", "NVB", "SHS", "TNG", "TVC", "VFS"], "above_ma50_symbols": ["API", "APS", "BVS", "CVN", "DST", "IDJ", "MBG", "MBS", "MST", "NRC", "NVB", "SHS", "SVN", "TVC"], "above_ma200_symbols": ["AAV", "APS", "BVS", "DST", "MST", "NRC", "NVB", "PVS", "SVN", "TVC", "VTZ"], "newly_above_ma20": ["API", "DDG"], "newly_below_ma20": ["PVS", "SVN"], "newly_above_ma50": ["IDJ"], "newly_below_ma50": [], "volume_breakout_symbols": [], "volume_breakout_count": 0}, "ALL": {"exchange": "ALL", "date": "06/07/2026", "total_symbols": 487, "advances": 128, "declines": 246, "unchanged": 113, "advances_pct": 26.3, "declines_pct": 50.5, "unchanged_pct": 23.2, "ad_ratio": 0.52, "pct_above_ma20": 47.7, "pct_above_ma50": 41.1, "pct_above_ma200": 33.1, "above_ma20_count": 72, "above_ma50_count": 62, "above_ma200_count": 50, "ma_total_symbols": 151, "above_ma20_symbols": ["AAA", "AAV", "ACB", "AGR", "APG", "API", "APS", "BAF", "BID", "BSI", "BVS", "CTG", "CTS", "CVN", "DCL", "DDG", "DGW", "DSE", "DST", "ELC", "FIT", "FPT", "FTS", "GEG", "HCM", "HDB", "HSL", "HVN", "LCG", "LPB", "MBB", "MBG", "MBS", "MCH", "MSB", "MWG", "NAB", "NRC", "NVB", "OCB", "ORS", "PET", "PHR", "POW", "PVD", "PVT", "SAB", "SHS", "SSB", "SSI", "STB", "TCB", "TNG", "TPB", "TTA", "TVC", "VCB", "VCG", "VCI", "VDS", "VFS", "VGC", "VHM", "VIB", "VIC", "VJC", "VND", "VNE", "VOS", "VPB", "VPI", "YEG"], "above_ma50_symbols": ["AAA", "ACB", "AGR", "APG", "API", "APS", "BAF", "BID", "BSI", "BVS", "CTS", "CVN", "DCL", "DSE", "DST", "ELC", "FTS", "GEG", "HCM", "HDB", "HHP", "HSL", "HVN", "IDJ", "KDC", "LPB", "MBB", "MBG", "MBS", "MCH", "MSB", "MST", "NAB", "NRC", "NVB", "OCB", "ORS", "PET", "POW", "PVD", "SAB", "SBT", "SHS", "SSB", "STB", "SVN", "TCB", "TPB", "TTA", "TVC", "VCB", "VCG", "VCI", "VDS", "VHM", "VIB", "VIC", "VJC", "VND", "VPB", "VPI", "YEG"], "above_ma200_symbols": ["AAV", "ACB", "AGR", "APS", "BAF", "BID", "BSI", "BSR", "BVS", "CTS", "DST", "EVF", "FTS", "GEX", "GMD", "GVR", "HCM", "HDB", "HHP", "HSL", "LPB", "MSB", "MST", "NAB", "NAF", "NRC", "NVB", "OCB", "ORS", "PET", "PHR", "POW", "PVD", "PVP", "PVS", "PVT", "SAB", "SSB", "STB", "SVN", "TTA", "TVC", "VCB", "VHM", "VIC", "VJC", "VND", "VPB", "VPI", "VTZ"], "newly_above_ma20": ["API", "DDG", "VJC", "VNE"], "newly_below_ma20": ["ANV", "CII", "CRC", "DGC", "EIB", "GEX", "HHP", "MSN", "NLG", "PAN", "PVP", "PVS", "SVN", "TCM"], "newly_above_ma50": ["IDJ", "SBT", "VCI", "VHM"], "newly_below_ma50": ["LDG", "NLG", "PHR", "PVP", "VGC"], "volume_breakout_symbols": ["AGR", "APG", "BID", "BSI", "CTG", "CTS", "DCL", "DGW", "DSE", "FIT", "FPT", "FTS", "HCM", "HDB", "HSL", "HVN", "LCG", "LPB", "MBB", "MCH", "MSB", "MWG", "NAB", "ORS", "PHR", "POW", "PVT", "SAB", "SSB", "SSI", "TCB", "VCG", "VCI", "VDS", "VHM", "VIB", "VJC", "VND", "VNE", "VPB", "YEG"], "volume_breakout_count": 41}}};
+const EMBEDDED_COMMENTARY = {"generated_at": "2026-07-06T05:14:35.796722", "session": "midday", "date": "06/07/2026", "content": "# Nhận định phiên Phiên sáng (11:30) — 06/07/2026\n\n## 1. Độ rộng thị trường\n- A/D Ratio = **0.52** | % trên MA20 = **47.7%** | MA50 = **41.1%** | MA200 = **33.1%**\n- Tiền rút lại, bán áp đảo.\n- % trên MA20 30-50% → chao đảo, chờ tín hiệu.\n\n## 3. Tín hiệu mới trong phiên\n- **Mới > MA20 (HOSE)**: VJC, VNE\n- **Mới < MA20 (HOSE)**: ANV, CII, CRC, DGC, EIB, GEX, HHP, MSN, NLG, PAN, PVP, TCM\n- **Mới > MA50 (HOSE)**: SBT, VCI, VHM\n- **Mới < MA50 (HOSE)**: LDG, NLG, PHR, PVP, VGC\n\n## 4. Volume breakout (giá ≥ MA20 + KL đột biến)\n- **HOSE**: AGR, APG, BID, BSI, CTG, CTS, DCL, DGW, DSE, FIT, FPT, FTS, HCM, HDB, HSL, HVN, LCG, LPB, MBB, MCH\n\n## 5. Gợi ý hành động\n⚠️ Giảm vị thế, chờ A/D hồi về > 1.0\n👀 Theo dõi volume breakout: AGR, APG, BID, BSI, CTG"};
 const EMBEDDED_SIGNALS = {"generated_at": "2026-07-05T20:08:02.407031+00:00", "date": "05/07/2026", "total_symbols_analyzed": 151, "total_signals": 2, "strong_signals": 0, "moderate_signals": 2, "strong": [], "moderate": [{"symbol": "DCL", "composite_score": 61.9, "base_score": 63.7, "base_range_pct": 3.99, "price_pos": 1.0, "obv_mom5": 0.0565, "obv_mom10": 0.0411, "obv_mom21": 0.0175, "obv_score": 100.0, "vol_gradient": -0.0031, "grad_score": 0, "price_near_high_pct": 0.0, "last_price": 38300.0, "last_volume": 543900.0}, {"symbol": "BAF", "composite_score": 60.7, "base_score": 61.4, "base_range_pct": 4.43, "price_pos": 0.808, "obv_mom5": 0.0247, "obv_mom10": 0.0181, "obv_mom21": 0.1376, "obv_score": 100.0, "vol_gradient": -0.2416, "grad_score": 0, "price_near_high_pct": 0.83, "last_price": 29800.0, "last_volume": 359400.0}], "all_signals": [{"symbol": "DCL", "composite_score": 61.9, "base_score": 63.7, "base_range_pct": 3.99, "price_pos": 1.0, "obv_mom5": 0.0565, "obv_mom10": 0.0411, "obv_mom21": 0.0175, "obv_score": 100.0, "vol_gradient": -0.0031, "grad_score": 0, "price_near_high_pct": 0.0, "last_price": 38300.0, "last_volume": 543900.0}, {"symbol": "BAF", "composite_score": 60.7, "base_score": 61.4, "base_range_pct": 4.43, "price_pos": 0.808, "obv_mom5": 0.0247, "obv_mom10": 0.0181, "obv_mom21": 0.1376, "obv_score": 100.0, "vol_gradient": -0.2416, "grad_score": 0, "price_near_high_pct": 0.83, "last_price": 29800.0, "last_volume": 359400.0}]};
 const EMBEDDED_ENSEMBLE = {"generated_at": "2026-07-05T20:08:17.900905+00:00", "date": "05/07/2026", "total_symbols_analyzed": 151, "total_signals": 8, "strong_buy": 0, "weak_buy": 8, "strong": [], "weak": [{"symbol": "MCH", "total_score": 0.552, "ma_crossover": 1, "pullback": 0, "breakout": 0, "momentum": 1, "ma10": 132400.0, "ma50": 132194.0, "rsi14": 68.3, "vol_ratio": 1.34, "roc10": 10.83, "roc20": 6.62, "last_price": 140200.0, "last_volume": 479700.0}, {"symbol": "VIB", "total_score": 0.552, "ma_crossover": 1, "pullback": 0, "breakout": 0, "momentum": 1, "ma10": 16315.0, "ma50": 16136.3, "rsi14": 57.3, "vol_ratio": 0.97, "roc10": 2.8, "roc20": 2.17, "last_price": 16500.0, "last_volume": 8562400.0}, {"symbol": "VPB", "total_score": 0.552, "ma_crossover": 1, "pullback": 0, "breakout": 0, "momentum": 1, "ma10": 26980.0, "ma50": 26857.6, "rsi14": 66.4, "vol_ratio": 0.65, "roc10": 7.34, "roc20": 5.1, "last_price": 27800.0, "last_volume": 8022500.0}, {"symbol": "AGR", "total_score": 0.545, "ma_crossover": 1, "pullback": 0, "breakout": 1, "momentum": 0, "ma10": 14810.0, "ma50": 14569.0, "rsi14": 71.0, "vol_ratio": 3.66, "roc10": 5.32, "roc20": 11.62, "last_price": 15850.0, "last_volume": 1640700.0}, {"symbol": "DSE", "total_score": 0.545, "ma_crossover": 1, "pullback": 0, "breakout": 1, "momentum": 0, "ma10": 22435.0, "ma50": 22413.0, "rsi14": 57.8, "vol_ratio": 1.89, "roc10": 2.94, "roc20": 6.06, "last_price": 22750.0, "last_volume": 813500.0}, {"symbol": "ORS", "total_score": 0.545, "ma_crossover": 1, "pullback": 0, "breakout": 1, "momentum": 0, "ma10": 13540.0, "ma50": 13240.0, "rsi14": 65.3, "vol_ratio": 3.03, "roc10": 6.49, "roc20": 7.31, "last_price": 13950.0, "last_volume": 10487900.0}, {"symbol": "VDS", "total_score": 0.545, "ma_crossover": 1, "pullback": 0, "breakout": 1, "momentum": 0, "ma10": 14380.0, "ma50": 13993.0, "rsi14": 71.7, "vol_ratio": 8.58, "roc10": 8.9, "roc20": 16.48, "last_price": 15900.0, "last_volume": 7234100.0}, {"symbol": "GEX", "total_score": 0.455, "ma_crossover": 0, "pullback": 1, "breakout": 0, "momentum": 1, "ma10": 30580.0, "ma50": 31421.8, "rsi14": 46.2, "vol_ratio": 0.82, "roc10": 1.17, "roc20": -5.16, "last_price": 30350.0, "last_volume": 8619700.0}], "all_signals": [{"symbol": "MCH", "total_score": 0.552, "ma_crossover": 1, "pullback": 0, "breakout": 0, "momentum": 1, "ma10": 132400.0, "ma50": 132194.0, "rsi14": 68.3, "vol_ratio": 1.34, "roc10": 10.83, "roc20": 6.62, "last_price": 140200.0, "last_volume": 479700.0}, {"symbol": "VIB", "total_score": 0.552, "ma_crossover": 1, "pullback": 0, "breakout": 0, "momentum": 1, "ma10": 16315.0, "ma50": 16136.3, "rsi14": 57.3, "vol_ratio": 0.97, "roc10": 2.8, "roc20": 2.17, "last_price": 16500.0, "last_volume": 8562400.0}, {"symbol": "VPB", "total_score": 0.552, "ma_crossover": 1, "pullback": 0, "breakout": 0, "momentum": 1, "ma10": 26980.0, "ma50": 26857.6, "rsi14": 66.4, "vol_ratio": 0.65, "roc10": 7.34, "roc20": 5.1, "last_price": 27800.0, "last_volume": 8022500.0}, {"symbol": "AGR", "total_score": 0.545, "ma_crossover": 1, "pullback": 0, "breakout": 1, "momentum": 0, "ma10": 14810.0, "ma50": 14569.0, "rsi14": 71.0, "vol_ratio": 3.66, "roc10": 5.32, "roc20": 11.62, "last_price": 15850.0, "last_volume": 1640700.0}, {"symbol": "DSE", "total_score": 0.545, "ma_crossover": 1, "pullback": 0, "breakout": 1, "momentum": 0, "ma10": 22435.0, "ma50": 22413.0, "rsi14": 57.8, "vol_ratio": 1.89, "roc10": 2.94, "roc20": 6.06, "last_price": 22750.0, "last_volume": 813500.0}, {"symbol": "ORS", "total_score": 0.545, "ma_crossover": 1, "pullback": 0, "breakout": 1, "momentum": 0, "ma10": 13540.0, "ma50": 13240.0, "rsi14": 65.3, "vol_ratio": 3.03, "roc10": 6.49, "roc20": 7.31, "last_price": 13950.0, "last_volume": 10487900.0}, {"symbol": "VDS", "total_score": 0.545, "ma_crossover": 1, "pullback": 0, "breakout": 1, "momentum": 0, "ma10": 14380.0, "ma50": 13993.0, "rsi14": 71.7, "vol_ratio": 8.58, "roc10": 8.9, "roc20": 16.48, "last_price": 15900.0, "last_volume": 7234100.0}, {"symbol": "GEX", "total_score": 0.455, "ma_crossover": 0, "pullback": 1, "breakout": 0, "momentum": 1, "ma10": 30580.0, "ma50": 31421.8, "rsi14": 46.2, "vol_ratio": 0.82, "roc10": 1.17, "roc20": -5.16, "last_price": 30350.0, "last_volume": 8619700.0}]};
 const EMBEDDED_WEIGHTS = {"generated_at": "2026-07-05T20:08:10.308477+00:00", "date": "05/07/2026", "num_symbols_tested": 145, "total_observations": 2473, "lookforward_days": 10, "success_threshold_pct": 2.0, "weights": {"ma_crossover": 0.2751, "pullback": 0.1771, "breakout": 0.2704, "momentum": 0.2774}, "stats": {"ma_crossover": {"wins": 194, "total": 806, "win_rate": 0.2407}, "pullback": {"wins": 22, "total": 142, "win_rate": 0.1549}, "breakout": {"wins": 44, "total": 186, "win_rate": 0.2366}, "momentum": {"wins": 325, "total": 1339, "win_rate": 0.2427}}};
-const EMBEDDED_MOMENTUM = {"generated_at": "2026-07-06T08:23:56.201995+00:00", "date": "06/07/2026", "total_symbols_analyzed": 113, "total_signals": 1, "strong_buy": 0, "watch_count": 1, "strong": [], "watch": [{"symbol": "NRC", "score": 45, "signal_type": "watch", "strategies": ["roc_momentum"], "bonuses": ["adx_strong", "rsi_gold"], "base_score": 25, "bonus_score": 20, "details": {"ma_crossover": {"signal": 0, "ma10": 6460.0, "ma50": 6268.0, "rsi14": 63.8, "adx14": 32.6, "vol_ratio": 0.66}, "breakout": {"signal": 0, "high_20": 7000, "rsi14": 63.8, "vol_ratio": 0.66}, "roc_momentum": {"signal": 1, "roc10": 17.24, "roc20": 15.25, "rsi14": 63.8, "vol_slope": 1}, "hybrid": {"signal": 0, "ma10": 6460.0, "ma50": 6268.0, "rsi14": 63.8, "adx14": 32.6, "vol_ratio": 0.66, "nh20": 0}}, "bonus_details": {"vol_surge": {"active": 0, "ratio": 0.66}, "adx_strong": {"active": 1, "adx": 32.6}, "rsi_gold": {"active": 1, "rsi": 63.8}}, "rsi14": 63.8, "adx14": 32.6, "vol_ratio": 0.66, "last_price": 6800.0, "last_volume": 824800.0}], "all_signals": [{"symbol": "NRC", "score": 45, "signal_type": "watch", "strategies": ["roc_momentum"], "bonuses": ["adx_strong", "rsi_gold"], "base_score": 25, "bonus_score": 20, "details": {"ma_crossover": {"signal": 0, "ma10": 6460.0, "ma50": 6268.0, "rsi14": 63.8, "adx14": 32.6, "vol_ratio": 0.66}, "breakout": {"signal": 0, "high_20": 7000, "rsi14": 63.8, "vol_ratio": 0.66}, "roc_momentum": {"signal": 1, "roc10": 17.24, "roc20": 15.25, "rsi14": 63.8, "vol_slope": 1}, "hybrid": {"signal": 0, "ma10": 6460.0, "ma50": 6268.0, "rsi14": 63.8, "adx14": 32.6, "vol_ratio": 0.66, "nh20": 0}}, "bonus_details": {"vol_surge": {"active": 0, "ratio": 0.66}, "adx_strong": {"active": 1, "adx": 32.6}, "rsi_gold": {"active": 1, "rsi": 63.8}}, "rsi14": 63.8, "adx14": 32.6, "vol_ratio": 0.66, "last_price": 6800.0, "last_volume": 824800.0}]};
+const EMBEDDED_MOMENTUM = {"generated_at": "2026-07-06T09:22:54.685902+00:00", "date": "06/07/2026", "total_symbols_analyzed": 142, "total_signals": 2, "strong_buy": 0, "watch_count": 2, "strong": [], "watch": [{"symbol": "NRC", "score": 45, "signal_type": "watch", "strategies": ["roc_momentum"], "bonuses": ["adx_strong", "rsi_gold"], "base_score": 25, "bonus_score": 20, "details": {"ma_crossover": {"signal": 0, "ma10": 6460.0, "ma50": 6268.0, "rsi14": 63.8, "adx14": 32.6, "vol_ratio": 0.66}, "breakout": {"signal": 0, "high_20": 7000, "rsi14": 63.8, "vol_ratio": 0.66}, "roc_momentum": {"signal": 1, "roc10": 17.24, "roc20": 15.25, "rsi14": 63.8, "vol_slope": 1}, "hybrid": {"signal": 0, "ma10": 6460.0, "ma50": 6268.0, "rsi14": 63.8, "adx14": 32.6, "vol_ratio": 0.66, "nh20": 0}}, "bonus_details": {"vol_surge": {"active": 0, "ratio": 0.66}, "adx_strong": {"active": 1, "adx": 32.6}, "rsi_gold": {"active": 1, "rsi": 63.8}}, "rsi14": 63.8, "adx14": 32.6, "vol_ratio": 0.66, "last_price": 6800.0, "last_volume": 824800.0}, {"symbol": "NAB", "score": 40, "signal_type": "watch", "strategies": ["ma_crossover"], "bonuses": ["adx_strong"], "base_score": 30, "bonus_score": 10, "details": {"ma_crossover": {"signal": 1, "ma10": 12955.0, "ma50": 12271.3, "rsi14": 68.1, "adx14": 29.9, "vol_ratio": 1.37}, "breakout": {"signal": 0, "high_20": 13200, "rsi14": 68.1, "vol_ratio": 1.37}, "roc_momentum": {"signal": 0, "roc10": 5.65, "roc20": 8.26, "rsi14": 68.1, "vol_slope": 1}, "hybrid": {"signal": 0, "ma10": 12955.0, "ma50": 12271.3, "rsi14": 68.1, "adx14": 29.9, "vol_ratio": 1.37, "nh20": 0}}, "bonus_details": {"vol_surge": {"active": 0, "ratio": 1.37}, "adx_strong": {"active": 1, "adx": 29.9}, "rsi_gold": {"active": 0, "rsi": 68.1}}, "rsi14": 68.1, "adx14": 29.9, "vol_ratio": 1.37, "last_price": 13100.0, "last_volume": 2839900.0}], "all_signals": [{"symbol": "NRC", "score": 45, "signal_type": "watch", "strategies": ["roc_momentum"], "bonuses": ["adx_strong", "rsi_gold"], "base_score": 25, "bonus_score": 20, "details": {"ma_crossover": {"signal": 0, "ma10": 6460.0, "ma50": 6268.0, "rsi14": 63.8, "adx14": 32.6, "vol_ratio": 0.66}, "breakout": {"signal": 0, "high_20": 7000, "rsi14": 63.8, "vol_ratio": 0.66}, "roc_momentum": {"signal": 1, "roc10": 17.24, "roc20": 15.25, "rsi14": 63.8, "vol_slope": 1}, "hybrid": {"signal": 0, "ma10": 6460.0, "ma50": 6268.0, "rsi14": 63.8, "adx14": 32.6, "vol_ratio": 0.66, "nh20": 0}}, "bonus_details": {"vol_surge": {"active": 0, "ratio": 0.66}, "adx_strong": {"active": 1, "adx": 32.6}, "rsi_gold": {"active": 1, "rsi": 63.8}}, "rsi14": 63.8, "adx14": 32.6, "vol_ratio": 0.66, "last_price": 6800.0, "last_volume": 824800.0}, {"symbol": "NAB", "score": 40, "signal_type": "watch", "strategies": ["ma_crossover"], "bonuses": ["adx_strong"], "base_score": 30, "bonus_score": 10, "details": {"ma_crossover": {"signal": 1, "ma10": 12955.0, "ma50": 12271.3, "rsi14": 68.1, "adx14": 29.9, "vol_ratio": 1.37}, "breakout": {"signal": 0, "high_20": 13200, "rsi14": 68.1, "vol_ratio": 1.37}, "roc_momentum": {"signal": 0, "roc10": 5.65, "roc20": 8.26, "rsi14": 68.1, "vol_slope": 1}, "hybrid": {"signal": 0, "ma10": 12955.0, "ma50": 12271.3, "rsi14": 68.1, "adx14": 29.9, "vol_ratio": 1.37, "nh20": 0}}, "bonus_details": {"vol_surge": {"active": 0, "ratio": 1.37}, "adx_strong": {"active": 1, "adx": 29.9}, "rsi_gold": {"active": 0, "rsi": 68.1}}, "rsi14": 68.1, "adx14": 29.9, "vol_ratio": 1.37, "last_price": 13100.0, "last_volume": 2839900.0}]};
+const EMBEDDED_MOMENTUM_BT = {"generated_at": "2026-07-06T09:12:35.011716+00:00", "date": "06/07/2026", "num_symbols_tested": 131, "lookforward_days": [5, 10, 20], "success_threshold_pct": 2.0, "min_observations": 20, "stats": {"strong_T+20": {"wins": 49, "total": 145, "win_rate": 0.3379}, "breakout_T+5": {"wins": 4, "total": 19, "win_rate": 0.2105}, "any_signal_T+20": {"wins": 96, "total": 331, "win_rate": 0.29}, "roc_momentum_T+20": {"wins": 0, "total": 11, "win_rate": 0.0}, "watch_T+20": {"wins": 47, "total": 186, "win_rate": 0.2527}, "roc_momentum_T+5": {"wins": 5, "total": 19, "win_rate": 0.2632}, "strong_T+5": {"wins": 79, "total": 248, "win_rate": 0.3185}, "any_signal_T+5": {"wins": 151, "total": 548, "win_rate": 0.2755}, "breakout_T+10": {"wins": 2, "total": 14, "win_rate": 0.1429}, "watch_T+5": {"wins": 72, "total": 300, "win_rate": 0.24}, "strong_T+10": {"wins": 66, "total": 208, "win_rate": 0.3173}, "hybrid_T+10": {"wins": 1, "total": 3, "win_rate": 0.3333}, "hybrid_T+5": {"wins": 1, "total": 4, "win_rate": 0.25}, "watch_T+10": {"wins": 65, "total": 248, "win_rate": 0.2621}, "ma_crossover_T+10": {"wins": 8, "total": 27, "win_rate": 0.2963}, "any_signal_T+10": {"wins": 131, "total": 456, "win_rate": 0.2873}, "ma_crossover_T+5": {"wins": 7, "total": 30, "win_rate": 0.2333}, "roc_momentum_T+10": {"wins": 3, "total": 11, "win_rate": 0.2727}, "ma_crossover_T+20": {"wins": 4, "total": 25, "win_rate": 0.16}, "hybrid_T+20": {"wins": 1, "total": 3, "win_rate": 0.3333}, "breakout_T+20": {"wins": 2, "total": 13, "win_rate": 0.1538}}, "score_distribution": {"mean_mean": 8.43, "mean_median": 4.12, "mean_pct_strong": 3.59, "mean_pct_watch": 4.62}};
 const EMBEDDED_SIGNALS_HISTORY = [{"date": "05/07/2026", "strategy": {"generated_at": "2026-07-05T20:08:02.407031+00:00", "date": "05/07/2026", "total_symbols_analyzed": 151, "total_signals": 2, "strong_signals": 0, "moderate_signals": 2, "strong": [], "moderate": [{"symbol": "DCL", "composite_score": 61.9, "base_score": 63.7, "base_range_pct": 3.99, "price_pos": 1.0, "obv_mom5": 0.0565, "obv_mom10": 0.0411, "obv_mom21": 0.0175, "obv_score": 100.0, "vol_gradient": -0.0031, "grad_score": 0, "price_near_high_pct": 0.0, "last_price": 38300.0, "last_volume": 543900.0}, {"symbol": "BAF", "composite_score": 60.7, "base_score": 61.4, "base_range_pct": 4.43, "price_pos": 0.808, "obv_mom5": 0.0247, "obv_mom10": 0.0181, "obv_mom21": 0.1376, "obv_score": 100.0, "vol_gradient": -0.2416, "grad_score": 0, "price_near_high_pct": 0.83, "last_price": 29800.0, "last_volume": 359400.0}], "all_signals": [{"symbol": "DCL", "composite_score": 61.9, "base_score": 63.7, "base_range_pct": 3.99, "price_pos": 1.0, "obv_mom5": 0.0565, "obv_mom10": 0.0411, "obv_mom21": 0.0175, "obv_score": 100.0, "vol_gradient": -0.0031, "grad_score": 0, "price_near_high_pct": 0.0, "last_price": 38300.0, "last_volume": 543900.0}, {"symbol": "BAF", "composite_score": 60.7, "base_score": 61.4, "base_range_pct": 4.43, "price_pos": 0.808, "obv_mom5": 0.0247, "obv_mom10": 0.0181, "obv_mom21": 0.1376, "obv_score": 100.0, "vol_gradient": -0.2416, "grad_score": 0, "price_near_high_pct": 0.83, "last_price": 29800.0, "last_volume": 359400.0}]}, "ensemble": {"generated_at": "2026-07-05T20:08:17.900905+00:00", "date": "05/07/2026", "total_symbols_analyzed": 151, "total_signals": 8, "strong_buy": 0, "weak_buy": 8, "strong": [], "weak": [{"symbol": "MCH", "total_score": 0.552, "ma_crossover": 1, "pullback": 0, "breakout": 0, "momentum": 1, "ma10": 132400.0, "ma50": 132194.0, "rsi14": 68.3, "vol_ratio": 1.34, "roc10": 10.83, "roc20": 6.62, "last_price": 140200.0, "last_volume": 479700.0}, {"symbol": "VIB", "total_score": 0.552, "ma_crossover": 1, "pullback": 0, "breakout": 0, "momentum": 1, "ma10": 16315.0, "ma50": 16136.3, "rsi14": 57.3, "vol_ratio": 0.97, "roc10": 2.8, "roc20": 2.17, "last_price": 16500.0, "last_volume": 8562400.0}, {"symbol": "VPB", "total_score": 0.552, "ma_crossover": 1, "pullback": 0, "breakout": 0, "momentum": 1, "ma10": 26980.0, "ma50": 26857.6, "rsi14": 66.4, "vol_ratio": 0.65, "roc10": 7.34, "roc20": 5.1, "last_price": 27800.0, "last_volume": 8022500.0}, {"symbol": "AGR", "total_score": 0.545, "ma_crossover": 1, "pullback": 0, "breakout": 1, "momentum": 0, "ma10": 14810.0, "ma50": 14569.0, "rsi14": 71.0, "vol_ratio": 3.66, "roc10": 5.32, "roc20": 11.62, "last_price": 15850.0, "last_volume": 1640700.0}, {"symbol": "DSE", "total_score": 0.545, "ma_crossover": 1, "pullback": 0, "breakout": 1, "momentum": 0, "ma10": 22435.0, "ma50": 22413.0, "rsi14": 57.8, "vol_ratio": 1.89, "roc10": 2.94, "roc20": 6.06, "last_price": 22750.0, "last_volume": 813500.0}, {"symbol": "ORS", "total_score": 0.545, "ma_crossover": 1, "pullback": 0, "breakout": 1, "momentum": 0, "ma10": 13540.0, "ma50": 13240.0, "rsi14": 65.3, "vol_ratio": 3.03, "roc10": 6.49, "roc20": 7.31, "last_price": 13950.0, "last_volume": 10487900.0}, {"symbol": "VDS", "total_score": 0.545, "ma_crossover": 1, "pullback": 0, "breakout": 1, "momentum": 0, "ma10": 14380.0, "ma50": 13993.0, "rsi14": 71.7, "vol_ratio": 8.58, "roc10": 8.9, "roc20": 16.48, "last_price": 15900.0, "last_volume": 7234100.0}, {"symbol": "GEX", "total_score": 0.455, "ma_crossover": 0, "pullback": 1, "breakout": 0, "momentum": 1, "ma10": 30580.0, "ma50": 31421.8, "rsi14": 46.2, "vol_ratio": 0.82, "roc10": 1.17, "roc20": -5.16, "last_price": 30350.0, "last_volume": 8619700.0}], "all_signals": [{"symbol": "MCH", "total_score": 0.552, "ma_crossover": 1, "pullback": 0, "breakout": 0, "momentum": 1, "ma10": 132400.0, "ma50": 132194.0, "rsi14": 68.3, "vol_ratio": 1.34, "roc10": 10.83, "roc20": 6.62, "last_price": 140200.0, "last_volume": 479700.0}, {"symbol": "VIB", "total_score": 0.552, "ma_crossover": 1, "pullback": 0, "breakout": 0, "momentum": 1, "ma10": 16315.0, "ma50": 16136.3, "rsi14": 57.3, "vol_ratio": 0.97, "roc10": 2.8, "roc20": 2.17, "last_price": 16500.0, "last_volume": 8562400.0}, {"symbol": "VPB", "total_score": 0.552, "ma_crossover": 1, "pullback": 0, "breakout": 0, "momentum": 1, "ma10": 26980.0, "ma50": 26857.6, "rsi14": 66.4, "vol_ratio": 0.65, "roc10": 7.34, "roc20": 5.1, "last_price": 27800.0, "last_volume": 8022500.0}, {"symbol": "AGR", "total_score": 0.545, "ma_crossover": 1, "pullback": 0, "breakout": 1, "momentum": 0, "ma10": 14810.0, "ma50": 14569.0, "rsi14": 71.0, "vol_ratio": 3.66, "roc10": 5.32, "roc20": 11.62, "last_price": 15850.0, "last_volume": 1640700.0}, {"symbol": "DSE", "total_score": 0.545, "ma_crossover": 1, "pullback": 0, "breakout": 1, "momentum": 0, "ma10": 22435.0, "ma50": 22413.0, "rsi14": 57.8, "vol_ratio": 1.89, "roc10": 2.94, "roc20": 6.06, "last_price": 22750.0, "last_volume": 813500.0}, {"symbol": "ORS", "total_score": 0.545, "ma_crossover": 1, "pullback": 0, "breakout": 1, "momentum": 0, "ma10": 13540.0, "ma50": 13240.0, "rsi14": 65.3, "vol_ratio": 3.03, "roc10": 6.49, "roc20": 7.31, "last_price": 13950.0, "last_volume": 10487900.0}, {"symbol": "VDS", "total_score": 0.545, "ma_crossover": 1, "pullback": 0, "breakout": 1, "momentum": 0, "ma10": 14380.0, "ma50": 13993.0, "rsi14": 71.7, "vol_ratio": 8.58, "roc10": 8.9, "roc20": 16.48, "last_price": 15900.0, "last_volume": 7234100.0}, {"symbol": "GEX", "total_score": 0.455, "ma_crossover": 0, "pullback": 1, "breakout": 0, "momentum": 1, "ma10": 30580.0, "ma50": 31421.8, "rsi14": 46.2, "vol_ratio": 0.82, "roc10": 1.17, "roc20": -5.16, "last_price": 30350.0, "last_volume": 8619700.0}]}}];
 </script>
 </head>
@@ -167,25 +170,25 @@ const EMBEDDED_SIGNALS_HISTORY = [{"date": "05/07/2026", "strategy": {"generated
 <div class="wrap">
   <header>
     <div>
-      <h1>Độ rộng thị trường chứng khoán Việt Nam</h1>
+      <h1>Độ rộng thị trường <small>TTCK Việt Nam</small></h1>
       <div class="sub" id="metaLine">Đang tải...</div>
     </div>
-    <div class="tabs" id="tabs"></div>
+    <div class="market-tabs" id="marketTabs"></div>
   </header>
 
-  <div id="content">
-    <div class="loading">Đang tải dữ liệu…</div>
-  </div>
+  <div id="content"></div>
 
-  <footer>Dữ liệu: SSI FastConnect · Cập nhật tự động qua GitHub Actions<br><span style="color:#141834;font-weight:600;font-size:12px;">nguyendat.invest2026</span></footer>
+  <footer>Dữ liệu: SSI FastConnect · Cập nhật tự động qua GitHub Actions<br><span style="color:#141834;font-weight:600;">nguyendat.invest2026</span></footer>
 </div>
 
 <script>
 let MARKETS = ['ALL'];
-let activeMarket = 'HOSE';
-let LATEST = null, HISTORY = null, MIDDAY = null, COMMENTARY = null, SIGNALS = null, ENSEMBLE = null, ENSEMBLE_WEIGHTS = null, SIGNALS_HISTORY = null;
-let MOMENTUM = null;
-let activeSignalsDate = null;
+let activeMarket = 'ALL';
+let activeFilter = 'all';
+let searchQuery = '';
+let LATEST = null, HISTORY = null, MIDDAY = null, COMMENTARY = null;
+let SIGNALS = null, ENSEMBLE = null, MOMENTUM = null, MOMENTUM_BT = null;
+let ENSEMBLE_WEIGHTS = null, SIGNALS_HISTORY = null;
 
 async function loadData(){
   LATEST = EMBEDDED_LATEST;
@@ -196,6 +199,7 @@ async function loadData(){
   ENSEMBLE = EMBEDDED_ENSEMBLE;
   ENSEMBLE_WEIGHTS = EMBEDDED_WEIGHTS;
   MOMENTUM = EMBEDDED_MOMENTUM;
+  MOMENTUM_BT = EMBEDDED_MOMENTUM_BT;
   SIGNALS_HISTORY = EMBEDDED_SIGNALS_HISTORY;
   if (SIGNALS_HISTORY && SIGNALS_HISTORY.length > 0) { activeSignalsDate = SIGNALS_HISTORY[SIGNALS_HISTORY.length - 1].date; }
   if (MIDDAY && MIDDAY.markets && MIDDAY.markets.ALL.date !== LATEST.markets.ALL.date) { MIDDAY = null; }
@@ -205,627 +209,486 @@ async function loadData(){
   document.getElementById('metaLine').innerHTML =
     "Cập nhật: " + new Date(LATEST.generated_at).toLocaleString('vi-VN') + " · Ngày dữ liệu: " + LATEST.markets.ALL.date + " " + sessionLabel;
   MARKETS = ['ALL', ...Object.keys(LATEST.markets).filter(k => k !== 'ALL')];
-  renderTabs();
+  renderMarketTabs();
   render();
 }
 
 
-function renderTabs(){
-  const tabsEl = document.getElementById('tabs');
-  tabsEl.innerHTML = '';
-  const tabs = [...MARKETS];
-  if (SIGNALS) tabs.push('TIN_HIEU');
-  if (ENSEMBLE) tabs.push('DONG_THUAT');
-  if (COMMENTARY) tabs.push('NHAN_DINH');
-  if (MOMENTUM) tabs.push('BREAK_OUT');
-  tabs.forEach(m => {
+
+function renderMarketTabs(){
+  const el = document.getElementById('marketTabs');
+  el.innerHTML = '';
+  MARKETS.forEach(m => {
     const btn = document.createElement('button');
-    const labels = { NHAN_DINH: 'Nhận định', TIN_HIEU: 'Pre-Breakout', DONG_THUAT: 'Ensemble', BREAK_OUT: 'Break out!' };
-    btn.textContent = labels[m] || m;
+    btn.textContent = m;
     if (m === activeMarket) btn.classList.add('active');
-    btn.onclick = () => { activeMarket = m; renderTabs(); render(); };
-    tabsEl.appendChild(btn);
+    btn.onclick = () => { activeMarket = m; render(); renderMarketTabs(); };
+    el.appendChild(btn);
   });
 }
 
-function fmt1(n){ return (n === null || n === undefined) ? '—' : Number(n).toFixed(1); }
-function deltaStr(cur, prev, rev){
-  if (cur === null || cur === undefined || prev === null || prev === undefined) return '';
-  const d = cur - prev;
-  if (Math.abs(d) < 0.01) return '<span class="delta flat">0</span>';
-  const cls = rev ? (d < 0 ? 'up' : 'down') : (d > 0 ? 'up' : 'down');
-  const sign = d > 0 ? '+' : '';
-  return `<span class="delta ${cls}">${sign}${Number(d).toFixed(typeof d === 'number' && Number.isInteger(d) ? 0 : 2)}</span>`;
-}
-
-function renderChipsDual(list, otherList){
-  const dual = new Set(otherList.filter(x => list.includes(x)));
-  return renderChips(list, 'neutral', dual);
-}
-
-function renderChips(list, kind, dualSet){
-  if (!list || list.length === 0) return '<span class="empty-note">Không có mã nào</span>';
-  let cls;
-  if (kind === 'up') cls = 'chip up';
-  else if (kind === 'down') cls = 'chip down';
-  else if (kind === 'dual') cls = 'chip dual';
-  else cls = 'chip';
-  return list.map(sym => {
-    const isDual = dualSet && dualSet.has(sym);
-    const finalCls = isDual ? 'chip dual' : cls;
-    return `<span class="${finalCls}">${sym}</span>`;
-  }).join('');
-}
-
-function signalsDateOptions(){
-  if (!SIGNALS_HISTORY) return '';
-  return SIGNALS_HISTORY.map(h => {
-    const sel = h.date === activeSignalsDate ? 'selected' : '';
-    return `<option value="${h.date}" ${sel}>${h.date}</option>`;
-  }).join('');
-}
-
-function onSignalsDateChange(date){
-  activeSignalsDate = date;
-  if (activeMarket === 'TIN_HIEU') renderSignals();
-  else if (activeMarket === 'DONG_THUAT') renderEnsemble();
-  else if (activeMarket === 'BREAK_OUT') renderMomentum();
-}
-
-function renderDateSelector(){
-  if (!SIGNALS_HISTORY || SIGNALS_HISTORY.length < 1) return '';
-  return `<div class="date-selector" style="display:flex;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap;">
-    <label style="font-size:13px;color:var(--faint);">Xem ngày:</label>
-    <select onchange="onSignalsDateChange(this.value)" style="padding:6px 12px;border-radius:10px;border:1px solid var(--border);background:var(--panel-tint);color:var(--text);font-size:13px;cursor:pointer;">
-      ${signalsDateOptions()}
-    </select>
-  </div>`;
-}
-
-function cmpHTML(){
-  if (!MIDDAY || LATEST.session !== 'close') return '';
-  const mm = MIDDAY.markets[activeMarket];
-  const m = LATEST.markets[activeMarket];
-  if (!mm || !m || mm.date !== m.date) return '';
-  const d = (v) => v === null || v === undefined ? 0 : v;
-  const advDelta = d(m.advances) - d(mm.advances);
-  const decDelta = d(m.declines) - d(mm.declines);
-  const adDelta = d(m.ad_ratio) - d(mm.ad_ratio);
-  const ma20Delta = d(m.pct_above_ma20) - d(mm.pct_above_ma20);
-  const advCls = advDelta > 0 ? 'up' : advDelta < 0 ? 'down' : 'flat';
-  const decCls = decDelta < 0 ? 'up' : decDelta > 0 ? 'down' : 'flat';
-  const adCls = adDelta > 0 ? 'up' : adDelta < 0 ? 'down' : 'flat';
-  const maCls = ma20Delta > 0 ? 'up' : ma20Delta < 0 ? 'down' : 'flat';
-  return `<div class="panel">
-    <h2>So sánh với phiên sáng — ${activeMarket}</h2>
-    <div class="cmp-grid">
-      <div class="cmp-card">
-        <div class="lab">Tăng / Giảm</div>
-        <div class="row"><span>11:30</span><span class="val">${mm.advances} / ${mm.declines}</span></div>
-        <div class="row"><span>15:10</span><span class="val">${m.advances} / ${m.declines}</span></div>
-        <div class="row"><span>Δ</span><span class="val"><span class="delta ${advCls}">${advDelta > 0 ? '+' : ''}${advDelta}</span> / <span class="delta ${decCls}">${decDelta > 0 ? '+' : ''}${decDelta}</span></span></div>
-      </div>
-      <div class="cmp-card">
-        <div class="lab">A/D Ratio</div>
-        <div class="row"><span>11:30</span><span class="val">${fmt1(mm.ad_ratio)}</span></div>
-        <div class="row"><span>15:10</span><span class="val">${fmt1(m.ad_ratio)}</span></div>
-        <div class="row"><span>Δ</span><span class="val"><span class="delta ${adCls}">${adDelta > 0 ? '+' : ''}${fmt1(adDelta)}</span></span></div>
-      </div>
-      <div class="cmp-card">
-        <div class="lab">% trên MA20</div>
-        <div class="row"><span>11:30</span><span class="val">${fmt1(mm.pct_above_ma20)}%</span></div>
-        <div class="row"><span>15:10</span><span class="val">${fmt1(m.pct_above_ma20)}%</span></div>
-        <div class="row"><span>Δ</span><span class="val"><span class="delta ${maCls}">${ma20Delta > 0 ? '+' : ''}${fmt1(ma20Delta)}%</span></span></div>
-      </div>
-    </div>
-  </div>`;
-}
+function fmt1(n){ return (n === null || n === undefined) ? '\u2014' : Number(n).toFixed(1); }
 
 function render(){
-  if (activeMarket === 'NHAN_DINH') {
-    renderCommentary();
-    return;
-  }
-  if (activeMarket === 'TIN_HIEU') {
-    renderSignals();
-    return;
-  }
-  if (activeMarket === 'DONG_THUAT') {
-    renderEnsemble();
-    return;
-  }
-  if (activeMarket === 'BREAK_OUT') {
-    renderMomentum();
-    return;
-  }
   const m = LATEST.markets[activeMarket];
-  const contentEl = document.getElementById('content');
-
+  if (!m) { document.getElementById('content').innerHTML = '<div class="loading">Chọn thị trường</div>'; return; }
+  const el = document.getElementById('content');
   const total = m.total_symbols || 0;
-  const upW = total ? (m.advances_pct) : 0;
-  const flatW = total ? (m.unchanged_pct) : 0;
-  const downW = total ? (m.declines_pct) : 0;
+  const upW = total ? m.advances_pct : 0;
+  const flatW = total ? m.unchanged_pct : 0;
+  const downW = total ? m.declines_pct : 0;
 
-  const hist = (HISTORY || []).slice(-6).reverse();
+  let summary = buildSummary();
+  let signalsHTML = buildSignalHub();
+  let chartHTML = buildChartSection();
+  let commentaryHTML = buildCommentarySection();
+  let cmpHTML = buildComparisonSection();
+  let appendixHTML = buildAppendixSection(m);
 
-  // AD ratio description
-  let adNote = '';
-  if (m.ad_ratio !== null) {
-    if (m.ad_ratio >= 1.5) adNote = 'Tien lan toa rong, tam ly lac quan.';
-    else if (m.ad_ratio >= 1.2) adNote = 'Tien lan toa tot, so ma tang vuot giam ro ret.';
-    else if (m.ad_ratio >= 1.0) adNote = 'So ma tang nhinh hon giam, can bang nghieng tang.';
-    else if (m.ad_ratio >= 0.8) adNote = 'Can bang, tien chua co huong ro.';
-    else adNote = 'Tien rut lai, ban ap dao.';
-  }
-
-  contentEl.innerHTML = `
-    <div class="sec-compact">
-      <div class="kpi-grid">
-        <div class="kpi-card">
-          <div class="lab">TANG</div>
-          <div class="num" style="color:var(--up);">${m.advances}</div>
-          <div class="sub">${fmt1(m.advances_pct)}% / ${total} ma</div>
+  el.innerHTML = `
+    <div class="summary-bar">
+      <div class="summary-top">
+        <div>
+          <span class="summary-count">${summary.totalSignals} tín hiệu · ${summary.uniqueSymbols} mã duy nhất</span>
         </div>
-        <div class="kpi-card">
-          <div class="lab">GIAM</div>
-          <div class="num" style="color:var(--down);">${m.declines}</div>
-          <div class="sub">${fmt1(m.declines_pct)}% / ${total} ma</div>
+        <div class="summary-badges">
+          ${summary.badges.map(b => `<span class="s-badge ${b.cls}" data-filter="${b.filter}">${b.label}</span>`).join('')}
         </div>
-        <div class="kpi-card">
-          <div class="lab">A/D RATIO</div>
-          <div class="num" style="color:${m.ad_ratio >= 1 ? 'var(--up)' : m.ad_ratio !== null ? 'var(--down)' : 'var(--neutral)'};">${m.ad_ratio ?? '—'}</div>
-          <div class="sub">${adNote}</div>
-        </div>
-        <div class="kpi-card">
-          <div class="lab">KHONG DOI</div>
-          <div class="num" style="color:var(--neutral);">${m.unchanged}</div>
-          <div class="sub">${fmt1(m.unchanged_pct)}%</div>
-        </div>
-      </div>
-
-      <div class="breadth-bar" style="margin-bottom:14px;">
-        <span style="width:${upW}%; background:var(--up);">${upW > 12 ? fmt1(upW) + '%' : ''}</span>
-        <span style="width:${flatW}%; background:var(--neutral);">${flatW > 10 ? fmt1(flatW) + '%' : ''}</span>
-        <span style="width:${downW}%; background:var(--down);">${downW > 12 ? fmt1(downW) + '%' : ''}</span>
       </div>
     </div>
 
-    <div class="section-title">ÐO RONG — % TREN DUONG TRUNG BINH</div>
-    <div class="kpi-grid" style="margin-bottom:14px;">
-      <div class="kpi-card primary">
-        <div class="lab">MA20 (ngan han)</div>
-        <div class="num">${fmt1(m.pct_above_ma20)}%</div>
-        <div class="sub">${m.above_ma20_count} ma</div>
-      </div>
-      <div class="kpi-card primary">
-        <div class="lab">MA50 (trung han)</div>
-        <div class="num">${fmt1(m.pct_above_ma50)}%</div>
-        <div class="sub">${m.above_ma50_count} ma</div>
-      </div>
-      <div class="kpi-card">
-        <div class="lab">MA200 (dai han)</div>
-        <div class="num" style="color:var(--accent-2);">${fmt1(m.pct_above_ma200)}%</div>
-        <div class="sub">${m.above_ma200_count} ma</div>
-      </div>
-      <div class="kpi-card">
-        <div class="lab">VOLUME BREAKOUT</div>
-        <div class="num" style="color:var(--up);">${m.volume_breakout_count || 0}</div>
-        <div class="sub">ma KL dot bien</div>
-      </div>
+    <div class="kpi-grid">
+      <div class="kpi-card up"><div class="lab">Tăng</div><div class="num">${m.advances}</div><div class="sub">${fmt1(m.advances_pct)}%</div></div>
+      <div class="kpi-card down"><div class="lab">Giảm</div><div class="num">${m.declines}</div><div class="sub">${fmt1(m.declines_pct)}%</div></div>
+      <div class="kpi-card" style="${m.ad_ratio >= 1 ? 'color:var(--up)' : m.ad_ratio !== null ? 'color:var(--down)' : ''}"><div class="lab">A/D</div><div class="num">${m.ad_ratio ?? '\u2014'}</div><div class="sub">${adRatioNote(m.ad_ratio)}</div></div>
+      <div class="kpi-card primary"><div class="lab">MA20</div><div class="num">${fmt1(m.pct_above_ma20)}%</div><div class="sub">${m.above_ma20_count} mã</div></div>
+      <div class="kpi-card primary"><div class="lab">MA50</div><div class="num">${fmt1(m.pct_above_ma50)}%</div><div class="sub">${m.above_ma50_count} mã</div></div>
+      <div class="kpi-card primary"><div class="lab">MA200</div><div class="num">${fmt1(m.pct_above_ma200)}%</div><div class="sub">${m.above_ma200_count} mã</div></div>
     </div>
 
-    ${cmpHTML()}
+    <div class="breadth-bar">
+      <span style="width:${upW}%;background:var(--up);">${upW > 10 ? fmt1(upW)+'%' : ''}</span>
+      <span style="width:${flatW}%;background:var(--neutral);">${flatW > 8 ? fmt1(flatW)+'%' : ''}</span>
+      <span style="width:${downW}%;background:var(--down);">${downW > 10 ? fmt1(downW)+'%' : ''}</span>
+    </div>
 
     <div class="panel">
-      <div class="section-title">BIEU DO LICH SU — % TREN MA20 / MA50 / MA200</div>
+      <h2>Tín hiệu giao dịch <span style="font-size:10px;font-weight:400;color:var(--faint);text-transform:none;">(${summary.totalSignals} tín hiệu)</span></h2>
+      <div class="filter-bar">
+        <select id="filterSelect" onchange="activeFilter=this.value;renderSignalTable()">
+          <option value="all">⚡ Tất cả</option>
+          <option value="strong">🟢 Strong</option>
+          <option value="watch">🟡 Watch</option>
+          <option value="pre-breakout">🔵 Pre-Breakout</option>
+          <option value="ensemble-strong">🟣 Ensemble Strong</option>
+          <option value="ensemble-weak">⚪ Ensemble Weak</option>
+        </select>
+        <input id="searchInput" type="text" placeholder="🔍 Tìm mã..." oninput="searchQuery=this.value.toUpperCase();renderSignalTable()">
+        <button class="btn-copy" id="copyBtn" onclick="copySymbols()">📋 Copy DS</button>
+      </div>
+      <div id="signalTableContainer">${signalsHTML}</div>
+    </div>
+
+    ${chartHTML}
+    ${commentaryHTML}
+    ${cmpHTML}
+    ${appendixHTML}
+  `;
+
+  // Attach badge click filters
+  document.querySelectorAll('.s-badge').forEach(b => {
+    b.onclick = () => {
+      document.getElementById('filterSelect').value = b.dataset.filter;
+      activeFilter = b.dataset.filter;
+      renderSignalTable();
+    };
+  });
+
+  requestAnimationFrame(() => renderBreadthChart(m));
+}
+
+function adRatioNote(r){
+  if (r === null) return '';
+  if (r >= 1.5) return 'Tiền lan tỏa rộng';
+  if (r >= 1.2) return 'Tiền lan tỏa tốt';
+  if (r >= 1.0) return 'Nghiêng tăng';
+  if (r >= 0.8) return 'Cân bằng';
+  return 'Bán áp đảo';
+}
+
+// --- Build summary badges from all strategies ---
+function buildSummary(){
+  let strongCount = 0, watchCount = 0, preCount = 0, ensStrong = 0, ensWeak = 0;
+  let symbols = new Set();
+
+  // Momentum
+  if (MOMENTUM && MOMENTUM.all_signals) {
+    MOMENTUM.all_signals.forEach(s => {
+      symbols.add(s.symbol);
+      if (s.signal_type === 'strong') strongCount++;
+      else if (s.signal_type === 'watch') watchCount++;
+    });
+  }
+  // Pre-breakout
+  if (SIGNALS && SIGNALS.all_signals) {
+    SIGNALS.all_signals.forEach(s => {
+      symbols.add(s.symbol);
+      preCount++;
+    });
+  }
+  // Ensemble
+  if (ENSEMBLE && ENSEMBLE.all_signals) {
+    ENSEMBLE.all_signals.forEach(s => {
+      symbols.add(s.symbol);
+      if (s.total_score >= 0.65) ensStrong++;
+      else if (s.total_score >= 0.35) ensWeak++;
+    });
+  }
+
+  let badges = [];
+  if (strongCount) badges.push({cls:'str', label:`🟢 Strong ${strongCount}`, filter:'strong'});
+  if (watchCount) badges.push({cls:'wat', label:`🟡 Watch ${watchCount}`, filter:'watch'});
+  if (preCount) badges.push({cls:'pre', label:`🔵 Pre-Breakout ${preCount}`, filter:'pre-breakout'});
+  if (ensStrong) badges.push({cls:'ens', label:`🟣 Ensemble ${ensStrong}`, filter:'ensemble-strong'});
+  if (ensWeak) badges.push({cls:'ensw', label:`⚪ Ensemble ${ensWeak}`, filter:'ensemble-weak'});
+
+  return { totalSignals: strongCount+watchCount+preCount+ensStrong+ensWeak, uniqueSymbols: symbols.size, badges };
+}
+
+// --- Unified signal table ---
+function buildSignalHub(){
+  let rows = collectAllSignals();
+  if (!rows.length) return '<div class="note" style="margin-bottom:0;">Chưa có tín hiệu nào hôm nay.</div>';
+
+  // Get previous signals for repeat detection
+  let prevSymbols = new Set();
+  if (SIGNALS_HISTORY && SIGNALS_HISTORY.length >= 2) {
+    const prev = SIGNALS_HISTORY[SIGNALS_HISTORY.length - 2];
+    if (prev) {
+      (prev.strategy?.all_signals || []).forEach(s => prevSymbols.add(s.symbol));
+      (prev.ensemble?.all_signals || []).forEach(s => prevSymbols.add(s.symbol));
+      (prev.momentum?.all_signals || []).forEach(s => prevSymbols.add(s.symbol));
+    }
+  }
+
+  // Load momentum backtest win rates
+  let wrStrong = MOMENTUM_BT?.stats?.['strong_T+5']?.win_rate;
+  let wrWatch = MOMENTUM_BT?.stats?.['watch_T+5']?.win_rate;
+
+  rows = rows.map(r => {
+    let repeat = prevSymbols.has(r.symbol) ? '<span class="badge-repeat">🔥 Lặp</span>' : '';
+    return { ...r, repeat };
+  });
+
+  let tbody = applyFilters(rows, activeFilter, searchQuery).map(r => {
+    let typeTag = '', winrateStr = '';
+    if (r.source === 'momentum') {
+      if (r.signalType === 'strong') { typeTag = '<span class="tag str">Strong</span>'; winrateStr = wrStrong ? `<span class="winrate">~${(wrStrong*100).toFixed(0)}%</span>` : ''; }
+      else { typeTag = '<span class="tag wat">Watch</span>'; winrateStr = wrWatch ? `<span class="winrate">~${(wrWatch*100).toFixed(0)}%</span>` : ''; }
+    } else if (r.source === 'pre-breakout') {
+      typeTag = r.score >= 75 ? '<span class="tag str">Mạnh</span>' : '<span class="tag wat">TB</span>';
+    } else if (r.source === 'ensemble') {
+      typeTag = r.signalType === 'strong' ? '<span class="tag ens">Strong</span>' : '<span class="tag ens-w">Weak</span>';
+    }
+
+    let srcTags = r.strategies.map(s => {
+      const cls = {hy:'hy',ma:'ma',breakout:'bo',roc_momentum:'roc',roc:'roc',pullback:'pb',ma_crossover:'ma'}[s] || '';
+      return `<span class="src-tag ${cls}">${s.replace('_momentum','').replace('_crossover','').toUpperCase()}</span>`;
+    }).join('');
+
+    let expl = r.expl || '';
+
+    return `<tr>
+      <td class="mono" style="font-weight:700;">${r.symbol}${r.repeat}</td>
+      <td class="mono" style="font-weight:700;">${r.score}</td>
+      <td>${typeTag}${winrateStr}</td>
+      <td><div class="sig-expl">${expl}</div></td>
+      <td><div class="sig-source">${srcTags}</div></td>
+      <td class="mono">${r.rsi ?? '\u2014'}</td>
+      <td class="mono">${r.adx ?? '\u2014'}</td>
+      <td class="mono">${r.vol ?? '\u2014'}</td>
+      <td class="mono">${r.price ?? '\u2014'}</td>
+    </tr>`;
+  }).join('');
+
+  if (!tbody) return '<div class="note" style="margin-bottom:0;">Không có tín hiệu phù hợp.</div>';
+
+  return `<table>
+    <thead><tr>
+      <th>Mã</th><th>Score</th><th>Loại</th><th>Chi tiết</th><th>Nguồn</th><th>RSI</th><th>ADX</th><th>Vol</th><th>Giá</th>
+    </tr></thead>
+    <tbody>${tbody}</tbody>
+  </table>`;
+}
+
+function collectAllSignals(){
+  let result = [];
+  // Momentum signals
+  if (MOMENTUM && MOMENTUM.all_signals) {
+    MOMENTUM.all_signals.forEach(s => {
+      let strats = s.strategies || [];
+      let bonusLabels = {vol_surge:'Vol2x', adx_strong:'ADX>28', rsi_gold:'RSI\u2605'};
+      let bonusStr = (s.bonuses||[]).map(b => bonusLabels[b]||b).join('+');
+      let parts = strats.map(st => {
+        const labels = {ma_crossover:'MA10>MA50', breakout:'Close>H20', roc_momentum:'ROC>ROC20', hybrid:'HY'};
+        return labels[st] || st;
+      });
+      if (bonusStr) parts.push(bonusStr);
+      let expl = parts.join(' + ');
+      let adxV = s.adx14 != null ? s.adx14.toFixed(1) : null;
+      if (s.adx14 != null && (s.bonuses||[]).includes('adx_strong')) expl += ` ADX${adxV}`;
+      result.push({
+        symbol: s.symbol, score: s.score,
+        signalType: s.signal_type, source: 'momentum',
+        strategies: strats, expl: expl,
+        rsi: s.rsi14 != null ? s.rsi14.toFixed(1) : null,
+        adx: s.adx14 != null ? s.adx14.toFixed(1) : null,
+        vol: s.vol_ratio != null ? s.vol_ratio.toFixed(1)+'x' : null,
+        price: s.last_price ? s.last_price.toLocaleString('vi-VN') : null,
+      });
+    });
+  }
+  // Pre-breakout signals
+  if (SIGNALS && SIGNALS.all_signals) {
+    SIGNALS.all_signals.forEach(s => {
+      let expl = `Base ${s.base_score?.toFixed(0)||'?'}% OBV ${s.obv_score?.toFixed(0)||'?'}% Grad ${s.vol_gradient > 0 ? '+' : ''}${(s.vol_gradient||0).toFixed(2)}`;
+      result.push({
+        symbol: s.symbol, score: s.composite_score,
+        signalType: s.composite_score >= 75 ? 'strong' : 'moderate',
+        source: 'pre-breakout',
+        strategies: ['pre-breakout'], expl: expl,
+        rsi: null, adx: null, vol: s.vol_ratio != null ? s.vol_ratio.toFixed(2) : null,
+        price: s.last_price ? s.last_price.toLocaleString('vi-VN') : null,
+      });
+    });
+  }
+  // Ensemble signals
+  if (ENSEMBLE && ENSEMBLE.all_signals) {
+    ENSEMBLE.all_signals.forEach(s => {
+      let strats = [];
+      if (s.ma_crossover) strats.push('ma_crossover');
+      if (s.pullback) strats.push('pullback');
+      if (s.breakout) strats.push('breakout');
+      if (s.momentum) strats.push('roc');
+      let expl = strats.map(st => {
+        const labels = {ma_crossover:'MA10>MA50', pullback:'Pullback MA50', breakout:'Breakout', roc:'ROC>ROC20'};
+        return labels[st] || st;
+      }).join(' + ');
+      let pct = (s.total_score * 100).toFixed(0);
+      result.push({
+        symbol: s.symbol, score: pct,
+        signalType: s.total_score >= 0.65 ? 'strong' : 'weak',
+        source: 'ensemble',
+        strategies: strats, expl: expl,
+        rsi: s.rsi14 != null ? s.rsi14.toFixed(1) : null,
+        adx: null, vol: s.vol_ratio != null ? s.vol_ratio.toFixed(1)+'x' : null,
+        price: s.last_price ? s.last_price.toLocaleString('vi-VN') : null,
+      });
+    });
+  }
+  // Sort by score desc
+  result.sort((a, b) => b.score - a.score);
+  return result;
+}
+
+function applyFilters(rows, filter, query){
+  return rows.filter(r => {
+    if (filter !== 'all') {
+      if (filter === 'strong' && !(r.source === 'momentum' && r.signalType === 'strong')) return false;
+      if (filter === 'watch' && !(r.source === 'momentum' && r.signalType === 'watch')) return false;
+      if (filter === 'pre-breakout' && r.source !== 'pre-breakout') return false;
+      if (filter === 'ensemble-strong' && !(r.source === 'ensemble' && r.signalType === 'strong')) return false;
+      if (filter === 'ensemble-weak' && !(r.source === 'ensemble' && r.signalType === 'weak')) return false;
+    }
+    if (query && !r.symbol.includes(query)) return false;
+    return true;
+  });
+}
+
+function renderSignalTable(){
+  const container = document.getElementById('signalTableContainer');
+  if (!container) return;
+  container.innerHTML = buildSignalHub();
+}
+
+function copySymbols(){
+  let rows = collectAllSignals();
+  if (!rows.length) return;
+  let filtered = applyFilters(rows, activeFilter, searchQuery);
+  let text = filtered.map(r => r.symbol).join(', ');
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.getElementById('copyBtn');
+    if (btn) { btn.textContent = '✅ Copied!'; setTimeout(() => { btn.textContent = '📋 Copy DS'; }, 2000); }
+  }).catch(() => {});
+}
+
+// --- Chart ---
+function buildChartSection(){
+  return `<div class="panel">
+    <h2 class="accordion" onclick="toggleAccordion(this)">Biểu đồ lịch sử — % trên MA20 / MA50 / MA200</h2>
+    <div class="accordion-body collapsed">
       <div class="chart-wrap" id="chartWrap">
         <canvas id="breadthChart"></canvas>
         <div class="chart-tooltip" id="chartTooltip"></div>
       </div>
     </div>
-
-    <div class="section-title">TIN HIEU MOI TRONG PHIEN — ${activeMarket} (${m.date})</div>
-    <div class="two-col">
-      <div class="panel">
-        <div class="section-title" style="font-size:11px;color:var(--up);">↑ Vua vuot len MA20 (${(m.newly_above_ma20||[]).length})</div>
-        <div class="tag-row">${renderChips(m.newly_above_ma20, 'up') || '<span class="empty-note">Khong co</span>'}</div>
-      </div>
-      <div class="panel">
-        <div class="section-title" style="font-size:11px;color:var(--down);">↓ Vua rot xuong MA20 (${(m.newly_below_ma20||[]).length})</div>
-        <div class="tag-row">${renderChips(m.newly_below_ma20, 'down') || '<span class="empty-note">Khong co</span>'}</div>
-      </div>
-    </div>
-    <div class="two-col" style="margin-bottom:14px;">
-      <div class="panel">
-        <div class="section-title" style="font-size:11px;color:var(--up);">↑ Vua vuot len MA50 (${(m.newly_above_ma50||[]).length})</div>
-        <div class="tag-row">${renderChips(m.newly_above_ma50, 'up') || '<span class="empty-note">Khong co</span>'}</div>
-      </div>
-      <div class="panel">
-        <div class="section-title" style="font-size:11px;color:var(--down);">↓ Vua rot xuong MA50 (${(m.newly_below_ma50||[]).length})</div>
-        <div class="tag-row">${renderChips(m.newly_below_ma50, 'down') || '<span class="empty-note">Khong co</span>'}</div>
-      </div>
-    </div>
-
-    <div class="section-title">TOAN BO MA TREN MA20 / MA50</div>
-    <div class="two-col" style="margin-bottom:14px;">
-      <div class="panel">
-        <div class="section-title" style="font-size:11px;">Tren MA20 (${(m.above_ma20_symbols||[]).length} ma)</div>
-        <div class="tag-row">${renderChipsDual(m.above_ma20_symbols, m.above_ma50_symbols) || '<span class="empty-note">Khong co</span>'}</div>
-      </div>
-      <div class="panel">
-        <div class="section-title" style="font-size:11px;">Tren MA50 (${(m.above_ma50_symbols||[]).length} ma)</div>
-        <div class="tag-row">${renderChipsDual(m.above_ma50_symbols, m.above_ma20_symbols) || '<span class="empty-note">Khong co</span>'}</div>
-      </div>
-    </div>
-
-    <div class="panel">
-      <div class="section-title">Breakout volume — ${activeMarket}</div>
-      <div class="tag-row">${renderChips(m.volume_breakout_symbols, 'up') || '<span class="empty-note">Khong co ma breakout volume</span>'}</div>
-    </div>
-
-    <div class="panel">
-      <div class="section-title">Chuoi do rong — cac phien gan nhat</div>
-      <table>
-        <thead><tr><th>Phien</th><th>Tang</th><th>Giam</th><th>A/D</th><th>MA20%</th><th>MA50%</th><th>NX</th></tr></thead>
-        <tbody>
-          ${hist.map(h => {
-            const row = h.markets[activeMarket];
-            if (!row) return '';
-            const ratio = row.ad_ratio;
-            let tagClass = 'mixed', tagText = 'TB';
-            if (ratio !== null) {
-              if (ratio >= 1.2) { tagClass = 'good'; tagText = 'Tot'; }
-              else if (ratio <= 0.8) { tagClass = 'weak'; tagText = 'Yeu'; }
-            }
-            return '<tr>'
-              + '<td>' + row.date + '</td>'
-              + '<td class="mono up-txt">' + row.advances + '</td>'
-              + '<td class="mono down-txt">' + row.declines + '</td>'
-              + '<td class="mono">' + (ratio ?? '—') + '</td>'
-              + '<td class="mono">' + fmt1(row.pct_above_ma20) + '%</td>'
-              + '<td class="mono">' + fmt1(row.pct_above_ma50) + '%</td>'
-              + '<td><span class="tag ' + tagClass + '">' + tagText + '</span></td></tr>';
-          }).join('')}
-        </tbody>
-      </table>
-    </div>
-  `;
-  requestAnimationFrame(renderBreadthChart);
+  </div>`;
 }
-function renderBreadthChart(){
-  const cv=document.getElementById('breadthChart'),tt=document.getElementById('chartTooltip'),wr=document.getElementById('chartWrap');
-  if(!cv||!tt||!wr)return;
-  const pts=((HISTORY||[]).map(h=>{const m=h.markets[activeMarket];return m&&m.pct_above_ma20!=null?{date:h.date,v20:m.pct_above_ma20,v50:m.pct_above_ma50,v200:m.pct_above_ma200}:null;}).filter(Boolean));
-  if(pts.length<2){wr.innerHTML='<div style="padding:60px 20px;text-align:center;color:var(--faint);font-size:13px;">Chưa đủ dữ liệu lịch sử để vẽ biểu đồ.</div>';return;}
-  pts.sort((a,b)=>{const da=a.date.split('/'),db=b.date.split('/');return da[2]-db[2]||da[1]-db[1]||da[0]-db[0];});
-  const dpr=window.devicePixelRatio||1,w=wr.clientWidth,h=300;
-  cv.width=w*dpr;cv.height=h*dpr;cv.style.width=w+'px';cv.style.height=h+'px';
-  const ctx=cv.getContext('2d');ctx.scale(dpr,dpr);
-  const P={t:34,r:16,b:42,l:50},cw=w-P.l-P.r,ch=h-P.t-P.b;
-  const xp=i=>P.l+(i/(pts.length-1))*cw,yp=v=>P.t+ch-(v/100)*ch;
-  const lines=[{k:'v20',c:'#4F46E5',l:'MA20'},{k:'v50',c:'#F5A524',l:'MA50'},{k:'v200',c:'#06B6D4',l:'MA200'}];
 
+function toggleAccordion(el){
+  el.classList.toggle('collapsed');
+  const body = el.nextElementSibling;
+  if (body) body.classList.toggle('collapsed');
+  // Trigger chart render when expanded
+  if (!el.classList.contains('collapsed')) {
+    requestAnimationFrame(() => renderBreadthChart(LATEST?.markets?.[activeMarket]));
+  }
+}
+
+function renderBreadthChart(m){
+  if (!m) return;
+  const cv = document.getElementById('breadthChart'), tt = document.getElementById('chartTooltip'), wr = document.getElementById('chartWrap');
+  if (!cv || !tt || !wr) return;
+  const pts = ((HISTORY||[]).map(h => { const k = h.markets[activeMarket]; return k && k.pct_above_ma20 != null ? { date: h.date, v20: k.pct_above_ma20, v50: k.pct_above_ma50, v200: k.pct_above_ma200 } : null; }).filter(Boolean));
+  if (pts.length < 2) { wr.innerHTML = '<div style="padding:40px 20px;text-align:center;color:var(--faint);font-size:12px;">Chưa đủ dữ liệu lịch sử.</div>'; return; }
+  pts.sort((a,b) => { const da = a.date.split('/'), db = b.date.split('/'); return da[2]-db[2] || da[1]-db[1] || da[0]-db[0]; });
+  const dpr = window.devicePixelRatio || 1, w = wr.clientWidth || 600, h = 260;
+  cv.width = w * dpr; cv.height = h * dpr; cv.style.width = w + 'px'; cv.style.height = h + 'px';
+  const ctx = cv.getContext('2d'); ctx.scale(dpr, dpr);
+  const P = { t: 30, r: 14, b: 38, l: 44 }, cw = w - P.l - P.r, ch = h - P.t - P.b;
+  const xp = i => P.l + (i / (pts.length - 1)) * cw, yp = v => P.t + ch - (v / 100) * ch;
+  const lines = [{ k: 'v20', c: '#4F46E5', l: 'MA20' }, { k: 'v50', c: '#F5A524', l: 'MA50' }, { k: 'v200', c: '#06B6D4', l: 'MA200' }];
   function drw(idx){
-    ctx.clearRect(0,0,w,h);
-    [0,25,50,75,100].forEach(pct=>{
-      const y=yp(pct);
-      ctx.save();ctx.strokeStyle='#E4E9F7';ctx.lineWidth=1;ctx.setLineDash([4,4]);
-      ctx.beginPath();ctx.moveTo(P.l,y);ctx.lineTo(w-P.r,y);ctx.stroke();ctx.restore();
-      ctx.fillStyle='#6B7395';ctx.font='10px JetBrains Mono,monospace';
-      ctx.textAlign='right';ctx.textBaseline='middle';ctx.fillText(pct+'%',P.l-8,y);
+    ctx.clearRect(0, 0, w, h);
+    [0, 25, 50, 75, 100].forEach(pct => {
+      const y = yp(pct);
+      ctx.save(); ctx.strokeStyle = '#E4E9F7'; ctx.lineWidth = 1; ctx.setLineDash([4, 4]);
+      ctx.beginPath(); ctx.moveTo(P.l, y); ctx.lineTo(w - P.r, y); ctx.stroke(); ctx.restore();
+      ctx.fillStyle = '#6B7395'; ctx.font = '9.5px Inter,sans-serif';
+      ctx.textAlign = 'right'; ctx.textBaseline = 'middle'; ctx.fillText(pct + '%', P.l - 6, y);
     });
-    lines.forEach(s=>{
-      ctx.strokeStyle=s.c;ctx.lineWidth=2.5;ctx.lineJoin='round';ctx.lineCap='round';
-      ctx.beginPath();pts.forEach((p,i)=>{const x=xp(i),y=yp(p[s.k]);i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);});
+    lines.forEach(s => {
+      ctx.strokeStyle = s.c; ctx.lineWidth = 2.5; ctx.lineJoin = 'round'; ctx.lineCap = 'round';
+      ctx.beginPath(); pts.forEach((p, i) => { const x = xp(i), y = yp(p[s.k]); i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y); });
       ctx.stroke();
-      const lx=xp(pts.length-1),ly=yp(pts[pts.length-1][s.k]);
-      ctx.fillStyle='#fff';ctx.strokeStyle=s.c;ctx.lineWidth=2;
-      ctx.beginPath();ctx.arc(lx,ly,4,0,Math.PI*2);ctx.fill();ctx.stroke();
+      const lx = xp(pts.length - 1), ly = yp(pts[pts.length - 1][s.k]);
+      ctx.fillStyle = '#fff'; ctx.strokeStyle = s.c; ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.arc(lx, ly, 4, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
     });
-    ctx.fillStyle='#6B7395';ctx.font='9.5px JetBrains Mono,monospace';
-    ctx.textAlign='center';ctx.textBaseline='top';
-    const step=Math.max(1,Math.floor(pts.length/Math.max(1,Math.floor(cw/55))));
-    pts.forEach((p,i)=>{if(i%step===0||i===pts.length-1){const d=p.date.split('/');ctx.fillText(d[0]+'/'+d[1],xp(i),h-P.b+10);}});
-    ctx.strokeStyle='#E4E9F7';ctx.lineWidth=1;
-    ctx.beginPath();ctx.moveTo(P.l,h-P.b);ctx.lineTo(w-P.r,h-P.b);ctx.stroke();
-    lines.forEach((s,i)=>{
-      const lx=P.l+i*110,ly=16;
-      ctx.strokeStyle=s.c;ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(lx,ly);ctx.lineTo(lx+20,ly);ctx.stroke();
-      ctx.fillStyle=s.c;ctx.beginPath();ctx.arc(lx+10,ly,3.5,0,Math.PI*2);ctx.fill();
-      ctx.fillStyle='#3A4270';ctx.font='11px Inter,sans-serif';ctx.textAlign='left';ctx.textBaseline='middle';ctx.fillText(s.l,lx+28,ly);
+    ctx.fillStyle = '#6B7395'; ctx.font = '9px Inter,sans-serif';
+    ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+    const step = Math.max(1, Math.floor(pts.length / Math.max(1, Math.floor(cw / 50))));
+    pts.forEach((p, i) => { if (i % step === 0 || i === pts.length - 1) { const d = p.date.split('/'); ctx.fillText(d[0] + '/' + d[1], xp(i), h - P.b + 8); } });
+    ctx.strokeStyle = '#E4E9F7'; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(P.l, h - P.b); ctx.lineTo(w - P.r, h - P.b); ctx.stroke();
+    lines.forEach((s, i) => {
+      const lx = P.l + i * 100, ly = 14;
+      ctx.strokeStyle = s.c; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(lx, ly); ctx.lineTo(lx + 18, ly); ctx.stroke();
+      ctx.fillStyle = '#3A4270'; ctx.font = '10px Inter,sans-serif'; ctx.textAlign = 'left'; ctx.textBaseline = 'middle'; ctx.fillText(s.l, lx + 24, ly);
     });
-    if(idx>=0&&idx<pts.length){
-      const p=pts[idx],x=xp(idx);
-      ctx.save();ctx.strokeStyle='rgba(27,33,64,0.18)';ctx.lineWidth=1;ctx.setLineDash([3,4]);
-      ctx.beginPath();ctx.moveTo(x,P.t);ctx.lineTo(x,P.t+ch);ctx.stroke();ctx.restore();
-      lines.forEach(s=>{const dy=yp(p[s.k]);ctx.fillStyle='#fff';ctx.strokeStyle=s.c;ctx.lineWidth=2.5;ctx.beginPath();ctx.arc(x,dy,5,0,Math.PI*2);ctx.fill();ctx.stroke();});
-      tt.style.display='block';
-      tt.innerHTML=`<div style="font-weight:700;margin-bottom:5px;color:#1B2140;font-size:12px;font-family:Inter,sans-serif;">${p.date}</div><div style="display:flex;gap:16px;"><span><span style="color:#4F46E5;font-weight:700;">●</span> MA20: <strong>${p.v20.toFixed(1)}%</strong></span><span><span style="color:#F5A524;font-weight:700;">●</span> MA50: <strong>${p.v50.toFixed(1)}%</strong></span><span><span style="color:#06B6D4;font-weight:700;">●</span> MA200: <strong>${p.v200.toFixed(1)}%</strong></span></div>`;
-      const tw=tt.offsetWidth;let tx=Math.round(x-tw/2);
-      if(tx<4)tx=4;if(tx+tw>w-4)tx=w-tw-4;
-      tt.style.left=tx+'px';tt.style.top=Math.max(4,P.t-52)+'px';
-    }else tt.style.display='none';
+    if (idx >= 0 && idx < pts.length) {
+      const p = pts[idx], x = xp(idx);
+      ctx.save(); ctx.strokeStyle = 'rgba(27,33,64,0.15)'; ctx.lineWidth = 1; ctx.setLineDash([3, 4]);
+      ctx.beginPath(); ctx.moveTo(x, P.t); ctx.lineTo(x, P.t + ch); ctx.stroke(); ctx.restore();
+      lines.forEach(s => { const dy = yp(p[s.k]); ctx.fillStyle = '#fff'; ctx.strokeStyle = s.c; ctx.lineWidth = 2.5; ctx.beginPath(); ctx.arc(x, dy, 5, 0, Math.PI * 2); ctx.fill(); ctx.stroke(); });
+      tt.style.display = 'block';
+      tt.innerHTML = `<div style="font-weight:600;margin-bottom:4px;font-size:11px;">${p.date}</div><div>MA20: <strong>${p.v20.toFixed(1)}%</strong> · MA50: <strong>${p.v50.toFixed(1)}%</strong> · MA200: <strong>${p.v200.toFixed(1)}%</strong></div>`;
+      const tw = tt.offsetWidth; let tx = Math.round(x - tw / 2);
+      if (tx < 4) tx = 4; if (tx + tw > w - 4) tx = w - tw - 4;
+      tt.style.left = tx + 'px'; tt.style.top = Math.max(4, P.t - 46) + 'px';
+    } else tt.style.display = 'none';
   }
-  let hi=-1;drw(-1);
-  cv.onmousemove=function(e){const cr=cv.getBoundingClientRect(),mx=e.clientX-cr.left;let cl=0,md=Infinity;pts.forEach((_,i)=>{const d=Math.abs(xp(i)-mx);if(d<md){md=d;cl=i;}});if(cl!==hi){hi=cl;drw(cl);}};
-  cv.onmouseleave=function(){if(hi!==-1){hi=-1;drw(-1);}};
-}
-let _crt;
-window.addEventListener('resize',()=>{clearTimeout(_crt);_crt=setTimeout(renderBreadthChart,150);});
-
-
-function renderEnsemble(){
-  const el = document.getElementById('content');
-  const src = activeSignalsDate && SIGNALS_HISTORY
-    ? SIGNALS_HISTORY.find(h => h.date === activeSignalsDate)
-    : null;
-  const s = (src && src.ensemble) || ENSEMBLE;
-  if (!s || !s.all_signals) {
-    el.innerHTML = '<div class="panel"><h2>Ensemble Strategy</h2><div class="loading">Chua co du lieu.</div></div>';
-    return;
-  }
-  const all = s.all_signals || [];
-  const tbody = all.map(row => {
-    const sigs = [];
-    if (row.ma_crossover) sigs.push('MA');
-    if (row.pullback) sigs.push('PB');
-    if (row.breakout) sigs.push('BO');
-    if (row.momentum) sigs.push('ROC');
-    const cls = row.total_score >= 0.65 ? 'good' : (row.total_score >= 0.35 ? 'mixed' : 'weak');
-    const label = row.total_score >= 0.65 ? 'Strong' : 'Weak';
-    const scorePct = (row.total_score * 100).toFixed(0) + '%';
-    return '<tr><td class="mono" style="font-weight:700;">' + row.symbol + '</td>'
-      + '<td class="mono">' + scorePct + '</td>'
-      + '<td class="mono">' + (sigs.join('+') || '\u2014') + '</td>'
-      + '<td class="mono">' + (row.rsi14 != null ? row.rsi14.toFixed(1) : '\u2014') + '</td>'
-      + '<td class="mono">' + (row.vol_ratio != null ? row.vol_ratio.toFixed(1) + 'x' : '\u2014') + '</td>'
-      + '<td class="mono">' + (row.roc10 != null ? row.roc10.toFixed(1) + '%' : '\u2014') + '</td>'
-      + '<td class="mono">' + (row.last_price || 0).toLocaleString('vi-VN') + '</td>'
-      + '<td><span class="tag ' + cls + '">' + label + '</span></td></tr>';
-  }).join('');
-
-  const maC = all.filter(r => r.ma_crossover).length;
-  const pbC = all.filter(r => r.pullback).length;
-  const boC = all.filter(r => r.breakout).length;
-  const rocC = all.filter(r => r.momentum).length;
-
-  const w = ENSEMBLE_WEIGHTS && ENSEMBLE_WEIGHTS.weights ? ENSEMBLE_WEIGHTS.weights : {ma_crossover:0.30,pullback:0.14,breakout:0.28,momentum:0.27};
-
-  const selHtml = renderDateSelector();
-
-  el.innerHTML = selHtml + '<div class="panel">'
-    + '<h2>Ensemble Strategy \u2014 ' + s.date + '</h2>'
-    + '<div style="display:flex;gap:14px;margin-bottom:16px;flex-wrap:wrap;">'
-    + '<div class="stat good" style="flex:1;min-width:120px;"><div class="lab">Strong (\u22650.65)</div><div class="num" style="font-size:22px;">' + s.strong_buy + '</div></div>'
-    + '<div class="stat flat" style="flex:1;min-width:120px;"><div class="lab">Weak (\u22650.35)</div><div class="num" style="font-size:22px;">' + s.weak_buy + '</div></div>'
-    + '<div style="flex:1;min-width:120px;border:1px solid var(--border);border-radius:14px;padding:16px;text-align:center;background:var(--panel-tint);">'
-    + '<div class="lab">Tong</div><div class="num" style="font-size:22px;color:var(--accent-1);">' + s.total_signals + '</div>'
-    + '<div class="sub2" style="font-size:11px;color:var(--faint);margin-top:3px;">/' + s.total_symbols_analyzed + ' ma</div></div></div></div>'
-
-    + '<div class="panel"><h2>Trong so tin hieu</h2>'
-    + '<div style="display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap;align-items:center;">'
-    + '<div style="flex:1;min-width:130px;"><div class="lab" style="font-size:11px;color:var(--faint);">MA ' + (w.ma_crossover*100).toFixed(0) + '%</div><div style="height:8px;border-radius:4px;background:var(--border);overflow:hidden;margin-top:4px;"><div style="width:' + (w.ma_crossover*100) + '%;height:100%;background:#8884d8;"></div></div></div>'
-    + '<div style="flex:1;min-width:130px;"><div class="lab" style="font-size:11px;color:var(--faint);">BO ' + (w.breakout*100).toFixed(0) + '%</div><div style="height:8px;border-radius:4px;background:var(--border);overflow:hidden;margin-top:4px;"><div style="width:' + (w.breakout*100) + '%;height:100%;background:#82ca9d;"></div></div></div>'
-    + '<div style="flex:1;min-width:130px;"><div class="lab" style="font-size:11px;color:var(--faint);">ROC ' + (w.momentum*100).toFixed(0) + '%</div><div style="height:8px;border-radius:4px;background:var(--border);overflow:hidden;margin-top:4px;"><div style="width:' + (w.momentum*100) + '%;height:100%;background:#ffc658;"></div></div></div>'
-    + '<div style="flex:1;min-width:130px;"><div class="lab" style="font-size:11px;color:var(--faint);">PB ' + (w.pullback*100).toFixed(0) + '%</div><div style="height:8px;border-radius:4px;background:var(--border);overflow:hidden;margin-top:4px;"><div style="width:' + (w.pullback*100) + '%;height:100%;background:#ff8042;"></div></div></div>'
-    + '</div></div>'
-
-    + '<div class="panel"><h2>Danh sach \u2014 ' + all.length + ' ma</h2>'
-    + '<div class="note" style="margin-bottom:14px;">'
-    + '<b>4 tin hieu</b> trong so backtest: MA ' + (w.ma_crossover*100).toFixed(0) + '%, BO ' + (w.breakout*100).toFixed(0) + '%, ROC ' + (w.momentum*100).toFixed(0) + '%, PB ' + (w.pullback*100).toFixed(0) + '%.'
-    + ' <b>Strong Buy \u2265 0.65, Weak Buy \u2265 0.35.</b></div>'
-    + '<table><thead><tr><th>Ma</th><th>Score</th><th>Signals</th><th>RSI</th><th>Vol</th><th>ROC10</th><th>Gia</th><th>Muc</th></tr></thead>'
-    + '<tbody>' + tbody + '</tbody></table></div>'
-
-    + '<div class="panel"><h2>Phan bo theo loai</h2>'
-    + '<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:10px;">'
-    + '<div class="stat" style="border-left:3px solid #8884d8;"><div class="lab">MA Crossover</div><div class="num" style="font-size:20px;">' + maC + '</div><div class="sub2" style="font-size:11px;color:var(--faint);">weight ' + (w.ma_crossover*100).toFixed(0) + '%</div></div>'
-    + '<div class="stat" style="border-left:3px solid #82ca9d;"><div class="lab">Breakout</div><div class="num" style="font-size:20px;">' + boC + '</div><div class="sub2" style="font-size:11px;color:var(--faint);">weight ' + (w.breakout*100).toFixed(0) + '%</div></div>'
-    + '<div class="stat" style="border-left:3px solid #ffc658;"><div class="lab">Momentum ROC</div><div class="num" style="font-size:20px;">' + rocC + '</div><div class="sub2" style="font-size:11px;color:var(--faint);">weight ' + (w.momentum*100).toFixed(0) + '%</div></div>'
-    + '<div class="stat" style="border-left:3px solid #ff8042;"><div class="lab">Pullback</div><div class="num" style="font-size:20px;">' + pbC + '</div><div class="sub2" style="font-size:11px;color:var(--faint);">weight ' + (w.pullback*100).toFixed(0) + '%</div></div>'
-    + '</div></div>';
+  let hi = -1; drw(-1);
+  cv.onmousemove = function(e) { const cr = cv.getBoundingClientRect(), mx = e.clientX - cr.left; let cl = 0, md = Infinity; pts.forEach((_, i) => { const d = Math.abs(xp(i) - mx); if (d < md) { md = d; cl = i; } }); if (cl !== hi) { hi = cl; drw(cl); } };
+  cv.onmouseleave = function() { if (hi !== -1) { hi = -1; drw(-1); } };
 }
 
-
-function renderSignals(){
-  const el = document.getElementById('content');
-  const src = activeSignalsDate && SIGNALS_HISTORY
-    ? SIGNALS_HISTORY.find(h => h.date === activeSignalsDate)
-    : null;
-  const s = (src && src.strategy) || SIGNALS;
-  if (!s || !s.all_signals) {
-    el.innerHTML = `<div class="panel"><h2>Pre-Breakout Signals</h2><div class="loading">Chưa có dữ liệu tín hiệu.</div></div>`;
-    return;
-  }
-  const all = s.all_signals || [];
-  const tbody = all.map(row => {
-    const cls = row.composite_score >= 75 ? 'good' : row.composite_score >= 60 ? 'mixed' : 'weak';
-    const label = row.composite_score >= 75 ? 'Mạnh' : row.composite_score >= 60 ? 'TB' : 'Yếu';
-    return `<tr>
-      <td class="mono" style="font-weight:700;">${row.symbol}</td>
-      <td class="mono">${row.composite_score.toFixed(1)}</td>
-      <td class="mono">${row.base_score.toFixed(1)}</td>
-      <td class="mono">${(row.obv_score || 0).toFixed(1)}</td>
-      <td class="mono">${(row.vol_gradient || 0) > 0 ? '+' : ''}${(row.vol_gradient || 0).toFixed(2)}</td>
-      <td class="mono">${(row.vol_ratio ?? null) != null ? row.vol_ratio.toFixed(2) : '—'}</td>
-      <td class="mono">${(row.last_price || 0).toLocaleString('vi-VN')}</td>
-      <td><span class="tag ${cls}">${label}</span></td>
-    </tr>`;
-  }).join('');
-
-  el.innerHTML = `
-    ${renderDateSelector()}
-    <div class="panel">
-      <h2>Pre-Breakout Signals — ${s.date}</h2>
-      <div style="display:flex;gap:14px;margin-bottom:16px;flex-wrap:wrap;">
-        <div class="stat good" style="flex:1;min-width:120px;">
-          <div class="lab">Mạnh (≥75)</div>
-          <div class="num" style="font-size:22px;">${s.strong_signals}</div>
-        </div>
-        <div class="stat flat" style="flex:1;min-width:120px;">
-          <div class="lab">TB (60-74)</div>
-          <div class="num" style="font-size:22px;">${s.moderate_signals}</div>
-        </div>
-        <div class="stat down" style="flex:1;min-width:120px;">
-          <div class="lab">Yếu (50-59)</div>
-          <div class="num" style="font-size:22px;">${s.weak_signals}</div>
-        </div>
-        <div style="flex:1;min-width:120px;border:1px solid var(--border);border-radius:14px;padding:16px;text-align:center;background:var(--panel-tint);">
-          <div class="lab">Tổng tín hiệu</div>
-          <div class="num" style="font-size:22px;color:var(--accent-1);">${s.total_signals}</div>
-          <div class="sub2" style="font-size:11px;color:var(--faint);margin-top:3px;">/${s.total_symbols_analyzed} mã</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="panel">
-      <h2>Danh sách tín hiệu — <span style="color:var(--accent-1);font-weight:700;">${all.length} mã</span> xếp hạng theo Composite Score</h2>
-      <div class="note" style="margin-bottom:14px;">
-        <b>Composite Score</b> = 40% Base + 30% Money Flow + 30% Vol Gradient.
-        Base: accumulation base detection (range + higher lows + volume dry-up).
-        Money Flow: OBV slope normalized.
-        Vol Gradient: tốc độ co hẹp của biến động ngắn hạn.
-      </div>
-      <table>
-        <thead><tr>
-          <th>Mã</th>
-          <th>Score</th>
-          <th>Base</th>
-          <th>MF</th>
-          <th>Grad</th>
-          <th>VolRatio</th>
-          <th>Giá</th>
-          <th>Mức</th>
-        </tr></thead>
-        <tbody>${tbody}</tbody>
-      </table>
-    </div>
-
-    <div class="panel">
-      <h2>Chi tiết theo mức — Pre-Breakout</h2>
-      <div class="signal-grid">
-        <div class="signal-col">
-          <div class="signal-title up-txt">Mạnh — ${s.strong_signals} mã</div>
-          <div class="chip-wrap">${renderChips((s.strong||[]).map(r => r.symbol), 'up')}</div>
-        </div>
-        <div class="signal-col">
-          <div class="signal-title" style="color:#B9760F;">Trung bình — ${s.moderate_signals} mã</div>
-          <div class="chip-wrap">${renderChips((s.moderate||[]).map(r => r.symbol))}</div>
-        </div>
-        <div class="signal-col">
-          <div class="signal-title down-txt">Yếu — ${s.weak_signals} mã</div>
-          <div class="chip-wrap">${renderChips((s.weak||[]).map(r => r.symbol), 'down')}</div>
-        </div>
-      </div>
-    </div>
-  `;
-}
-
-function renderMomentum(){
-  const el = document.getElementById('content');
-  const src = activeSignalsDate && SIGNALS_HISTORY
-    ? SIGNALS_HISTORY.find(h => h.date === activeSignalsDate)
-    : null;
-  const s = (src && src.momentum) || MOMENTUM;
-  if (!s || !s.all_signals) {
-    el.innerHTML = '<div class="panel"><h2>Break out!</h2><div class="loading">Chua co du lieu.</div></div>';
-    return;
-  }
-  const all = s.all_signals || [];
-  const tbody = all.map(row => {
-    const stratList = row.strategies || [];
-    const bonusList = row.bonuses || [];
-    const stratStr = stratList.map(st => {
-      const labels = {ma_crossover:'MA', breakout:'BO', roc_momentum:'ROC', hybrid:'HY'};
-      return labels[st] || st;
-    }).join('+') || '\u2014';
-    const bonusStr = bonusList.map(b => {
-      const labels = {vol_surge:'Vx2', adx_strong:'ADX>28', rsi_gold:'RSI\u2605'};
-      return labels[b] || b;
-    }).join('+') || '';
-
-    const cls = row.signal_type === 'strong' ? 'good' : 'mixed';
-    const label = row.signal_type === 'strong' ? 'Strong' : 'QS';
-
-    const hasMA = row.details?.ma_crossover?.signal;
-    const hasBO = row.details?.breakout?.signal;
-    const hasROC = row.details?.roc_momentum?.signal;
-    const hasHY = row.details?.hybrid?.signal;
-
-    return '<tr>'
-      + '<td class="mono" style="font-weight:700;">' + row.symbol + '</td>'
-      + '<td class="mono" style="font-weight:700;">' + row.score + '</td>'
-      + '<td class="mono">' + stratStr + '</td>'
-      + '<td class="mono">' + (bonusStr || '\u2014') + '</td>'
-      + '<td class="mono">' + (row.rsi14 != null ? row.rsi14.toFixed(1) : '\u2014') + '</td>'
-      + '<td class="mono">' + (row.adx14 != null ? row.adx14.toFixed(1) : '\u2014') + '</td>'
-      + '<td class="mono">' + (row.vol_ratio != null ? row.vol_ratio.toFixed(1) + 'x' : '\u2014') + '</td>'
-      + '<td class="mono">' + (row.last_price || 0).toLocaleString('vi-VN') + '</td>'
-      + '<td><span class="tag ' + cls + '">' + label + '</span></td></tr>';
-  }).join('');
-
-  const sigBreakdown = {ma_crossover:0, breakout:0, roc_momentum:0, hybrid:0};
-  all.forEach(r => {
-    const d = r.details || {};
-    if (d.ma_crossover?.signal) sigBreakdown.ma_crossover++;
-    if (d.breakout?.signal) sigBreakdown.breakout++;
-    if (d.roc_momentum?.signal) sigBreakdown.roc_momentum++;
-    if (d.hybrid?.signal) sigBreakdown.hybrid++;
-  });
-
-  el.innerHTML = '<div class="panel">'
-    + '<h2>Break out! — ' + s.date + '</h2>'
-    + '<div style="display:flex;gap:14px;margin-bottom:16px;flex-wrap:wrap;">'
-    + '<div class="stat good" style="flex:1;min-width:120px;"><div class="lab">Strong Buy (\u226560)</div><div class="num" style="font-size:22px;">' + s.strong_buy + '</div></div>'
-    + '<div class="stat flat" style="flex:1;min-width:120px;"><div class="lab">Quan sat (35-59)</div><div class="num" style="font-size:22px;">' + (s.watch_count ?? 0) + '</div></div>'
-    + '<div style="flex:1;min-width:120px;border:1px solid var(--border);border-radius:14px;padding:16px;text-align:center;background:var(--panel-tint);">'
-    + '<div class="lab">Tong tin hieu</div><div class="num" style="font-size:22px;color:var(--accent-1);">' + s.total_signals + '</div>'
-    + '<div class="sub2" style="font-size:11px;color:var(--faint);margin-top:3px;">/' + s.total_symbols_analyzed + ' ma</div></div></div></div>'
-
-    + '<div class="panel"><h2>Phan bo chien luoc</h2>'
-    + '<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:10px;">'
-    + '<div class="stat" style="border-left:3px solid #8884d8;"><div class="lab">MA Crossover</div><div class="num" style="font-size:20px;">' + sigBreakdown.ma_crossover + '</div><div class="sub2" style="font-size:11px;color:var(--faint);">30d</div></div>'
-    + '<div class="stat" style="border-left:3px solid #82ca9d;"><div class="lab">Breakout</div><div class="num" style="font-size:20px;">' + sigBreakdown.breakout + '</div><div class="sub2" style="font-size:11px;color:var(--faint);">35d</div></div>'
-    + '<div class="stat" style="border-left:3px solid #ffc658;"><div class="lab">ROC Momentum</div><div class="num" style="font-size:20px;">' + sigBreakdown.roc_momentum + '</div><div class="sub2" style="font-size:11px;color:var(--faint);">25d</div></div>'
-    + '<div class="stat" style="border-left:3px solid #d946ef;"><div class="lab">Hybrid</div><div class="num" style="font-size:20px;">' + sigBreakdown.hybrid + '</div><div class="sub2" style="font-size:11px;color:var(--faint);">40d</div></div>'
-    + '</div></div>'
-
-    + '<div class="panel"><h2>Danh sach — ' + all.length + ' ma</h2>'
-    + '<div class="note" style="margin-bottom:14px;">'
-    + '<b>Score</b> = tong base chien luoc + bonuses (Vol>2x +15, ADX>28 +10, RSI 50-68 +10).'
-    + ' <b>Strong \u2265 60</b> | <b>Quan sat 35-59</b>.</div>'
-    + '<table><thead><tr><th>Ma</th><th>Score</th><th>Chien luoc</th><th>Bonus</th><th>RSI</th><th>ADX</th><th>Vol</th><th>Gia</th><th>Muc</th></tr></thead>'
-    + '<tbody>' + tbody + '</tbody></table></div>'
-
-    + '<div class="panel"><h2>Phan loai</h2>'
-    + '<div class="signal-grid">'
-    + '<div class="signal-col"><div class="signal-title up-txt">Strong Buy \u2014 ' + s.strong_buy + ' ma</div>'
-    + '<div class="chip-wrap">' + renderChips((s.strong||[]).map(r => r.symbol), 'up') + '</div></div>'
-    + '<div class="signal-col"><div class="signal-title" style="color:#B9760F;">Quan sat \u2014 ' + (s.watch_count ?? 0) + ' ma</div>'
-    + '<div class="chip-wrap">' + renderChips((s.watch||[]).map(r => r.symbol)) + '</div></div>'
-    + '</div></div>';
-}
-
-function renderCommentary(){
-  const contentEl = document.getElementById('content');
-  if (!COMMENTARY || !COMMENTARY.content) {
-    contentEl.innerHTML = `<div class="panel"><h2>Nhận định phiên</h2><div class="loading">Chưa có dữ liệu nhận định.</div></div>`;
-    return;
-  }
+// --- Commentary ---
+function buildCommentarySection(){
+  if (!COMMENTARY || !COMMENTARY.content) return '';
   const md = COMMENTARY.content;
-  // Simple markdown to HTML for basic formatting
-  const html = md
-    .replace(/^### (.*$)/gm, '<h3>$1</h3>')
-    .replace(/^## (.*$)/gm, '<h2>$1</h2>')
-    .replace(/^# (.*$)/gm, '<h1>$1</h1>')
-    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-    .replace(/\n/g, '<br>');
-  contentEl.innerHTML = `<div class="panel"><h2>Nhận định phiên</h2><div class="commentary">${html}</div></div>`;
+  const html = md.replace(/^### (.*$)/gm, '<h3>$1</h3>').replace(/^## (.*$)/gm, '<h2>$1</h2>').replace(/^# (.*$)/gm, '<h2>$1</h2>').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>');
+  return `<div class="panel">
+    <h2 class="accordion collapsed" onclick="toggleAccordion(this)">Nhận định phiên</h2>
+    <div class="accordion-body collapsed">
+      <div class="commentary">${html}</div>
+    </div>
+  </div>`;
+}
+
+// --- Session comparison ---
+function buildComparisonSection(){
+  if (!MIDDAY || LATEST.session !== 'close') return '';
+  const mm = MIDDAY.markets[activeMarket], m = LATEST.markets[activeMarket];
+  if (!mm || !m || mm.date !== m.date) return '';
+  const d = v => v === null || v === undefined ? 0 : v;
+  const delta = (val, base) => { const dv = d(val) - d(base); const cls = dv > 0 ? 'up' : dv < 0 ? 'down' : 'flat'; return `<span class="delta ${cls}">${dv > 0 ? '+' : ''}${typeof val === 'number' && Number.isInteger(val) ? dv : dv.toFixed(1)}</span>`; };
+  return `<div class="panel">
+    <h2 class="accordion collapsed" onclick="toggleAccordion(this)">So sánh phiên sáng/chiều — ${activeMarket}</h2>
+    <div class="accordion-body collapsed">
+      <div class="cmp-grid">
+        <div class="cmp-card"><div class="lab">Tăng / Giảm</div>
+          <div class="row"><span>11:30</span><span class="val">${mm.advances}/${mm.declines}</span></div>
+          <div class="row"><span>15:10</span><span class="val">${m.advances}/${m.declines}</span></div>
+          <div class="row"><span>Δ</span><span class="val">${delta(m.advances, mm.advances)} / ${delta(m.declines, mm.declines)}</span></div>
+        </div>
+        <div class="cmp-card"><div class="lab">A/D Ratio</div>
+          <div class="row"><span>11:30</span><span class="val">${fmt1(mm.ad_ratio)}</span></div>
+          <div class="row"><span>15:10</span><span class="val">${fmt1(m.ad_ratio)}</span></div>
+          <div class="row"><span>Δ</span><span class="val">${delta(m.ad_ratio, mm.ad_ratio)}</span></div>
+        </div>
+        <div class="cmp-card"><div class="lab">% trên MA20</div>
+          <div class="row"><span>11:30</span><span class="val">${fmt1(mm.pct_above_ma20)}%</span></div>
+          <div class="row"><span>15:10</span><span class="val">${fmt1(m.pct_above_ma20)}%</span></div>
+          <div class="row"><span>Δ</span><span class="val">${delta(m.pct_above_ma20, mm.pct_above_ma20)}%</span></div>
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+
+// --- Appendix ---
+function buildAppendixSection(m){
+  if (!m) return '';
+  const renderChips = (list, kind, dualSet) => {
+    if (!list || !list.length) return '<span class="empty-note">Không có</span>';
+    return list.map(s => {
+      const isDual = dualSet && dualSet.has(s);
+      const cls = isDual ? 'chip dual' : (kind === 'up' ? 'chip up' : kind === 'down' ? 'chip down' : 'chip');
+      return `<span class="${cls}">${s}</span>`;
+    }).join('');
+  };
+  const dualSet = new Set((m.above_ma20_symbols||[]).filter(x => (m.above_ma50_symbols||[]).includes(x)));
+
+  return `<div class="panel">
+    <h2 class="accordion collapsed" onclick="toggleAccordion(this)">Phụ lục — Mới vượt/rớt MA + Danh sách đầy đủ</h2>
+    <div class="accordion-body collapsed">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;">
+        <div><div style="font-size:11px;font-weight:600;color:var(--up);margin-bottom:4px;">↑ Mới vượt MA20 (${(m.newly_above_ma20||[]).length})</div>
+          <div class="chip-wrap">${renderChips(m.newly_above_ma20, 'up')}</div></div>
+        <div><div style="font-size:11px;font-weight:600;color:var(--down);margin-bottom:4px;">↓ Mới rớt MA20 (${(m.newly_below_ma20||[]).length})</div>
+          <div class="chip-wrap">${renderChips(m.newly_below_ma20, 'down')}</div></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+        <div><div style="font-size:11px;font-weight:600;color:var(--up);margin-bottom:4px;">↑ Mới vượt MA50 (${(m.newly_above_ma50||[]).length})</div>
+          <div class="chip-wrap">${renderChips(m.newly_above_ma50, 'up')}</div></div>
+        <div><div style="font-size:11px;font-weight:600;color:var(--down);margin-bottom:4px;">↓ Mới rớt MA50 (${(m.newly_below_ma50||[]).length})</div>
+          <div class="chip-wrap">${renderChips(m.newly_below_ma50, 'down')}</div></div>
+      </div>
+      <div style="margin-top:14px;display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+        <div><div style="font-size:11px;font-weight:600;margin-bottom:4px;">Trên MA20 (${(m.above_ma20_symbols||[]).length})</div>
+          <div class="chip-wrap" style="max-height:120px;overflow-y:auto;">${renderChips(m.above_ma20_symbols, 'neutral', dualSet)}</div></div>
+        <div><div style="font-size:11px;font-weight:600;margin-bottom:4px;">Trên MA50 (${(m.above_ma50_symbols||[]).length})</div>
+          <div class="chip-wrap" style="max-height:120px;overflow-y:auto;">${renderChips(m.above_ma50_symbols, 'neutral', dualSet)}</div></div>
+      </div>
+      ${(m.volume_breakout_symbols||[]).length ? `
+      <div style="margin-top:14px;"><div style="font-size:11px;font-weight:600;color:var(--up);margin-bottom:4px;">📊 Volume Breakout (${m.volume_breakout_symbols.length})</div>
+        <div class="chip-wrap">${renderChips(m.volume_breakout_symbols, 'up')}</div></div>` : ''}
+    </div>
+  </div>`;
 }
 
 loadData();
 </script>
 </body>
 </html>
-
-
