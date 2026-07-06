@@ -1,11 +1,10 @@
-"""Nhúng dữ liệu breadth + commentary vào dashboard HTML để mở trực tiếp không cần server."""
+﻿"""Nhung du lieu breadth + commentary vao dashboard HTML de mo truc tiep khong can server."""
 import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 LATEST_JSON = ROOT / "data" / "breadth_latest.json"
 HISTORY_JSON = ROOT / "data" / "breadth_history.json"
-MIDDAY_JSON = ROOT / "data" / "breadth_midday.json"
 COMMENTARY_JSON = ROOT / "data" / "market_commentary.json"
 SIGNALS_JSON = ROOT / "data" / "strategy_signals.json"
 ENSEMBLE_JSON = ROOT / "data" / "ensemble_signals.json"
@@ -18,7 +17,6 @@ OUT_HTML = ROOT / "docs" / "dashboard.html"
 
 latest = json.loads(LATEST_JSON.read_text(encoding="utf-8"))
 history = json.loads(HISTORY_JSON.read_text(encoding="utf-8") if HISTORY_JSON.exists() else "[]")
-midday = json.loads(MIDDAY_JSON.read_text(encoding="utf-8")) if MIDDAY_JSON.exists() else None
 commentary = json.loads(COMMENTARY_JSON.read_text(encoding="utf-8")) if COMMENTARY_JSON.exists() else None
 signals = json.loads(SIGNALS_JSON.read_text(encoding="utf-8")) if SIGNALS_JSON.exists() else None
 ensemble = json.loads(ENSEMBLE_JSON.read_text(encoding="utf-8")) if ENSEMBLE_JSON.exists() else None
@@ -29,12 +27,11 @@ signals_history = json.loads(SIGNALS_HISTORY_JSON.read_text(encoding="utf-8")) i
 
 html = SRC_HTML.read_text(encoding="utf-8")
 
-# Inject dữ liệu JSON inline
+# Inject du lieu JSON inline
 inject_script = f"""
 <script>
 const EMBEDDED_LATEST = {json.dumps(latest, ensure_ascii=False)};
 const EMBEDDED_HISTORY = {json.dumps(history, ensure_ascii=False)};
-const EMBEDDED_MIDDAY = {json.dumps(midday, ensure_ascii=False)};
 const EMBEDDED_COMMENTARY = {json.dumps(commentary, ensure_ascii=False)};
 const EMBEDDED_SIGNALS = {json.dumps(signals, ensure_ascii=False)};
 const EMBEDDED_ENSEMBLE = {json.dumps(ensemble, ensure_ascii=False)};
@@ -45,15 +42,14 @@ const EMBEDDED_SIGNALS_HISTORY = {json.dumps(signals_history, ensure_ascii=False
 </script>
 """
 
-# Inject script vào </head>
+# Inject script vao </head>
 html = html.replace("</head>", inject_script + "</head>")
 
-# Thay thế hàm loadData() — dùng markers rõ ràng
+# Thay the ham loadData() - dung markers ro rang
 old_marker = "async function loadData(){"
 new_func = """async function loadData(){
   LATEST = EMBEDDED_LATEST;
   HISTORY = EMBEDDED_HISTORY || [];
-  MIDDAY = EMBEDDED_MIDDAY;
   COMMENTARY = EMBEDDED_COMMENTARY;
   SIGNALS = EMBEDDED_SIGNALS;
   ENSEMBLE = EMBEDDED_ENSEMBLE;
@@ -61,13 +57,9 @@ new_func = """async function loadData(){
   MOMENTUM = EMBEDDED_MOMENTUM;
   MOMENTUM_BT = EMBEDDED_MOMENTUM_BT;
   SIGNALS_HISTORY = EMBEDDED_SIGNALS_HISTORY;
-  if (SIGNALS_HISTORY && SIGNALS_HISTORY.length > 0) { activeSignalsDate = SIGNALS_HISTORY[SIGNALS_HISTORY.length - 1].date; }
-  if (MIDDAY && MIDDAY.markets && MIDDAY.markets.ALL.date !== LATEST.markets.ALL.date) { MIDDAY = null; }
-  const sessionLabel = LATEST.session === 'midday'
-    ? '<span class="session-badge midday">Phiên sáng 11:30</span>'
-    : '<span class="session-badge close">Đóng cửa 15:10</span>';
+  const sessionLabel = '<span class="session-badge close">Dong cua 15:10</span>';
   document.getElementById('metaLine').innerHTML =
-    "Cập nhật: " + new Date(LATEST.generated_at).toLocaleString('vi-VN') + " · Ngày dữ liệu: " + LATEST.markets.ALL.date + " " + sessionLabel;
+    "Cap nhat: " + new Date(LATEST.generated_at).toLocaleString('vi-VN') + " - Ngay du lieu: " + LATEST.markets.ALL.date + " " + sessionLabel;
   MARKETS = ['ALL', ...Object.keys(LATEST.markets).filter(k => k !== 'ALL')];
   renderMarketTabs();
   render();
@@ -75,7 +67,6 @@ new_func = """async function loadData(){
 
 if old_marker in html:
     idx = html.index(old_marker)
-    # Đếm brace để tìm đúng dấu } đóng hàm loadData
     rest = html[idx:]
     brace_count = 0
     actual_end = idx
@@ -90,5 +81,5 @@ if old_marker in html:
     html = html[:idx] + new_func + "\n\n" + html[actual_end:]
 
 OUT_HTML.write_text(html, encoding="utf-8")
-print(f"Đã tạo: {OUT_HTML}")
-print("Mở file này bằng double-click (file://) để xem dashboard.")
+print(f"Da tao: {OUT_HTML}")
+print("Mo file nay bang double-click (file://) de xem dashboard.")

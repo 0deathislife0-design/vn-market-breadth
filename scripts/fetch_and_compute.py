@@ -1,4 +1,4 @@
-"""
+﻿"""
 Pipeline chinh: chay hang ngay qua GitHub Actions.
   1. Lay danh sach ma theo san (HOSE/HNX/UPCOM)
      - Bo ma co chu so trong ten (CW, phai sinh, ...)
@@ -58,13 +58,13 @@ from strategy_signals import main as run_strategy_signals
 from ensemble_signals import main as run_ensemble_signals
 from backtest_weights import main as run_backtest_weights
 from momentum_signals import main as run_momentum_signals
+from backtest_momentum import main as run_backtest_momentum
 
 ROOT = Path(__file__).resolve().parent.parent
 DATA_DIR = ROOT / "data"
 CACHE_DIR = DATA_DIR / "ohlc_cache"
 DOCS_DATA_DIR = ROOT / "docs" / "data"
 LATEST_JSON = DATA_DIR / "breadth_latest.json"
-MIDDAY_JSON = DATA_DIR / "breadth_midday.json"
 HISTORY_JSON = DATA_DIR / "breadth_history.json"
 COMMENTARY_JSON = DATA_DIR / "market_commentary.json"
 DOCS_COMMENTARY_JSON = DOCS_DATA_DIR / "market_commentary.json"
@@ -78,8 +78,8 @@ MARKET_INDEX_ID = {
 }
 MA_WINDOWS = [20, 50, 200]
 HISTORY_DAYS_LOOKBACK = 380   # du ~260 phien de tinh MA200
-INCREMENTAL_LOOKBACK = 21     # lay 21 ngay gan nhat neu da co cache (tránh thiếu sau kỳ nghỉ dài)
-REQUEST_SLEEP_SEC = 0.5       # chờ giữa các lần gọi API để tránh rate limit
+INCREMENTAL_LOOKBACK = 21     # lay 21 ngay gan nhat neu da co cache (tra╠ünh thi├¬╠üu sau ky╠Ç nghi╠ë da╠Çi)
+REQUEST_SLEEP_SEC = 0.5       # ch╞í╠Ç gi╞░╠âa ca╠üc l├ó╠Çn go╠úi API ─æ├¬╠ë tra╠ünh rate limit
 DATE_FMT = "%d/%m/%Y"
 MIN_AVG_VOLUME = 300_000      # loc thanh khoan: TB 20 phien >= 300,000 cp
 
@@ -97,7 +97,7 @@ def save_cache(symbol: str, df: pd.DataFrame) -> None:
 
 
 def cache_max_date(symbol: str) -> datetime | None:
-    """Trả về ngày giao dịch gần nhất trong cache của symbol, None nếu chưa có."""
+    """Tra╠ë v├¬╠Ç nga╠Çy giao di╠úch g├ó╠Çn nh├ó╠üt trong cache cu╠ëa symbol, None n├¬╠üu ch╞░a co╠ü."""
     path = CACHE_DIR / f"{symbol}.csv"
     if not path.exists():
         return None
@@ -120,7 +120,7 @@ def update_ohlc(client: SSIClient, symbol: str, today: datetime) -> pd.DataFrame
         latest_cached = cached["TradingDate"].max()
         if latest_cached is not None and latest_cached.date() > today.date():
             return cached
-        # Luôn fetch data hôm nay (cho phép midday + closing cùng ngày)
+        # Lu├┤n fetch data h├┤m nay (cho ph├⌐p midday + closing c├╣ng ng├áy)
         cached_historical = cached[cached["TradingDate"].dt.date < today.date()]
         from_date = today - timedelta(days=INCREMENTAL_LOOKBACK)
 
@@ -177,7 +177,7 @@ def update_ohlc(client: SSIClient, symbol: str, today: datetime) -> pd.DataFrame
 
 
 # --- Tinh MA ------------------------------------------------------------------
-def compute_ma_breadth(client: SSIClient, symbols: list[str], today: datetime, market: str, session: str = "close") -> dict:
+def compute_ma_breadth(client: SSIClient, symbols: list[str], today: datetime, market: str) -> dict:
     counts = {w: 0 for w in MA_WINDOWS}
     above_syms = {w: [] for w in MA_WINDOWS}
     newly_above = {20: [], 50: []}
@@ -186,9 +186,7 @@ def compute_ma_breadth(client: SSIClient, symbols: list[str], today: datetime, m
     total_valid = 0
     skipped_volume = 0
     skipped_data = 0
-    _mid_thresh = os.environ.get("VOLUME_BREAKOUT_MIDDAY", "0.5")
-    _close_thresh = os.environ.get("VOLUME_BREAKOUT_CLOSE", "1.3")
-    volume_threshold = float(_mid_thresh) if session == "midday" else float(_close_thresh)
+    volume_threshold = float(os.environ.get("VOLUME_BREAKOUT_CLOSE", "1.3"))
 
     bar = tqdm(
         symbols,
@@ -235,7 +233,7 @@ def compute_ma_breadth(client: SSIClient, symbols: list[str], today: datetime, m
                 if is_above:
                     counts[w] += 1
                     above_syms[w].append(sym)
-                    # Volume breakout: >= MA20 + volume > ngưỡng * TB 20 phiên
+                    # Volume breakout: >= MA20 + volume > ng╞░╞í╠âng * TB 20 phi├¬n
                     if w == 20 and avg_vol is not None and volume_today is not None and avg_vol > 0 and volume_today > avg_vol * volume_threshold:
                         volume_breakout.append(sym)
 
@@ -315,7 +313,7 @@ def get_advance_decline(client: SSIClient, market: str, today: datetime) -> dict
 
 # --- Snapshot moi san ---------------------------------------------------------
 
-def build_snapshot(client: SSIClient, market: str, today: datetime, session: str = "close") -> dict:
+def build_snapshot(client: SSIClient, market: str, today: datetime) -> dict:
     print(f"\n{'='*50}")
     print(f"[{market}] Bat dau xu ly...")
 
@@ -326,7 +324,7 @@ def build_snapshot(client: SSIClient, market: str, today: datetime, session: str
     ad = get_advance_decline(client, market, today)
     print(f"[{market}] A/D: adv={ad['advances']} dec={ad['declines']} unc={ad['unchanged']}")
 
-    ma = compute_ma_breadth(client, symbols, today, market, session)
+    ma = compute_ma_breadth(client, symbols, today, market)
 
     total_ad = ad["advances"] + ad["declines"] + ad["unchanged"]
 
@@ -418,9 +416,9 @@ def _write_json(path: Path, data) -> None:
 
 
 def _sync_docs_data():
-    """Đồng bộ dữ liệu sang docs/data/ cho GitHub Pages."""
+    """─É├┤╠Çng b├┤╠ú d╞░╠â li├¬╠úu sang docs/data/ cho GitHub Pages."""
     DOCS_DATA_DIR.mkdir(parents=True, exist_ok=True)
-    for f in ("breadth_latest.json", "breadth_history.json", "breadth_midday.json", "market_commentary.json", "strategy_signals.json", "ensemble_signals.json", "backtest_weights.json", "momentum_signals.json"):
+    for f in ("breadth_latest.json", "breadth_history.json", "market_commentary.json", "strategy_signals.json", "ensemble_signals.json", "backtest_weights.json", "momentum_signals.json", "backtest_momentum.json"):
         src = DATA_DIR / f
         dst = DOCS_DATA_DIR / f
         if src.exists():
@@ -493,13 +491,11 @@ def main():
     print(f"Ngay xu ly: {today.strftime(DATE_FMT)}")
     print(f"Nguong thanh khoan: TB 20 phien >= {MIN_AVG_VOLUME:,} cp\n")
 
-    session = "midday" if today.hour < 14 else "close"
-
     markets_dict = {}
     all_list = []
 
     for market in MARKETS:
-        snap = build_snapshot(client, market, today, session)
+        snap = build_snapshot(client, market, today)
         markets_dict[market] = snap
         all_list.append(snap)
 
@@ -508,17 +504,12 @@ def main():
 
     output = {
         "generated_at": today.isoformat(),
-        "session": session,
+        "session": "close",
         "markets": markets_dict,
     }
     _write_json(LATEST_JSON, output)
-
-    if session == "midday":
-        # Giữ nguyên file midday để closing run so sánh
-        _write_json(MIDDAY_JSON, output)
-
     _sync_docs_data()
-    print(f"\nDa ghi: {LATEST_JSON} ({session})")
+    print(f"\nDa ghi: {LATEST_JSON}")
 
     append_history(markets_dict)
     _sync_docs_data()
@@ -529,7 +520,7 @@ def main():
         commentary_text = generate_commentary(output)
         commentary_output = {
             "generated_at": datetime.now().isoformat(),
-            "session": session,
+            "session": "close",
             "date": output["markets"]["ALL"]["date"],
             "content": commentary_text,
         }
@@ -539,35 +530,38 @@ def main():
     except Exception as e:
         print(f"Loi sinh nhan xet: {e}")
 
-    # Generate strategy signals (close session only — needs full day data)
-    if session == "close":
-        try:
-            run_strategy_signals()
-            print(f"Da ghi tin hieu pre-breakout.\n")
-        except Exception as e:
-            print(f"Loi sinh tin hieu pre-breakout: {e}")
+    # Generate strategy signals
+    try:
+        run_strategy_signals()
+        print(f"Da ghi tin hieu pre-breakout.\n")
+    except Exception as e:
+        print(f"Loi sinh tin hieu pre-breakout: {e}")
 
-        try:
-            run_backtest_weights()
-            print(f"Da cap nhat backtest weights.\n")
-        except Exception as e:
-            print(f"Loi backtest weights: {e}")
+    try:
+        run_backtest_weights()
+        print(f"Da cap nhat backtest weights.\n")
+    except Exception as e:
+        print(f"Loi backtest weights: {e}")
 
-        try:
-            run_ensemble_signals()
-            print(f"Da ghi tin hieu ensemble.\n")
-        except Exception as e:
-            print(f"Loi sinh tin hieu ensemble: {e}")
+    try:
+        run_ensemble_signals()
+        print(f"Da ghi tin hieu ensemble.\n")
+    except Exception as e:
+        print(f"Loi sinh tin hieu ensemble: {e}")
 
-        try:
-            run_momentum_signals()
-            print(f"Da ghi tin hieu momentum.\n")
-        except Exception as e:
-            print(f"Loi sinh tin hieu momentum: {e}")
+    try:
+        run_momentum_signals()
+        print(f"Da ghi tin hieu momentum.\n")
+    except Exception as e:
+        print(f"Loi sinh tin hieu momentum: {e}")
 
-        append_signals_history()
-    else:
-        print(f"Bo qua strategy signals (midday session).")
+    try:
+        run_backtest_momentum()
+        print(f"Da ghi backtest momentum.\n")
+    except Exception as e:
+        print(f"Loi backtest momentum: {e}")
+
+    append_signals_history()
 
     print("\nHoan tat.")
 

@@ -1,12 +1,10 @@
-name: Update market breadth data
+﻿name: Update market breadth data
 
 on:
   schedule:
-    # 04:30 UTC = 11:30 giờ VN (sau phiên sáng)
-    - cron: "30 4 * * 1-5"
-    # 08:10 UTC = 15:10 giờ VN (sau giờ đóng cửa)
+    # 08:10 UTC = 15:10 giß╗¥ VN (sau giß╗¥ ─æ├│ng cß╗¡a)
     - cron: "10 8 * * 1-5"
-  workflow_dispatch: {}   # Cho phép chạy thủ công
+  workflow_dispatch: {}   # Cho ph├⌐p chß║íy thß╗º c├┤ng
 
 permissions:
   contents: write
