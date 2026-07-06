@@ -244,8 +244,8 @@ function render(){
   const flatW = total ? m.unchanged_pct : 0;
   const downW = total ? m.declines_pct : 0;
 
-  let summary = buildSummary();
-  let signalsHTML = buildSignalHub();
+  let summary = buildSummary(activeSignalDate);
+  let signalsHTML = buildSignalHub(activeSignalDate);
   let chartHTML = buildChartSection();
   let commentaryHTML = buildCommentarySection();
   let appendixHTML = buildAppendixSection(m);
@@ -279,7 +279,7 @@ function render(){
     </div>
 
     <div class="panel">
-      <h2>Tín hiệu giao dịch <span style="font-size:10px;font-weight:400;color:var(--faint);text-transform:none;">(${summary.totalSignals} tín hiệu)</span></h2>
+      <h2>Tín hiệu giao dịch <span style="font-size:10px;font-weight:400;color:var(--faint);text-transform:none;">(${summary.totalSignals} tín hiệu${activeSignalDate ? ' · '+activeSignalDate : ''})</span></h2>
       <div class="filter-bar">
         <select id="filterSelect" onchange="activeFilter=this.value;renderSignalTable()">
           <option value="all">⚡ Tất cả</option>
@@ -288,6 +288,9 @@ function render(){
           <option value="pre-breakout">🔵 Pre-Breakout</option>
           <option value="ensemble-strong">🟣 Ensemble Strong</option>
           <option value="ensemble-weak">⚪ Ensemble Weak</option>
+        </select>
+        <select id="signalDateSelect" onchange="onSignalDateChange(this.value)" style="margin-left:6px;width:auto;min-width:100px;">
+          <option value="">Hôm nay</option>
         </select>
         <input id="searchInput" type="text" placeholder="🔍 Tìm mã..." oninput="searchQuery=this.value.toUpperCase();renderSignalTable()">
         <button class="btn-copy" id="copyBtn" onclick="copySymbols()">📋 Copy DS</button>
@@ -311,6 +314,7 @@ function render(){
   });
 
   requestAnimationFrame(() => renderBreadthChart(m));
+  populateSignalDateSelector();
 }
 
 function adRatioNote(r){
@@ -323,28 +327,33 @@ function adRatioNote(r){
 }
 
 // --- Build summary badges from all strategies ---
-function buildSummary(){
+function buildSummary(dateStr){
   let strongCount = 0, watchCount = 0, preCount = 0, ensStrong = 0, ensWeak = 0;
   let symbols = new Set();
 
-  // Momentum
-  if (MOMENTUM && MOMENTUM.all_signals) {
-    MOMENTUM.all_signals.forEach(s => {
+  let momSrc, stratSrc, ensSrc;
+  if (dateStr && SIGNALS_HISTORY) {
+    const entry = SIGNALS_HISTORY.find(h => h.date === dateStr);
+    if (entry) { momSrc = entry.momentum; stratSrc = entry.strategy; ensSrc = entry.ensemble; }
+  } else {
+    momSrc = MOMENTUM; stratSrc = SIGNALS; ensSrc = ENSEMBLE;
+  }
+
+  if (momSrc && momSrc.all_signals) {
+    momSrc.all_signals.forEach(s => {
       symbols.add(s.symbol);
       if (s.signal_type === 'strong') strongCount++;
       else if (s.signal_type === 'watch') watchCount++;
     });
   }
-  // Pre-breakout
-  if (SIGNALS && SIGNALS.all_signals) {
-    SIGNALS.all_signals.forEach(s => {
+  if (stratSrc && stratSrc.all_signals) {
+    stratSrc.all_signals.forEach(s => {
       symbols.add(s.symbol);
       preCount++;
     });
   }
-  // Ensemble
-  if (ENSEMBLE && ENSEMBLE.all_signals) {
-    ENSEMBLE.all_signals.forEach(s => {
+  if (ensSrc && ensSrc.all_signals) {
+    ensSrc.all_signals.forEach(s => {
       symbols.add(s.symbol);
       if (s.total_score >= 0.65) ensStrong++;
       else if (s.total_score >= 0.35) ensWeak++;
@@ -362,9 +371,9 @@ function buildSummary(){
 }
 
 // --- Unified signal table ---
-function buildSignalHub(){
-  let rows = collectAllSignals();
-  if (!rows.length) return '<div class="note" style="margin-bottom:0;">Chưa có tín hiệu nào hôm nay.</div>';
+function buildSignalHub(dateStr){
+  let rows = collectAllSignals(dateStr);
+  if (!rows.length) return '<div class="note" style="margin-bottom:0;">Chưa có tín hiệu cho ngày này.</div>';
 
   // Get previous signals for repeat detection
   let prevSymbols = new Set();
@@ -427,11 +436,22 @@ function buildSignalHub(){
   </table>`;
 }
 
-function collectAllSignals(){
+let activeSignalDate = null; // null = hom nay
+
+function collectAllSignals(dateStr){
+  if (dateStr && SIGNALS_HISTORY) {
+    const entry = SIGNALS_HISTORY.find(h => h.date === dateStr);
+    if (entry) return _collectSignals(entry.momentum, entry.strategy, entry.ensemble);
+    return [];
+  }
+  return _collectSignals(MOMENTUM, SIGNALS, ENSEMBLE);
+}
+
+function _collectSignals(momSrc, stratSrc, ensSrc){
   let result = [];
   // Momentum signals
-  if (MOMENTUM && MOMENTUM.all_signals) {
-    MOMENTUM.all_signals.forEach(s => {
+  if (momSrc && momSrc.all_signals) {
+    momSrc.all_signals.forEach(s => {
       let strats = s.strategies || [];
       let bonusLabels = {vol_surge:'Vol2x', adx_strong:'ADX>28', rsi_gold:'RSI\u2605'};
       let bonusStr = (s.bonuses||[]).map(b => bonusLabels[b]||b).join('+');
@@ -455,8 +475,8 @@ function collectAllSignals(){
     });
   }
   // Pre-breakout signals
-  if (SIGNALS && SIGNALS.all_signals) {
-    SIGNALS.all_signals.forEach(s => {
+  if (stratSrc && stratSrc.all_signals) {
+    stratSrc.all_signals.forEach(s => {
       let expl = `Base ${s.base_score?.toFixed(0)||'?'}% OBV ${s.obv_score?.toFixed(0)||'?'}% Grad ${s.vol_gradient > 0 ? '+' : ''}${(s.vol_gradient||0).toFixed(2)}`;
       result.push({
         symbol: s.symbol, score: s.composite_score,
@@ -469,8 +489,8 @@ function collectAllSignals(){
     });
   }
   // Ensemble signals
-  if (ENSEMBLE && ENSEMBLE.all_signals) {
-    ENSEMBLE.all_signals.forEach(s => {
+  if (ensSrc && ensSrc.all_signals) {
+    ensSrc.all_signals.forEach(s => {
       let strats = [];
       if (s.ma_crossover) strats.push('ma_crossover');
       if (s.pullback) strats.push('pullback');
@@ -514,11 +534,33 @@ function applyFilters(rows, filter, query){
 function renderSignalTable(){
   const container = document.getElementById('signalTableContainer');
   if (!container) return;
-  container.innerHTML = buildSignalHub();
+  container.innerHTML = buildSignalHub(activeSignalDate);
+}
+
+function populateSignalDateSelector(){
+  const sel = document.getElementById('signalDateSelect');
+  if (!sel || !SIGNALS_HISTORY) return;
+  const cur = sel.value;
+  sel.innerHTML = '<option value="">Hôm nay</option>';
+  SIGNALS_HISTORY.slice().reverse().forEach(h => {
+    const opt = document.createElement('option');
+    opt.value = h.date;
+    opt.textContent = h.date;
+    sel.appendChild(opt);
+  });
+  sel.value = cur;
+}
+
+function onSignalDateChange(dateStr){
+  activeSignalDate = dateStr || null;
+  const h2 = document.querySelector('.panel h2');
+  if (h2 && dateStr) h2.innerHTML = `Tín hiệu giao dịch <span style="font-size:10px;font-weight:400;color:var(--faint);text-transform:none;">(${dateStr})</span>`;
+  else if (h2) h2.innerHTML = `Tín hiệu giao dịch <span style="font-size:10px;font-weight:400;color:var(--faint);text-transform:none;">(hôm nay)</span>`;
+  renderSignalTable();
 }
 
 function copySymbols(){
-  let rows = collectAllSignals();
+  let rows = collectAllSignals(activeSignalDate);
   if (!rows.length) return;
   let filtered = applyFilters(rows, activeFilter, searchQuery);
   let text = filtered.map(r => r.symbol).join(', ');
