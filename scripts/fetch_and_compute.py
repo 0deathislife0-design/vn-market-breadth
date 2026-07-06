@@ -62,7 +62,7 @@ def vn_today() -> datetime:
 def save_cache(symbol: str, df: pd.DataFrame) -> None:
     CACHE_DIR.mkdir(parents=True, exist_ok=True)
     df = df.sort_values("TradingDate").drop_duplicates("TradingDate")
-    df.to_csv(CACHE_DIR / f"{symbol}.csv", index=False)
+    df.to_csv(CACHE_DIR / f"{symbol}.csv", index=False, date_format="%d/%m/%Y")
 
 
 def cache_max_date(symbol: str) -> datetime | None:
@@ -72,7 +72,7 @@ def cache_max_date(symbol: str) -> datetime | None:
         return None
     try:
         dates = pd.read_csv(path, usecols=["TradingDate"])["TradingDate"]
-        max_dt = pd.to_datetime(dates, dayfirst=True, errors="coerce").max()
+        max_dt = pd.to_datetime(dates, format="%d/%m/%Y", errors="coerce").max()
         if pd.isna(max_dt):
             return None
         return max_dt
