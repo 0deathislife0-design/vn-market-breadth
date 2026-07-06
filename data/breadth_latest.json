@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-07-06T18:14:47.163199",
+  "generated_at": "2026-07-07T00:56:42.855081",
   "session": "close",
   "markets": {
     "HOSE": {
       "exchange": "HOSE",
-      "date": "06/07/2026",
+      "date": "07/07/2026",
       "total_symbols": 365,
       "advances": 56,
       "declines": 261,
@@ -203,7 +203,7 @@
     },
     "HNX": {
       "exchange": "HNX",
-      "date": "06/07/2026",
+      "date": "07/07/2026",
       "total_symbols": 186,
       "advances": 38,
       "declines": 96,
@@ -281,7 +281,7 @@
     },
     "ALL": {
       "exchange": "ALL",
-      "date": "06/07/2026",
+      "date": "07/07/2026",
       "total_symbols": 551,
       "advances": 94,
       "declines": 357,
