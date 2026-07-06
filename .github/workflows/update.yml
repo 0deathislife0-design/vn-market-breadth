@@ -1,6 +1,8 @@
 name: Update market breadth data
 
 on:
+  push:
+    branches: [main]
   schedule:
     # 04:30 UTC = 11:30 giờ VN (sau phiên sáng)
     - cron: "30 4 * * 1-5"
