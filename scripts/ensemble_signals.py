@@ -1,5 +1,5 @@
 """
-Ensemble Strategy Voting â€” 4-signal daily swing.
+Ensemble Strategy Voting — 4-signal daily swing.
   - MA Crossover (MA10 > MA50 + price > MA10 + RSI > 50)
   - Pullback to Support (uptrend + near MA50 + RSI rebound)
   - Breakout (new 20d high + vol > 1.5x avg)
@@ -11,46 +11,19 @@ from __future__ import annotations
 import json
 import warnings
 from datetime import datetime, timezone, timedelta
-from pathlib import Path
 from cache_utils import load_cache as _load_cache, compute_rsi_numpy
 
 import numpy as np
-import json
-from pathlib import Path
 import pandas as pd
-try:
-    from tqdm import tqdm
-    _HAS_TQDM = True
-except ImportError:
-    _HAS_TQDM = False
-    class tqdm:
-        def __init__(self, iterable, **kwargs):
-            self._it = iterable; self._n = 0
-            print(f"{kwargs.get('desc','')}: 0/{len(iterable)}")
-        def __iter__(self):
-            for item in self._it: yield item; self._n += 1
-            if self._n % 50 == 0: print(f"  {self._n}/{len(self._it)}")
-        def set_postfix_str(self, s, **kw): pass
-        def close(self): print(f"  {self._n}/{len(self._it)} - Done")
-        @staticmethod
-        def write(msg): print(msg)
+from _shared import tqdm, CACHE_DIR, DATA_DIR, DOCS_DATA_DIR, DEFAULT_WEIGHTS, WEIGHTS_PATH
 
 warnings.filterwarnings("ignore", category=FutureWarning)
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 
-ROOT = Path(__file__).resolve().parent.parent
-DATA_DIR = ROOT / "data"
-WEIGHTS_PATH = DATA_DIR / "backtest_weights.json"
-DATA_DIR = ROOT / "data"
-CACHE_DIR = DATA_DIR / "ohlc_cache"
-DOCS_DATA_DIR = ROOT / "docs" / "data"
 SIGNALS_JSON = DATA_DIR / "ensemble_signals.json"
 DOCS_SIGNALS_JSON = DOCS_DATA_DIR / "ensemble_signals.json"
 
 MIN_AVG_VOLUME = 300_000
-
-
-DEFAULT_WEIGHTS = {"ma_crossover": 0.30, "pullback": 0.14, "breakout": 0.28, "momentum": 0.27}
 
 
 def _load_weights() -> dict:
@@ -115,14 +88,14 @@ def compute_momentum(df: pd.DataFrame) -> dict:
     vol_valid = ~np.isnan(volume[-10:])
     vol_slope = 0
     if np.sum(vol_valid) >= 5:
-        x = np.arange(np.sum(vol_valid))
+        x = np.where(vol_valid)[0]
         y = volume[-10:][vol_valid]
         vol_slope = np.polyfit(x, y, 1)[0] / np.mean(y) if np.mean(y) > 0 else 0
     signal = 1 if (roc10 > roc20 and vol_slope > 0) else 0
     return {"signal": signal, "roc10": round(roc10, 2), "roc20": round(roc20, 2), "vol_slope": round(vol_slope, 4)}
 
 
-def analyze_symbol(symbol: str) -> dict | None:
+def analyze_symbol(symbol: str, weights: dict | None = None) -> dict | None:
     df = _load_cache(symbol, CACHE_DIR)
     if len(df) < 210:
         return None
@@ -136,8 +109,8 @@ def analyze_symbol(symbol: str) -> dict | None:
     bo = compute_breakout(df)
     mo = compute_momentum(df)
 
-    weights = _load_weights()
-    total = weights["ma_crossover"] * ma["signal"] + weights["pullback"] * pb["signal"] + weights["breakout"] * bo["signal"] + weights["momentum"] * mo["signal"]
+    w = weights if weights is not None else _load_weights()
+    total = w["ma_crossover"] * ma["signal"] + w["pullback"] * pb["signal"] + w["breakout"] * bo["signal"] + w["momentum"] * mo["signal"]
 
     if total < 0.35:
         return None
@@ -150,8 +123,8 @@ def analyze_symbol(symbol: str) -> dict | None:
         "breakout": bo["signal"],
         "momentum": mo["signal"],
         "ma10": ma["ma10"],
-        "ma50": ma["ma50"] or pb["ma50"],
-        "rsi14": ma["rsi14"] or pb["rsi14"],
+        "ma50": ma["ma50"] if ma["ma50"] is not None else pb["ma50"],
+        "rsi14": ma["rsi14"] if ma["rsi14"] is not None else pb["rsi14"],
         "vol_ratio": bo["vol_ratio"],
         "roc10": mo["roc10"],
         "roc20": mo["roc20"],
@@ -161,37 +134,24 @@ def analyze_symbol(symbol: str) -> dict | None:
 
 
 def get_filtered_symbols() -> list[str]:
-    symbols = []
-    for path in sorted(CACHE_DIR.glob("*.csv")):
-        sym = path.stem
-        if sym == ".gitkeep":
-            continue
-        if sym.startswith("FU") or sym.startswith("E1"):
-            continue
-        df = _load_cache(sym, CACHE_DIR)
-        if len(df) < 20:
-            continue
-        if "Volume" in df.columns:
-            avg_vol = df["Volume"].dropna().iloc[-20:].mean()
-            if pd.isna(avg_vol) or avg_vol < MIN_AVG_VOLUME:
-                continue
-        symbols.append(sym)
-    return symbols
+    from _shared import list_symbols
+    return list_symbols(CACHE_DIR, min_history=20, min_volume=MIN_AVG_VOLUME)
 
 
 def main():
     tqdm.write("=" * 60)
-    tqdm.write("Ensemble Strategy Signals â€” 4-Signal Voting")
+    tqdm.write("Ensemble Strategy Signals — 4-Signal Voting")
     tqdm.write("=" * 60)
 
     symbols = get_filtered_symbols()
     tqdm.write(f"\nPhan tich {len(symbols)} ma...\n")
 
+    weights = _load_weights()
     signals = []
     bar = tqdm(symbols, desc="[ALL] Ensemble", unit="sym")
     for sym in bar:
         bar.set_postfix_str(sym, refresh=True)
-        result = analyze_symbol(sym)
+        result = analyze_symbol(sym, weights)
         if result:
             signals.append(result)
 

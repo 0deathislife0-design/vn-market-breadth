@@ -8,37 +8,25 @@ from __future__ import annotations
 import json
 import warnings
 from datetime import datetime, timezone, timedelta
-from pathlib import Path
 
 import numpy as np
 import pandas as pd
 
 from cache_utils import load_cache as _load_cache
+from _shared import CACHE_DIR, DATA_DIR, DOCS_DATA_DIR, MIN_SYMBOL_HISTORY
+from _shared import (SCORE_MA, SCORE_BREAKOUT, SCORE_ROC, SCORE_HYBRID,
+                     BONUS_VOL_SURGE, BONUS_ADX_STRONG, BONUS_RSI_GOLD)
 
 warnings.filterwarnings("ignore", category=FutureWarning)
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 
-ROOT = Path(__file__).resolve().parent.parent
-CACHE_DIR = ROOT / "data" / "ohlc_cache"
-OUTPUT_JSON = ROOT / "data" / "backtest_momentum.json"
-DOCS_OUTPUT_JSON = ROOT / "docs" / "data" / "backtest_momentum.json"
+OUTPUT_JSON = DATA_DIR / "backtest_momentum.json"
+DOCS_OUTPUT_JSON = DOCS_DATA_DIR / "backtest_momentum.json"
 
-MIN_SYMBOL_HISTORY = 220
 LOOKFORWARD_OPTIONS = [5, 10, 20]
 SUCCESS_THRESHOLD = 0.02
 MIN_AVG_VOLUME = 500_000
 MIN_OBSERVATIONS = 20
-
-# Base scores
-SCORE_MA = 30
-SCORE_BREAKOUT = 35
-SCORE_ROC = 25
-SCORE_HYBRID = 40
-
-# Bonuses
-BONUS_VOL_SURGE = 15
-BONUS_ADX_STRONG = 10
-BONUS_RSI_GOLD = 10
 
 
 # --- Vectorized ADX (close-based) ---
@@ -215,7 +203,7 @@ def backtest_symbol(symbol: str) -> dict | None:
     # Forward returns
     results = {}
     for lf in LOOKFORWARD_OPTIONS:
-        valid_start = 210
+        valid_start = MIN_SYMBOL_HISTORY
         valid_end = n - lf
 
         fwd_price = close.shift(-lf)
@@ -246,7 +234,7 @@ def backtest_symbol(symbol: str) -> dict | None:
             results[f"{sig_name}_T+{lf}"] = {"wins": int(sig_wins), "total": int(sig_total)}
 
     # Score distribution stats
-    valid_scores = score.iloc[210:n - max(LOOKFORWARD_OPTIONS)]
+    valid_scores = score.iloc[MIN_SYMBOL_HISTORY:n - max(LOOKFORWARD_OPTIONS)]
     results["score_distribution"] = {
         "mean": round(float(valid_scores.mean()), 2),
         "median": round(float(valid_scores.median()), 2),

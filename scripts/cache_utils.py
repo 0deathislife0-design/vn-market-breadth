@@ -3,9 +3,12 @@ Shared utilities: cache loading + RSI calculation.
 Dung chung cho fetch_and_compute, strategy_signals, ensemble_signals, market_commentary.
 """
 from __future__ import annotations
+import logging
 from pathlib import Path
 import numpy as np
 import pandas as pd
+
+logger = logging.getLogger(__name__)
 
 
 def load_cache(symbol: str, cache_dir: Path) -> pd.DataFrame:
@@ -14,15 +17,17 @@ def load_cache(symbol: str, cache_dir: Path) -> pd.DataFrame:
     if path.exists():
         try:
             df = pd.read_csv(path)
-            df["TradingDate"] = pd.to_datetime(df["TradingDate"], format="mixed", dayfirst=True, errors="coerce")
+            df["TradingDate"] = pd.to_datetime(df["TradingDate"], format="%d/%m/%Y", errors="coerce")
             df["Close"] = pd.to_numeric(df["Close"], errors="coerce")
             if "Volume" in df.columns:
                 df["Volume"] = pd.to_numeric(df["Volume"], errors="coerce")
             else:
                 df["Volume"] = float("nan")
             return df.dropna(subset=["Close"])
-        except Exception:
-            pass
+        except Exception as exc:
+            logger.warning("load_cache(%s): %s", symbol, exc)
+    else:
+        logger.warning("load_cache(%s): file not found at %s", symbol, path)
     return pd.DataFrame(columns=["TradingDate", "Close", "Volume"])
 
 

@@ -15,14 +15,13 @@ import numpy as np
 import pandas as pd
 
 from cache_utils import load_cache as _load_cache
+from _shared import CACHE_DIR, DATA_DIR, DOCS_DATA_DIR
 
 warnings.filterwarnings("ignore", category=FutureWarning)
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 
-ROOT = Path(__file__).resolve().parent.parent
-CACHE_DIR = ROOT / "data" / "ohlc_cache"
-WEIGHTS_JSON = ROOT / "data" / "backtest_weights.json"
-DOCS_WEIGHTS_JSON = ROOT / "docs" / "data" / "backtest_weights.json"
+WEIGHTS_JSON = DATA_DIR / "backtest_weights.json"
+DOCS_WEIGHTS_JSON = DOCS_DATA_DIR / "backtest_weights.json"
 
 MIN_SYMBOL_HISTORY = 220  # need 200 for MA200 + 10 fwd + 10 buffer
 LOOKFORWARD = 10

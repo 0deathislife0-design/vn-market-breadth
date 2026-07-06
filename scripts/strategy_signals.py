@@ -12,35 +12,15 @@ from __future__ import annotations
 import json
 import warnings
 from datetime import datetime, timezone, timedelta
-from pathlib import Path
 from cache_utils import load_cache as _load_cache, compute_rsi_numpy
 
 import numpy as np
 import pandas as pd
-try:
-    from tqdm import tqdm
-    _HAS_TQDM = True
-except ImportError:
-    _HAS_TQDM = False
-    class tqdm:
-        def __init__(self, iterable, **kwargs):
-            self._it = iterable; self._n = 0
-            print(f"{kwargs.get('desc','')}: 0/{len(iterable)}")
-        def __iter__(self):
-            for item in self._it: yield item; self._n += 1
-            if self._n % 50 == 0: print(f"  {self._n}/{len(self._it)}")
-        def set_postfix_str(self, s, **kw): pass
-        def close(self): print(f"  {self._n}/{len(self._it)} - Done")
-        @staticmethod
-        def write(msg): print(msg)
+from _shared import tqdm, DATA_DIR, CACHE_DIR, DOCS_DATA_DIR
 
 warnings.filterwarnings("ignore", category=FutureWarning)
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 
-ROOT = Path(__file__).resolve().parent.parent
-DATA_DIR = ROOT / "data"
-CACHE_DIR = DATA_DIR / "ohlc_cache"
-DOCS_DATA_DIR = ROOT / "docs" / "data"
 SIGNALS_JSON = DATA_DIR / "strategy_signals.json"
 DOCS_SIGNALS_JSON = DOCS_DATA_DIR / "strategy_signals.json"
 

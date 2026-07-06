@@ -15,37 +15,9 @@ import os
 import time
 import warnings
 from datetime import datetime, timedelta, timezone
-from pathlib import Path
 
 import pandas as pd
-try:
-    from tqdm import tqdm
-    _HAS_TQDM = True
-except ImportError:
-    # Fallback khi chay tren CI/GitHub Actions khong co tqdm
-    _HAS_TQDM = False
-    class tqdm:
-        def __init__(self, iterable, **kwargs):
-            self._it = iterable
-            self._desc = kwargs.get('desc', '')
-            self._total = kwargs.get('total', None)
-            try:
-                self._total = self._total or len(iterable)
-            except Exception:
-                self._total = '?'
-            self._n = 0
-            print(f"{self._desc}: 0/{self._total}")
-        def __iter__(self):
-            for item in self._it:
-                yield item
-                self._n += 1
-                if self._n % 50 == 0:
-                    print(f"{self._desc}: {self._n}/{self._total}")
-        def set_postfix_str(self, s, **kw): pass
-        def close(self):
-            print(f"{self._desc}: {self._n}/{self._total} - Done")
-        @staticmethod
-        def write(msg): print(msg)
+from _shared import tqdm
 
 # Suppress pandas FutureWarning va Python DeprecationWarning
 warnings.filterwarnings("ignore", category=FutureWarning)
@@ -53,6 +25,7 @@ warnings.filterwarnings("ignore", category=DeprecationWarning)
 
 from ssi_client import SSIClient
 from cache_utils import load_cache as _load_cache
+from _shared import DATA_DIR, CACHE_DIR, DOCS_DATA_DIR
 from market_commentary import generate_commentary
 from strategy_signals import main as run_strategy_signals
 from ensemble_signals import main as run_ensemble_signals
@@ -60,10 +33,6 @@ from backtest_weights import main as run_backtest_weights
 from momentum_signals import main as run_momentum_signals
 from backtest_momentum import main as run_backtest_momentum
 
-ROOT = Path(__file__).resolve().parent.parent
-DATA_DIR = ROOT / "data"
-CACHE_DIR = DATA_DIR / "ohlc_cache"
-DOCS_DATA_DIR = ROOT / "docs" / "data"
 LATEST_JSON = DATA_DIR / "breadth_latest.json"
 HISTORY_JSON = DATA_DIR / "breadth_history.json"
 COMMENTARY_JSON = DATA_DIR / "market_commentary.json"

@@ -15,60 +15,22 @@ from __future__ import annotations
 import json
 import warnings
 from datetime import datetime, timezone, timedelta
-from pathlib import Path
 from cache_utils import load_cache as _load_cache, compute_rsi_numpy
 
 import numpy as np
 import pandas as pd
-try:
-    from tqdm import tqdm
-    _HAS_TQDM = True
-except ImportError:
-    _HAS_TQDM = False
-    class tqdm:
-        def __init__(self, iterable, **kwargs):
-            self._it = iterable; self._n = 0
-            print(f"{kwargs.get('desc','')}: 0/{len(iterable)}")
-        def __iter__(self):
-            for item in self._it: yield item; self._n += 1
-            if self._n % 50 == 0: print(f"  {self._n}/{len(self._it)}")
-        def set_postfix_str(self, s, **kw): pass
-        def close(self): print(f"  {self._n}/{len(self._it)} - Done")
-        @staticmethod
-        def write(msg): print(msg)
+from _shared import tqdm, DATA_DIR, CACHE_DIR, DOCS_DATA_DIR
+from _shared import (SCORE_MA, SCORE_BREAKOUT, SCORE_ROC, SCORE_HYBRID,
+                     BONUS_VOL_SURGE, BONUS_ADX_STRONG, BONUS_RSI_GOLD,
+                     json_default as _json_default)
 
 warnings.filterwarnings("ignore", category=FutureWarning)
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 
-
-def _json_default(obj):
-    if isinstance(obj, (np.integer, np.int64)):
-        return int(obj)
-    if isinstance(obj, (np.floating, np.float64)):
-        return float(obj)
-    if isinstance(obj, np.bool_):
-        return bool(obj)
-    raise TypeError(f"Object of type {type(obj)} is not JSON serializable")
-
-ROOT = Path(__file__).resolve().parent.parent
-DATA_DIR = ROOT / "data"
-CACHE_DIR = DATA_DIR / "ohlc_cache"
-DOCS_DATA_DIR = ROOT / "docs" / "data"
 SIGNALS_JSON = DATA_DIR / "momentum_signals.json"
 DOCS_SIGNALS_JSON = DOCS_DATA_DIR / "momentum_signals.json"
 
 MIN_AVG_VOLUME = 500_000
-
-# Base scores
-SCORE_MA = 30
-SCORE_BREAKOUT = 35
-SCORE_ROC = 25
-SCORE_HYBRID = 40
-
-# Bonuses
-BONUS_VOL_SURGE = 15
-BONUS_ADX_STRONG = 10
-BONUS_RSI_GOLD = 10
 
 
 def _wilder_ema(values: np.ndarray, period: int = 14) -> np.ndarray:
@@ -104,15 +66,15 @@ def compute_adx(close: np.ndarray, period: int = 14) -> float:
 
 # --- 4 Strategies ------------------------------------------------------------
 
-def compute_ma_crossover(df: pd.DataFrame) -> dict:
+def compute_ma_crossover(df: pd.DataFrame, rsi14: float | None = None, adx14: float | None = None) -> dict:
     close = df["Close"].values
     volume = df["Volume"].values
     if len(close) < 60:
         return {"signal": 0, "ma10": None, "ma50": None, "rsi14": None, "adx14": None, "vol_ratio": None}
     ma10 = close[-10:].mean()
     ma50 = close[-50:].mean()
-    rsi14 = compute_rsi_numpy(close, 14)
-    adx14 = compute_adx(close, 14)
+    if rsi14 is None: rsi14 = compute_rsi_numpy(close, 14)
+    if adx14 is None: adx14 = compute_adx(close, 14)
     vol_avg_20 = volume[-20:].mean()
     vol_ratio = volume[-1] / vol_avg_20 if vol_avg_20 > 0 else 0
 
@@ -134,14 +96,14 @@ def compute_ma_crossover(df: pd.DataFrame) -> dict:
     }
 
 
-def compute_breakout(df: pd.DataFrame) -> dict:
+def compute_breakout(df: pd.DataFrame, rsi14: float | None = None) -> dict:
     close = df["Close"].values
     volume = df["Volume"].values
     if len(close) < 25:
         return {"signal": 0, "high_20": None, "rsi14": None, "vol_ratio": None}
     high_20 = close[-21:-1].max()
     ma10 = close[-10:].mean()
-    rsi14 = compute_rsi_numpy(close, 14)
+    if rsi14 is None: rsi14 = compute_rsi_numpy(close, 14)
     vol_avg_20 = volume[-20:].mean()
     vol_ratio = volume[-1] / vol_avg_20 if vol_avg_20 > 0 else 0
 
@@ -160,7 +122,7 @@ def compute_breakout(df: pd.DataFrame) -> dict:
     }
 
 
-def compute_roc_momentum(df: pd.DataFrame) -> dict:
+def compute_roc_momentum(df: pd.DataFrame, rsi14: float | None = None) -> dict:
     close = df["Close"].values
     volume = df["Volume"].values
     if len(close) < 25:
@@ -168,7 +130,7 @@ def compute_roc_momentum(df: pd.DataFrame) -> dict:
     roc10 = (close[-1] - close[-11]) / close[-11] * 100 if close[-11] > 0 else 0
     roc20 = (close[-1] - close[-21]) / close[-21] * 100 if close[-21] > 0 else 0
     ma10 = close[-10:].mean()
-    rsi14 = compute_rsi_numpy(close, 14)
+    if rsi14 is None: rsi14 = compute_rsi_numpy(close, 14)
 
     vol_ma5 = volume[-5:].mean()
     vol_ma20 = volume[-20:].mean()
@@ -191,15 +153,15 @@ def compute_roc_momentum(df: pd.DataFrame) -> dict:
     }
 
 
-def compute_hybrid(df: pd.DataFrame) -> dict:
+def compute_hybrid(df: pd.DataFrame, rsi14: float | None = None, adx14: float | None = None) -> dict:
     close = df["Close"].values
     volume = df["Volume"].values
     if len(close) < 60:
         return {"signal": 0, "ma10": None, "ma50": None, "rsi14": None, "adx14": None, "vol_ratio": None}
     ma10 = close[-10:].mean()
     ma50 = close[-50:].mean()
-    rsi14 = compute_rsi_numpy(close, 14)
-    adx14 = compute_adx(close, 14)
+    if rsi14 is None: rsi14 = compute_rsi_numpy(close, 14)
+    if adx14 is None: adx14 = compute_adx(close, 14)
 
     vol_avg_20 = volume[-20:].mean()
     vol_ratio = volume[-1] / vol_avg_20 if vol_avg_20 > 0 else 0
@@ -232,7 +194,7 @@ def compute_hybrid(df: pd.DataFrame) -> dict:
 
 # --- Common filters ----------------------------------------------------------
 
-def check_common_filters(df: pd.DataFrame) -> bool:
+def check_common_filters(df: pd.DataFrame, rsi14: float | None = None, adx14: float | None = None) -> bool:
     """Check common filters. Returns True if all pass."""
     close = df["Close"].values
     volume = df["Volume"].values
@@ -244,11 +206,11 @@ def check_common_filters(df: pd.DataFrame) -> bool:
     if not (close[-1] > ma50 > ma200):
         return False
 
-    rsi14 = compute_rsi_numpy(close, 14)
+    if rsi14 is None: rsi14 = compute_rsi_numpy(close, 14)
     if not (48 <= rsi14 <= 72):
         return False
 
-    adx14 = compute_adx(close, 14)
+    if adx14 is None: adx14 = compute_adx(close, 14)
     if adx14 < 20:
         return False
 
@@ -261,7 +223,7 @@ def check_common_filters(df: pd.DataFrame) -> bool:
 
 # --- Bonuses ----------------------------------------------------------------
 
-def compute_bonuses(df: pd.DataFrame) -> dict:
+def compute_bonuses(df: pd.DataFrame, rsi14: float | None = None, adx14: float | None = None) -> dict:
     close = df["Close"].values
     volume = df["Volume"].values
 
@@ -269,10 +231,10 @@ def compute_bonuses(df: pd.DataFrame) -> dict:
     vol_ratio = volume[-1] / vol_avg_20 if vol_avg_20 > 0 else 0
     vol_surge = 1 if vol_ratio > 2.0 else 0
 
-    adx14 = compute_adx(close, 14)
+    if adx14 is None: adx14 = compute_adx(close, 14)
     adx_strong = 1 if adx14 > 28 else 0
 
-    rsi14 = compute_rsi_numpy(close, 14)
+    if rsi14 is None: rsi14 = compute_rsi_numpy(close, 14)
     rsi_gold = 1 if 50 <= rsi14 <= 68 else 0
 
     total = (vol_surge * BONUS_VOL_SURGE
@@ -297,14 +259,18 @@ def analyze_symbol(symbol: str) -> dict | None:
     if len(df) < 210:
         return None
 
-    if not check_common_filters(df):
+    close = df["Close"].values
+    rsi14 = compute_rsi_numpy(close, 14)
+    adx14 = compute_adx(close, 14)
+
+    if not check_common_filters(df, rsi14=rsi14, adx14=adx14):
         return None
 
-    ma = compute_ma_crossover(df)
-    bo = compute_breakout(df)
-    roc = compute_roc_momentum(df)
-    hy = compute_hybrid(df)
-    bonuses = compute_bonuses(df)
+    ma = compute_ma_crossover(df, rsi14=rsi14, adx14=adx14)
+    bo = compute_breakout(df, rsi14=rsi14)
+    roc = compute_roc_momentum(df, rsi14=rsi14)
+    hy = compute_hybrid(df, rsi14=rsi14, adx14=adx14)
+    bonuses = compute_bonuses(df, rsi14=rsi14, adx14=adx14)
 
     # Score = sum of activated strategy bases + bonus total
     base = (ma["signal"] * SCORE_MA
@@ -357,22 +323,8 @@ def analyze_symbol(symbol: str) -> dict | None:
 
 
 def get_filtered_symbols() -> list[str]:
-    symbols = []
-    for path in sorted(CACHE_DIR.glob("*.csv")):
-        sym = path.stem
-        if sym == ".gitkeep":
-            continue
-        if sym.startswith("FU") or sym.startswith("E1"):
-            continue
-        df = _load_cache(sym, CACHE_DIR)
-        if len(df) < 20:
-            continue
-        if "Volume" in df.columns:
-            avg_vol = df["Volume"].dropna().iloc[-20:].mean()
-            if pd.isna(avg_vol) or avg_vol < MIN_AVG_VOLUME:
-                continue
-        symbols.append(sym)
-    return symbols
+    from _shared import list_symbols
+    return list_symbols(CACHE_DIR, min_history=20, min_volume=MIN_AVG_VOLUME)
 
 
 def main():

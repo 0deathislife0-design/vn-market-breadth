@@ -500,7 +500,7 @@ function collectAllSignals(){
 function applyFilters(rows, filter, query){
   return rows.filter(r => {
     if (filter !== 'all') {
-      if (filter === 'strong' && !(r.source === 'momentum' && r.signalType === 'strong')) return false;
+      if (filter === 'strong' && r.signalType !== 'strong') return false;
       if (filter === 'watch' && !(r.source === 'momentum' && r.signalType === 'watch')) return false;
       if (filter === 'pre-breakout' && r.source !== 'pre-breakout') return false;
       if (filter === 'ensemble-strong' && !(r.source === 'ensemble' && r.signalType === 'strong')) return false;

@@ -6,13 +6,9 @@ Không dùng sector, news, cơ bản.
 from __future__ import annotations
 import json
 from datetime import datetime, timedelta
-from pathlib import Path
+from _shared import DATA_DIR, CACHE_DIR as OHLC_CACHE_DIR, DOCS_DATA_DIR
 
-ROOT = Path(__file__).resolve().parent.parent
-DATA_DIR = ROOT / "data"
-DOCS_DATA_DIR = ROOT / "docs" / "data"
 LATEST_JSON = DATA_DIR / "breadth_latest.json"
-OHLC_CACHE_DIR = DATA_DIR / "ohlc_cache"
 COMMENTARY_JSON = DATA_DIR / "market_commentary.json"
 DOCS_COMMENTARY_JSON = DOCS_DATA_DIR / "market_commentary.json"
 
