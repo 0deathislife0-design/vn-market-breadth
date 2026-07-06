@@ -69,7 +69,7 @@ new_func = """async function loadData(){
   document.getElementById('metaLine').innerHTML =
     "Cập nhật: " + new Date(LATEST.generated_at).toLocaleString('vi-VN') + " · Ngày dữ liệu: " + LATEST.markets.ALL.date + " " + sessionLabel;
   MARKETS = ['ALL', ...Object.keys(LATEST.markets).filter(k => k !== 'ALL')];
-  renderTabs();
+  renderMarketTabs();
   render();
 }"""
 

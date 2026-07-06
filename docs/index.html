@@ -383,8 +383,8 @@ function buildSignalHub(){
   }
 
   // Load momentum backtest win rates
-  let wrStrong = MOMENTUM_BT?.stats?.strong_T+5?.win_rate;
-  let wrWatch = MOMENTUM_BT?.stats?.watch_T+5?.win_rate;
+  let wrStrong = MOMENTUM_BT?.stats?.['strong_T+5']?.win_rate;
+  let wrWatch = MOMENTUM_BT?.stats?.['watch_T+5']?.win_rate;
 
   rows = rows.map(r => {
     let repeat = prevSymbols.has(r.symbol) ? '<span class="badge-repeat">🔥 Lặp</span>' : '';
