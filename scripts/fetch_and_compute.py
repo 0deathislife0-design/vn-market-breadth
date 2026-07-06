@@ -82,6 +82,8 @@ def cache_max_date(symbol: str) -> datetime | None:
 
 def update_ohlc(client: SSIClient, symbol: str, today: datetime) -> pd.DataFrame:
     cached = _load_cache(symbol, CACHE_DIR)
+    if not cached.empty:
+        cached = cached.dropna(subset=["TradingDate"])
     cached_historical = pd.DataFrame()
     if cached.empty:
         from_date = today - timedelta(days=HISTORY_DAYS_LOOKBACK)
