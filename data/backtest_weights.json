@@ -1,36 +1,36 @@
 {
-  "generated_at": "2026-07-07T01:07:27.168857+00:00",
+  "generated_at": "2026-07-07T09:29:44.739696+00:00",
   "date": "07/07/2026",
-  "num_symbols_tested": 148,
-  "total_observations": 2622,
+  "num_symbols_tested": 145,
+  "total_observations": 2657,
   "lookforward_days": 10,
   "success_threshold_pct": 2.0,
   "weights": {
-    "ma_crossover": 0.2731,
-    "pullback": 0.1829,
-    "breakout": 0.2743,
-    "momentum": 0.2697
+    "ma_crossover": 0.2787,
+    "pullback": 0.1844,
+    "breakout": 0.2689,
+    "momentum": 0.2681
   },
   "stats": {
     "ma_crossover": {
-      "wins": 203,
-      "total": 833,
-      "win_rate": 0.2437
+      "wins": 209,
+      "total": 824,
+      "win_rate": 0.2536
     },
     "pullback": {
-      "wins": 24,
-      "total": 147,
-      "win_rate": 0.1633
+      "wins": 25,
+      "total": 149,
+      "win_rate": 0.1678
     },
     "breakout": {
-      "wins": 47,
-      "total": 192,
-      "win_rate": 0.2448
+      "wins": 46,
+      "total": 188,
+      "win_rate": 0.2447
     },
     "momentum": {
-      "wins": 349,
-      "total": 1450,
-      "win_rate": 0.2407
+      "wins": 365,
+      "total": 1496,
+      "win_rate": 0.244
     }
   }
 }
