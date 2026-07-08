@@ -1070,7 +1070,7 @@
   {
     "date": "08/07/2026",
     "strategy": {
-      "generated_at": "2026-07-08T17:17:09.313429+00:00",
+      "generated_at": "2026-07-08T17:31:49.270119+00:00",
       "date": "08/07/2026",
       "total_symbols_analyzed": 158,
       "total_signals": 1,
@@ -1115,7 +1115,7 @@
       ]
     },
     "ensemble": {
-      "generated_at": "2026-07-08T17:17:15.152452+00:00",
+      "generated_at": "2026-07-08T17:31:55.000379+00:00",
       "date": "08/07/2026",
       "total_symbols_analyzed": 158,
       "total_signals": 12,
@@ -1513,7 +1513,7 @@
       ]
     },
     "momentum": {
-      "generated_at": "2026-07-08T17:17:17.763346+00:00",
+      "generated_at": "2026-07-08T17:31:57.591472+00:00",
       "date": "08/07/2026",
       "total_symbols_analyzed": 129,
       "total_signals": 0,
@@ -1525,7 +1525,7 @@
     },
     "luc_mach": {
       "mode": "diep_original",
-      "generated_at": "2026-07-08T17:17:53.602077+00:00",
+      "generated_at": "2026-07-08T17:32:33.183077+00:00",
       "date": "08/07/2026",
       "threshold": 3,
       "min_volume": 20000,
