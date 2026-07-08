@@ -30,6 +30,18 @@ def _last_bool(series: pd.Series) -> bool:
     return bool(series.iloc[-1]) if len(series) else False
 
 
+def _num(value):
+    if value is None or pd.isna(value):
+        return None
+    return float(value)
+
+
+def _date(value):
+    if value is None or pd.isna(value):
+        return None
+    return pd.to_datetime(value).strftime("%d/%m/%Y")
+
+
 def has_ohlcv(df: pd.DataFrame) -> bool:
     required = ("Open", "High", "Low", "Close", "Volume")
     if len(df) < MIN_HISTORY or not all(col in df.columns for col in required):
@@ -76,25 +88,74 @@ def compute_khung4_tplus(df: pd.DataFrame) -> dict:
         "sell": _last_bool(sell),
         "state": int(state.iloc[-1]) if n else 0,
         "d": None if not n or pd.isna(d.iloc[-1]) else round(float(d.iloc[-1]), 2),
+        "prev_d": None if n < 2 or pd.isna(d.iloc[-2]) else round(float(d.iloc[-2]), 2),
+        "prev_state": int(state.iloc[-2]) if n >= 2 else 0,
+        "cross_up": _last_bool(cross_up),
+        "cross_down": _last_bool(cross_down),
         "buy_price": float(close.iloc[-1]) if _last_bool(buy) else None,
         "sell_price": float(close.iloc[-1]) if _last_bool(sell) else None,
     }
 
 
-def analyze_symbol(symbol: str) -> dict | None:
+def audit_symbol(symbol: str) -> tuple[dict | None, dict]:
     df = _load_cache(symbol, CACHE_DIR).sort_values("TradingDate").reset_index(drop=True)
+    audit = {
+        "symbol": symbol,
+        "rows": int(len(df)),
+        "columns": list(df.columns),
+        "has_ohlcv": bool(has_ohlcv(df)),
+        "reason": None,
+    }
+
     if not has_ohlcv(df):
-        return None
+        required = ("Open", "High", "Low", "Close", "Volume")
+        audit["reason"] = "missing_ohlcv_or_history"
+        audit["missing_columns"] = [c for c in required if c not in df.columns]
+        return None, audit
 
     last_volume = df["Volume"].iloc[-1]
+    last = df.iloc[-1]
+    i = len(df) - 1
+    recent_high = df["High"].iloc[i - 4:i].max() if i >= 4 else np.nan
+    recent_low = df["Low"].iloc[i - 4:i].min() if i >= 4 else np.nan
+
+    audit.update({
+        "last_date": _date(last.get("TradingDate")),
+        "last_open": _num(last.get("Open")),
+        "last_high": _num(last.get("High")),
+        "last_low": _num(last.get("Low")),
+        "last_close": _num(last.get("Close")),
+        "last_volume": _num(last_volume),
+        "recent_high_4": _num(recent_high),
+        "recent_low_4": _num(recent_low),
+        "break_up": bool(last.get("Close") > recent_high) if not pd.isna(recent_high) else False,
+        "break_down": bool(last.get("Close") < recent_low) if not pd.isna(recent_low) else False,
+    })
+
     if pd.isna(last_volume) or float(last_volume) <= MIN_VOLUME:
-        return None
+        audit["reason"] = "volume_filter"
+        return None, audit
 
     signal = compute_khung4_tplus(df)
+    audit.update({
+        "d": signal["d"],
+        "prev_d": signal["prev_d"],
+        "state": int(signal["state"]),
+        "prev_state": int(signal["prev_state"]),
+        "cross_up": bool(signal["cross_up"]),
+        "cross_down": bool(signal["cross_down"]),
+        "buy": bool(signal["buy"]),
+        "sell": bool(signal["sell"]),
+        "buy_price": signal["buy_price"],
+        "sell_price": signal["sell_price"],
+    })
+
     if not signal["buy"]:
-        return None
+        audit["reason"] = "no_buy_signal"
+        return None, audit
 
     close = df["Close"]
+    audit["reason"] = "buy_signal"
     return {
         "symbol": symbol,
         "status": "BUY",
@@ -108,7 +169,12 @@ def analyze_symbol(symbol: str) -> dict | None:
         "last_price": float(close.iloc[-1]),
         "last_volume": float(last_volume),
         "strategies": ["khung4_tplus_buy"],
-    }
+    }, audit
+
+
+def analyze_symbol(symbol: str) -> dict | None:
+    result, _audit = audit_symbol(symbol)
+    return result
 
 
 def get_filtered_symbols() -> list[str]:
@@ -125,16 +191,17 @@ def main():
     tqdm.write(f"\nPhan tich {len(symbols)} ma...\n")
 
     signals = []
+    audit = []
     skipped_ohlc = 0
     bar = tqdm(symbols, desc="[K4] Khung4/Tplus", unit="sym")
     for sym in bar:
         bar.set_postfix_str(sym, refresh=True)
-        result = analyze_symbol(sym)
+        result, item_audit = audit_symbol(sym)
+        audit.append(item_audit)
         if result:
             signals.append(result)
         else:
-            df = _load_cache(sym, CACHE_DIR)
-            if len(df) < MIN_HISTORY or not has_ohlcv(df):
+            if item_audit["reason"] == "missing_ohlcv_or_history":
                 skipped_ohlc += 1
 
     signals.sort(key=lambda x: (x["score"], x["last_volume"]), reverse=True)
@@ -150,6 +217,7 @@ def main():
         "skipped_missing_ohlc": skipped_ohlc,
         "buy": signals,
         "all_signals": signals,
+        "audit": audit,
     }
 
     DATA_DIR.mkdir(parents=True, exist_ok=True)
