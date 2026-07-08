@@ -21,6 +21,7 @@ import numpy as np
 import pandas as pd
 
 from cache_utils import load_cache as _load_cache
+from khung4_tplus_signals import compute_khung4_tplus
 from _shared import tqdm, DATA_DIR, CACHE_DIR, DOCS_DATA_DIR, list_symbols, json_default as _json_default
 
 warnings.filterwarnings("ignore", category=FutureWarning)
@@ -96,45 +97,7 @@ def compute_vudd(df: pd.DataFrame, period: int) -> dict:
 
 
 def compute_tplus(df: pd.DataFrame) -> dict:
-    high = df["High"].reset_index(drop=True)
-    low = df["Low"].reset_index(drop=True)
-    close = df["Close"].reset_index(drop=True)
-    n = len(df)
-    d = pd.Series(np.nan, index=range(n), dtype=float)
-
-    for i in range(4, n):
-        recent_high = high.iloc[i - 4:i].max()
-        recent_low = low.iloc[i - 4:i].min()
-        if close.iloc[i] > recent_high:
-            d.iloc[i] = low.iloc[i - 3:i + 1].min()
-        elif close.iloc[i] < recent_low:
-            d.iloc[i] = high.iloc[i - 3:i + 1].max()
-        else:
-            d.iloc[i] = d.iloc[i - 1]
-
-    prev_d = d.shift(1)
-    prev_close = close.shift(1)
-    cross_up = ((close > d) & ((prev_close <= prev_d) | prev_d.isna())).fillna(False)
-    cross_down = ((d > close) & ((prev_d <= prev_close) | prev_d.isna())).fillna(False)
-    state = pd.Series(0, index=range(n), dtype=int)
-    for i in range(1, n):
-        if cross_up.iloc[i]:
-            state.iloc[i] = 1
-        elif cross_down.iloc[i]:
-            state.iloc[i] = 0
-        else:
-            state.iloc[i] = state.iloc[i - 1]
-
-    buy = (state > state.shift(1)).fillna(False)
-    sell = (state < state.shift(1)).fillna(False)
-    return {
-        "buy_series": buy,
-        "sell_series": sell,
-        "buy": _last_bool(buy),
-        "sell": _last_bool(sell),
-        "state": int(state.iloc[-1]),
-        "d": None if pd.isna(d.iloc[-1]) else round(float(d.iloc[-1]), 2),
-    }
+    return compute_khung4_tplus(df)
 
 
 def analyze_symbol(symbol: str) -> dict | None:
