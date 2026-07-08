@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-08T16:54:00.055057+00:00",
+  "generated_at": "2026-07-08T17:18:28.411790+00:00",
   "date": "08/07/2026",
   "num_symbols_tested": 127,
   "lookforward_days": [
@@ -10,35 +10,10 @@
   "success_threshold_pct": 2.0,
   "min_observations": 20,
   "stats": {
-    "strong_T+10": {
-      "wins": 869,
-      "total": 1903,
-      "win_rate": 0.4566
-    },
-    "roc_momentum_T+5": {
-      "wins": 124,
-      "total": 315,
-      "win_rate": 0.3937
-    },
-    "ma_crossover_T+5": {
-      "wins": 207,
-      "total": 501,
-      "win_rate": 0.4132
-    },
-    "ma_crossover_T+10": {
-      "wins": 216,
-      "total": 499,
-      "win_rate": 0.4329
-    },
     "roc_momentum_T+10": {
       "wins": 125,
       "total": 312,
       "win_rate": 0.4006
-    },
-    "watch_T+5": {
-      "wins": 862,
-      "total": 2487,
-      "win_rate": 0.3466
     },
     "roc_momentum_T+20": {
       "wins": 144,
@@ -50,50 +25,45 @@
       "total": 4422,
       "win_rate": 0.3618
     },
-    "breakout_T+10": {
-      "wins": 82,
-      "total": 192,
-      "win_rate": 0.4271
-    },
-    "ma_crossover_T+20": {
-      "wins": 254,
-      "total": 497,
-      "win_rate": 0.5111
-    },
-    "watch_T+10": {
-      "wins": 1025,
-      "total": 2453,
-      "win_rate": 0.4179
+    "any_signal_T+20": {
+      "wins": 2086,
+      "total": 4252,
+      "win_rate": 0.4906
     },
     "hybrid_T+5": {
       "wins": 61,
       "total": 143,
       "win_rate": 0.4266
     },
+    "strong_T+10": {
+      "wins": 869,
+      "total": 1903,
+      "win_rate": 0.4566
+    },
     "hybrid_T+20": {
       "wins": 82,
       "total": 140,
       "win_rate": 0.5857
     },
-    "any_signal_T+20": {
-      "wins": 2086,
-      "total": 4252,
-      "win_rate": 0.4906
-    },
-    "breakout_T+20": {
-      "wins": 89,
-      "total": 191,
-      "win_rate": 0.466
+    "ma_crossover_T+20": {
+      "wins": 254,
+      "total": 497,
+      "win_rate": 0.5111
     },
     "strong_T+5": {
       "wins": 738,
       "total": 1935,
       "win_rate": 0.3814
     },
-    "strong_T+20": {
-      "wins": 956,
-      "total": 1864,
-      "win_rate": 0.5129
+    "watch_T+10": {
+      "wins": 1025,
+      "total": 2453,
+      "win_rate": 0.4179
+    },
+    "ma_crossover_T+5": {
+      "wins": 207,
+      "total": 501,
+      "win_rate": 0.4132
     },
     "breakout_T+5": {
       "wins": 76,
@@ -105,10 +75,40 @@
       "total": 4356,
       "win_rate": 0.4348
     },
+    "strong_T+20": {
+      "wins": 956,
+      "total": 1864,
+      "win_rate": 0.5129
+    },
+    "watch_T+5": {
+      "wins": 862,
+      "total": 2487,
+      "win_rate": 0.3466
+    },
+    "breakout_T+10": {
+      "wins": 82,
+      "total": 192,
+      "win_rate": 0.4271
+    },
+    "roc_momentum_T+5": {
+      "wins": 124,
+      "total": 315,
+      "win_rate": 0.3937
+    },
     "hybrid_T+10": {
       "wins": 59,
       "total": 141,
       "win_rate": 0.4184
+    },
+    "ma_crossover_T+10": {
+      "wins": 216,
+      "total": 499,
+      "win_rate": 0.4329
+    },
+    "breakout_T+20": {
+      "wins": 89,
+      "total": 191,
+      "win_rate": 0.466
     },
     "watch_T+20": {
       "wins": 1130,

@@ -1,25 +1,41 @@
 {
   "mode": "khung4_tplus_original",
-  "generated_at": "2026-07-08T16:31:03.779447+00:00",
+  "generated_at": "2026-07-08T17:18:24.187188+00:00",
   "date": "08/07/2026",
   "min_volume": 20000,
   "min_history": 20,
-  "total_symbols_analyzed": 1241,
-  "total_signals": 5,
-  "skipped_missing_ohlc": 633,
+  "total_symbols_analyzed": 650,
+  "total_signals": 6,
+  "skipped_missing_ohlc": 0,
   "buy": [
     {
-      "symbol": "VCI",
+      "symbol": "DPM",
       "status": "BUY",
       "signal_type": "khung4_tplus_buy",
       "score": 100,
       "khung4_tplus_buy": true,
       "khung4_tplus_sell": false,
       "khung4_tplus_state": 1,
-      "khung4_tplus_d": 24100.0,
-      "buy_price": 25600.0,
-      "last_price": 25600.0,
-      "last_volume": 11281300.0,
+      "khung4_tplus_d": 22150.0,
+      "buy_price": 24200.0,
+      "last_price": 24200.0,
+      "last_volume": 12316200.0,
+      "strategies": [
+        "khung4_tplus_buy"
+      ]
+    },
+    {
+      "symbol": "DCM",
+      "status": "BUY",
+      "signal_type": "khung4_tplus_buy",
+      "score": 100,
+      "khung4_tplus_buy": true,
+      "khung4_tplus_sell": false,
+      "khung4_tplus_state": 1,
+      "khung4_tplus_d": 34150.0,
+      "buy_price": 36650.0,
+      "last_price": 36650.0,
+      "last_volume": 5137200.0,
       "strategies": [
         "khung4_tplus_buy"
       ]
@@ -51,39 +67,39 @@
       "khung4_tplus_d": 2300.0,
       "buy_price": 2530.0,
       "last_price": 2530.0,
-      "last_volume": 234300.0,
+      "last_volume": 316000.0,
       "strategies": [
         "khung4_tplus_buy"
       ]
     },
     {
-      "symbol": "TCO",
+      "symbol": "SPI",
       "status": "BUY",
       "signal_type": "khung4_tplus_buy",
       "score": 100,
       "khung4_tplus_buy": true,
       "khung4_tplus_sell": false,
       "khung4_tplus_state": 1,
-      "khung4_tplus_d": 10350.0,
-      "buy_price": 11000.0,
-      "last_price": 11000.0,
-      "last_volume": 196400.0,
+      "khung4_tplus_d": 1500.0,
+      "buy_price": 1800.0,
+      "last_price": 1800.0,
+      "last_volume": 195200.0,
       "strategies": [
         "khung4_tplus_buy"
       ]
     },
     {
-      "symbol": "KHP",
+      "symbol": "TNH",
       "status": "BUY",
       "signal_type": "khung4_tplus_buy",
       "score": 100,
       "khung4_tplus_buy": true,
       "khung4_tplus_sell": false,
       "khung4_tplus_state": 1,
-      "khung4_tplus_d": 9830.0,
-      "buy_price": 10150.0,
-      "last_price": 10150.0,
-      "last_volume": 31200.0,
+      "khung4_tplus_d": 7990.0,
+      "buy_price": 8180.0,
+      "last_price": 8180.0,
+      "last_volume": 54300.0,
       "strategies": [
         "khung4_tplus_buy"
       ]
@@ -91,17 +107,33 @@
   ],
   "all_signals": [
     {
-      "symbol": "VCI",
+      "symbol": "DPM",
       "status": "BUY",
       "signal_type": "khung4_tplus_buy",
       "score": 100,
       "khung4_tplus_buy": true,
       "khung4_tplus_sell": false,
       "khung4_tplus_state": 1,
-      "khung4_tplus_d": 24100.0,
-      "buy_price": 25600.0,
-      "last_price": 25600.0,
-      "last_volume": 11281300.0,
+      "khung4_tplus_d": 22150.0,
+      "buy_price": 24200.0,
+      "last_price": 24200.0,
+      "last_volume": 12316200.0,
+      "strategies": [
+        "khung4_tplus_buy"
+      ]
+    },
+    {
+      "symbol": "DCM",
+      "status": "BUY",
+      "signal_type": "khung4_tplus_buy",
+      "score": 100,
+      "khung4_tplus_buy": true,
+      "khung4_tplus_sell": false,
+      "khung4_tplus_state": 1,
+      "khung4_tplus_d": 34150.0,
+      "buy_price": 36650.0,
+      "last_price": 36650.0,
+      "last_volume": 5137200.0,
       "strategies": [
         "khung4_tplus_buy"
       ]
@@ -133,39 +165,39 @@
       "khung4_tplus_d": 2300.0,
       "buy_price": 2530.0,
       "last_price": 2530.0,
-      "last_volume": 234300.0,
+      "last_volume": 316000.0,
       "strategies": [
         "khung4_tplus_buy"
       ]
     },
     {
-      "symbol": "TCO",
+      "symbol": "SPI",
       "status": "BUY",
       "signal_type": "khung4_tplus_buy",
       "score": 100,
       "khung4_tplus_buy": true,
       "khung4_tplus_sell": false,
       "khung4_tplus_state": 1,
-      "khung4_tplus_d": 10350.0,
-      "buy_price": 11000.0,
-      "last_price": 11000.0,
-      "last_volume": 196400.0,
+      "khung4_tplus_d": 1500.0,
+      "buy_price": 1800.0,
+      "last_price": 1800.0,
+      "last_volume": 195200.0,
       "strategies": [
         "khung4_tplus_buy"
       ]
     },
     {
-      "symbol": "KHP",
+      "symbol": "TNH",
       "status": "BUY",
       "signal_type": "khung4_tplus_buy",
       "score": 100,
       "khung4_tplus_buy": true,
       "khung4_tplus_sell": false,
       "khung4_tplus_state": 1,
-      "khung4_tplus_d": 9830.0,
-      "buy_price": 10150.0,
-      "last_price": 10150.0,
-      "last_volume": 31200.0,
+      "khung4_tplus_d": 7990.0,
+      "buy_price": 8180.0,
+      "last_price": 8180.0,
+      "last_volume": 54300.0,
       "strategies": [
         "khung4_tplus_buy"
       ]
