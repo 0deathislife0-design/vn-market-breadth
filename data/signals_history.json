@@ -1070,7 +1070,7 @@
   {
     "date": "08/07/2026",
     "strategy": {
-      "generated_at": "2026-07-08T19:17:59.073930+00:00",
+      "generated_at": "2026-07-08T22:57:46.796266+00:00",
       "date": "08/07/2026",
       "total_symbols_analyzed": 158,
       "total_signals": 1,
@@ -1115,7 +1115,7 @@
       ]
     },
     "ensemble": {
-      "generated_at": "2026-07-08T19:18:04.865309+00:00",
+      "generated_at": "2026-07-08T22:57:52.522366+00:00",
       "date": "08/07/2026",
       "total_symbols_analyzed": 158,
       "total_signals": 12,
@@ -1513,7 +1513,7 @@
       ]
     },
     "momentum": {
-      "generated_at": "2026-07-08T19:18:07.468890+00:00",
+      "generated_at": "2026-07-08T22:57:55.074275+00:00",
       "date": "08/07/2026",
       "total_symbols_analyzed": 129,
       "total_signals": 0,
@@ -1525,7 +1525,7 @@
     },
     "luc_mach": {
       "mode": "diep_original",
-      "generated_at": "2026-07-08T19:18:43.167201+00:00",
+      "generated_at": "2026-07-08T22:58:32.190172+00:00",
       "date": "08/07/2026",
       "threshold": 3,
       "min_volume": 20000,
@@ -3719,7 +3719,7 @@
     },
     "mama_positional": {
       "mode": "ehlers_mama_positional",
-      "generated_at": "2026-07-08T19:19:22.358088+00:00",
+      "generated_at": "2026-07-08T22:59:12.787164+00:00",
       "date": "08/07/2026",
       "fast_limit": 0.5,
       "slow_limit": 0.05,
@@ -18813,7 +18813,7 @@
     },
     "advanced_trailstop": {
       "mode": "diep_advanced_trailstop",
-      "generated_at": "2026-07-08T19:19:52.545537+00:00",
+      "generated_at": "2026-07-08T22:59:43.707783+00:00",
       "date": "08/07/2026",
       "mult": 2.0,
       "atr_period": 7,
