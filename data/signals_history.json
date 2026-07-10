@@ -81381,7 +81381,7 @@
   {
     "date": "10/07/2026",
     "strategy": {
-      "generated_at": "2026-07-10T11:49:24.622660+00:00",
+      "generated_at": "2026-07-10T15:07:46.082177+00:00",
       "date": "10/07/2026",
       "total_symbols_analyzed": 156,
       "total_signals": 3,
@@ -81491,7 +81491,7 @@
       ]
     },
     "ensemble": {
-      "generated_at": "2026-07-10T11:49:30.283634+00:00",
+      "generated_at": "2026-07-10T15:07:51.040963+00:00",
       "date": "10/07/2026",
       "total_symbols_analyzed": 156,
       "total_signals": 3,
@@ -81600,7 +81600,7 @@
       ]
     },
     "momentum": {
-      "generated_at": "2026-07-10T11:49:32.839279+00:00",
+      "generated_at": "2026-07-10T15:07:53.354127+00:00",
       "date": "10/07/2026",
       "total_symbols_analyzed": 125,
       "total_signals": 0,
@@ -81612,7 +81612,7 @@
     },
     "luc_mach": {
       "mode": "diep_original",
-      "generated_at": "2026-07-10T11:49:54.705269+00:00",
+      "generated_at": "2026-07-10T15:08:07.847602+00:00",
       "date": "10/07/2026",
       "threshold": 3,
       "min_volume": 20000,
@@ -82894,7 +82894,7 @@
     },
     "khung4_tplus": {
       "mode": "khung4_tplus_original",
-      "generated_at": "2026-07-10T11:50:12.197514+00:00",
+      "generated_at": "2026-07-10T15:08:18.857851+00:00",
       "date": "10/07/2026",
       "min_volume": 20000,
       "min_history": 20,
@@ -83174,7 +83174,7 @@
         },
         {
           "symbol": "ABR",
-          "rows": 467,
+          "rows": 468,
           "columns": [
             "TradingDate",
             "Open",
@@ -83185,7 +83185,7 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
+          "last_date": "10/07/2026",
           "last_open": 11300.0,
           "last_high": 11300.0,
           "last_low": 11300.0,
@@ -83574,7 +83574,7 @@
         },
         {
           "symbol": "AMC",
-          "rows": 293,
+          "rows": 294,
           "columns": [
             "TradingDate",
             "Open",
@@ -83585,13 +83585,13 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "02/07/2026",
+          "last_date": "10/07/2026",
           "last_open": 12400.0,
           "last_high": 12400.0,
           "last_low": 12400.0,
           "last_close": 12400.0,
-          "last_volume": 100.0,
-          "recent_high_4": 12493.0,
+          "last_volume": 0.0,
+          "recent_high_4": 12400.0,
           "recent_low_4": 12306.0,
           "break_up": false,
           "break_down": false
@@ -83820,7 +83820,7 @@
         },
         {
           "symbol": "ASG",
-          "rows": 437,
+          "rows": 438,
           "columns": [
             "TradingDate",
             "Open",
@@ -83831,12 +83831,12 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "08/07/2026",
-          "last_open": 16900.0,
-          "last_high": 16900.0,
-          "last_low": 16900.0,
-          "last_close": 16900.0,
-          "last_volume": 100.0,
+          "last_date": "10/07/2026",
+          "last_open": 16300.0,
+          "last_high": 16800.0,
+          "last_low": 16300.0,
+          "last_close": 16800.0,
+          "last_volume": 700.0,
           "recent_high_4": 16900.0,
           "recent_low_4": 16300.0,
           "break_up": false,
@@ -83902,7 +83902,7 @@
         },
         {
           "symbol": "AST",
-          "rows": 517,
+          "rows": 518,
           "columns": [
             "TradingDate",
             "Open",
@@ -83913,12 +83913,12 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
-          "last_open": 62500.0,
+          "last_date": "10/07/2026",
+          "last_open": 63400.0,
           "last_high": 63400.0,
-          "last_low": 62500.0,
+          "last_low": 63400.0,
           "last_close": 63400.0,
-          "last_volume": 1800.0,
+          "last_volume": 200.0,
           "recent_high_4": 64000.0,
           "recent_low_4": 60200.0,
           "break_up": false,
@@ -84056,7 +84056,7 @@
         },
         {
           "symbol": "BBS",
-          "rows": 160,
+          "rows": 161,
           "columns": [
             "TradingDate",
             "Open",
@@ -84067,16 +84067,16 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
-          "last_open": 12800.0,
-          "last_high": 12900.0,
-          "last_low": 11700.0,
-          "last_close": 11700.0,
-          "last_volume": 1100.0,
-          "recent_high_4": 12800.0,
-          "recent_low_4": 12700.0,
+          "last_date": "10/07/2026",
+          "last_open": 12700.0,
+          "last_high": 12700.0,
+          "last_low": 12700.0,
+          "last_close": 12700.0,
+          "last_volume": 0.0,
+          "recent_high_4": 12900.0,
+          "recent_low_4": 11700.0,
           "break_up": false,
-          "break_down": true
+          "break_down": false
         },
         {
           "symbol": "BCC",
@@ -85082,7 +85082,7 @@
         },
         {
           "symbol": "CDN",
-          "rows": 517,
+          "rows": 518,
           "columns": [
             "TradingDate",
             "Open",
@@ -85093,16 +85093,16 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
-          "last_open": 26600.0,
-          "last_high": 26600.0,
-          "last_low": 26500.0,
-          "last_close": 26500.0,
-          "last_volume": 800.0,
+          "last_date": "10/07/2026",
+          "last_open": 26800.0,
+          "last_high": 26800.0,
+          "last_low": 26400.0,
+          "last_close": 26400.0,
+          "last_volume": 0.0,
           "recent_high_4": 27300.0,
           "recent_low_4": 26500.0,
           "break_up": false,
-          "break_down": false
+          "break_down": true
         },
         {
           "symbol": "CEO",
@@ -85308,7 +85308,7 @@
         },
         {
           "symbol": "CLC",
-          "rows": 489,
+          "rows": 490,
           "columns": [
             "TradingDate",
             "Open",
@@ -85319,20 +85319,20 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
-          "last_open": 52000.0,
+          "last_date": "10/07/2026",
+          "last_open": 51900.0,
           "last_high": 52000.0,
-          "last_low": 52000.0,
+          "last_low": 51900.0,
           "last_close": 52000.0,
-          "last_volume": 900.0,
-          "recent_high_4": 55000.0,
+          "last_volume": 3700.0,
+          "recent_high_4": 53000.0,
           "recent_low_4": 50700.0,
           "break_up": false,
           "break_down": false
         },
         {
           "symbol": "CLH",
-          "rows": 514,
+          "rows": 515,
           "columns": [
             "TradingDate",
             "Open",
@@ -85343,13 +85343,13 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "08/07/2026",
+          "last_date": "10/07/2026",
           "last_open": 20100.0,
-          "last_high": 20100.0,
+          "last_high": 20300.0,
           "last_low": 20100.0,
-          "last_close": 20100.0,
-          "last_volume": 7000.0,
-          "recent_high_4": 21200.0,
+          "last_close": 20300.0,
+          "last_volume": 0.0,
+          "recent_high_4": 21000.0,
           "recent_low_4": 20100.0,
           "break_up": false,
           "break_down": false
@@ -85428,7 +85428,7 @@
         },
         {
           "symbol": "CMC",
-          "rows": 354,
+          "rows": 355,
           "columns": [
             "TradingDate",
             "Open",
@@ -85439,16 +85439,16 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "08/07/2026",
-          "last_open": 10000.0,
-          "last_high": 10000.0,
-          "last_low": 9400.0,
-          "last_close": 9400.0,
-          "last_volume": 1100.0,
+          "last_date": "10/07/2026",
+          "last_open": 9100.0,
+          "last_high": 9100.0,
+          "last_low": 9100.0,
+          "last_close": 9100.0,
+          "last_volume": 0.0,
           "recent_high_4": 10000.0,
           "recent_low_4": 9400.0,
           "break_up": false,
-          "break_down": false
+          "break_down": true
         },
         {
           "symbol": "CMG",
@@ -85814,7 +85814,7 @@
         },
         {
           "symbol": "CTB",
-          "rows": 389,
+          "rows": 390,
           "columns": [
             "TradingDate",
             "Open",
@@ -85825,14 +85825,14 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "08/07/2026",
+          "last_date": "10/07/2026",
           "last_open": 17600.0,
           "last_high": 17600.0,
           "last_low": 17600.0,
           "last_close": 17600.0,
-          "last_volume": 500.0,
+          "last_volume": 0.0,
           "recent_high_4": 17600.0,
-          "recent_low_4": 17200.0,
+          "recent_low_4": 17500.0,
           "break_up": false,
           "break_down": false
         },
@@ -86118,7 +86118,7 @@
         },
         {
           "symbol": "DAD",
-          "rows": 406,
+          "rows": 407,
           "columns": [
             "TradingDate",
             "Open",
@@ -86129,14 +86129,14 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "08/07/2026",
-          "last_open": 15500.0,
-          "last_high": 15600.0,
-          "last_low": 15500.0,
-          "last_close": 15600.0,
-          "last_volume": 1600.0,
+          "last_date": "10/07/2026",
+          "last_open": 15400.0,
+          "last_high": 15400.0,
+          "last_low": 15400.0,
+          "last_close": 15400.0,
+          "last_volume": 0.0,
           "recent_high_4": 15600.0,
-          "recent_low_4": 14400.0,
+          "recent_low_4": 14500.0,
           "break_up": false,
           "break_down": false
         },
@@ -86586,7 +86586,7 @@
         },
         {
           "symbol": "DHT",
-          "rows": 517,
+          "rows": 518,
           "columns": [
             "TradingDate",
             "Open",
@@ -86597,14 +86597,14 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
-          "last_open": 65500.0,
-          "last_high": 65500.0,
-          "last_low": 64900.0,
-          "last_close": 65100.0,
-          "last_volume": 5500.0,
+          "last_date": "10/07/2026",
+          "last_open": 63000.0,
+          "last_high": 64500.0,
+          "last_low": 63000.0,
+          "last_close": 64500.0,
+          "last_volume": 0.0,
           "recent_high_4": 66000.0,
-          "recent_low_4": 62500.0,
+          "recent_low_4": 63000.0,
           "break_up": false,
           "break_down": false
         },
@@ -86644,7 +86644,7 @@
         },
         {
           "symbol": "DIH",
-          "rows": 499,
+          "rows": 500,
           "columns": [
             "TradingDate",
             "Open",
@@ -86655,13 +86655,13 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
-          "last_open": 7800.0,
-          "last_high": 7800.0,
-          "last_low": 7600.0,
-          "last_close": 7600.0,
-          "last_volume": 3100.0,
-          "recent_high_4": 9000.0,
+          "last_date": "10/07/2026",
+          "last_open": 7500.0,
+          "last_high": 7500.0,
+          "last_low": 7200.0,
+          "last_close": 7500.0,
+          "last_volume": 0.0,
+          "recent_high_4": 7900.0,
           "recent_low_4": 7500.0,
           "break_up": false,
           "break_down": false
@@ -87382,7 +87382,7 @@
         },
         {
           "symbol": "DXV",
-          "rows": 510,
+          "rows": 511,
           "columns": [
             "TradingDate",
             "Open",
@@ -87393,15 +87393,15 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
-          "last_open": 3550.0,
-          "last_high": 3820.0,
-          "last_low": 3500.0,
-          "last_close": 3820.0,
-          "last_volume": 9200.0,
-          "recent_high_4": 3750.0,
+          "last_date": "10/07/2026",
+          "last_open": 3800.0,
+          "last_high": 3800.0,
+          "last_low": 3600.0,
+          "last_close": 3800.0,
+          "last_volume": 500.0,
+          "recent_high_4": 3820.0,
           "recent_low_4": 3500.0,
-          "break_up": true,
+          "break_up": false,
           "break_down": false
         },
         {
@@ -87488,7 +87488,7 @@
         },
         {
           "symbol": "EID",
-          "rows": 515,
+          "rows": 516,
           "columns": [
             "TradingDate",
             "Open",
@@ -87499,12 +87499,12 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
-          "last_open": 20200.0,
-          "last_high": 20200.0,
-          "last_low": 20200.0,
-          "last_close": 20200.0,
-          "last_volume": 3000.0,
+          "last_date": "10/07/2026",
+          "last_open": 20300.0,
+          "last_high": 20300.0,
+          "last_low": 20300.0,
+          "last_close": 20300.0,
+          "last_volume": 0.0,
           "recent_high_4": 21000.0,
           "recent_low_4": 20000.0,
           "break_up": false,
@@ -88580,7 +88580,7 @@
         },
         {
           "symbol": "HAS",
-          "rows": 258,
+          "rows": 259,
           "columns": [
             "TradingDate",
             "Open",
@@ -88591,13 +88591,13 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
-          "last_open": 9400.0,
-          "last_high": 9440.0,
-          "last_low": 8270.0,
-          "last_close": 8270.0,
-          "last_volume": 13500.0,
-          "recent_high_4": 8880.0,
+          "last_date": "10/07/2026",
+          "last_open": 7810.0,
+          "last_high": 7810.0,
+          "last_low": 7810.0,
+          "last_close": 7810.0,
+          "last_volume": 7500.0,
+          "recent_high_4": 9440.0,
           "recent_low_4": 7760.0,
           "break_up": false,
           "break_down": false
@@ -88782,7 +88782,7 @@
         },
         {
           "symbol": "HDA",
-          "rows": 512,
+          "rows": 513,
           "columns": [
             "TradingDate",
             "Open",
@@ -88793,16 +88793,16 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
-          "last_open": 6900.0,
-          "last_high": 6900.0,
-          "last_low": 6900.0,
-          "last_close": 6900.0,
-          "last_volume": 1900.0,
+          "last_date": "10/07/2026",
+          "last_open": 6400.0,
+          "last_high": 6400.0,
+          "last_low": 6400.0,
+          "last_close": 6400.0,
+          "last_volume": 0.0,
           "recent_high_4": 7600.0,
-          "recent_low_4": 6400.0,
+          "recent_low_4": 6600.0,
           "break_up": false,
-          "break_down": false
+          "break_down": true
         },
         {
           "symbol": "HDB",
@@ -89178,7 +89178,7 @@
         },
         {
           "symbol": "HLC",
-          "rows": 489,
+          "rows": 490,
           "columns": [
             "TradingDate",
             "Open",
@@ -89189,16 +89189,16 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
-          "last_open": 10000.0,
-          "last_high": 10000.0,
-          "last_low": 10000.0,
-          "last_close": 10000.0,
-          "last_volume": 1000.0,
+          "last_date": "10/07/2026",
+          "last_open": 10500.0,
+          "last_high": 10900.0,
+          "last_low": 10500.0,
+          "last_close": 10900.0,
+          "last_volume": 0.0,
           "recent_high_4": 10800.0,
-          "recent_low_4": 10100.0,
-          "break_up": false,
-          "break_down": true
+          "recent_low_4": 10000.0,
+          "break_up": true,
+          "break_down": false
         },
         {
           "symbol": "HLD",
@@ -89226,7 +89226,7 @@
         },
         {
           "symbol": "HMC",
-          "rows": 514,
+          "rows": 515,
           "columns": [
             "TradingDate",
             "Open",
@@ -89237,12 +89237,12 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "08/07/2026",
-          "last_open": 10700.0,
+          "last_date": "10/07/2026",
+          "last_open": 10650.0,
           "last_high": 10900.0,
-          "last_low": 10700.0,
+          "last_low": 10650.0,
           "last_close": 10900.0,
-          "last_volume": 300.0,
+          "last_volume": 400.0,
           "recent_high_4": 10950.0,
           "recent_low_4": 10550.0,
           "break_up": false,
@@ -89322,7 +89322,7 @@
         },
         {
           "symbol": "HOM",
-          "rows": 517,
+          "rows": 518,
           "columns": [
             "TradingDate",
             "Open",
@@ -89333,12 +89333,12 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
-          "last_open": 3900.0,
-          "last_high": 4000.0,
-          "last_low": 3900.0,
-          "last_close": 4000.0,
-          "last_volume": 1400.0,
+          "last_date": "10/07/2026",
+          "last_open": 4000.0,
+          "last_high": 4100.0,
+          "last_low": 4000.0,
+          "last_close": 4100.0,
+          "last_volume": 0.0,
           "recent_high_4": 4400.0,
           "recent_low_4": 3800.0,
           "break_up": false,
@@ -89448,7 +89448,7 @@
         },
         {
           "symbol": "HRC",
-          "rows": 360,
+          "rows": 361,
           "columns": [
             "TradingDate",
             "Open",
@@ -89459,16 +89459,16 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
-          "last_open": 41300.0,
-          "last_high": 41300.0,
-          "last_low": 38550.0,
-          "last_close": 40800.0,
-          "last_volume": 3800.0,
+          "last_date": "10/07/2026",
+          "last_open": 38100.0,
+          "last_high": 38100.0,
+          "last_low": 38100.0,
+          "last_close": 38100.0,
+          "last_volume": 100.0,
           "recent_high_4": 41400.0,
-          "recent_low_4": 36100.0,
+          "recent_low_4": 38550.0,
           "break_up": false,
-          "break_down": false
+          "break_down": true
         },
         {
           "symbol": "HSG",
@@ -89872,7 +89872,7 @@
         },
         {
           "symbol": "ICT",
-          "rows": 513,
+          "rows": 514,
           "columns": [
             "TradingDate",
             "Open",
@@ -89883,13 +89883,13 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
-          "last_open": 17600.0,
-          "last_high": 17600.0,
-          "last_low": 17600.0,
-          "last_close": 17600.0,
-          "last_volume": 700.0,
-          "recent_high_4": 17650.0,
+          "last_date": "10/07/2026",
+          "last_open": 17450.0,
+          "last_high": 17450.0,
+          "last_low": 17400.0,
+          "last_close": 17400.0,
+          "last_volume": 4300.0,
+          "recent_high_4": 17600.0,
           "recent_low_4": 17400.0,
           "break_up": false,
           "break_down": false
@@ -89978,7 +89978,7 @@
         },
         {
           "symbol": "IDV",
-          "rows": 517,
+          "rows": 518,
           "columns": [
             "TradingDate",
             "Open",
@@ -89989,14 +89989,14 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
-          "last_open": 21800.0,
-          "last_high": 21900.0,
-          "last_low": 21300.0,
-          "last_close": 21900.0,
-          "last_volume": 2000.0,
-          "recent_high_4": 22500.0,
-          "recent_low_4": 21600.0,
+          "last_date": "10/07/2026",
+          "last_open": 22000.0,
+          "last_high": 22000.0,
+          "last_low": 22000.0,
+          "last_close": 22000.0,
+          "last_volume": 0.0,
+          "recent_high_4": 22100.0,
+          "recent_low_4": 21300.0,
           "break_up": false,
           "break_down": false
         },
@@ -90108,7 +90108,7 @@
         },
         {
           "symbol": "INN",
-          "rows": 502,
+          "rows": 503,
           "columns": [
             "TradingDate",
             "Open",
@@ -90119,12 +90119,12 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
-          "last_open": 36300.0,
-          "last_high": 36300.0,
-          "last_low": 36300.0,
-          "last_close": 36300.0,
-          "last_volume": 100.0,
+          "last_date": "10/07/2026",
+          "last_open": 35600.0,
+          "last_high": 35600.0,
+          "last_low": 35600.0,
+          "last_close": 35600.0,
+          "last_volume": 0.0,
           "recent_high_4": 36700.0,
           "recent_low_4": 35000.0,
           "break_up": false,
@@ -90228,7 +90228,7 @@
         },
         {
           "symbol": "IVS",
-          "rows": 517,
+          "rows": 518,
           "columns": [
             "TradingDate",
             "Open",
@@ -90238,27 +90238,17 @@
             "Volume"
           ],
           "has_ohlcv": true,
-          "reason": "no_buy_signal",
-          "last_date": "09/07/2026",
-          "last_open": 7200.0,
-          "last_high": 7200.0,
-          "last_low": 6900.0,
+          "reason": "volume_filter",
+          "last_date": "10/07/2026",
+          "last_open": 7000.0,
+          "last_high": 7000.0,
+          "last_low": 6800.0,
           "last_close": 7000.0,
-          "last_volume": 22800.0,
+          "last_volume": 0.0,
           "recent_high_4": 7500.0,
-          "recent_low_4": 6800.0,
+          "recent_low_4": 6900.0,
           "break_up": false,
-          "break_down": false,
-          "d": 6600.0,
-          "prev_d": 6600.0,
-          "state": 1,
-          "prev_state": 1,
-          "cross_up": false,
-          "cross_down": false,
-          "buy": false,
-          "sell": false,
-          "buy_price": null,
-          "sell_price": null
+          "break_down": false
         },
         {
           "symbol": "JVC",
@@ -90378,7 +90368,7 @@
         },
         {
           "symbol": "KDM",
-          "rows": 517,
+          "rows": 518,
           "columns": [
             "TradingDate",
             "Open",
@@ -90389,12 +90379,12 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
-          "last_open": 21100.0,
-          "last_high": 21100.0,
-          "last_low": 21100.0,
-          "last_close": 21100.0,
-          "last_volume": 100.0,
+          "last_date": "10/07/2026",
+          "last_open": 22000.0,
+          "last_high": 22000.0,
+          "last_low": 20800.0,
+          "last_close": 20800.0,
+          "last_volume": 0.0,
           "recent_high_4": 23400.0,
           "recent_low_4": 19300.0,
           "break_up": false,
@@ -90864,7 +90854,7 @@
         },
         {
           "symbol": "LBM",
-          "rows": 517,
+          "rows": 518,
           "columns": [
             "TradingDate",
             "Open",
@@ -90875,12 +90865,12 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
-          "last_open": 29000.0,
-          "last_high": 29000.0,
-          "last_low": 28750.0,
-          "last_close": 29000.0,
-          "last_volume": 6800.0,
+          "last_date": "10/07/2026",
+          "last_open": 29200.0,
+          "last_high": 29200.0,
+          "last_low": 29200.0,
+          "last_close": 29200.0,
+          "last_volume": 1000.0,
           "recent_high_4": 29300.0,
           "recent_low_4": 28500.0,
           "break_up": false,
@@ -91384,7 +91374,7 @@
         },
         {
           "symbol": "MCO",
-          "rows": 516,
+          "rows": 517,
           "columns": [
             "TradingDate",
             "Open",
@@ -91395,16 +91385,16 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "08/07/2026",
+          "last_date": "10/07/2026",
           "last_open": 5600.0,
           "last_high": 5600.0,
-          "last_low": 5600.0,
-          "last_close": 5600.0,
-          "last_volume": 4900.0,
-          "recent_high_4": 5900.0,
+          "last_low": 5200.0,
+          "last_close": 5300.0,
+          "last_volume": 0.0,
+          "recent_high_4": 5800.0,
           "recent_low_4": 5600.0,
           "break_up": false,
-          "break_down": false
+          "break_down": true
         },
         {
           "symbol": "MCP",
@@ -91432,7 +91422,7 @@
         },
         {
           "symbol": "MDC",
-          "rows": 504,
+          "rows": 505,
           "columns": [
             "TradingDate",
             "Open",
@@ -91443,12 +91433,12 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
-          "last_open": 9300.0,
-          "last_high": 9300.0,
-          "last_low": 9100.0,
-          "last_close": 9100.0,
-          "last_volume": 700.0,
+          "last_date": "10/07/2026",
+          "last_open": 9200.0,
+          "last_high": 9200.0,
+          "last_low": 8800.0,
+          "last_close": 8800.0,
+          "last_volume": 0.0,
           "recent_high_4": 9500.0,
           "recent_low_4": 8800.0,
           "break_up": false,
@@ -91948,7 +91938,7 @@
         },
         {
           "symbol": "NBB",
-          "rows": 517,
+          "rows": 518,
           "columns": [
             "TradingDate",
             "Open",
@@ -91959,12 +91949,12 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
+          "last_date": "10/07/2026",
           "last_open": 17150.0,
-          "last_high": 17400.0,
+          "last_high": 17250.0,
           "last_low": 17150.0,
-          "last_close": 17400.0,
-          "last_volume": 10100.0,
+          "last_close": 17250.0,
+          "last_volume": 10500.0,
           "recent_high_4": 17550.0,
           "recent_low_4": 17100.0,
           "break_up": false,
@@ -91996,7 +91986,7 @@
         },
         {
           "symbol": "NBP",
-          "rows": 365,
+          "rows": 366,
           "columns": [
             "TradingDate",
             "Open",
@@ -92007,12 +91997,12 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
+          "last_date": "10/07/2026",
           "last_open": 7500.0,
           "last_high": 7500.0,
           "last_low": 7500.0,
           "last_close": 7500.0,
-          "last_volume": 100.0,
+          "last_volume": 0.0,
           "recent_high_4": 8200.0,
           "recent_low_4": 7500.0,
           "break_up": false,
@@ -92236,7 +92226,7 @@
         },
         {
           "symbol": "NHT",
-          "rows": 442,
+          "rows": 443,
           "columns": [
             "TradingDate",
             "Open",
@@ -92247,16 +92237,16 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
-          "last_open": 11850.0,
-          "last_high": 11850.0,
-          "last_low": 11650.0,
-          "last_close": 11650.0,
-          "last_volume": 2500.0,
+          "last_date": "10/07/2026",
+          "last_open": 11650.0,
+          "last_high": 11650.0,
+          "last_low": 11550.0,
+          "last_close": 11550.0,
+          "last_volume": 1200.0,
           "recent_high_4": 12000.0,
           "recent_low_4": 11600.0,
           "break_up": false,
-          "break_down": false
+          "break_down": true
         },
         {
           "symbol": "NKG",
@@ -92578,7 +92568,7 @@
         },
         {
           "symbol": "NVT",
-          "rows": 441,
+          "rows": 442,
           "columns": [
             "TradingDate",
             "Open",
@@ -92589,14 +92579,14 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "08/07/2026",
-          "last_open": 7020.0,
-          "last_high": 7480.0,
-          "last_low": 7020.0,
-          "last_close": 7480.0,
-          "last_volume": 200.0,
+          "last_date": "10/07/2026",
+          "last_open": 7970.0,
+          "last_high": 7970.0,
+          "last_low": 7970.0,
+          "last_close": 7970.0,
+          "last_volume": 100.0,
           "recent_high_4": 7990.0,
-          "recent_low_4": 7250.0,
+          "recent_low_4": 7020.0,
           "break_up": false,
           "break_down": false
         },
@@ -92834,7 +92824,7 @@
         },
         {
           "symbol": "PBP",
-          "rows": 511,
+          "rows": 512,
           "columns": [
             "TradingDate",
             "Open",
@@ -92845,15 +92835,15 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
-          "last_open": 11400.0,
-          "last_high": 12100.0,
-          "last_low": 11400.0,
-          "last_close": 12100.0,
-          "last_volume": 1100.0,
+          "last_date": "10/07/2026",
+          "last_open": 12200.0,
+          "last_high": 12200.0,
+          "last_low": 12200.0,
+          "last_close": 12200.0,
+          "last_volume": 0.0,
           "recent_high_4": 12100.0,
           "recent_low_4": 11200.0,
-          "break_up": false,
+          "break_up": true,
           "break_down": false
         },
         {
@@ -93118,7 +93108,7 @@
         },
         {
           "symbol": "PGD",
-          "rows": 515,
+          "rows": 516,
           "columns": [
             "TradingDate",
             "Open",
@@ -93129,20 +93119,20 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
+          "last_date": "10/07/2026",
           "last_open": 22100.0,
           "last_high": 22100.0,
-          "last_low": 22100.0,
-          "last_close": 22100.0,
-          "last_volume": 200.0,
+          "last_low": 21500.0,
+          "last_close": 21500.0,
+          "last_volume": 1400.0,
           "recent_high_4": 22800.0,
           "recent_low_4": 21700.0,
           "break_up": false,
-          "break_down": false
+          "break_down": true
         },
         {
           "symbol": "PGI",
-          "rows": 431,
+          "rows": 432,
           "columns": [
             "TradingDate",
             "Open",
@@ -93153,12 +93143,12 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "08/07/2026",
-          "last_open": 17350.0,
-          "last_high": 17350.0,
+          "last_date": "10/07/2026",
+          "last_open": 17000.0,
+          "last_high": 17000.0,
           "last_low": 17000.0,
           "last_close": 17000.0,
-          "last_volume": 5100.0,
+          "last_volume": 300.0,
           "recent_high_4": 17650.0,
           "recent_low_4": 16850.0,
           "break_up": false,
@@ -93830,7 +93820,7 @@
         },
         {
           "symbol": "PPP",
-          "rows": 401,
+          "rows": 402,
           "columns": [
             "TradingDate",
             "Open",
@@ -93841,12 +93831,12 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "07/07/2026",
-          "last_open": 18200.0,
-          "last_high": 18200.0,
-          "last_low": 18200.0,
-          "last_close": 18200.0,
-          "last_volume": 300.0,
+          "last_date": "10/07/2026",
+          "last_open": 18000.0,
+          "last_high": 18000.0,
+          "last_low": 18000.0,
+          "last_close": 18000.0,
+          "last_volume": 0.0,
           "recent_high_4": 19800.0,
           "recent_low_4": 18000.0,
           "break_up": false,
@@ -93902,7 +93892,7 @@
         },
         {
           "symbol": "PPY",
-          "rows": 306,
+          "rows": 307,
           "columns": [
             "TradingDate",
             "Open",
@@ -93913,12 +93903,12 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
+          "last_date": "10/07/2026",
           "last_open": 9200.0,
-          "last_high": 9300.0,
+          "last_high": 9400.0,
           "last_low": 9200.0,
-          "last_close": 9200.0,
-          "last_volume": 2800.0,
+          "last_close": 9400.0,
+          "last_volume": 0.0,
           "recent_high_4": 9500.0,
           "recent_low_4": 8900.0,
           "break_up": false,
@@ -94104,7 +94094,7 @@
         },
         {
           "symbol": "PSW",
-          "rows": 515,
+          "rows": 516,
           "columns": [
             "TradingDate",
             "Open",
@@ -94115,13 +94105,13 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
-          "last_open": 7900.0,
-          "last_high": 8000.0,
+          "last_date": "10/07/2026",
+          "last_open": 7800.0,
+          "last_high": 7800.0,
           "last_low": 7800.0,
           "last_close": 7800.0,
-          "last_volume": 14500.0,
-          "recent_high_4": 7800.0,
+          "last_volume": 0.0,
+          "recent_high_4": 8000.0,
           "recent_low_4": 7600.0,
           "break_up": false,
           "break_down": false
@@ -94200,7 +94190,7 @@
         },
         {
           "symbol": "PTI",
-          "rows": 455,
+          "rows": 456,
           "columns": [
             "TradingDate",
             "Open",
@@ -94211,16 +94201,16 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
-          "last_open": 23800.0,
-          "last_high": 23800.0,
-          "last_low": 23800.0,
-          "last_close": 23800.0,
-          "last_volume": 200.0,
+          "last_date": "10/07/2026",
+          "last_open": 24800.0,
+          "last_high": 24800.0,
+          "last_low": 24800.0,
+          "last_close": 24800.0,
+          "last_volume": 0.0,
           "recent_high_4": 26500.0,
-          "recent_low_4": 24800.0,
+          "recent_low_4": 23800.0,
           "break_up": false,
-          "break_down": true
+          "break_down": false
         },
         {
           "symbol": "PTL",
@@ -95134,7 +95124,7 @@
         },
         {
           "symbol": "SDN",
-          "rows": 164,
+          "rows": 165,
           "columns": [
             "TradingDate",
             "Open",
@@ -95145,15 +95135,15 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "30/06/2026",
-          "last_open": 19800.0,
-          "last_high": 19800.0,
-          "last_low": 19800.0,
-          "last_close": 19800.0,
-          "last_volume": 2000.0,
-          "recent_high_4": 19500.0,
+          "last_date": "10/07/2026",
+          "last_open": 18000.0,
+          "last_high": 18000.0,
+          "last_low": 18000.0,
+          "last_close": 18000.0,
+          "last_volume": 0.0,
+          "recent_high_4": 19800.0,
           "recent_low_4": 18000.0,
-          "break_up": true,
+          "break_up": false,
           "break_down": false
         },
         {
@@ -95610,7 +95600,7 @@
         },
         {
           "symbol": "SHP",
-          "rows": 517,
+          "rows": 518,
           "columns": [
             "TradingDate",
             "Open",
@@ -95621,12 +95611,12 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
-          "last_open": 32650.0,
+          "last_date": "10/07/2026",
+          "last_open": 32800.0,
           "last_high": 32900.0,
-          "last_low": 32500.0,
-          "last_close": 32500.0,
-          "last_volume": 2100.0,
+          "last_low": 32800.0,
+          "last_close": 32900.0,
+          "last_volume": 300.0,
           "recent_high_4": 32900.0,
           "recent_low_4": 32500.0,
           "break_up": false,
@@ -95740,7 +95730,7 @@
         },
         {
           "symbol": "SJS",
-          "rows": 517,
+          "rows": 518,
           "columns": [
             "TradingDate",
             "Open",
@@ -95750,17 +95740,27 @@
             "Volume"
           ],
           "has_ohlcv": true,
-          "reason": "volume_filter",
-          "last_date": "09/07/2026",
-          "last_open": 47900.0,
-          "last_high": 48000.0,
+          "reason": "no_buy_signal",
+          "last_date": "10/07/2026",
+          "last_open": 47000.0,
+          "last_high": 47800.0,
           "last_low": 47000.0,
           "last_close": 47800.0,
-          "last_volume": 9600.0,
-          "recent_high_4": 48600.0,
-          "recent_low_4": 44500.0,
+          "last_volume": 41200.0,
+          "recent_high_4": 48000.0,
+          "recent_low_4": 46600.0,
           "break_up": false,
-          "break_down": false
+          "break_down": false,
+          "d": 49800.0,
+          "prev_d": 49800.0,
+          "state": 0,
+          "prev_state": 0,
+          "cross_up": false,
+          "cross_down": false,
+          "buy": false,
+          "sell": false,
+          "buy_price": null,
+          "sell_price": null
         },
         {
           "symbol": "SKG",
@@ -95788,7 +95788,7 @@
         },
         {
           "symbol": "SLS",
-          "rows": 517,
+          "rows": 518,
           "columns": [
             "TradingDate",
             "Open",
@@ -95799,12 +95799,12 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
+          "last_date": "10/07/2026",
           "last_open": 149000.0,
           "last_high": 149000.0,
           "last_low": 149000.0,
           "last_close": 149000.0,
-          "last_volume": 400.0,
+          "last_volume": 0.0,
           "recent_high_4": 150000.0,
           "recent_low_4": 146200.0,
           "break_up": false,
@@ -96000,7 +96000,7 @@
         },
         {
           "symbol": "SPM",
-          "rows": 360,
+          "rows": 361,
           "columns": [
             "TradingDate",
             "Open",
@@ -96011,16 +96011,16 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "29/06/2026",
+          "last_date": "10/07/2026",
           "last_open": 8080.0,
           "last_high": 8080.0,
           "last_low": 8080.0,
           "last_close": 8080.0,
-          "last_volume": 900.0,
+          "last_volume": 200.0,
           "recent_high_4": 8670.0,
-          "recent_low_4": 8100.0,
+          "recent_low_4": 8080.0,
           "break_up": false,
-          "break_down": true
+          "break_down": false
         },
         {
           "symbol": "SRA",
@@ -96318,7 +96318,7 @@
         },
         {
           "symbol": "STP",
-          "rows": 281,
+          "rows": 282,
           "columns": [
             "TradingDate",
             "Open",
@@ -96329,16 +96329,16 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "06/07/2026",
-          "last_open": 7400.0,
-          "last_high": 7400.0,
-          "last_low": 7400.0,
-          "last_close": 7400.0,
-          "last_volume": 100.0,
+          "last_date": "10/07/2026",
+          "last_open": 7500.0,
+          "last_high": 7500.0,
+          "last_low": 7500.0,
+          "last_close": 7500.0,
+          "last_volume": 0.0,
           "recent_high_4": 8000.0,
-          "recent_low_4": 7700.0,
+          "recent_low_4": 7400.0,
           "break_up": false,
-          "break_down": true
+          "break_down": false
         },
         {
           "symbol": "SVC",
@@ -96438,7 +96438,7 @@
         },
         {
           "symbol": "SVT",
-          "rows": 514,
+          "rows": 515,
           "columns": [
             "TradingDate",
             "Open",
@@ -96449,12 +96449,12 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
+          "last_date": "10/07/2026",
           "last_open": 10550.0,
           "last_high": 10550.0,
-          "last_low": 10550.0,
-          "last_close": 10550.0,
-          "last_volume": 100.0,
+          "last_low": 10500.0,
+          "last_close": 10500.0,
+          "last_volume": 400.0,
           "recent_high_4": 10550.0,
           "recent_low_4": 10350.0,
           "break_up": false,
@@ -97040,7 +97040,7 @@
         },
         {
           "symbol": "TET",
-          "rows": 53,
+          "rows": 54,
           "columns": [
             "TradingDate",
             "Open",
@@ -97051,15 +97051,15 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "06/07/2026",
-          "last_open": 43000.0,
-          "last_high": 43000.0,
-          "last_low": 43000.0,
-          "last_close": 43000.0,
-          "last_volume": 100.0,
+          "last_date": "10/07/2026",
+          "last_open": 45000.0,
+          "last_high": 45000.0,
+          "last_low": 45000.0,
+          "last_close": 45000.0,
+          "last_volume": 0.0,
           "recent_high_4": 43000.0,
-          "recent_low_4": 40000.0,
-          "break_up": false,
+          "recent_low_4": 42000.0,
+          "break_up": true,
           "break_down": false
         },
         {
@@ -97304,7 +97304,7 @@
         },
         {
           "symbol": "TKU",
-          "rows": 283,
+          "rows": 284,
           "columns": [
             "TradingDate",
             "Open",
@@ -97315,15 +97315,15 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
-          "last_open": 12600.0,
-          "last_high": 12600.0,
-          "last_low": 12600.0,
-          "last_close": 12600.0,
-          "last_volume": 1800.0,
+          "last_date": "10/07/2026",
+          "last_open": 12500.0,
+          "last_high": 13700.0,
+          "last_low": 12500.0,
+          "last_close": 13700.0,
+          "last_volume": 0.0,
           "recent_high_4": 12700.0,
           "recent_low_4": 11500.0,
-          "break_up": false,
+          "break_up": true,
           "break_down": false
         },
         {
@@ -97458,7 +97458,7 @@
         },
         {
           "symbol": "TMP",
-          "rows": 500,
+          "rows": 501,
           "columns": [
             "TradingDate",
             "Open",
@@ -97469,14 +97469,14 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
-          "last_open": 44850.0,
-          "last_high": 47000.0,
-          "last_low": 44850.0,
+          "last_date": "10/07/2026",
+          "last_open": 46000.0,
+          "last_high": 46500.0,
+          "last_low": 46000.0,
           "last_close": 46500.0,
-          "last_volume": 1800.0,
-          "recent_high_4": 48200.0,
-          "recent_low_4": 45088.0,
+          "last_volume": 400.0,
+          "recent_high_4": 47000.0,
+          "recent_low_4": 44850.0,
           "break_up": false,
           "break_down": false
         },
@@ -98310,7 +98310,7 @@
         },
         {
           "symbol": "UNI",
-          "rows": 415,
+          "rows": 416,
           "columns": [
             "TradingDate",
             "Open",
@@ -98321,12 +98321,12 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
-          "last_open": 7100.0,
-          "last_high": 7100.0,
-          "last_low": 7100.0,
-          "last_close": 7100.0,
-          "last_volume": 100.0,
+          "last_date": "10/07/2026",
+          "last_open": 7000.0,
+          "last_high": 7000.0,
+          "last_low": 7000.0,
+          "last_close": 7000.0,
+          "last_volume": 0.0,
           "recent_high_4": 7200.0,
           "recent_low_4": 6900.0,
           "break_up": false,
@@ -98440,7 +98440,7 @@
         },
         {
           "symbol": "VCC",
-          "rows": 468,
+          "rows": 469,
           "columns": [
             "TradingDate",
             "Open",
@@ -98451,12 +98451,12 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
-          "last_open": 9500.0,
+          "last_date": "10/07/2026",
+          "last_open": 9400.0,
           "last_high": 9500.0,
-          "last_low": 9500.0,
-          "last_close": 9500.0,
-          "last_volume": 2500.0,
+          "last_low": 9200.0,
+          "last_close": 9200.0,
+          "last_volume": 0.0,
           "recent_high_4": 9800.0,
           "recent_low_4": 9000.0,
           "break_up": false,
@@ -99178,7 +99178,7 @@
         },
         {
           "symbol": "VLA",
-          "rows": 332,
+          "rows": 333,
           "columns": [
             "TradingDate",
             "Open",
@@ -99189,15 +99189,15 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "07/07/2026",
-          "last_open": 10400.0,
-          "last_high": 10500.0,
-          "last_low": 10400.0,
-          "last_close": 10500.0,
-          "last_volume": 300.0,
-          "recent_high_4": 9600.0,
+          "last_date": "10/07/2026",
+          "last_open": 10000.0,
+          "last_high": 10000.0,
+          "last_low": 10000.0,
+          "last_close": 10000.0,
+          "last_volume": 0.0,
+          "recent_high_4": 10500.0,
           "recent_low_4": 8700.0,
-          "break_up": true,
+          "break_up": false,
           "break_down": false
         },
         {
@@ -99414,7 +99414,7 @@
         },
         {
           "symbol": "VNL",
-          "rows": 515,
+          "rows": 516,
           "columns": [
             "TradingDate",
             "Open",
@@ -99425,16 +99425,16 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "08/07/2026",
-          "last_open": 19000.0,
-          "last_high": 19000.0,
-          "last_low": 18900.0,
-          "last_close": 18900.0,
-          "last_volume": 11800.0,
+          "last_date": "10/07/2026",
+          "last_open": 18800.0,
+          "last_high": 18850.0,
+          "last_low": 18800.0,
+          "last_close": 18850.0,
+          "last_volume": 4700.0,
           "recent_high_4": 19250.0,
           "recent_low_4": 18900.0,
           "break_up": false,
-          "break_down": false
+          "break_down": true
         },
         {
           "symbol": "VNM",
@@ -99496,7 +99496,7 @@
         },
         {
           "symbol": "VNS",
-          "rows": 514,
+          "rows": 515,
           "columns": [
             "TradingDate",
             "Open",
@@ -99507,15 +99507,15 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
-          "last_open": 7820.0,
-          "last_high": 7980.0,
-          "last_low": 7800.0,
-          "last_close": 7980.0,
-          "last_volume": 12200.0,
-          "recent_high_4": 7830.0,
-          "recent_low_4": 7600.0,
-          "break_up": true,
+          "last_date": "10/07/2026",
+          "last_open": 7810.0,
+          "last_high": 7970.0,
+          "last_low": 7810.0,
+          "last_close": 7970.0,
+          "last_volume": 2200.0,
+          "recent_high_4": 7980.0,
+          "recent_low_4": 7700.0,
+          "break_up": false,
           "break_down": false
         },
         {
@@ -99612,7 +99612,7 @@
         },
         {
           "symbol": "VPD",
-          "rows": 517,
+          "rows": 518,
           "columns": [
             "TradingDate",
             "Open",
@@ -99623,16 +99623,16 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
-          "last_open": 21400.0,
-          "last_high": 21400.0,
-          "last_low": 21200.0,
-          "last_close": 21300.0,
-          "last_volume": 7200.0,
-          "recent_high_4": 21800.0,
-          "recent_low_4": 21300.0,
+          "last_date": "10/07/2026",
+          "last_open": 21300.0,
+          "last_high": 21300.0,
+          "last_low": 21150.0,
+          "last_close": 21150.0,
+          "last_volume": 2700.0,
+          "recent_high_4": 21500.0,
+          "recent_low_4": 21200.0,
           "break_up": false,
-          "break_down": false
+          "break_down": true
         },
         {
           "symbol": "VPG",
@@ -99820,7 +99820,7 @@
         },
         {
           "symbol": "VSA",
-          "rows": 487,
+          "rows": 488,
           "columns": [
             "TradingDate",
             "Open",
@@ -99831,15 +99831,15 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "06/07/2026",
-          "last_open": 18700.0,
-          "last_high": 20100.0,
-          "last_low": 18700.0,
-          "last_close": 20100.0,
-          "last_volume": 400.0,
-          "recent_high_4": 18900.0,
+          "last_date": "10/07/2026",
+          "last_open": 18200.0,
+          "last_high": 18200.0,
+          "last_low": 18200.0,
+          "last_close": 18200.0,
+          "last_volume": 0.0,
+          "recent_high_4": 20100.0,
           "recent_low_4": 18000.0,
-          "break_up": true,
+          "break_up": false,
           "break_down": false
         },
         {
@@ -99926,7 +99926,7 @@
         },
         {
           "symbol": "VSM",
-          "rows": 386,
+          "rows": 387,
           "columns": [
             "TradingDate",
             "Open",
@@ -99937,15 +99937,15 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
-          "last_open": 14900.0,
-          "last_high": 15200.0,
-          "last_low": 14400.0,
-          "last_close": 14400.0,
-          "last_volume": 300.0,
-          "recent_high_4": 15700.0,
+          "last_date": "10/07/2026",
+          "last_open": 15400.0,
+          "last_high": 15400.0,
+          "last_low": 15400.0,
+          "last_close": 15400.0,
+          "last_volume": 0.0,
+          "recent_high_4": 15300.0,
           "recent_low_4": 14300.0,
-          "break_up": false,
+          "break_up": true,
           "break_down": false
         },
         {
@@ -100104,7 +100104,7 @@
         },
         {
           "symbol": "VTV",
-          "rows": 517,
+          "rows": 518,
           "columns": [
             "TradingDate",
             "Open",
@@ -100115,14 +100115,14 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
-          "last_open": 13800.0,
-          "last_high": 13800.0,
-          "last_low": 13200.0,
+          "last_date": "10/07/2026",
+          "last_open": 13900.0,
+          "last_high": 13900.0,
+          "last_low": 13600.0,
           "last_close": 13600.0,
-          "last_volume": 11100.0,
+          "last_volume": 0.0,
           "recent_high_4": 14600.0,
-          "recent_low_4": 13000.0,
+          "recent_low_4": 13200.0,
           "break_up": false,
           "break_down": false
         },
@@ -100152,7 +100152,7 @@
         },
         {
           "symbol": "WCS",
-          "rows": 409,
+          "rows": 410,
           "columns": [
             "TradingDate",
             "Open",
@@ -100163,12 +100163,12 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "08/07/2026",
-          "last_open": 304800.0,
-          "last_high": 304800.0,
-          "last_low": 304800.0,
-          "last_close": 304800.0,
-          "last_volume": 100.0,
+          "last_date": "10/07/2026",
+          "last_open": 293100.0,
+          "last_high": 293100.0,
+          "last_low": 293100.0,
+          "last_close": 293100.0,
+          "last_volume": 0.0,
           "recent_high_4": 321000.0,
           "recent_low_4": 263000.0,
           "break_up": false,
@@ -100260,7 +100260,7 @@
     },
     "mama_positional": {
       "mode": "ehlers_mama_positional",
-      "generated_at": "2026-07-10T11:50:20.138443+00:00",
+      "generated_at": "2026-07-10T15:08:25.788921+00:00",
       "date": "10/07/2026",
       "fast_limit": 0.5,
       "slow_limit": 0.05,
@@ -100360,7 +100360,7 @@
         },
         {
           "symbol": "ABR",
-          "rows": 467,
+          "rows": 468,
           "columns": [
             "TradingDate",
             "Open",
@@ -100371,7 +100371,7 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
+          "last_date": "10/07/2026",
           "last_close": 11300.0,
           "last_volume": 100.0
         },
@@ -100440,7 +100440,7 @@
           "last_close": 22700.0,
           "last_volume": 667400.0,
           "mama": 22603.963987868847,
-          "fama": 22318.7159722875,
+          "fama": 22318.715972287497,
           "period": 22.098224205968652,
           "alpha": 0.5,
           "buysetup": false,
@@ -100671,7 +100671,7 @@
         },
         {
           "symbol": "AMC",
-          "rows": 293,
+          "rows": 294,
           "columns": [
             "TradingDate",
             "Open",
@@ -100682,9 +100682,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "02/07/2026",
+          "last_date": "10/07/2026",
           "last_close": 12400.0,
-          "last_volume": 100.0
+          "last_volume": 0.0
         },
         {
           "symbol": "AME",
@@ -100866,7 +100866,7 @@
         },
         {
           "symbol": "ASG",
-          "rows": 437,
+          "rows": 438,
           "columns": [
             "TradingDate",
             "Open",
@@ -100877,9 +100877,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "08/07/2026",
-          "last_close": 16900.0,
-          "last_volume": 100.0
+          "last_date": "10/07/2026",
+          "last_close": 16800.0,
+          "last_volume": 700.0
         },
         {
           "symbol": "ASM",
@@ -100931,7 +100931,7 @@
         },
         {
           "symbol": "AST",
-          "rows": 517,
+          "rows": 518,
           "columns": [
             "TradingDate",
             "Open",
@@ -100942,9 +100942,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
+          "last_date": "10/07/2026",
           "last_close": 63400.0,
-          "last_volume": 1800.0
+          "last_volume": 200.0
         },
         {
           "symbol": "ATS",
@@ -101047,7 +101047,7 @@
         },
         {
           "symbol": "BBS",
-          "rows": 160,
+          "rows": 161,
           "columns": [
             "TradingDate",
             "Open",
@@ -101058,9 +101058,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
-          "last_close": 11700.0,
-          "last_volume": 1100.0
+          "last_date": "10/07/2026",
+          "last_close": 12700.0,
+          "last_volume": 0.0
         },
         {
           "symbol": "BCC",
@@ -101258,7 +101258,7 @@
           "last_volume": 325300.0,
           "mama": 41960.73846448157,
           "fama": 41877.746991036234,
-          "period": 19.380269802213235,
+          "period": 19.380269802213228,
           "alpha": 0.05,
           "buysetup": false,
           "sellsetup": false,
@@ -101819,7 +101819,7 @@
         },
         {
           "symbol": "CDN",
-          "rows": 517,
+          "rows": 518,
           "columns": [
             "TradingDate",
             "Open",
@@ -101830,9 +101830,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
-          "last_close": 26500.0,
-          "last_volume": 800.0
+          "last_date": "10/07/2026",
+          "last_close": 26400.0,
+          "last_volume": 0.0
         },
         {
           "symbol": "CEO",
@@ -101986,7 +101986,7 @@
         },
         {
           "symbol": "CLC",
-          "rows": 489,
+          "rows": 490,
           "columns": [
             "TradingDate",
             "Open",
@@ -101997,13 +101997,13 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
+          "last_date": "10/07/2026",
           "last_close": 52000.0,
-          "last_volume": 900.0
+          "last_volume": 3700.0
         },
         {
           "symbol": "CLH",
-          "rows": 514,
+          "rows": 515,
           "columns": [
             "TradingDate",
             "Open",
@@ -102014,9 +102014,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "08/07/2026",
-          "last_close": 20100.0,
-          "last_volume": 7000.0
+          "last_date": "10/07/2026",
+          "last_close": 20300.0,
+          "last_volume": 0.0
         },
         {
           "symbol": "CLL",
@@ -102071,7 +102071,7 @@
         },
         {
           "symbol": "CMC",
-          "rows": 354,
+          "rows": 355,
           "columns": [
             "TradingDate",
             "Open",
@@ -102082,9 +102082,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "08/07/2026",
-          "last_close": 9400.0,
-          "last_volume": 1100.0
+          "last_date": "10/07/2026",
+          "last_close": 9100.0,
+          "last_volume": 0.0
         },
         {
           "symbol": "CMG",
@@ -102379,7 +102379,7 @@
         },
         {
           "symbol": "CTB",
-          "rows": 389,
+          "rows": 390,
           "columns": [
             "TradingDate",
             "Open",
@@ -102390,9 +102390,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "08/07/2026",
+          "last_date": "10/07/2026",
           "last_close": 17600.0,
-          "last_volume": 500.0
+          "last_volume": 0.0
         },
         {
           "symbol": "CTD",
@@ -102622,7 +102622,7 @@
         },
         {
           "symbol": "DAD",
-          "rows": 406,
+          "rows": 407,
           "columns": [
             "TradingDate",
             "Open",
@@ -102633,9 +102633,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "08/07/2026",
-          "last_close": 15600.0,
-          "last_volume": 1600.0
+          "last_date": "10/07/2026",
+          "last_close": 15400.0,
+          "last_volume": 0.0
         },
         {
           "symbol": "DAE",
@@ -102995,7 +102995,7 @@
         },
         {
           "symbol": "DHT",
-          "rows": 517,
+          "rows": 518,
           "columns": [
             "TradingDate",
             "Open",
@@ -103006,9 +103006,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
-          "last_close": 65100.0,
-          "last_volume": 5500.0
+          "last_date": "10/07/2026",
+          "last_close": 64500.0,
+          "last_volume": 0.0
         },
         {
           "symbol": "DIG",
@@ -103043,7 +103043,7 @@
         },
         {
           "symbol": "DIH",
-          "rows": 499,
+          "rows": 500,
           "columns": [
             "TradingDate",
             "Open",
@@ -103054,9 +103054,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
-          "last_close": 7600.0,
-          "last_volume": 3100.0
+          "last_date": "10/07/2026",
+          "last_close": 7500.0,
+          "last_volume": 0.0
         },
         {
           "symbol": "DLG",
@@ -103075,9 +103075,9 @@
           "last_close": 2510.0,
           "last_volume": 79800.0,
           "mama": 2550.185016306382,
-          "fama": 2594.480599196847,
+          "fama": 2594.4805991968465,
           "period": 27.998384784783745,
-          "alpha": 0.08403105217230966,
+          "alpha": 0.08403105217230947,
           "buysetup": false,
           "sellsetup": false,
           "longa": false,
@@ -103628,7 +103628,7 @@
         },
         {
           "symbol": "DXV",
-          "rows": 510,
+          "rows": 511,
           "columns": [
             "TradingDate",
             "Open",
@@ -103639,9 +103639,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
-          "last_close": 3820.0,
-          "last_volume": 9200.0
+          "last_date": "10/07/2026",
+          "last_close": 3800.0,
+          "last_volume": 500.0
         },
         {
           "symbol": "EBS",
@@ -103693,7 +103693,7 @@
         },
         {
           "symbol": "EID",
-          "rows": 515,
+          "rows": 516,
           "columns": [
             "TradingDate",
             "Open",
@@ -103704,9 +103704,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
-          "last_close": 20200.0,
-          "last_volume": 3000.0
+          "last_date": "10/07/2026",
+          "last_close": 20300.0,
+          "last_volume": 0.0
         },
         {
           "symbol": "ELC",
@@ -104000,7 +104000,7 @@
           "last_volume": 1661100.0,
           "mama": 72276.54126121014,
           "fama": 72449.93241091403,
-          "period": 29.39803389721739,
+          "period": 29.398033897217395,
           "alpha": 0.05,
           "buysetup": false,
           "sellsetup": false,
@@ -104574,7 +104574,7 @@
         },
         {
           "symbol": "HAS",
-          "rows": 258,
+          "rows": 259,
           "columns": [
             "TradingDate",
             "Open",
@@ -104585,9 +104585,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
-          "last_close": 8270.0,
-          "last_volume": 13500.0
+          "last_date": "10/07/2026",
+          "last_close": 7810.0,
+          "last_volume": 7500.0
         },
         {
           "symbol": "HAT",
@@ -104707,7 +104707,7 @@
         },
         {
           "symbol": "HDA",
-          "rows": 512,
+          "rows": 513,
           "columns": [
             "TradingDate",
             "Open",
@@ -104718,9 +104718,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
-          "last_close": 6900.0,
-          "last_volume": 1900.0
+          "last_date": "10/07/2026",
+          "last_close": 6400.0,
+          "last_volume": 0.0
         },
         {
           "symbol": "HDB",
@@ -105012,7 +105012,7 @@
         },
         {
           "symbol": "HLC",
-          "rows": 489,
+          "rows": 490,
           "columns": [
             "TradingDate",
             "Open",
@@ -105023,9 +105023,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
-          "last_close": 10000.0,
-          "last_volume": 1000.0
+          "last_date": "10/07/2026",
+          "last_close": 10900.0,
+          "last_volume": 0.0
         },
         {
           "symbol": "HLD",
@@ -105046,7 +105046,7 @@
         },
         {
           "symbol": "HMC",
-          "rows": 514,
+          "rows": 515,
           "columns": [
             "TradingDate",
             "Open",
@@ -105057,9 +105057,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "08/07/2026",
+          "last_date": "10/07/2026",
           "last_close": 10900.0,
-          "last_volume": 300.0
+          "last_volume": 400.0
         },
         {
           "symbol": "HMH",
@@ -105114,7 +105114,7 @@
         },
         {
           "symbol": "HOM",
-          "rows": 517,
+          "rows": 518,
           "columns": [
             "TradingDate",
             "Open",
@@ -105125,9 +105125,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
-          "last_close": 4000.0,
-          "last_volume": 1400.0
+          "last_date": "10/07/2026",
+          "last_close": 4100.0,
+          "last_volume": 0.0
         },
         {
           "symbol": "HPG",
@@ -105224,7 +105224,7 @@
         },
         {
           "symbol": "HRC",
-          "rows": 360,
+          "rows": 361,
           "columns": [
             "TradingDate",
             "Open",
@@ -105235,9 +105235,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
-          "last_close": 40800.0,
-          "last_volume": 3800.0
+          "last_date": "10/07/2026",
+          "last_close": 38100.0,
+          "last_volume": 100.0
         },
         {
           "symbol": "HSG",
@@ -105552,7 +105552,7 @@
         },
         {
           "symbol": "ICT",
-          "rows": 513,
+          "rows": 514,
           "columns": [
             "TradingDate",
             "Open",
@@ -105563,9 +105563,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
-          "last_close": 17600.0,
-          "last_volume": 700.0
+          "last_date": "10/07/2026",
+          "last_close": 17400.0,
+          "last_volume": 4300.0
         },
         {
           "symbol": "IDC",
@@ -105634,7 +105634,7 @@
         },
         {
           "symbol": "IDV",
-          "rows": 517,
+          "rows": 518,
           "columns": [
             "TradingDate",
             "Open",
@@ -105645,9 +105645,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
-          "last_close": 21900.0,
-          "last_volume": 2000.0
+          "last_date": "10/07/2026",
+          "last_close": 22000.0,
+          "last_volume": 0.0
         },
         {
           "symbol": "IJC",
@@ -105716,7 +105716,7 @@
         },
         {
           "symbol": "INN",
-          "rows": 502,
+          "rows": 503,
           "columns": [
             "TradingDate",
             "Open",
@@ -105727,9 +105727,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
-          "last_close": 36300.0,
-          "last_volume": 100.0
+          "last_date": "10/07/2026",
+          "last_close": 35600.0,
+          "last_volume": 0.0
         },
         {
           "symbol": "IPA",
@@ -105801,7 +105801,7 @@
         },
         {
           "symbol": "IVS",
-          "rows": 517,
+          "rows": 518,
           "columns": [
             "TradingDate",
             "Open",
@@ -105811,24 +105811,10 @@
             "Volume"
           ],
           "has_ohlcv": true,
-          "reason": "no_confirmed_signal",
-          "last_date": "09/07/2026",
+          "reason": "volume_filter",
+          "last_date": "10/07/2026",
           "last_close": 7000.0,
-          "last_volume": 22800.0,
-          "mama": 6960.9302862472905,
-          "fama": 6813.058042097005,
-          "period": 20.77726230146498,
-          "alpha": 0.05,
-          "buysetup": false,
-          "sellsetup": false,
-          "longa": true,
-          "shrta": false,
-          "buy": false,
-          "sell": false,
-          "buy_setup_value": 6800.0,
-          "sell_setup_value": 8600.0,
-          "bprice": 7000.0,
-          "sprice": 8500.0
+          "last_volume": 0.0
         },
         {
           "symbol": "JVC",
@@ -105928,7 +105914,7 @@
         },
         {
           "symbol": "KDM",
-          "rows": 517,
+          "rows": 518,
           "columns": [
             "TradingDate",
             "Open",
@@ -105939,9 +105925,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
-          "last_close": 21100.0,
-          "last_volume": 100.0
+          "last_date": "10/07/2026",
+          "last_close": 20800.0,
+          "last_volume": 0.0
         },
         {
           "symbol": "KHG",
@@ -106276,7 +106262,7 @@
         },
         {
           "symbol": "LBM",
-          "rows": 517,
+          "rows": 518,
           "columns": [
             "TradingDate",
             "Open",
@@ -106287,9 +106273,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
-          "last_close": 29000.0,
-          "last_volume": 6800.0
+          "last_date": "10/07/2026",
+          "last_close": 29200.0,
+          "last_volume": 1000.0
         },
         {
           "symbol": "LCG",
@@ -106672,7 +106658,7 @@
         },
         {
           "symbol": "MCO",
-          "rows": 516,
+          "rows": 517,
           "columns": [
             "TradingDate",
             "Open",
@@ -106683,9 +106669,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "08/07/2026",
-          "last_close": 5600.0,
-          "last_volume": 4900.0
+          "last_date": "10/07/2026",
+          "last_close": 5300.0,
+          "last_volume": 0.0
         },
         {
           "symbol": "MCP",
@@ -106706,7 +106692,7 @@
         },
         {
           "symbol": "MDC",
-          "rows": 504,
+          "rows": 505,
           "columns": [
             "TradingDate",
             "Open",
@@ -106717,9 +106703,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
-          "last_close": 9100.0,
-          "last_volume": 700.0
+          "last_date": "10/07/2026",
+          "last_close": 8800.0,
+          "last_volume": 0.0
         },
         {
           "symbol": "MDG",
@@ -107016,7 +107002,7 @@
           "last_volume": 278200.0,
           "mama": 13204.92724363686,
           "fama": 13028.2179949882,
-          "period": 41.94840134421763,
+          "period": 41.94840134421762,
           "alpha": 0.5,
           "buysetup": false,
           "sellsetup": false,
@@ -107047,7 +107033,7 @@
           "last_volume": 56100.0,
           "mama": 48462.99434122202,
           "fama": 48801.94768652307,
-          "period": 16.804421904902878,
+          "period": 16.804421904902892,
           "alpha": 0.05,
           "buysetup": false,
           "sellsetup": false,
@@ -107113,7 +107099,7 @@
         },
         {
           "symbol": "NBB",
-          "rows": 517,
+          "rows": 518,
           "columns": [
             "TradingDate",
             "Open",
@@ -107124,9 +107110,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
-          "last_close": 17400.0,
-          "last_volume": 10100.0
+          "last_date": "10/07/2026",
+          "last_close": 17250.0,
+          "last_volume": 10500.0
         },
         {
           "symbol": "NBC",
@@ -107147,7 +107133,7 @@
         },
         {
           "symbol": "NBP",
-          "rows": 365,
+          "rows": 366,
           "columns": [
             "TradingDate",
             "Open",
@@ -107158,9 +107144,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
+          "last_date": "10/07/2026",
           "last_close": 7500.0,
-          "last_volume": 100.0
+          "last_volume": 0.0
         },
         {
           "symbol": "NBW",
@@ -107317,7 +107303,7 @@
         },
         {
           "symbol": "NHT",
-          "rows": 442,
+          "rows": 443,
           "columns": [
             "TradingDate",
             "Open",
@@ -107328,9 +107314,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
-          "last_close": 11650.0,
-          "last_volume": 2500.0
+          "last_date": "10/07/2026",
+          "last_close": 11550.0,
+          "last_volume": 1200.0
         },
         {
           "symbol": "NKG",
@@ -107580,7 +107566,7 @@
         },
         {
           "symbol": "NVT",
-          "rows": 441,
+          "rows": 442,
           "columns": [
             "TradingDate",
             "Open",
@@ -107591,9 +107577,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "08/07/2026",
-          "last_close": 7480.0,
-          "last_volume": 200.0
+          "last_date": "10/07/2026",
+          "last_close": 7970.0,
+          "last_volume": 100.0
         },
         {
           "symbol": "OCB",
@@ -107773,8 +107759,8 @@
           "last_close": 22200.0,
           "last_volume": 37100.0,
           "mama": 22581.316065104194,
-          "fama": 22969.462932109138,
-          "period": 21.44570421213976,
+          "fama": 22969.46293210914,
+          "period": 21.445704212139752,
           "alpha": 0.5,
           "buysetup": false,
           "sellsetup": false,
@@ -107789,7 +107775,7 @@
         },
         {
           "symbol": "PBP",
-          "rows": 511,
+          "rows": 512,
           "columns": [
             "TradingDate",
             "Open",
@@ -107800,9 +107786,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
-          "last_close": 12100.0,
-          "last_volume": 1100.0
+          "last_date": "10/07/2026",
+          "last_close": 12200.0,
+          "last_volume": 0.0
         },
         {
           "symbol": "PCE",
@@ -108004,7 +107990,7 @@
         },
         {
           "symbol": "PGD",
-          "rows": 515,
+          "rows": 516,
           "columns": [
             "TradingDate",
             "Open",
@@ -108015,13 +108001,13 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
-          "last_close": 22100.0,
-          "last_volume": 200.0
+          "last_date": "10/07/2026",
+          "last_close": 21500.0,
+          "last_volume": 1400.0
         },
         {
           "symbol": "PGI",
-          "rows": 431,
+          "rows": 432,
           "columns": [
             "TradingDate",
             "Open",
@@ -108032,9 +108018,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "08/07/2026",
+          "last_date": "10/07/2026",
           "last_close": 17000.0,
-          "last_volume": 5100.0
+          "last_volume": 300.0
         },
         {
           "symbol": "PGN",
@@ -108536,7 +108522,7 @@
         },
         {
           "symbol": "PPP",
-          "rows": 401,
+          "rows": 402,
           "columns": [
             "TradingDate",
             "Open",
@@ -108547,9 +108533,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "07/07/2026",
-          "last_close": 18200.0,
-          "last_volume": 300.0
+          "last_date": "10/07/2026",
+          "last_close": 18000.0,
+          "last_volume": 0.0
         },
         {
           "symbol": "PPS",
@@ -108587,7 +108573,7 @@
         },
         {
           "symbol": "PPY",
-          "rows": 306,
+          "rows": 307,
           "columns": [
             "TradingDate",
             "Open",
@@ -108598,9 +108584,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
-          "last_close": 9200.0,
-          "last_volume": 2800.0
+          "last_date": "10/07/2026",
+          "last_close": 9400.0,
+          "last_volume": 0.0
         },
         {
           "symbol": "PRC",
@@ -108737,7 +108723,7 @@
         },
         {
           "symbol": "PSW",
-          "rows": 515,
+          "rows": 516,
           "columns": [
             "TradingDate",
             "Open",
@@ -108748,9 +108734,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
+          "last_date": "10/07/2026",
           "last_close": 7800.0,
-          "last_volume": 14500.0
+          "last_volume": 0.0
         },
         {
           "symbol": "PTB",
@@ -108805,7 +108791,7 @@
         },
         {
           "symbol": "PTI",
-          "rows": 455,
+          "rows": 456,
           "columns": [
             "TradingDate",
             "Open",
@@ -108816,9 +108802,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
-          "last_close": 23800.0,
-          "last_volume": 200.0
+          "last_date": "10/07/2026",
+          "last_close": 24800.0,
+          "last_volume": 0.0
         },
         {
           "symbol": "PTL",
@@ -109498,7 +109484,7 @@
         },
         {
           "symbol": "SDN",
-          "rows": 164,
+          "rows": 165,
           "columns": [
             "TradingDate",
             "Open",
@@ -109509,9 +109495,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "30/06/2026",
-          "last_close": 19800.0,
-          "last_volume": 2000.0
+          "last_date": "10/07/2026",
+          "last_close": 18000.0,
+          "last_volume": 0.0
         },
         {
           "symbol": "SDU",
@@ -109849,7 +109835,7 @@
         },
         {
           "symbol": "SHP",
-          "rows": 517,
+          "rows": 518,
           "columns": [
             "TradingDate",
             "Open",
@@ -109860,9 +109846,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
-          "last_close": 32500.0,
-          "last_volume": 2100.0
+          "last_date": "10/07/2026",
+          "last_close": 32900.0,
+          "last_volume": 300.0
         },
         {
           "symbol": "SHS",
@@ -109948,7 +109934,7 @@
         },
         {
           "symbol": "SJS",
-          "rows": 517,
+          "rows": 518,
           "columns": [
             "TradingDate",
             "Open",
@@ -109958,10 +109944,24 @@
             "Volume"
           ],
           "has_ohlcv": true,
-          "reason": "volume_filter",
-          "last_date": "09/07/2026",
+          "reason": "no_confirmed_signal",
+          "last_date": "10/07/2026",
           "last_close": 47800.0,
-          "last_volume": 9600.0
+          "last_volume": 41200.0,
+          "mama": 47571.57576409308,
+          "fama": 48543.867693859516,
+          "period": 19.993276964166594,
+          "alpha": 0.05,
+          "buysetup": false,
+          "sellsetup": false,
+          "longa": false,
+          "shrta": true,
+          "buy": false,
+          "sell": false,
+          "buy_setup_value": 52700.0,
+          "sell_setup_value": 49000.0,
+          "bprice": 53900.0,
+          "sprice": 47800.0
         },
         {
           "symbol": "SKG",
@@ -109982,7 +109982,7 @@
         },
         {
           "symbol": "SLS",
-          "rows": 517,
+          "rows": 518,
           "columns": [
             "TradingDate",
             "Open",
@@ -109993,9 +109993,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
+          "last_date": "10/07/2026",
           "last_close": 149000.0,
-          "last_volume": 400.0
+          "last_volume": 0.0
         },
         {
           "symbol": "SMA",
@@ -110146,7 +110146,7 @@
         },
         {
           "symbol": "SPM",
-          "rows": 360,
+          "rows": 361,
           "columns": [
             "TradingDate",
             "Open",
@@ -110157,9 +110157,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "29/06/2026",
+          "last_date": "10/07/2026",
           "last_close": 8080.0,
-          "last_volume": 900.0
+          "last_volume": 200.0
         },
         {
           "symbol": "SRA",
@@ -110392,7 +110392,7 @@
         },
         {
           "symbol": "STP",
-          "rows": 281,
+          "rows": 282,
           "columns": [
             "TradingDate",
             "Open",
@@ -110403,9 +110403,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "06/07/2026",
-          "last_close": 7400.0,
-          "last_volume": 100.0
+          "last_date": "10/07/2026",
+          "last_close": 7500.0,
+          "last_volume": 0.0
         },
         {
           "symbol": "SVC",
@@ -110477,7 +110477,7 @@
         },
         {
           "symbol": "SVT",
-          "rows": 514,
+          "rows": 515,
           "columns": [
             "TradingDate",
             "Open",
@@ -110488,9 +110488,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
-          "last_close": 10550.0,
-          "last_volume": 100.0
+          "last_date": "10/07/2026",
+          "last_close": 10500.0,
+          "last_volume": 400.0
         },
         {
           "symbol": "SZB",
@@ -111074,7 +111074,7 @@
         },
         {
           "symbol": "TKU",
-          "rows": 283,
+          "rows": 284,
           "columns": [
             "TradingDate",
             "Open",
@@ -111085,9 +111085,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
-          "last_close": 12600.0,
-          "last_volume": 1800.0
+          "last_date": "10/07/2026",
+          "last_close": 13700.0,
+          "last_volume": 0.0
         },
         {
           "symbol": "TLD",
@@ -111190,7 +111190,7 @@
         },
         {
           "symbol": "TMP",
-          "rows": 500,
+          "rows": 501,
           "columns": [
             "TradingDate",
             "Open",
@@ -111201,9 +111201,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
+          "last_date": "10/07/2026",
           "last_close": 46500.0,
-          "last_volume": 1800.0
+          "last_volume": 400.0
         },
         {
           "symbol": "TMS",
@@ -111818,7 +111818,7 @@
         },
         {
           "symbol": "UNI",
-          "rows": 415,
+          "rows": 416,
           "columns": [
             "TradingDate",
             "Open",
@@ -111829,9 +111829,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
-          "last_close": 7100.0,
-          "last_volume": 100.0
+          "last_date": "10/07/2026",
+          "last_close": 7000.0,
+          "last_volume": 0.0
         },
         {
           "symbol": "VAF",
@@ -111917,7 +111917,7 @@
         },
         {
           "symbol": "VCC",
-          "rows": 468,
+          "rows": 469,
           "columns": [
             "TradingDate",
             "Open",
@@ -111928,9 +111928,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
-          "last_close": 9500.0,
-          "last_volume": 2500.0
+          "last_date": "10/07/2026",
+          "last_close": 9200.0,
+          "last_volume": 0.0
         },
         {
           "symbol": "VCF",
@@ -112502,7 +112502,7 @@
         },
         {
           "symbol": "VLA",
-          "rows": 332,
+          "rows": 333,
           "columns": [
             "TradingDate",
             "Open",
@@ -112513,9 +112513,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "07/07/2026",
-          "last_close": 10500.0,
-          "last_volume": 300.0
+          "last_date": "10/07/2026",
+          "last_close": 10000.0,
+          "last_volume": 0.0
         },
         {
           "symbol": "VMC",
@@ -112683,7 +112683,7 @@
         },
         {
           "symbol": "VNL",
-          "rows": 515,
+          "rows": 516,
           "columns": [
             "TradingDate",
             "Open",
@@ -112694,9 +112694,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "08/07/2026",
-          "last_close": 18900.0,
-          "last_volume": 11800.0
+          "last_date": "10/07/2026",
+          "last_close": 18850.0,
+          "last_volume": 4700.0
         },
         {
           "symbol": "VNM",
@@ -112748,7 +112748,7 @@
         },
         {
           "symbol": "VNS",
-          "rows": 514,
+          "rows": 515,
           "columns": [
             "TradingDate",
             "Open",
@@ -112759,9 +112759,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
-          "last_close": 7980.0,
-          "last_volume": 12200.0
+          "last_date": "10/07/2026",
+          "last_close": 7970.0,
+          "last_volume": 2200.0
         },
         {
           "symbol": "VNT",
@@ -112844,7 +112844,7 @@
         },
         {
           "symbol": "VPD",
-          "rows": 517,
+          "rows": 518,
           "columns": [
             "TradingDate",
             "Open",
@@ -112855,9 +112855,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
-          "last_close": 21300.0,
-          "last_volume": 7200.0
+          "last_date": "10/07/2026",
+          "last_close": 21150.0,
+          "last_volume": 2700.0
         },
         {
           "symbol": "VPG",
@@ -113019,7 +113019,7 @@
         },
         {
           "symbol": "VSA",
-          "rows": 487,
+          "rows": 488,
           "columns": [
             "TradingDate",
             "Open",
@@ -113030,9 +113030,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "06/07/2026",
-          "last_close": 20100.0,
-          "last_volume": 400.0
+          "last_date": "10/07/2026",
+          "last_close": 18200.0,
+          "last_volume": 0.0
         },
         {
           "symbol": "VSC",
@@ -113101,7 +113101,7 @@
         },
         {
           "symbol": "VSM",
-          "rows": 386,
+          "rows": 387,
           "columns": [
             "TradingDate",
             "Open",
@@ -113112,9 +113112,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
-          "last_close": 14400.0,
-          "last_volume": 300.0
+          "last_date": "10/07/2026",
+          "last_close": 15400.0,
+          "last_volume": 0.0
         },
         {
           "symbol": "VTB",
@@ -113234,7 +113234,7 @@
         },
         {
           "symbol": "VTV",
-          "rows": 517,
+          "rows": 518,
           "columns": [
             "TradingDate",
             "Open",
@@ -113245,9 +113245,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
+          "last_date": "10/07/2026",
           "last_close": 13600.0,
-          "last_volume": 11100.0
+          "last_volume": 0.0
         },
         {
           "symbol": "VTZ",
@@ -113268,7 +113268,7 @@
         },
         {
           "symbol": "WCS",
-          "rows": 409,
+          "rows": 410,
           "columns": [
             "TradingDate",
             "Open",
@@ -113279,9 +113279,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "08/07/2026",
-          "last_close": 304800.0,
-          "last_volume": 100.0
+          "last_date": "10/07/2026",
+          "last_close": 293100.0,
+          "last_volume": 0.0
         },
         {
           "symbol": "WSS",
@@ -113352,7 +113352,7 @@
     },
     "advanced_trailstop": {
       "mode": "diep_advanced_trailstop",
-      "generated_at": "2026-07-10T11:50:38.447011+00:00",
+      "generated_at": "2026-07-10T15:08:37.054061+00:00",
       "date": "10/07/2026",
       "mult": 2.0,
       "atr_period": 7,
@@ -113546,7 +113546,7 @@
         },
         {
           "symbol": "ABR",
-          "rows": 467,
+          "rows": 468,
           "columns": [
             "TradingDate",
             "Open",
@@ -113557,7 +113557,7 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
+          "last_date": "10/07/2026",
           "last_close": 11300.0,
           "last_volume": 100.0
         },
@@ -113845,7 +113845,7 @@
         },
         {
           "symbol": "AMC",
-          "rows": 293,
+          "rows": 294,
           "columns": [
             "TradingDate",
             "Open",
@@ -113856,9 +113856,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "02/07/2026",
+          "last_date": "10/07/2026",
           "last_close": 12400.0,
-          "last_volume": 100.0
+          "last_volume": 0.0
         },
         {
           "symbol": "AME",
@@ -114031,7 +114031,7 @@
         },
         {
           "symbol": "ASG",
-          "rows": 437,
+          "rows": 438,
           "columns": [
             "TradingDate",
             "Open",
@@ -114042,9 +114042,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "08/07/2026",
-          "last_close": 16900.0,
-          "last_volume": 100.0
+          "last_date": "10/07/2026",
+          "last_close": 16800.0,
+          "last_volume": 700.0
         },
         {
           "symbol": "ASM",
@@ -114093,7 +114093,7 @@
         },
         {
           "symbol": "AST",
-          "rows": 517,
+          "rows": 518,
           "columns": [
             "TradingDate",
             "Open",
@@ -114104,9 +114104,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
+          "last_date": "10/07/2026",
           "last_close": 63400.0,
-          "last_volume": 1800.0
+          "last_volume": 200.0
         },
         {
           "symbol": "ATS",
@@ -114206,7 +114206,7 @@
         },
         {
           "symbol": "BBS",
-          "rows": 160,
+          "rows": 161,
           "columns": [
             "TradingDate",
             "Open",
@@ -114217,9 +114217,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
-          "last_close": 11700.0,
-          "last_volume": 1100.0
+          "last_date": "10/07/2026",
+          "last_close": 12700.0,
+          "last_volume": 0.0
         },
         {
           "symbol": "BCC",
@@ -114968,7 +114968,7 @@
         },
         {
           "symbol": "CDN",
-          "rows": 517,
+          "rows": 518,
           "columns": [
             "TradingDate",
             "Open",
@@ -114979,9 +114979,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
-          "last_close": 26500.0,
-          "last_volume": 800.0
+          "last_date": "10/07/2026",
+          "last_close": 26400.0,
+          "last_volume": 0.0
         },
         {
           "symbol": "CEO",
@@ -115132,7 +115132,7 @@
         },
         {
           "symbol": "CLC",
-          "rows": 489,
+          "rows": 490,
           "columns": [
             "TradingDate",
             "Open",
@@ -115143,13 +115143,13 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
+          "last_date": "10/07/2026",
           "last_close": 52000.0,
-          "last_volume": 900.0
+          "last_volume": 3700.0
         },
         {
           "symbol": "CLH",
-          "rows": 514,
+          "rows": 515,
           "columns": [
             "TradingDate",
             "Open",
@@ -115160,9 +115160,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "08/07/2026",
-          "last_close": 20100.0,
-          "last_volume": 7000.0
+          "last_date": "10/07/2026",
+          "last_close": 20300.0,
+          "last_volume": 0.0
         },
         {
           "symbol": "CLL",
@@ -115217,7 +115217,7 @@
         },
         {
           "symbol": "CMC",
-          "rows": 354,
+          "rows": 355,
           "columns": [
             "TradingDate",
             "Open",
@@ -115228,9 +115228,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "08/07/2026",
-          "last_close": 9400.0,
-          "last_volume": 1100.0
+          "last_date": "10/07/2026",
+          "last_close": 9100.0,
+          "last_volume": 0.0
         },
         {
           "symbol": "CMG",
@@ -115510,7 +115510,7 @@
         },
         {
           "symbol": "CTB",
-          "rows": 389,
+          "rows": 390,
           "columns": [
             "TradingDate",
             "Open",
@@ -115521,9 +115521,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "08/07/2026",
+          "last_date": "10/07/2026",
           "last_close": 17600.0,
-          "last_volume": 500.0
+          "last_volume": 0.0
         },
         {
           "symbol": "CTD",
@@ -115741,7 +115741,7 @@
         },
         {
           "symbol": "DAD",
-          "rows": 406,
+          "rows": 407,
           "columns": [
             "TradingDate",
             "Open",
@@ -115752,9 +115752,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "08/07/2026",
-          "last_close": 15600.0,
-          "last_volume": 1600.0
+          "last_date": "10/07/2026",
+          "last_close": 15400.0,
+          "last_volume": 0.0
         },
         {
           "symbol": "DAE",
@@ -116096,7 +116096,7 @@
         },
         {
           "symbol": "DHT",
-          "rows": 517,
+          "rows": 518,
           "columns": [
             "TradingDate",
             "Open",
@@ -116107,9 +116107,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
-          "last_close": 65100.0,
-          "last_volume": 5500.0
+          "last_date": "10/07/2026",
+          "last_close": 64500.0,
+          "last_volume": 0.0
         },
         {
           "symbol": "DIG",
@@ -116141,7 +116141,7 @@
         },
         {
           "symbol": "DIH",
-          "rows": 499,
+          "rows": 500,
           "columns": [
             "TradingDate",
             "Open",
@@ -116152,9 +116152,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
-          "last_close": 7600.0,
-          "last_volume": 3100.0
+          "last_date": "10/07/2026",
+          "last_close": 7500.0,
+          "last_volume": 0.0
         },
         {
           "symbol": "DLG",
@@ -116699,7 +116699,7 @@
         },
         {
           "symbol": "DXV",
-          "rows": 510,
+          "rows": 511,
           "columns": [
             "TradingDate",
             "Open",
@@ -116710,9 +116710,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
-          "last_close": 3820.0,
-          "last_volume": 9200.0
+          "last_date": "10/07/2026",
+          "last_close": 3800.0,
+          "last_volume": 500.0
         },
         {
           "symbol": "EBS",
@@ -116778,7 +116778,7 @@
         },
         {
           "symbol": "EID",
-          "rows": 515,
+          "rows": 516,
           "columns": [
             "TradingDate",
             "Open",
@@ -116789,9 +116789,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
-          "last_close": 20200.0,
-          "last_volume": 3000.0
+          "last_date": "10/07/2026",
+          "last_close": 20300.0,
+          "last_volume": 0.0
         },
         {
           "symbol": "ELC",
@@ -117622,7 +117622,7 @@
         },
         {
           "symbol": "HAS",
-          "rows": 258,
+          "rows": 259,
           "columns": [
             "TradingDate",
             "Open",
@@ -117633,9 +117633,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
-          "last_close": 8270.0,
-          "last_volume": 13500.0
+          "last_date": "10/07/2026",
+          "last_close": 7810.0,
+          "last_volume": 7500.0
         },
         {
           "symbol": "HAT",
@@ -117752,7 +117752,7 @@
         },
         {
           "symbol": "HDA",
-          "rows": 512,
+          "rows": 513,
           "columns": [
             "TradingDate",
             "Open",
@@ -117763,9 +117763,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
-          "last_close": 6900.0,
-          "last_volume": 1900.0
+          "last_date": "10/07/2026",
+          "last_close": 6400.0,
+          "last_volume": 0.0
         },
         {
           "symbol": "HDB",
@@ -118056,7 +118056,7 @@
         },
         {
           "symbol": "HLC",
-          "rows": 489,
+          "rows": 490,
           "columns": [
             "TradingDate",
             "Open",
@@ -118067,9 +118067,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
-          "last_close": 10000.0,
-          "last_volume": 1000.0
+          "last_date": "10/07/2026",
+          "last_close": 10900.0,
+          "last_volume": 0.0
         },
         {
           "symbol": "HLD",
@@ -118090,7 +118090,7 @@
         },
         {
           "symbol": "HMC",
-          "rows": 514,
+          "rows": 515,
           "columns": [
             "TradingDate",
             "Open",
@@ -118101,9 +118101,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "08/07/2026",
+          "last_date": "10/07/2026",
           "last_close": 10900.0,
-          "last_volume": 300.0
+          "last_volume": 400.0
         },
         {
           "symbol": "HMH",
@@ -118158,7 +118158,7 @@
         },
         {
           "symbol": "HOM",
-          "rows": 517,
+          "rows": 518,
           "columns": [
             "TradingDate",
             "Open",
@@ -118169,9 +118169,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
-          "last_close": 4000.0,
-          "last_volume": 1400.0
+          "last_date": "10/07/2026",
+          "last_close": 4100.0,
+          "last_volume": 0.0
         },
         {
           "symbol": "HPG",
@@ -118259,7 +118259,7 @@
         },
         {
           "symbol": "HRC",
-          "rows": 360,
+          "rows": 361,
           "columns": [
             "TradingDate",
             "Open",
@@ -118270,9 +118270,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
-          "last_close": 40800.0,
-          "last_volume": 3800.0
+          "last_date": "10/07/2026",
+          "last_close": 38100.0,
+          "last_volume": 100.0
         },
         {
           "symbol": "HSG",
@@ -118575,7 +118575,7 @@
         },
         {
           "symbol": "ICT",
-          "rows": 513,
+          "rows": 514,
           "columns": [
             "TradingDate",
             "Open",
@@ -118586,9 +118586,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
-          "last_close": 17600.0,
-          "last_volume": 700.0
+          "last_date": "10/07/2026",
+          "last_close": 17400.0,
+          "last_volume": 4300.0
         },
         {
           "symbol": "IDC",
@@ -118654,7 +118654,7 @@
         },
         {
           "symbol": "IDV",
-          "rows": 517,
+          "rows": 518,
           "columns": [
             "TradingDate",
             "Open",
@@ -118665,9 +118665,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
-          "last_close": 21900.0,
-          "last_volume": 2000.0
+          "last_date": "10/07/2026",
+          "last_close": 22000.0,
+          "last_volume": 0.0
         },
         {
           "symbol": "IJC",
@@ -118750,7 +118750,7 @@
         },
         {
           "symbol": "INN",
-          "rows": 502,
+          "rows": 503,
           "columns": [
             "TradingDate",
             "Open",
@@ -118761,9 +118761,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
-          "last_close": 36300.0,
-          "last_volume": 100.0
+          "last_date": "10/07/2026",
+          "last_close": 35600.0,
+          "last_volume": 0.0
         },
         {
           "symbol": "IPA",
@@ -118835,7 +118835,7 @@
         },
         {
           "symbol": "IVS",
-          "rows": 517,
+          "rows": 518,
           "columns": [
             "TradingDate",
             "Open",
@@ -118845,21 +118845,10 @@
             "Volume"
           ],
           "has_ohlcv": true,
-          "reason": "no_cross_signal",
-          "last_date": "09/07/2026",
+          "reason": "volume_filter",
+          "last_date": "10/07/2026",
           "last_close": 7000.0,
-          "last_volume": 22800.0,
-          "bs": 6607.179803296597,
-          "atr": 255.75679662964288,
-          "atrvalue": 511.51359325928576,
-          "up_condition": false,
-          "down_condition": false,
-          "buy": false,
-          "sell": false,
-          "long": true,
-          "shrt": false,
-          "last_buy_price": 6800.0,
-          "last_sell_price": 8500.0
+          "last_volume": 0.0
         },
         {
           "symbol": "JVC",
@@ -118953,7 +118942,7 @@
         },
         {
           "symbol": "KDM",
-          "rows": 517,
+          "rows": 518,
           "columns": [
             "TradingDate",
             "Open",
@@ -118964,9 +118953,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
-          "last_close": 21100.0,
-          "last_volume": 100.0
+          "last_date": "10/07/2026",
+          "last_close": 20800.0,
+          "last_volume": 0.0
         },
         {
           "symbol": "KHG",
@@ -119309,7 +119298,7 @@
         },
         {
           "symbol": "LBM",
-          "rows": 517,
+          "rows": 518,
           "columns": [
             "TradingDate",
             "Open",
@@ -119320,9 +119309,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
-          "last_close": 29000.0,
-          "last_volume": 6800.0
+          "last_date": "10/07/2026",
+          "last_close": 29200.0,
+          "last_volume": 1000.0
         },
         {
           "symbol": "LCG",
@@ -119693,7 +119682,7 @@
         },
         {
           "symbol": "MCO",
-          "rows": 516,
+          "rows": 517,
           "columns": [
             "TradingDate",
             "Open",
@@ -119704,9 +119693,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "08/07/2026",
-          "last_close": 5600.0,
-          "last_volume": 4900.0
+          "last_date": "10/07/2026",
+          "last_close": 5300.0,
+          "last_volume": 0.0
         },
         {
           "symbol": "MCP",
@@ -119727,7 +119716,7 @@
         },
         {
           "symbol": "MDC",
-          "rows": 504,
+          "rows": 505,
           "columns": [
             "TradingDate",
             "Open",
@@ -119738,9 +119727,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
-          "last_close": 9100.0,
-          "last_volume": 700.0
+          "last_date": "10/07/2026",
+          "last_close": 8800.0,
+          "last_volume": 0.0
         },
         {
           "symbol": "MDG",
@@ -120116,7 +120105,7 @@
         },
         {
           "symbol": "NBB",
-          "rows": 517,
+          "rows": 518,
           "columns": [
             "TradingDate",
             "Open",
@@ -120127,9 +120116,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
-          "last_close": 17400.0,
-          "last_volume": 10100.0
+          "last_date": "10/07/2026",
+          "last_close": 17250.0,
+          "last_volume": 10500.0
         },
         {
           "symbol": "NBC",
@@ -120150,7 +120139,7 @@
         },
         {
           "symbol": "NBP",
-          "rows": 365,
+          "rows": 366,
           "columns": [
             "TradingDate",
             "Open",
@@ -120161,9 +120150,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
+          "last_date": "10/07/2026",
           "last_close": 7500.0,
-          "last_volume": 100.0
+          "last_volume": 0.0
         },
         {
           "symbol": "NBW",
@@ -120320,7 +120309,7 @@
         },
         {
           "symbol": "NHT",
-          "rows": 442,
+          "rows": 443,
           "columns": [
             "TradingDate",
             "Open",
@@ -120331,9 +120320,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
-          "last_close": 11650.0,
-          "last_volume": 2500.0
+          "last_date": "10/07/2026",
+          "last_close": 11550.0,
+          "last_volume": 1200.0
         },
         {
           "symbol": "NKG",
@@ -120574,7 +120563,7 @@
         },
         {
           "symbol": "NVT",
-          "rows": 441,
+          "rows": 442,
           "columns": [
             "TradingDate",
             "Open",
@@ -120585,9 +120574,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "08/07/2026",
-          "last_close": 7480.0,
-          "last_volume": 200.0
+          "last_date": "10/07/2026",
+          "last_close": 7970.0,
+          "last_volume": 100.0
         },
         {
           "symbol": "OCB",
@@ -120771,7 +120760,7 @@
         },
         {
           "symbol": "PBP",
-          "rows": 511,
+          "rows": 512,
           "columns": [
             "TradingDate",
             "Open",
@@ -120782,9 +120771,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
-          "last_close": 12100.0,
-          "last_volume": 1100.0
+          "last_date": "10/07/2026",
+          "last_close": 12200.0,
+          "last_volume": 0.0
         },
         {
           "symbol": "PCE",
@@ -120980,7 +120969,7 @@
         },
         {
           "symbol": "PGD",
-          "rows": 515,
+          "rows": 516,
           "columns": [
             "TradingDate",
             "Open",
@@ -120991,13 +120980,13 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
-          "last_close": 22100.0,
-          "last_volume": 200.0
+          "last_date": "10/07/2026",
+          "last_close": 21500.0,
+          "last_volume": 1400.0
         },
         {
           "symbol": "PGI",
-          "rows": 431,
+          "rows": 432,
           "columns": [
             "TradingDate",
             "Open",
@@ -121008,9 +120997,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "08/07/2026",
+          "last_date": "10/07/2026",
           "last_close": 17000.0,
-          "last_volume": 5100.0
+          "last_volume": 300.0
         },
         {
           "symbol": "PGN",
@@ -121500,7 +121489,7 @@
         },
         {
           "symbol": "PPP",
-          "rows": 401,
+          "rows": 402,
           "columns": [
             "TradingDate",
             "Open",
@@ -121511,9 +121500,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "07/07/2026",
-          "last_close": 18200.0,
-          "last_volume": 300.0
+          "last_date": "10/07/2026",
+          "last_close": 18000.0,
+          "last_volume": 0.0
         },
         {
           "symbol": "PPS",
@@ -121551,7 +121540,7 @@
         },
         {
           "symbol": "PPY",
-          "rows": 306,
+          "rows": 307,
           "columns": [
             "TradingDate",
             "Open",
@@ -121562,9 +121551,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
-          "last_close": 9200.0,
-          "last_volume": 2800.0
+          "last_date": "10/07/2026",
+          "last_close": 9400.0,
+          "last_volume": 0.0
         },
         {
           "symbol": "PRC",
@@ -121698,7 +121687,7 @@
         },
         {
           "symbol": "PSW",
-          "rows": 515,
+          "rows": 516,
           "columns": [
             "TradingDate",
             "Open",
@@ -121709,9 +121698,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
+          "last_date": "10/07/2026",
           "last_close": 7800.0,
-          "last_volume": 14500.0
+          "last_volume": 0.0
         },
         {
           "symbol": "PTB",
@@ -121766,7 +121755,7 @@
         },
         {
           "symbol": "PTI",
-          "rows": 455,
+          "rows": 456,
           "columns": [
             "TradingDate",
             "Open",
@@ -121777,9 +121766,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
-          "last_close": 23800.0,
-          "last_volume": 200.0
+          "last_date": "10/07/2026",
+          "last_close": 24800.0,
+          "last_volume": 0.0
         },
         {
           "symbol": "PTL",
@@ -122455,7 +122444,7 @@
         },
         {
           "symbol": "SDN",
-          "rows": 164,
+          "rows": 165,
           "columns": [
             "TradingDate",
             "Open",
@@ -122466,9 +122455,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "30/06/2026",
-          "last_close": 19800.0,
-          "last_volume": 2000.0
+          "last_date": "10/07/2026",
+          "last_close": 18000.0,
+          "last_volume": 0.0
         },
         {
           "symbol": "SDU",
@@ -122800,7 +122789,7 @@
         },
         {
           "symbol": "SHP",
-          "rows": 517,
+          "rows": 518,
           "columns": [
             "TradingDate",
             "Open",
@@ -122811,9 +122800,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
-          "last_close": 32500.0,
-          "last_volume": 2100.0
+          "last_date": "10/07/2026",
+          "last_close": 32900.0,
+          "last_volume": 300.0
         },
         {
           "symbol": "SHS",
@@ -122896,7 +122885,7 @@
         },
         {
           "symbol": "SJS",
-          "rows": 517,
+          "rows": 518,
           "columns": [
             "TradingDate",
             "Open",
@@ -122906,10 +122895,21 @@
             "Volume"
           ],
           "has_ohlcv": true,
-          "reason": "volume_filter",
-          "last_date": "09/07/2026",
+          "reason": "no_cross_signal",
+          "last_date": "10/07/2026",
           "last_close": 47800.0,
-          "last_volume": 9600.0
+          "last_volume": 41200.0,
+          "bs": 50835.9715140859,
+          "atr": 1339.6061910241317,
+          "atrvalue": 2679.2123820482634,
+          "up_condition": false,
+          "down_condition": false,
+          "buy": false,
+          "sell": false,
+          "long": false,
+          "shrt": true,
+          "last_buy_price": 52700.0,
+          "last_sell_price": 49000.0
         },
         {
           "symbol": "SKG",
@@ -122930,7 +122930,7 @@
         },
         {
           "symbol": "SLS",
-          "rows": 517,
+          "rows": 518,
           "columns": [
             "TradingDate",
             "Open",
@@ -122941,9 +122941,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
+          "last_date": "10/07/2026",
           "last_close": 149000.0,
-          "last_volume": 400.0
+          "last_volume": 0.0
         },
         {
           "symbol": "SMA",
@@ -123088,7 +123088,7 @@
         },
         {
           "symbol": "SPM",
-          "rows": 360,
+          "rows": 361,
           "columns": [
             "TradingDate",
             "Open",
@@ -123099,9 +123099,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "29/06/2026",
+          "last_date": "10/07/2026",
           "last_close": 8080.0,
-          "last_volume": 900.0
+          "last_volume": 200.0
         },
         {
           "symbol": "SRA",
@@ -123325,7 +123325,7 @@
         },
         {
           "symbol": "STP",
-          "rows": 281,
+          "rows": 282,
           "columns": [
             "TradingDate",
             "Open",
@@ -123336,9 +123336,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "06/07/2026",
-          "last_close": 7400.0,
-          "last_volume": 100.0
+          "last_date": "10/07/2026",
+          "last_close": 7500.0,
+          "last_volume": 0.0
         },
         {
           "symbol": "SVC",
@@ -123410,7 +123410,7 @@
         },
         {
           "symbol": "SVT",
-          "rows": 514,
+          "rows": 515,
           "columns": [
             "TradingDate",
             "Open",
@@ -123421,9 +123421,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
-          "last_close": 10550.0,
-          "last_volume": 100.0
+          "last_date": "10/07/2026",
+          "last_close": 10500.0,
+          "last_volume": 400.0
         },
         {
           "symbol": "SZB",
@@ -123839,7 +123839,7 @@
         },
         {
           "symbol": "TET",
-          "rows": 53,
+          "rows": 54,
           "columns": [
             "TradingDate",
             "Open",
@@ -123850,9 +123850,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "06/07/2026",
-          "last_close": 43000.0,
-          "last_volume": 100.0
+          "last_date": "10/07/2026",
+          "last_close": 45000.0,
+          "last_volume": 0.0
         },
         {
           "symbol": "TFC",
@@ -124026,7 +124026,7 @@
         },
         {
           "symbol": "TKU",
-          "rows": 283,
+          "rows": 284,
           "columns": [
             "TradingDate",
             "Open",
@@ -124037,9 +124037,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
-          "last_close": 12600.0,
-          "last_volume": 1800.0
+          "last_date": "10/07/2026",
+          "last_close": 13700.0,
+          "last_volume": 0.0
         },
         {
           "symbol": "TLD",
@@ -124139,7 +124139,7 @@
         },
         {
           "symbol": "TMP",
-          "rows": 500,
+          "rows": 501,
           "columns": [
             "TradingDate",
             "Open",
@@ -124150,9 +124150,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
+          "last_date": "10/07/2026",
           "last_close": 46500.0,
-          "last_volume": 1800.0
+          "last_volume": 400.0
         },
         {
           "symbol": "TMS",
@@ -124766,7 +124766,7 @@
         },
         {
           "symbol": "UNI",
-          "rows": 415,
+          "rows": 416,
           "columns": [
             "TradingDate",
             "Open",
@@ -124777,9 +124777,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
-          "last_close": 7100.0,
-          "last_volume": 100.0
+          "last_date": "10/07/2026",
+          "last_close": 7000.0,
+          "last_volume": 0.0
         },
         {
           "symbol": "VAF",
@@ -124862,7 +124862,7 @@
         },
         {
           "symbol": "VCC",
-          "rows": 468,
+          "rows": 469,
           "columns": [
             "TradingDate",
             "Open",
@@ -124873,9 +124873,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
-          "last_close": 9500.0,
-          "last_volume": 2500.0
+          "last_date": "10/07/2026",
+          "last_close": 9200.0,
+          "last_volume": 0.0
         },
         {
           "symbol": "VCF",
@@ -125420,7 +125420,7 @@
         },
         {
           "symbol": "VLA",
-          "rows": 332,
+          "rows": 333,
           "columns": [
             "TradingDate",
             "Open",
@@ -125431,9 +125431,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "07/07/2026",
-          "last_close": 10500.0,
-          "last_volume": 300.0
+          "last_date": "10/07/2026",
+          "last_close": 10000.0,
+          "last_volume": 0.0
         },
         {
           "symbol": "VMC",
@@ -125595,7 +125595,7 @@
         },
         {
           "symbol": "VNL",
-          "rows": 515,
+          "rows": 516,
           "columns": [
             "TradingDate",
             "Open",
@@ -125606,9 +125606,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "08/07/2026",
-          "last_close": 18900.0,
-          "last_volume": 11800.0
+          "last_date": "10/07/2026",
+          "last_close": 18850.0,
+          "last_volume": 4700.0
         },
         {
           "symbol": "VNM",
@@ -125657,7 +125657,7 @@
         },
         {
           "symbol": "VNS",
-          "rows": 514,
+          "rows": 515,
           "columns": [
             "TradingDate",
             "Open",
@@ -125668,9 +125668,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
-          "last_close": 7980.0,
-          "last_volume": 12200.0
+          "last_date": "10/07/2026",
+          "last_close": 7970.0,
+          "last_volume": 2200.0
         },
         {
           "symbol": "VNT",
@@ -125747,7 +125747,7 @@
         },
         {
           "symbol": "VPD",
-          "rows": 517,
+          "rows": 518,
           "columns": [
             "TradingDate",
             "Open",
@@ -125758,9 +125758,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
-          "last_close": 21300.0,
-          "last_volume": 7200.0
+          "last_date": "10/07/2026",
+          "last_close": 21150.0,
+          "last_volume": 2700.0
         },
         {
           "symbol": "VPG",
@@ -125910,7 +125910,7 @@
         },
         {
           "symbol": "VSA",
-          "rows": 487,
+          "rows": 488,
           "columns": [
             "TradingDate",
             "Open",
@@ -125921,9 +125921,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "06/07/2026",
-          "last_close": 20100.0,
-          "last_volume": 400.0
+          "last_date": "10/07/2026",
+          "last_close": 18200.0,
+          "last_volume": 0.0
         },
         {
           "symbol": "VSC",
@@ -125989,7 +125989,7 @@
         },
         {
           "symbol": "VSM",
-          "rows": 386,
+          "rows": 387,
           "columns": [
             "TradingDate",
             "Open",
@@ -126000,9 +126000,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
-          "last_close": 14400.0,
-          "last_volume": 300.0
+          "last_date": "10/07/2026",
+          "last_close": 15400.0,
+          "last_volume": 0.0
         },
         {
           "symbol": "VTB",
@@ -126119,7 +126119,7 @@
         },
         {
           "symbol": "VTV",
-          "rows": 517,
+          "rows": 518,
           "columns": [
             "TradingDate",
             "Open",
@@ -126130,9 +126130,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "09/07/2026",
+          "last_date": "10/07/2026",
           "last_close": 13600.0,
-          "last_volume": 11100.0
+          "last_volume": 0.0
         },
         {
           "symbol": "VTZ",
@@ -126153,7 +126153,7 @@
         },
         {
           "symbol": "WCS",
-          "rows": 409,
+          "rows": 410,
           "columns": [
             "TradingDate",
             "Open",
@@ -126164,9 +126164,9 @@
           ],
           "has_ohlcv": true,
           "reason": "volume_filter",
-          "last_date": "08/07/2026",
-          "last_close": 304800.0,
-          "last_volume": 100.0
+          "last_date": "10/07/2026",
+          "last_close": 293100.0,
+          "last_volume": 0.0
         },
         {
           "symbol": "WSS",
