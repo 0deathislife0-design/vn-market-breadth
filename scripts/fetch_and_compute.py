@@ -1,4 +1,4 @@
-﻿"""
+"""
 Pipeline chinh: chay hang ngay qua GitHub Actions.
   1. Lay danh sach ma theo san (HOSE/HNX/UPCOM)
      - Bo ma co chu so trong ten (CW, phai sinh, ...)
@@ -43,6 +43,7 @@ COMMENTARY_JSON = DATA_DIR / "market_commentary.json"
 DOCS_COMMENTARY_JSON = DOCS_DATA_DIR / "market_commentary.json"
 SIGNALS_HISTORY_JSON = DATA_DIR / "signals_history.json"
 DOCS_SIGNALS_HISTORY_JSON = DOCS_DATA_DIR / "signals_history.json"
+LATEST_PRICES_JSON = DATA_DIR / "latest_prices.json"
 
 MARKETS = ["HOSE", "HNX"]
 MARKET_INDEX_ID = {
@@ -70,6 +71,27 @@ def save_cache(symbol: str, df: pd.DataFrame) -> None:
     rest = [c for c in df.columns if c not in ordered]
     df = df[ordered + rest]
     df.to_csv(CACHE_DIR / f"{symbol}.csv", index=False, date_format="%d/%m/%Y")
+
+
+def generate_latest_prices() -> None:
+    """Ghi map gia dong cua moi nhat tu OHLC cache cho dashboard."""
+    prices = {}
+    for path in CACHE_DIR.glob("*.csv"):
+        try:
+            df = pd.read_csv(path)
+            if df.empty or "Close" not in df.columns:
+                continue
+            row = df.iloc[-1]
+            close = pd.to_numeric(row.get("Close"), errors="coerce")
+            if pd.isna(close):
+                continue
+            prices[path.stem.upper()] = {
+                "close": float(close),
+                "date": str(row.get("TradingDate", "")),
+            }
+        except Exception:
+            continue
+    _write_json(LATEST_PRICES_JSON, prices)
 
 
 def cache_max_date(symbol: str) -> datetime | None:
@@ -417,7 +439,7 @@ def _write_json(path: Path, data) -> None:
 def _sync_docs_data():
     """Dong bo du lieu sang docs/data/ cho GitHub Pages."""
     DOCS_DATA_DIR.mkdir(parents=True, exist_ok=True)
-    for f in ("breadth_latest.json", "breadth_history.json", "market_commentary.json", "strategy_signals.json", "ensemble_signals.json", "backtest_weights.json", "momentum_signals.json", "backtest_momentum.json", "backtest_mama_positional.json", "backtest_advanced_trailstop.json", "luc_mach_signals.json", "khung4_tplus_signals.json", "mama_positional_signals.json", "advanced_trailstop_signals.json"):
+    for f in ("breadth_latest.json", "breadth_history.json", "market_commentary.json", "strategy_signals.json", "ensemble_signals.json", "backtest_weights.json", "momentum_signals.json", "backtest_momentum.json", "backtest_mama_positional.json", "backtest_advanced_trailstop.json", "luc_mach_signals.json", "khung4_tplus_signals.json", "mama_positional_signals.json", "advanced_trailstop_signals.json", "latest_prices.json"):
         src = DATA_DIR / f
         dst = DOCS_DATA_DIR / f
         if src.exists():
@@ -445,9 +467,10 @@ def append_signals_history() -> None:
     ensemble_path = DATA_DIR / "ensemble_signals.json"
     momentum_path = DATA_DIR / "momentum_signals.json"
     luc_mach_path = DATA_DIR / "luc_mach_signals.json"
+    khung4_path = DATA_DIR / "khung4_tplus_signals.json"
     mama_path = DATA_DIR / "mama_positional_signals.json"
     ats_path = DATA_DIR / "advanced_trailstop_signals.json"
-    if not strategy_path.exists() and not ensemble_path.exists() and not momentum_path.exists() and not luc_mach_path.exists() and not mama_path.exists() and not ats_path.exists():
+    if not strategy_path.exists() and not ensemble_path.exists() and not momentum_path.exists() and not luc_mach_path.exists() and not khung4_path.exists() and not mama_path.exists() and not ats_path.exists():
         return
 
     history = []
@@ -457,7 +480,7 @@ def append_signals_history() -> None:
         except Exception:
             history = []
 
-    entry = {"date": "", "strategy": None, "ensemble": None, "momentum": None, "luc_mach": None, "mama_positional": None, "advanced_trailstop": None}
+    entry = {"date": "", "strategy": None, "ensemble": None, "momentum": None, "luc_mach": None, "khung4_tplus": None, "mama_positional": None, "advanced_trailstop": None}
     if strategy_path.exists():
         data = json.loads(strategy_path.read_text(encoding="utf-8"))
         entry["date"] = data.get("date", "")
@@ -476,6 +499,11 @@ def append_signals_history() -> None:
         data = json.loads(luc_mach_path.read_text(encoding="utf-8"))
         entry["date"] = entry["date"] or data.get("date", "")
         entry["luc_mach"] = data
+
+    if khung4_path.exists():
+        data = json.loads(khung4_path.read_text(encoding="utf-8"))
+        entry["date"] = entry["date"] or data.get("date", "")
+        entry["khung4_tplus"] = data
 
     if mama_path.exists():
         data = json.loads(mama_path.read_text(encoding="utf-8"))
@@ -525,6 +553,7 @@ def main():
         "markets": markets_dict,
     }
     _write_json(LATEST_JSON, output)
+    generate_latest_prices()
     _sync_docs_data()
     print(f"\nDa ghi: {LATEST_JSON}")
 

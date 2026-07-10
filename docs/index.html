@@ -226,7 +226,7 @@ let activeFilter = 'all';
 let searchQuery = '';
 let LATEST = null, HISTORY = null, COMMENTARY = null;
 let SIGNALS = null, ENSEMBLE = null, MOMENTUM = null, MOMENTUM_BT = null, MAMA_BT = null, ATS_BT = null, LUC_MACH = null, KHUNG4_TPLUS = null, MAMA_POSITIONAL = null, ADVANCED_TRAILSTOP = null;
-let ENSEMBLE_WEIGHTS = null, SIGNALS_HISTORY = null;
+let ENSEMBLE_WEIGHTS = null, SIGNALS_HISTORY = null, LATEST_PRICES = null;
 
 async function loadData(){
   try {
@@ -277,6 +277,9 @@ async function loadData(){
     const sh = await fetch(`./data/signals_history.json?t=${ts}`);
     SIGNALS_HISTORY = sh.ok ? await sh.json() : null;
 
+    const lp = await fetch(`./data/latest_prices.json?t=${ts}`);
+    LATEST_PRICES = lp.ok ? await lp.json() : null;
+
     document.getElementById('metaLine').innerHTML =
       `Cập nhật: ${new Date(LATEST.generated_at).toLocaleString('vi-VN')}`
       + ` · ${LATEST.markets.ALL.date}`
@@ -310,8 +313,12 @@ function parseDisplayPrice(v){
   const n = Number(String(v).replace(/[^0-9.-]/g, ''));
   return Number.isFinite(n) ? n : null;
 }
-function fmtBuyPerformance(currentPrice, buyPrice){
-  const cur = parseDisplayPrice(currentPrice);
+function latestCloseForSymbol(symbol){
+  const item = LATEST_PRICES?.[symbol];
+  return item?.close ?? item ?? null;
+}
+function fmtBuyPerformance(symbol, currentPrice, buyPrice){
+  const cur = latestCloseForSymbol(symbol) ?? parseDisplayPrice(currentPrice);
   const buy = parseDisplayPrice(buyPrice);
   if (!cur || !buy) return '\u2014';
   const pct = ((cur - buy) / buy) * 100;
@@ -645,7 +652,7 @@ function buildStockRadar(dateStr){
     const methods = g.methodList.map(m => `<span class="method-tag ${m.side}">${m.label}</span>`).join('');
     const note = g.notes.slice(0, 2).join(' · ');
     const consensus = `${g.buy} Buy · ${g.watch} Watch · ${g.sell} Sell`;
-    const performance = fmtBuyPerformance(g.price, g.buyPrice);
+    const performance = fmtBuyPerformance(g.symbol, g.price, g.buyPrice);
     return `<tr>
       <td class="mono" style="font-weight:900;font-size:13px;">${g.symbol}</td>
       <td><span class="action-pill ${g.cls}">${g.action}</span></td>

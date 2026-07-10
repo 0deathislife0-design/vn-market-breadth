@@ -1,4 +1,4 @@
-﻿"""Nhung du lieu breadth + commentary vao dashboard HTML de mo truc tiep khong can server."""
+"""Nhung du lieu breadth + commentary vao dashboard HTML de mo truc tiep khong can server."""
 import json
 from pathlib import Path
 
@@ -18,6 +18,7 @@ KHUNG4_TPLUS_JSON = ROOT / "data" / "khung4_tplus_signals.json"
 MAMA_POSITIONAL_JSON = ROOT / "data" / "mama_positional_signals.json"
 ADVANCED_TRAILSTOP_JSON = ROOT / "data" / "advanced_trailstop_signals.json"
 SIGNALS_HISTORY_JSON = ROOT / "data" / "signals_history.json"
+LATEST_PRICES_JSON = ROOT / "data" / "latest_prices.json"
 SRC_HTML = ROOT / "docs" / "index.html"
 OUT_HTML = ROOT / "docs" / "dashboard.html"
 
@@ -36,6 +37,7 @@ khung4_tplus = json.loads(KHUNG4_TPLUS_JSON.read_text(encoding="utf-8")) if KHUN
 mama_positional = json.loads(MAMA_POSITIONAL_JSON.read_text(encoding="utf-8")) if MAMA_POSITIONAL_JSON.exists() else None
 advanced_trailstop = json.loads(ADVANCED_TRAILSTOP_JSON.read_text(encoding="utf-8")) if ADVANCED_TRAILSTOP_JSON.exists() else None
 signals_history = json.loads(SIGNALS_HISTORY_JSON.read_text(encoding="utf-8")) if SIGNALS_HISTORY_JSON.exists() else None
+latest_prices = json.loads(LATEST_PRICES_JSON.read_text(encoding="utf-8")) if LATEST_PRICES_JSON.exists() else None
 
 html = SRC_HTML.read_text(encoding="utf-8")
 
@@ -57,6 +59,7 @@ const EMBEDDED_KHUNG4_TPLUS = {json.dumps(khung4_tplus, ensure_ascii=False)};
 const EMBEDDED_MAMA_POSITIONAL = {json.dumps(mama_positional, ensure_ascii=False)};
 const EMBEDDED_ADVANCED_TRAILSTOP = {json.dumps(advanced_trailstop, ensure_ascii=False)};
 const EMBEDDED_SIGNALS_HISTORY = {json.dumps(signals_history, ensure_ascii=False)};
+const EMBEDDED_LATEST_PRICES = {json.dumps(latest_prices, ensure_ascii=False)};
 </script>
 """
 
@@ -81,6 +84,7 @@ new_func = """async function loadData(){
   MAMA_POSITIONAL = EMBEDDED_MAMA_POSITIONAL;
   ADVANCED_TRAILSTOP = EMBEDDED_ADVANCED_TRAILSTOP;
   SIGNALS_HISTORY = EMBEDDED_SIGNALS_HISTORY;
+  LATEST_PRICES = EMBEDDED_LATEST_PRICES;
   const sessionLabel = '<span class="session-badge close">Dong cua 15:10</span>';
   document.getElementById('metaLine').innerHTML =
     "Cap nhat: " + new Date(LATEST.generated_at).toLocaleString('vi-VN') + " - Ngay du lieu: " + LATEST.markets.ALL.date + " " + sessionLabel;
