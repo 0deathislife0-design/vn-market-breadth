@@ -354,16 +354,20 @@ function fmt1(n){ return (n === null || n === undefined) ? '\u2014' : Number(n).
 function fmtPrice(n){ return (n === null || n === undefined) ? '\u2014' : Number(n).toLocaleString('vi-VN'); }
 function parseDisplayPrice(v){
   if (v === null || v === undefined || v === '\u2014') return null;
-  const n = Number(String(v).replace(/[^0-9.-]/g, ''));
+  if (typeof v === 'number') return Number.isFinite(v) ? v : null;
+  let cleaned = String(v).trim().replace(/\s/g, '');
+  cleaned = cleaned.replace(/\./g, '').replace(',', '.');
+  cleaned = cleaned.replace(/[^0-9.-]/g, '');
+  const n = Number(cleaned);
   return Number.isFinite(n) ? n : null;
 }
 function latestCloseForSymbol(symbol){
   const item = LATEST_PRICES?.[symbol];
   return item?.close ?? item ?? null;
 }
-function fmtBuyPerformance(symbol, currentPrice, buyPrice){
+function fmtBuyPerformance(symbol, currentPrice, buyPrice, buyPriceValue){
   const cur = latestCloseForSymbol(symbol) ?? parseDisplayPrice(currentPrice);
-  const buy = parseDisplayPrice(buyPrice);
+  const buy = buyPriceValue ?? parseDisplayPrice(buyPrice);
   if (!cur || !buy) return '\u2014';
   const pct = ((cur - buy) / buy) * 100;
   const color = pct >= 0 ? 'var(--up)' : 'var(--down)';
@@ -442,13 +446,9 @@ function render(){
           <option value="ensemble-weak">⚪ Ensemble Weak</option>
           <option value="luc-mach-valid">✅ Lục Mạch Buy</option>
           <option value="luc-mach-watch">👀 Lục Mạch Watch</option>
-          <option value="luc-mach-sell">🔴 Lục Mạch Sell</option>
           <option value="mama-buy">✅ MAMA Buy</option>
-          <option value="mama-sell">🔴 MAMA Sell</option>
           <option value="ats-buy">✅ ATS Buy</option>
-          <option value="ats-sell">🔴 ATS Sell</option>
           <option value="k4-buy">✅ K4 Buy</option>
-          <option value="k4-sell">🔴 K4 Sell</option>
         </select>
         <select id="signalDateSelect" onchange="onSignalDateChange(this.value)" style="margin-left:6px;width:auto;min-width:100px;">
           <option value="">Hôm nay</option>
@@ -567,13 +567,13 @@ function buildSummary(dateStr){
   if (ensWeak) badges.push({cls:'ensw', label:`⚪ Ensemble ${ensWeak}`, filter:'ensemble-weak'});
   if (lmValid) badges.push({cls:'ens', label:`✅ LM Buy ${lmValid}`, filter:'luc-mach-valid'});
   if (lmWatch) badges.push({cls:'wat', label:`👀 LM Watch ${lmWatch}`, filter:'luc-mach-watch'});
-  if (lmSell) badges.push({cls:'ensw', label:`🔴 LM Sell ${lmSell}`, filter:'luc-mach-sell'});
+  if (lmSell) badges.push({cls:'ensw', label:`🔴 LM Sell ${lmSell}`, filter:'sell-warning'});
   if (mamaBuy) badges.push({cls:'str', label:`✅ MAMA Buy ${mamaBuy}`, filter:'mama-buy'});
-  if (mamaSell) badges.push({cls:'ensw', label:`🔴 MAMA Sell ${mamaSell}`, filter:'mama-sell'});
+  if (mamaSell) badges.push({cls:'ensw', label:`🔴 MAMA Sell ${mamaSell}`, filter:'sell-warning'});
   if (atsBuy) badges.push({cls:'str', label:`✅ ATS Buy ${atsBuy}`, filter:'ats-buy'});
-  if (atsSell) badges.push({cls:'ensw', label:`🔴 ATS Sell ${atsSell}`, filter:'ats-sell'});
+  if (atsSell) badges.push({cls:'ensw', label:`🔴 ATS Sell ${atsSell}`, filter:'sell-warning'});
   if (k4Buy) badges.push({cls:'str', label:`✅ K4 Buy ${k4Buy}`, filter:'k4-buy'});
-  if (k4Sell) badges.push({cls:'ensw', label:`🔴 K4 Sell ${k4Sell}`, filter:'k4-sell'});
+  if (k4Sell) badges.push({cls:'ensw', label:`🔴 K4 Sell ${k4Sell}`, filter:'sell-warning'});
 
   const buySignals = strongCount + preCount + ensStrong + ensWeak + lmValid + mamaBuy + atsBuy + k4Buy;
   const watchSignals = watchCount + lmWatch;
@@ -691,7 +691,7 @@ function aggregateSignalRows(rows){
     if (!bySymbol.has(r.symbol)) {
       bySymbol.set(r.symbol, {
         symbol: r.symbol, rows: [], buy: 0, sell: 0, watch: 0,
-        maxScore: 0, price: r.price, vol: r.vol, methods: new Map(), notes: []
+        maxScore: 0, price: r.price, priceValue: r.priceValue, buyPrice: r.buyPrice, buyPriceValue: r.buyPriceValue, methods: new Map(), notes: []
       });
     }
     const g = bySymbol.get(r.symbol);
@@ -700,7 +700,9 @@ function aggregateSignalRows(rows){
     g[side] += 1;
     g.maxScore = Math.max(g.maxScore, Number(r.score) || 0);
     if (!g.price && r.price) g.price = r.price;
+    if (g.priceValue == null && r.priceValue != null) g.priceValue = r.priceValue;
     if (!g.buyPrice && r.buyPrice) g.buyPrice = r.buyPrice;
+    if (g.buyPriceValue == null && r.buyPriceValue != null) g.buyPriceValue = r.buyPriceValue;
     const key = `${r.source}:${side}`;
     g.methods.set(key, {label: methodLabel(r.source), side});
     if (r.expl) g.notes.push(`${methodLabel(r.source)}: ${r.expl}`);
@@ -728,7 +730,7 @@ function buildStockRadar(dateStr){
     const methods = g.methodList.map(m => `<span class="method-tag ${m.side}">${m.label}</span>`).join('');
     const note = g.notes.slice(0, 2).join(' · ');
     const consensus = `${g.buy} Buy · ${g.watch} Watch · ${g.sell} Sell`;
-    const performance = fmtBuyPerformance(g.symbol, g.price, g.buyPrice);
+    const performance = fmtBuyPerformance(g.symbol, g.priceValue ?? g.price, g.buyPrice, g.buyPriceValue);
     return `<tr>
       <td class="mono" style="font-weight:900;font-size:13px;">${g.symbol}</td>
       <td><span class="action-pill ${g.cls}">${g.action}</span></td>
@@ -863,7 +865,9 @@ function _collectSignals(momSrc, stratSrc, ensSrc, lmSrc, mamaSrc, atsSrc, k4Src
         adx: s.adx14 != null ? s.adx14.toFixed(1) : null,
         vol: s.vol_ratio != null ? s.vol_ratio.toFixed(1)+'x' : null,
         price: s.last_price ? s.last_price.toLocaleString('vi-VN') : null,
+        priceValue: s.last_price ?? null,
         buyPrice: s.buy_price ? fmtPrice(s.buy_price) : (s.last_price ? fmtPrice(s.last_price) : null),
+        buyPriceValue: s.buy_price ?? s.last_price ?? null,
       });
     });
   }
@@ -878,7 +882,9 @@ function _collectSignals(momSrc, stratSrc, ensSrc, lmSrc, mamaSrc, atsSrc, k4Src
         strategies: ['pre-breakout'], expl: expl,
         rsi: null, adx: null, vol: s.vol_ratio != null ? s.vol_ratio.toFixed(2) : null,
         price: s.last_price ? s.last_price.toLocaleString('vi-VN') : null,
+        priceValue: s.last_price ?? null,
         buyPrice: s.buy_price ? fmtPrice(s.buy_price) : (s.last_price ? fmtPrice(s.last_price) : null),
+        buyPriceValue: s.buy_price ?? s.last_price ?? null,
       });
     });
   }
@@ -903,7 +909,9 @@ function _collectSignals(momSrc, stratSrc, ensSrc, lmSrc, mamaSrc, atsSrc, k4Src
         rsi: s.rsi14 != null ? s.rsi14.toFixed(1) : null,
         adx: null, vol: s.vol_ratio != null ? s.vol_ratio.toFixed(1)+'x' : null,
         price: s.last_price ? s.last_price.toLocaleString('vi-VN') : null,
+        priceValue: s.last_price ?? null,
         buyPrice: s.buy_price ? fmtPrice(s.buy_price) : (s.last_price ? fmtPrice(s.last_price) : null),
+        buyPriceValue: s.buy_price ?? s.last_price ?? null,
       });
     });
   }
@@ -924,7 +932,9 @@ function _collectSignals(momSrc, stratSrc, ensSrc, lmSrc, mamaSrc, atsSrc, k4Src
         rsi: null, adx: null,
         vol: s.last_volume ? Math.round(s.last_volume).toLocaleString('vi-VN') : null,
         price: s.last_price ? s.last_price.toLocaleString('vi-VN') : null,
+        priceValue: s.last_price ?? null,
         buyPrice: s.buy_price ? fmtPrice(s.buy_price) : (s.last_price && s.luc_mach_buy ? fmtPrice(s.last_price) : null),
+        buyPriceValue: s.buy_price ?? (s.last_price && s.luc_mach_buy ? s.last_price : null),
       });
     });
   }
@@ -943,7 +953,9 @@ function _collectSignals(momSrc, stratSrc, ensSrc, lmSrc, mamaSrc, atsSrc, k4Src
         rsi: null, adx: null,
         vol: s.last_volume ? Math.round(s.last_volume).toLocaleString('vi-VN') : null,
         price: s.last_price ? s.last_price.toLocaleString('vi-VN') : null,
+        priceValue: s.last_price ?? null,
         buyPrice: s.buy_price ? fmtPrice(s.buy_price) : null,
+        buyPriceValue: s.buy_price ?? null,
       });
     });
   }
@@ -962,7 +974,9 @@ function _collectSignals(momSrc, stratSrc, ensSrc, lmSrc, mamaSrc, atsSrc, k4Src
         rsi: null, adx: null,
         vol: s.last_volume ? Math.round(s.last_volume).toLocaleString('vi-VN') : null,
         price: s.last_price ? s.last_price.toLocaleString('vi-VN') : null,
+        priceValue: s.last_price ?? null,
         buyPrice: s.buy_price ? fmtPrice(s.buy_price) : null,
+        buyPriceValue: s.buy_price ?? null,
       });
     });
   }
@@ -981,7 +995,9 @@ function _collectSignals(momSrc, stratSrc, ensSrc, lmSrc, mamaSrc, atsSrc, k4Src
         rsi: null, adx: null,
         vol: s.last_volume ? Math.round(s.last_volume).toLocaleString('vi-VN') : null,
         price: s.last_price ? s.last_price.toLocaleString('vi-VN') : null,
+        priceValue: s.last_price ?? null,
         buyPrice: s.buy_price ? fmtPrice(s.buy_price) : null,
+        buyPriceValue: s.buy_price ?? null,
       });
     });
   }
