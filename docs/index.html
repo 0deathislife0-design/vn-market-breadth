@@ -8,15 +8,15 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg-a:#EEF3FF; --bg-b:#F3EEFF; --bg-c:#FFF6E9;
-    --panel:#FFFFFF; --panel-tint:#F7F9FF; --border:#E4E9F7;
-    --text:#1B2140; --muted:#6B7395; --faint:#9AA1C0;
-    --up:#0FAE72; --down:#F0473E;
-    --neutral:#F5A524;
-    --accent-1:#4F46E5; --accent-2:#06B6D4;
-    --accent-grad: linear-gradient(120deg, var(--accent-1), var(--accent-2));
-    --shadow-sm: 0 2px 10px rgba(31,41,102,0.06);
-    --shadow-md: 0 10px 30px rgba(31,41,102,0.10);
+    --bg-a:#F8FAF7; --bg-b:#F3F6F1; --bg-c:#FFF8EA;
+    --panel:#FFFFFF; --panel-tint:#F8FAF7; --border:#E3E8EF;
+    --text:#0B132B; --muted:#556070; --faint:#8A94A6;
+    --up:#16A34A; --down:#C2413B;
+    --neutral:#D6A84F;
+    --accent-1:#0B132B; --accent-2:#2E7D32;
+    --accent-grad: linear-gradient(120deg, #0B132B, #2E7D32);
+    --shadow-sm: 0 2px 10px rgba(11,19,43,0.045);
+    --shadow-md: 0 14px 36px rgba(11,19,43,0.09);
     --font-all:'Inter',sans-serif;
   }
   *{box-sizing:border-box; margin:0; padding:0; font-family:'Inter',sans-serif !important;}
@@ -25,23 +25,23 @@
   body{
     min-height:100vh; padding:20px clamp(12px,3vw,36px) 40px;
     background:
-      radial-gradient(1100px 600px at 8% -10%, var(--bg-c) 0%, transparent 55%),
-      radial-gradient(900px 600px at 100% 0%, var(--bg-b) 0%, transparent 50%),
-      linear-gradient(180deg, var(--bg-a) 0%, #FBFCFF 60%);
+      radial-gradient(900px 520px at 10% -10%, rgba(214,168,79,0.14) 0%, transparent 55%),
+      radial-gradient(850px 560px at 100% 0%, rgba(46,125,50,0.08) 0%, transparent 50%),
+      linear-gradient(180deg, var(--bg-a) 0%, #FFFFFF 68%);
     background-attachment:fixed;
   }
   .wrap{max-width:1120px; margin:0 auto;}
-  .hero{position:relative;overflow:hidden;background:linear-gradient(135deg,#ffffff 0%,#F7FAFF 52%,#EEF3FF 100%);border:1px solid var(--border);border-radius:18px;padding:34px clamp(22px,4vw,42px);margin-bottom:14px;box-shadow:var(--shadow-md);display:grid;grid-template-columns:minmax(0,1fr) 190px;gap:24px;align-items:center;}
-  .hero:after{content:'';position:absolute;right:-90px;top:-120px;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(79,70,229,0.14),transparent 66%);}
-  .hero-kicker{display:flex;align-items:center;gap:10px;font-size:11px;font-weight:800;letter-spacing:0.16em;color:#15346D;text-transform:uppercase;margin-bottom:12px;}
+  .hero{position:relative;overflow:hidden;background:linear-gradient(135deg,#FFFFFF 0%,#FAFBF8 55%,#F2F6EF 100%);border:1px solid var(--border);border-radius:22px;padding:42px clamp(26px,5vw,56px);margin-bottom:18px;box-shadow:var(--shadow-md);display:grid;grid-template-columns:minmax(0,1fr) 150px;gap:34px;align-items:center;}
+  .hero:after{content:'';position:absolute;right:-100px;top:-140px;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,rgba(46,125,50,0.12),transparent 66%);}
+  .hero-kicker{display:flex;align-items:center;gap:10px;font-size:11px;font-weight:800;letter-spacing:0.18em;color:#0B132B;text-transform:uppercase;margin-bottom:14px;}
   .hero-kicker:before{content:'';width:28px;height:2px;background:#F5A524;border-radius:999px;}
-  .hero-title{max-width:760px;font-size:clamp(34px,6vw,64px);line-height:0.96;letter-spacing:-0.055em;font-weight:800;color:#162F66;margin-bottom:18px;}
+  .hero-title{max-width:760px;font-size:clamp(34px,5.6vw,60px);line-height:0.98;letter-spacing:-0.055em;font-weight:800;color:#0B132B;margin-bottom:18px;}
   .hero-desc{max-width:760px;font-size:clamp(14px,1.8vw,17px);line-height:1.7;color:#4B587F;}
   .hero-meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px;}
   .hero-pill{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--accent-1);background:rgba(79,70,229,0.08);border:1px solid rgba(79,70,229,0.16);border-radius:999px;padding:6px 10px;}
-  .hero-logo{position:relative;z-index:1;justify-self:end;width:170px;height:170px;border-radius:24px;background:#fff;border:1px solid rgba(228,233,247,0.9);box-shadow:0 18px 42px rgba(31,41,102,0.12);display:flex;align-items:center;justify-content:center;padding:16px;}
+  .hero-logo{position:relative;z-index:1;justify-self:end;width:138px;height:138px;border-radius:22px;background:#fff;border:1px solid rgba(227,232,239,0.95);box-shadow:0 18px 42px rgba(11,19,43,0.10);display:flex;align-items:center;justify-content:center;padding:14px;}
   .hero-logo img{width:100%;height:100%;object-fit:contain;display:block;}
-  @media (max-width:760px){.hero{grid-template-columns:1fr;}.hero-logo{justify-self:start;width:120px;height:120px;order:-1;}}
+  @media (max-width:760px){.hero{grid-template-columns:1fr;}.hero-logo{justify-self:start;width:112px;height:112px;order:-1;}}
   @media (max-width:640px){.hero{padding:26px 20px;}.hero-title{font-size:36px;}}
   header{display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom:10px;}
   h1{font-weight:700; font-size:clamp(17px,2.2vw,23px); letter-spacing:-0.01em; color:#141834; display:inline-flex; align-items:center; gap:8px;}
@@ -57,12 +57,12 @@
   .market-tabs button:hover{color:var(--accent-1); background:var(--panel-tint);}
   .market-tabs button.active{background:var(--accent-grad); color:#fff; box-shadow:0 4px 12px rgba(79,70,229,0.3);}
 
-  .panel{background:var(--panel); border:1px solid var(--border); border-radius:14px; padding:18px; margin-bottom:12px; box-shadow:var(--shadow-sm);}
+  .panel{background:var(--panel); border:1px solid var(--border); border-radius:16px; padding:20px; margin-bottom:14px; box-shadow:var(--shadow-sm);}
   .panel h2{font-family:var(--font-all); font-weight:600; font-size:12px; text-transform:uppercase; letter-spacing:0.05em; color:#3A4270; margin-bottom:12px; display:flex; align-items:center; gap:8px;}
 
   .kpi-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;}
   @media (max-width:700px){.kpi-grid{grid-template-columns:repeat(3,1fr);}}
-  .kpi-card{border:1px solid var(--border);border-radius:10px;padding:10px;text-align:center;background:var(--panel);}
+  .kpi-card{border:1px solid var(--border);border-radius:13px;padding:12px;text-align:center;background:var(--panel);box-shadow:var(--shadow-sm);}
   .kpi-card .lab{font-size:9px;text-transform:uppercase;letter-spacing:0.04em;color:var(--faint);font-weight:600;}
   .kpi-card .num{font-family:var(--font-all);font-size:20px;font-weight:700;margin-top:2px;}
   .kpi-card .sub{font-size:10px;color:var(--muted);margin-top:1px;}
@@ -86,11 +86,11 @@
   .action-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:12px 0;}
   @media (max-width:850px){.action-grid{grid-template-columns:repeat(2,1fr);}}
   @media (max-width:520px){.action-grid{grid-template-columns:1fr;}}
-  .action-card{border:1px solid var(--border);border-radius:14px;padding:14px;background:var(--panel);box-shadow:var(--shadow-sm);min-height:132px;}
-  .action-card.buy{border-color:rgba(15,174,114,0.25);background:linear-gradient(180deg,rgba(15,174,114,0.08),#fff 60%);}
-  .action-card.watch{border-color:rgba(245,165,36,0.28);background:linear-gradient(180deg,rgba(245,165,36,0.10),#fff 60%);}
-  .action-card.sell{border-color:rgba(240,71,62,0.25);background:linear-gradient(180deg,rgba(240,71,62,0.08),#fff 60%);}
-  .action-card.neutral{border-color:rgba(79,70,229,0.18);background:linear-gradient(180deg,rgba(79,70,229,0.06),#fff 60%);}
+  .action-card{border:1px solid var(--border);border-radius:16px;padding:16px;background:var(--panel);box-shadow:var(--shadow-sm);min-height:132px;}
+  .action-card.buy{border-color:rgba(22,163,74,0.24);background:#fff;}
+  .action-card.watch{border-color:rgba(214,168,79,0.30);background:#fff;}
+  .action-card.sell{border-color:rgba(194,65,59,0.24);background:#fff;}
+  .action-card.neutral{border-color:rgba(11,19,43,0.12);background:#fff;}
   .action-head{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:8px;}
   .action-title{font-size:10px;text-transform:uppercase;letter-spacing:0.06em;color:var(--muted);font-weight:700;}
   .action-num{font-size:24px;font-weight:800;line-height:1;color:var(--text);}
@@ -106,13 +106,33 @@
   .filter-bar input,.filter-bar select{padding:7px 12px;border-radius:8px;border:1px solid var(--border);background:var(--panel-tint);color:var(--text);font-size:12px;font-family:var(--font-all);outline:none;}
   .filter-bar input:focus,.filter-bar select:focus{border-color:var(--accent-1);}
   .filter-bar input{flex:1;min-width:120px;}
+  .filter-menu{position:relative;min-width:220px;}
+  .filter-trigger{width:100%;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 12px;border-radius:10px;border:1px solid var(--border);background:#fff;color:var(--text);font-size:12px;font-weight:650;cursor:pointer;box-shadow:var(--shadow-sm);}
+  .filter-trigger:hover,.filter-trigger.open{border-color:rgba(46,125,50,0.35);box-shadow:0 0 0 3px rgba(46,125,50,0.08);}
+  .filter-caret{font-size:10px;color:var(--muted);}
+  .filter-popover{position:absolute;left:0;top:calc(100% + 8px);z-index:60;width:250px;max-height:440px;overflow:auto;background:#fff;border:1px solid var(--border);border-radius:14px;box-shadow:0 20px 55px rgba(11,19,43,0.16);padding:10px;display:none;}
+  .filter-popover.open{display:block;}
+  .filter-group{padding:6px 0;border-bottom:1px solid rgba(227,232,239,0.75);}
+  .filter-group:last-child{border-bottom:none;}
+  .filter-group-title{font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:0.12em;color:var(--faint);padding:4px 8px 7px;}
+  .filter-option{width:100%;border:none;background:transparent;border-radius:10px;padding:8px;display:flex;align-items:center;justify-content:space-between;gap:10px;cursor:pointer;color:var(--text);text-align:left;}
+  .filter-option:hover{background:var(--panel-tint);}
+  .filter-option.active{background:rgba(46,125,50,0.10);box-shadow:inset 0 0 0 1px rgba(46,125,50,0.20);}
+  .filter-option-main{display:flex;align-items:center;gap:8px;min-width:0;}
+  .filter-chip{font-size:9px;font-weight:850;letter-spacing:0.08em;border-radius:999px;padding:4px 7px;min-width:42px;text-align:center;}
+  .filter-chip.buy{background:rgba(22,163,74,0.10);color:var(--up);}
+  .filter-chip.watch{background:rgba(214,168,79,0.14);color:#98732C;}
+  .filter-chip.sell{background:rgba(194,65,59,0.10);color:var(--down);}
+  .filter-chip.system{background:rgba(11,19,43,0.07);color:var(--accent-1);}
+  .filter-chip.neutral{background:rgba(85,96,112,0.08);color:var(--muted);}
+  .filter-label{font-size:12px;font-weight:650;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
   .btn-copy{font-family:var(--font-all);font-size:11px;padding:6px 14px;border-radius:8px;border:1px solid var(--border);background:var(--panel-tint);color:var(--muted);cursor:pointer;transition:all .15s;white-space:nowrap;}
   .btn-copy:hover{background:var(--accent-1);color:#fff;border-color:var(--accent-1);}
 
   table{width:100%;border-collapse:collapse;font-size:12px;}
-  th{text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:0.04em;color:var(--faint);font-weight:600;padding:8px 8px;border-bottom:2px solid var(--border);}
-  td{padding:9px 8px;border-bottom:1px solid var(--border);vertical-align:top;}
-  tr:hover td{background:var(--panel-tint);}
+  th{text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:0.06em;color:var(--faint);font-weight:700;padding:9px 8px;border-bottom:1px solid var(--border);position:sticky;top:0;background:rgba(255,255,255,0.96);z-index:2;}
+  td{padding:11px 8px;border-bottom:1px solid var(--border);vertical-align:top;}
+  tr:hover td{background:rgba(248,250,247,0.78);}
   td.mono{font-family:var(--font-all);}
   .up-txt{color:var(--up); font-weight:700;}
   .down-txt{color:var(--down); font-weight:700;}
@@ -267,6 +287,30 @@
 let MARKETS = ['ALL'];
 let activeMarket = 'ALL';
 let activeFilter = 'all';
+const FILTER_GROUPS = [
+  { title:'Tổng quan', items:[
+    {value:'all', label:'Tất cả tín hiệu', chip:'ALL', tone:'neutral', desc:'Toàn bộ tín hiệu'},
+    {value:'multi-system', label:'Đồng thuận ≥2 hệ', chip:'SYNC', tone:'system', desc:'Mã được nhiều hệ xác nhận'},
+  ]},
+  { title:'Trạng thái hành động', items:[
+    {value:'buy', label:'Tất cả điểm mua', chip:'BUY', tone:'buy', desc:'Ứng viên cần kiểm tra điểm mua'},
+    {value:'watch', label:'Chờ xác nhận', chip:'WATCH', tone:'watch', desc:'Theo dõi thêm trạng thái'},
+    {value:'sell-warning', label:'Cảnh báo bán', chip:'SELL', tone:'sell', desc:'Rà lại vị thế đang nắm'},
+  ]},
+  { title:'Cường độ tín hiệu', items:[
+    {value:'strong', label:'Strong', chip:'MẠNH', tone:'buy', desc:'Tín hiệu mua mạnh'},
+    {value:'pre-breakout', label:'Pre-Breakout', chip:'SỚM', tone:'system', desc:'Vùng tích lũy trước bứt phá'},
+    {value:'ensemble-strong', label:'Ensemble Strong', chip:'ENS', tone:'system', desc:'Đồng thuận ensemble cao'},
+    {value:'ensemble-weak', label:'Ensemble Weak', chip:'ENS', tone:'neutral', desc:'Đồng thuận ensemble thấp'},
+  ]},
+  { title:'Theo hệ thống', items:[
+    {value:'luc-mach-valid', label:'Lục Mạch Buy', chip:'LM', tone:'buy', desc:'Lục Mạch xác nhận mua'},
+    {value:'luc-mach-watch', label:'Lục Mạch Watch', chip:'LM', tone:'watch', desc:'Lục Mạch chờ xác nhận'},
+    {value:'mama-buy', label:'MAMA Buy', chip:'MAMA', tone:'buy', desc:'MAMA positional buy'},
+    {value:'ats-buy', label:'ATS Buy', chip:'ATS', tone:'buy', desc:'Advanced Trailstop buy'},
+    {value:'k4-buy', label:'K4 Buy', chip:'K4', tone:'buy', desc:'Khung4/Tplus buy'},
+  ]},
+];
 let searchQuery = '';
 let LATEST = null, HISTORY = null, COMMENTARY = null;
 let SIGNALS = null, ENSEMBLE = null, MOMENTUM = null, MOMENTUM_BT = null, MAMA_BT = null, ATS_BT = null, LUC_MACH = null, KHUNG4_TPLUS = null, MAMA_POSITIONAL = null, ADVANCED_TRAILSTOP = null;
@@ -434,27 +478,17 @@ function render(){
     <div class="panel">
       <h2>Stock Radar <span style="font-size:10px;font-weight:400;color:var(--faint);text-transform:none;">(gom theo mã${activeSignalDate ? ' · '+activeSignalDate : ''})</span></h2>
       <div class="filter-bar">
-        <select id="filterSelect" onchange="activeFilter=this.value;renderSignalTable()">
-          <option value="all">⚡ Tất cả</option>
-          <option value="multi-system">⭐ Từ 2 hệ trở lên</option>
-          <option value="buy">✅ Buy</option>
-          <option value="strong">🟢 Strong</option>
-          <option value="watch">🟡 Watch</option>
-          <option value="sell-warning">🔴 Sell Warning</option>
-          <option value="pre-breakout">🔵 Pre-Breakout</option>
-          <option value="ensemble-strong">🟣 Ensemble Strong</option>
-          <option value="ensemble-weak">⚪ Ensemble Weak</option>
-          <option value="luc-mach-valid">✅ Lục Mạch Buy</option>
-          <option value="luc-mach-watch">👀 Lục Mạch Watch</option>
-          <option value="mama-buy">✅ MAMA Buy</option>
-          <option value="ats-buy">✅ ATS Buy</option>
-          <option value="k4-buy">✅ K4 Buy</option>
-        </select>
+        <div class="filter-menu" id="filterMenu">
+          <button class="filter-trigger" id="filterTrigger" type="button" onclick="toggleFilterMenu(event)">
+            <span id="filterTriggerLabel">Tất cả tín hiệu</span><span class="filter-caret">▾</span>
+          </button>
+          <div class="filter-popover" id="filterPopover"></div>
+        </div>
         <select id="signalDateSelect" onchange="onSignalDateChange(this.value)" style="margin-left:6px;width:auto;min-width:100px;">
           <option value="">Hôm nay</option>
         </select>
-        <input id="searchInput" type="text" placeholder="🔍 Tìm mã..." oninput="searchQuery=this.value.toUpperCase();renderSignalTable()">
-        <button class="btn-copy" id="copyBtn" onclick="copySymbols()">📋 Copy DS</button>
+        <input id="searchInput" type="text" placeholder="Tìm mã..." oninput="searchQuery=this.value.toUpperCase();renderSignalTable()">
+        <button class="btn-copy" id="copyBtn" onclick="copySymbols()">Copy DS</button>
       </div>
       <div id="stockRadarContainer">${radarHTML}</div>
     </div>
@@ -560,19 +594,19 @@ function buildSummary(dateStr){
   }
 
   let badges = [];
-  if (strongCount) badges.push({cls:'str', label:`🟢 Strong ${strongCount}`, filter:'strong'});
-  if (watchCount) badges.push({cls:'wat', label:`🟡 Watch ${watchCount}`, filter:'watch'});
-  if (preCount) badges.push({cls:'pre', label:`🔵 Pre-Breakout ${preCount}`, filter:'pre-breakout'});
+  if (strongCount) badges.push({cls:'str', label:`Strong ${strongCount}`, filter:'strong'});
+  if (watchCount) badges.push({cls:'wat', label:`Watch ${watchCount}`, filter:'watch'});
+  if (preCount) badges.push({cls:'pre', label:`Pre-Breakout ${preCount}`, filter:'pre-breakout'});
   if (ensStrong) badges.push({cls:'ens', label:`🟣 Ensemble ${ensStrong}`, filter:'ensemble-strong'});
   if (ensWeak) badges.push({cls:'ensw', label:`⚪ Ensemble ${ensWeak}`, filter:'ensemble-weak'});
   if (lmValid) badges.push({cls:'ens', label:`✅ LM Buy ${lmValid}`, filter:'luc-mach-valid'});
   if (lmWatch) badges.push({cls:'wat', label:`👀 LM Watch ${lmWatch}`, filter:'luc-mach-watch'});
   if (lmSell) badges.push({cls:'ensw', label:`🔴 LM Sell ${lmSell}`, filter:'sell-warning'});
-  if (mamaBuy) badges.push({cls:'str', label:`✅ MAMA Buy ${mamaBuy}`, filter:'mama-buy'});
+  if (mamaBuy) badges.push({cls:'str', label:`MAMA Buy ${mamaBuy}`, filter:'mama-buy'});
   if (mamaSell) badges.push({cls:'ensw', label:`🔴 MAMA Sell ${mamaSell}`, filter:'sell-warning'});
-  if (atsBuy) badges.push({cls:'str', label:`✅ ATS Buy ${atsBuy}`, filter:'ats-buy'});
+  if (atsBuy) badges.push({cls:'str', label:`ATS Buy ${atsBuy}`, filter:'ats-buy'});
   if (atsSell) badges.push({cls:'ensw', label:`🔴 ATS Sell ${atsSell}`, filter:'sell-warning'});
-  if (k4Buy) badges.push({cls:'str', label:`✅ K4 Buy ${k4Buy}`, filter:'k4-buy'});
+  if (k4Buy) badges.push({cls:'str', label:`K4 Buy ${k4Buy}`, filter:'k4-buy'});
   if (k4Sell) badges.push({cls:'ensw', label:`🔴 K4 Sell ${k4Sell}`, filter:'sell-warning'});
 
   const buySignals = strongCount + preCount + ensStrong + ensWeak + lmValid + mamaBuy + atsBuy + k4Buy;
@@ -1031,7 +1065,55 @@ function applyFilters(rows, filter, query){
   });
 }
 
+function filterLabel(value){
+  for (const group of FILTER_GROUPS) {
+    const found = group.items.find(item => item.value === value);
+    if (found) return found.label;
+  }
+  return 'Tất cả tín hiệu';
+}
+
+function buildFilterPopover(){
+  const pop = document.getElementById('filterPopover');
+  const triggerLabel = document.getElementById('filterTriggerLabel');
+  if (!pop || !triggerLabel) return;
+  triggerLabel.textContent = filterLabel(activeFilter);
+  pop.innerHTML = FILTER_GROUPS.map(group => `
+    <div class="filter-group">
+      <div class="filter-group-title">${group.title}</div>
+      ${group.items.map(item => `
+        <button type="button" class="filter-option ${item.value === activeFilter ? 'active' : ''}" onclick="selectFilter('${item.value}')">
+          <span class="filter-option-main"><span class="filter-chip ${item.tone}">${item.chip}</span><span class="filter-label">${item.label}</span></span>
+        </button>`).join('')}
+    </div>`).join('');
+}
+
+function toggleFilterMenu(event){
+  event.stopPropagation();
+  buildFilterPopover();
+  const pop = document.getElementById('filterPopover');
+  const trigger = document.getElementById('filterTrigger');
+  if (!pop || !trigger) return;
+  const open = !pop.classList.contains('open');
+  pop.classList.toggle('open', open);
+  trigger.classList.toggle('open', open);
+}
+
+function closeFilterMenu(){
+  document.getElementById('filterPopover')?.classList.remove('open');
+  document.getElementById('filterTrigger')?.classList.remove('open');
+}
+
+function selectFilter(value){
+  activeFilter = value;
+  closeFilterMenu();
+  renderSignalTable();
+}
+
+document.addEventListener('click', closeFilterMenu);
+
 function renderSignalTable(){
+  buildFilterPopover();
   const radar = document.getElementById('stockRadarContainer');
   if (radar) radar.innerHTML = buildStockRadar(activeSignalDate);
   const container = document.getElementById('signalTableContainer');
