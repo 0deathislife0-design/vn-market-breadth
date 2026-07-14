@@ -1,35 +1,39 @@
 {
-  "generated_at": "2026-07-13T23:59:15.021939",
+  "generated_at": "2026-07-14T15:19:49.468506",
   "session": "close",
   "markets": {
     "HOSE": {
       "exchange": "HOSE",
-      "date": "13/07/2026",
-      "total_symbols": 361,
-      "advances": 50,
-      "declines": 263,
-      "unchanged": 48,
-      "advances_pct": 13.9,
-      "declines_pct": 72.9,
-      "unchanged_pct": 13.3,
-      "ad_ratio": 0.19,
-      "pct_above_ma20": 16.4,
-      "pct_above_ma50": 26.6,
-      "pct_above_ma200": 21.1,
-      "above_ma20_count": 21,
-      "above_ma50_count": 34,
-      "above_ma200_count": 27,
-      "ma_total_symbols": 128,
+      "date": "14/07/2026",
+      "total_symbols": 345,
+      "advances": 185,
+      "declines": 106,
+      "unchanged": 54,
+      "advances_pct": 53.6,
+      "declines_pct": 30.7,
+      "unchanged_pct": 15.7,
+      "ad_ratio": 1.75,
+      "pct_above_ma20": 21.7,
+      "pct_above_ma50": 29.5,
+      "pct_above_ma200": 24.8,
+      "above_ma20_count": 28,
+      "above_ma50_count": 38,
+      "above_ma200_count": 32,
+      "ma_total_symbols": 129,
       "above_ma20_symbols": [
+        "ABS",
         "ACB",
         "ASM",
         "BSR",
         "CSM",
         "CTS",
+        "DCL",
         "DIG",
         "DPM",
+        "DSE",
+        "GAS",
+        "GMD",
         "HDB",
-        "HHP",
         "HSL",
         "HVN",
         "KDC",
@@ -37,17 +41,22 @@
         "MCH",
         "MSB",
         "NAB",
+        "ORS",
         "SCR",
+        "SSB",
         "TNI",
         "TTA",
         "TVS",
-        "VIC"
+        "VIC",
+        "VPI"
       ],
       "above_ma50_symbols": [
         "AAA",
+        "ABS",
         "ACB",
         "ASM",
         "BAF",
+        "BSR",
         "CSM",
         "CTS",
         "DSE",
@@ -60,12 +69,14 @@
         "HVN",
         "KDC",
         "LPB",
+        "MCH",
         "MSB",
         "NAB",
         "OCB",
         "ORS",
         "POW",
         "PVP",
+        "SAB",
         "SBT",
         "SSB",
         "STB",
@@ -80,223 +91,87 @@
         "VPI"
       ],
       "above_ma200_symbols": [
+        "ABS",
         "ACB",
         "BAF",
         "BSR",
         "CSM",
+        "CTS",
+        "GAS",
         "GMD",
         "HCM",
         "HDB",
         "HHP",
         "HSL",
         "LPB",
+        "MCH",
         "MSB",
         "NAB",
         "NAF",
         "OCB",
         "PET",
         "POW",
-        "PVD",
         "PVP",
         "PVT",
+        "SAB",
         "SSB",
         "STB",
         "TNI",
         "TTA",
+        "TVS",
         "VHM",
         "VIC",
         "VJC",
         "VPI"
       ],
       "newly_above_ma20": [
-        "DIG"
-      ],
-      "newly_below_ma20": [
-        "AGR",
-        "BAF",
-        "BSI",
         "DCL",
         "DSE",
-        "FTS",
-        "HCM",
-        "HPX",
-        "LPB",
-        "OCB",
+        "GAS",
+        "GMD",
         "ORS",
-        "PVD",
         "SSB",
-        "STB",
-        "VCI",
-        "VDS",
-        "VND",
-        "VPB",
         "VPI"
       ],
+      "newly_below_ma20": [
+        "HHP"
+      ],
       "newly_above_ma50": [
-        "GMD"
+        "BSR",
+        "MCH",
+        "SAB"
       ],
-      "newly_below_ma50": [
-        "AGR",
-        "BID",
-        "BSI",
-        "PVD",
-        "SAB",
-        "VCB",
-        "VDS",
-        "VPB"
-      ],
+      "newly_below_ma50": [],
       "volume_breakout_symbols": [
+        "ABS",
+        "ACB",
         "ASM",
-        "CSM",
-        "CTS",
+        "BSR",
         "DIG",
-        "HDB",
+        "DPM",
+        "GAS",
+        "GMD",
+        "HSL",
+        "HVN",
+        "KHG",
         "SCR",
         "TNI"
       ],
-      "volume_breakout_count": 7,
+      "volume_breakout_count": 13,
       "ad_distribution": [
         {
           "bucket": "<=-7%",
-          "count": 6,
+          "count": 0,
           "side": "down"
         },
         {
           "bucket": "-7~-5%",
-          "count": 15,
-          "side": "down"
-        },
-        {
-          "bucket": "-5~-3%",
-          "count": 28,
-          "side": "down"
-        },
-        {
-          "bucket": "-3~-1%",
-          "count": 41,
-          "side": "down"
-        },
-        {
-          "bucket": "-1~0%",
-          "count": 19,
-          "side": "down"
-        },
-        {
-          "bucket": "0%",
-          "count": 5,
-          "side": "neutral"
-        },
-        {
-          "bucket": "0~1%",
-          "count": 9,
-          "side": "up"
-        },
-        {
-          "bucket": "1~3%",
-          "count": 4,
-          "side": "up"
-        },
-        {
-          "bucket": "3~5%",
-          "count": 1,
-          "side": "up"
-        },
-        {
-          "bucket": "5~7%",
-          "count": 0,
-          "side": "up"
-        },
-        {
-          "bucket": ">=7%",
-          "count": 0,
-          "side": "up"
-        }
-      ],
-      "ad_distribution_total": 128
-    },
-    "HNX": {
-      "exchange": "HNX",
-      "date": "13/07/2026",
-      "total_symbols": 187,
-      "advances": 30,
-      "declines": 104,
-      "unchanged": 53,
-      "advances_pct": 16.0,
-      "declines_pct": 55.6,
-      "unchanged_pct": 28.3,
-      "ad_ratio": 0.29,
-      "pct_above_ma20": 24.0,
-      "pct_above_ma50": 40.0,
-      "pct_above_ma200": 28.0,
-      "above_ma20_count": 6,
-      "above_ma50_count": 10,
-      "above_ma200_count": 7,
-      "ma_total_symbols": 25,
-      "above_ma20_symbols": [
-        "BVS",
-        "CVN",
-        "DDG",
-        "MBS",
-        "MST",
-        "SVN"
-      ],
-      "above_ma50_symbols": [
-        "APS",
-        "BVS",
-        "CVN",
-        "IDJ",
-        "MBS",
-        "MST",
-        "NVB",
-        "SVN",
-        "TVC",
-        "VTZ"
-      ],
-      "above_ma200_symbols": [
-        "AAV",
-        "BVS",
-        "MST",
-        "NRC",
-        "PVS",
-        "SVN",
-        "VTZ"
-      ],
-      "newly_above_ma20": [],
-      "newly_below_ma20": [
-        "AAV",
-        "APS",
-        "NVB",
-        "SHS",
-        "VFS",
-        "VTZ"
-      ],
-      "newly_above_ma50": [],
-      "newly_below_ma50": [
-        "NRC",
-        "SHS"
-      ],
-      "volume_breakout_symbols": [
-        "BVS",
-        "CVN",
-        "MBS",
-        "MST",
-        "SVN"
-      ],
-      "volume_breakout_count": 5,
-      "ad_distribution": [
-        {
-          "bucket": "<=-7%",
           "count": 5,
           "side": "down"
         },
         {
-          "bucket": "-7~-5%",
-          "count": 2,
-          "side": "down"
-        },
-        {
           "bucket": "-5~-3%",
-          "count": 2,
+          "count": 0,
           "side": "down"
         },
         {
@@ -306,61 +181,190 @@
         },
         {
           "bucket": "-1~0%",
-          "count": 1,
+          "count": 19,
           "side": "down"
         },
         {
           "bucket": "0%",
-          "count": 5,
+          "count": 12,
           "side": "neutral"
         },
         {
           "bucket": "0~1%",
-          "count": 0,
+          "count": 33,
           "side": "up"
         },
         {
           "bucket": "1~3%",
-          "count": 0,
+          "count": 37,
           "side": "up"
         },
         {
           "bucket": "3~5%",
-          "count": 1,
+          "count": 11,
           "side": "up"
         },
         {
           "bucket": "5~7%",
-          "count": 0,
+          "count": 4,
           "side": "up"
         },
         {
           "bucket": ">=7%",
-          "count": 1,
+          "count": 0,
           "side": "up"
         }
       ],
-      "ad_distribution_total": 25
+      "ad_distribution_total": 129
+    },
+    "HNX": {
+      "exchange": "HNX",
+      "date": "14/07/2026",
+      "total_symbols": 173,
+      "advances": 78,
+      "declines": 32,
+      "unchanged": 63,
+      "advances_pct": 45.1,
+      "declines_pct": 18.5,
+      "unchanged_pct": 36.4,
+      "ad_ratio": 2.44,
+      "pct_above_ma20": 34.6,
+      "pct_above_ma50": 46.2,
+      "pct_above_ma200": 30.8,
+      "above_ma20_count": 9,
+      "above_ma50_count": 12,
+      "above_ma200_count": 8,
+      "ma_total_symbols": 26,
+      "above_ma20_symbols": [
+        "BVS",
+        "CVN",
+        "DDG",
+        "MBS",
+        "MST",
+        "PSI",
+        "PVC",
+        "PVS",
+        "SVN"
+      ],
+      "above_ma50_symbols": [
+        "APS",
+        "BVS",
+        "CVN",
+        "IDJ",
+        "MBS",
+        "MST",
+        "NVB",
+        "PSI",
+        "PVS",
+        "SVN",
+        "TVC",
+        "VTZ"
+      ],
+      "above_ma200_symbols": [
+        "AAV",
+        "BVS",
+        "MST",
+        "PSI",
+        "PVC",
+        "PVS",
+        "SVN",
+        "VTZ"
+      ],
+      "newly_above_ma20": [
+        "PVC",
+        "PVS"
+      ],
+      "newly_below_ma20": [],
+      "newly_above_ma50": [
+        "PVS"
+      ],
+      "newly_below_ma50": [],
+      "volume_breakout_symbols": [
+        "MST",
+        "PVC",
+        "PVS",
+        "SVN"
+      ],
+      "volume_breakout_count": 4,
+      "ad_distribution": [
+        {
+          "bucket": "<=-7%",
+          "count": 1,
+          "side": "down"
+        },
+        {
+          "bucket": "-7~-5%",
+          "count": 0,
+          "side": "down"
+        },
+        {
+          "bucket": "-5~-3%",
+          "count": 3,
+          "side": "down"
+        },
+        {
+          "bucket": "-3~-1%",
+          "count": 1,
+          "side": "down"
+        },
+        {
+          "bucket": "-1~0%",
+          "count": 0,
+          "side": "down"
+        },
+        {
+          "bucket": "0%",
+          "count": 8,
+          "side": "neutral"
+        },
+        {
+          "bucket": "0~1%",
+          "count": 5,
+          "side": "up"
+        },
+        {
+          "bucket": "1~3%",
+          "count": 4,
+          "side": "up"
+        },
+        {
+          "bucket": "3~5%",
+          "count": 3,
+          "side": "up"
+        },
+        {
+          "bucket": "5~7%",
+          "count": 1,
+          "side": "up"
+        },
+        {
+          "bucket": ">=7%",
+          "count": 0,
+          "side": "up"
+        }
+      ],
+      "ad_distribution_total": 26
     },
     "ALL": {
       "exchange": "ALL",
-      "date": "13/07/2026",
-      "total_symbols": 548,
-      "advances": 80,
-      "declines": 367,
-      "unchanged": 101,
-      "advances_pct": 14.6,
-      "declines_pct": 67.0,
-      "unchanged_pct": 18.4,
-      "ad_ratio": 0.22,
-      "pct_above_ma20": 17.6,
-      "pct_above_ma50": 28.8,
-      "pct_above_ma200": 22.2,
-      "above_ma20_count": 27,
-      "above_ma50_count": 44,
-      "above_ma200_count": 34,
-      "ma_total_symbols": 153,
+      "date": "14/07/2026",
+      "total_symbols": 518,
+      "advances": 263,
+      "declines": 138,
+      "unchanged": 117,
+      "advances_pct": 50.8,
+      "declines_pct": 26.6,
+      "unchanged_pct": 22.6,
+      "ad_ratio": 1.91,
+      "pct_above_ma20": 23.9,
+      "pct_above_ma50": 32.3,
+      "pct_above_ma200": 25.8,
+      "above_ma20_count": 37,
+      "above_ma50_count": 50,
+      "above_ma200_count": 40,
+      "ma_total_symbols": 155,
       "above_ma20_symbols": [
+        "ABS",
         "ACB",
         "ASM",
         "BSR",
@@ -368,11 +372,14 @@
         "CSM",
         "CTS",
         "CVN",
+        "DCL",
         "DDG",
         "DIG",
         "DPM",
+        "DSE",
+        "GAS",
+        "GMD",
         "HDB",
-        "HHP",
         "HSL",
         "HVN",
         "KDC",
@@ -382,19 +389,27 @@
         "MSB",
         "MST",
         "NAB",
+        "ORS",
+        "PSI",
+        "PVC",
+        "PVS",
         "SCR",
+        "SSB",
         "SVN",
         "TNI",
         "TTA",
         "TVS",
-        "VIC"
+        "VIC",
+        "VPI"
       ],
       "above_ma50_symbols": [
         "AAA",
+        "ABS",
         "ACB",
         "APS",
         "ASM",
         "BAF",
+        "BSR",
         "BVS",
         "CSM",
         "CTS",
@@ -411,6 +426,7 @@
         "KDC",
         "LPB",
         "MBS",
+        "MCH",
         "MSB",
         "MST",
         "NAB",
@@ -418,7 +434,10 @@
         "OCB",
         "ORS",
         "POW",
+        "PSI",
         "PVP",
+        "PVS",
+        "SAB",
         "SBT",
         "SSB",
         "STB",
@@ -437,34 +456,40 @@
       ],
       "above_ma200_symbols": [
         "AAV",
+        "ABS",
         "ACB",
         "BAF",
         "BSR",
         "BVS",
         "CSM",
+        "CTS",
+        "GAS",
         "GMD",
         "HCM",
         "HDB",
         "HHP",
         "HSL",
         "LPB",
+        "MCH",
         "MSB",
         "MST",
         "NAB",
         "NAF",
-        "NRC",
         "OCB",
         "PET",
         "POW",
-        "PVD",
+        "PSI",
+        "PVC",
         "PVP",
         "PVS",
         "PVT",
+        "SAB",
         "SSB",
         "STB",
         "SVN",
         "TNI",
         "TTA",
+        "TVS",
         "VHM",
         "VIC",
         "VJC",
@@ -472,65 +497,46 @@
         "VTZ"
       ],
       "newly_above_ma20": [
-        "DIG"
-      ],
-      "newly_below_ma20": [
-        "AAV",
-        "AGR",
-        "APS",
-        "BAF",
-        "BSI",
         "DCL",
         "DSE",
-        "FTS",
-        "HCM",
-        "HPX",
-        "LPB",
-        "NVB",
-        "OCB",
+        "GAS",
+        "GMD",
         "ORS",
-        "PVD",
-        "SHS",
+        "PVC",
+        "PVS",
         "SSB",
-        "STB",
-        "VCI",
-        "VDS",
-        "VFS",
-        "VND",
-        "VPB",
-        "VPI",
-        "VTZ"
+        "VPI"
+      ],
+      "newly_below_ma20": [
+        "HHP"
       ],
       "newly_above_ma50": [
-        "GMD"
+        "BSR",
+        "MCH",
+        "PVS",
+        "SAB"
       ],
-      "newly_below_ma50": [
-        "AGR",
-        "BID",
-        "BSI",
-        "NRC",
-        "PVD",
-        "SAB",
-        "SHS",
-        "VCB",
-        "VDS",
-        "VPB"
-      ],
+      "newly_below_ma50": [],
       "volume_breakout_symbols": [
+        "ABS",
+        "ACB",
         "ASM",
-        "BVS",
-        "CSM",
-        "CTS",
-        "CVN",
+        "BSR",
         "DIG",
-        "HDB",
-        "MBS",
+        "DPM",
+        "GAS",
+        "GMD",
+        "HSL",
+        "HVN",
+        "KHG",
         "MST",
+        "PVC",
+        "PVS",
         "SCR",
         "SVN",
         "TNI"
       ],
-      "volume_breakout_count": 12
+      "volume_breakout_count": 17
     }
   }
 }
