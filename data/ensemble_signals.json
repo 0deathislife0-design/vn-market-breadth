@@ -1,14 +1,14 @@
 {
-  "generated_at": "2026-07-16T15:17:13.690081+00:00",
+  "generated_at": "2026-07-16T20:18:48.821469+00:00",
   "date": "16/07/2026",
-  "total_symbols_analyzed": 153,
+  "total_symbols_analyzed": 154,
   "total_signals": 6,
   "strong_buy": 1,
   "weak_buy": 5,
   "strong": [
     {
       "symbol": "GMD",
-      "total_score": 0.818,
+      "total_score": 0.819,
       "ma_crossover": 1,
       "pullback": 0,
       "breakout": 1,
@@ -26,7 +26,7 @@
   "weak": [
     {
       "symbol": "ACB",
-      "total_score": 0.572,
+      "total_score": 0.573,
       "ma_crossover": 1,
       "pullback": 0,
       "breakout": 1,
@@ -42,7 +42,7 @@
     },
     {
       "symbol": "MST",
-      "total_score": 0.53,
+      "total_score": 0.532,
       "ma_crossover": 1,
       "pullback": 0,
       "breakout": 0,
@@ -50,15 +50,15 @@
       "ma10": 9540.0,
       "ma50": 8754.0,
       "rsi14": 77.8,
-      "vol_ratio": 0.0,
+      "vol_ratio": 1.61,
       "roc10": 14.61,
       "roc20": 12.09,
       "last_price": 10200.0,
-      "last_volume": 0.0
+      "last_volume": 2101900.0
     },
     {
       "symbol": "SVN",
-      "total_score": 0.53,
+      "total_score": 0.532,
       "ma_crossover": 1,
       "pullback": 0,
       "breakout": 0,
@@ -66,15 +66,15 @@
       "ma10": 2740.0,
       "ma50": 2354.0,
       "rsi14": 56.6,
-      "vol_ratio": 0.0,
+      "vol_ratio": 1.22,
       "roc10": 3.7,
       "roc20": -3.45,
       "last_price": 2800.0,
-      "last_volume": 0.0
+      "last_volume": 589900.0
     },
     {
       "symbol": "HCM",
-      "total_score": 0.428,
+      "total_score": 0.427,
       "ma_crossover": 0,
       "pullback": 1,
       "breakout": 0,
@@ -90,7 +90,7 @@
     },
     {
       "symbol": "NAF",
-      "total_score": 0.428,
+      "total_score": 0.427,
       "ma_crossover": 0,
       "pullback": 1,
       "breakout": 0,
@@ -108,7 +108,7 @@
   "all_signals": [
     {
       "symbol": "GMD",
-      "total_score": 0.818,
+      "total_score": 0.819,
       "ma_crossover": 1,
       "pullback": 0,
       "breakout": 1,
@@ -124,7 +124,7 @@
     },
     {
       "symbol": "ACB",
-      "total_score": 0.572,
+      "total_score": 0.573,
       "ma_crossover": 1,
       "pullback": 0,
       "breakout": 1,
@@ -140,7 +140,7 @@
     },
     {
       "symbol": "MST",
-      "total_score": 0.53,
+      "total_score": 0.532,
       "ma_crossover": 1,
       "pullback": 0,
       "breakout": 0,
@@ -148,15 +148,15 @@
       "ma10": 9540.0,
       "ma50": 8754.0,
       "rsi14": 77.8,
-      "vol_ratio": 0.0,
+      "vol_ratio": 1.61,
       "roc10": 14.61,
       "roc20": 12.09,
       "last_price": 10200.0,
-      "last_volume": 0.0
+      "last_volume": 2101900.0
     },
     {
       "symbol": "SVN",
-      "total_score": 0.53,
+      "total_score": 0.532,
       "ma_crossover": 1,
       "pullback": 0,
       "breakout": 0,
@@ -164,15 +164,15 @@
       "ma10": 2740.0,
       "ma50": 2354.0,
       "rsi14": 56.6,
-      "vol_ratio": 0.0,
+      "vol_ratio": 1.22,
       "roc10": 3.7,
       "roc20": -3.45,
       "last_price": 2800.0,
-      "last_volume": 0.0
+      "last_volume": 589900.0
     },
     {
       "symbol": "HCM",
-      "total_score": 0.428,
+      "total_score": 0.427,
       "ma_crossover": 0,
       "pullback": 1,
       "breakout": 0,
@@ -188,7 +188,7 @@
     },
     {
       "symbol": "NAF",
-      "total_score": 0.428,
+      "total_score": 0.427,
       "ma_crossover": 0,
       "pullback": 1,
       "breakout": 0,

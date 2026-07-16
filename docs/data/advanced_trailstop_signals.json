@@ -1,15 +1,15 @@
 {
   "mode": "diep_advanced_trailstop",
-  "generated_at": "2026-07-16T15:18:12.519505+00:00",
+  "generated_at": "2026-07-16T20:20:09.491090+00:00",
   "date": "16/07/2026",
   "mult": 2.0,
   "atr_period": 7,
   "min_volume": 20000,
   "min_history": 30,
   "total_symbols_analyzed": 648,
-  "total_signals": 6,
-  "buy_count": 4,
-  "sell_count": 2,
+  "total_signals": 9,
+  "buy_count": 6,
+  "sell_count": 3,
   "skipped_missing_ohlc": 0,
   "buy": [
     {
@@ -107,6 +107,54 @@
       "strategies": [
         "advanced_trailstop_buy"
       ]
+    },
+    {
+      "symbol": "SDA",
+      "status": "BUY",
+      "signal_type": "advanced_trailstop_buy",
+      "score": 100,
+      "ats_buy": true,
+      "ats_sell": false,
+      "ats_cover": true,
+      "ats_short": false,
+      "ats_long": true,
+      "ats_shrt": false,
+      "bs": 2022.98,
+      "atr": 193.56,
+      "atrvalue": 387.12,
+      "buy_price": 2100.0,
+      "sell_price": null,
+      "last_buy_price": 2100.0,
+      "last_sell_price": 2000.0,
+      "last_price": 2100.0,
+      "last_volume": 57400.0,
+      "strategies": [
+        "advanced_trailstop_buy"
+      ]
+    },
+    {
+      "symbol": "WSS",
+      "status": "BUY",
+      "signal_type": "advanced_trailstop_buy",
+      "score": 100,
+      "ats_buy": true,
+      "ats_sell": false,
+      "ats_cover": true,
+      "ats_short": false,
+      "ats_long": true,
+      "ats_shrt": false,
+      "bs": 6477.76,
+      "atr": 294.26,
+      "atrvalue": 588.52,
+      "buy_price": 6500.0,
+      "sell_price": null,
+      "last_buy_price": 6500.0,
+      "last_sell_price": 6400.0,
+      "last_price": 6500.0,
+      "last_volume": 44200.0,
+      "strategies": [
+        "advanced_trailstop_buy"
+      ]
     }
   ],
   "sell": [
@@ -130,6 +178,30 @@
       "last_sell_price": 3000.0,
       "last_price": 3000.0,
       "last_volume": 641200.0,
+      "strategies": [
+        "advanced_trailstop_sell"
+      ]
+    },
+    {
+      "symbol": "VIG",
+      "status": "SELL",
+      "signal_type": "advanced_trailstop_sell",
+      "score": 100,
+      "ats_buy": false,
+      "ats_sell": true,
+      "ats_cover": false,
+      "ats_short": true,
+      "ats_long": false,
+      "ats_shrt": true,
+      "bs": 4822.3,
+      "atr": 211.15,
+      "atrvalue": 422.3,
+      "buy_price": null,
+      "sell_price": 4400.0,
+      "last_buy_price": 4700.0,
+      "last_sell_price": 4400.0,
+      "last_price": 4400.0,
+      "last_volume": 144100.0,
       "strategies": [
         "advanced_trailstop_sell"
       ]
@@ -257,6 +329,54 @@
       ]
     },
     {
+      "symbol": "SDA",
+      "status": "BUY",
+      "signal_type": "advanced_trailstop_buy",
+      "score": 100,
+      "ats_buy": true,
+      "ats_sell": false,
+      "ats_cover": true,
+      "ats_short": false,
+      "ats_long": true,
+      "ats_shrt": false,
+      "bs": 2022.98,
+      "atr": 193.56,
+      "atrvalue": 387.12,
+      "buy_price": 2100.0,
+      "sell_price": null,
+      "last_buy_price": 2100.0,
+      "last_sell_price": 2000.0,
+      "last_price": 2100.0,
+      "last_volume": 57400.0,
+      "strategies": [
+        "advanced_trailstop_buy"
+      ]
+    },
+    {
+      "symbol": "WSS",
+      "status": "BUY",
+      "signal_type": "advanced_trailstop_buy",
+      "score": 100,
+      "ats_buy": true,
+      "ats_sell": false,
+      "ats_cover": true,
+      "ats_short": false,
+      "ats_long": true,
+      "ats_shrt": false,
+      "bs": 6477.76,
+      "atr": 294.26,
+      "atrvalue": 588.52,
+      "buy_price": 6500.0,
+      "sell_price": null,
+      "last_buy_price": 6500.0,
+      "last_sell_price": 6400.0,
+      "last_price": 6500.0,
+      "last_volume": 44200.0,
+      "strategies": [
+        "advanced_trailstop_buy"
+      ]
+    },
+    {
       "symbol": "ABS",
       "status": "SELL",
       "signal_type": "advanced_trailstop_sell",
@@ -276,6 +396,30 @@
       "last_sell_price": 3000.0,
       "last_price": 3000.0,
       "last_volume": 641200.0,
+      "strategies": [
+        "advanced_trailstop_sell"
+      ]
+    },
+    {
+      "symbol": "VIG",
+      "status": "SELL",
+      "signal_type": "advanced_trailstop_sell",
+      "score": 100,
+      "ats_buy": false,
+      "ats_sell": true,
+      "ats_cover": false,
+      "ats_short": true,
+      "ats_long": false,
+      "ats_shrt": true,
+      "bs": 4822.3,
+      "atr": 211.15,
+      "atrvalue": 422.3,
+      "buy_price": null,
+      "sell_price": 4400.0,
+      "last_buy_price": 4700.0,
+      "last_sell_price": 4400.0,
+      "last_price": 4400.0,
+      "last_volume": 144100.0,
       "strategies": [
         "advanced_trailstop_sell"
       ]
@@ -380,10 +524,21 @@
         "Volume"
       ],
       "has_ohlcv": true,
-      "reason": "volume_filter",
+      "reason": "no_cross_signal",
       "last_date": "16/07/2026",
       "last_close": 6800.0,
-      "last_volume": 0.0
+      "last_volume": 407300.0,
+      "bs": 7464.345697057756,
+      "atr": 297.1065825926451,
+      "atrvalue": 594.2131651852902,
+      "up_condition": false,
+      "down_condition": false,
+      "buy": false,
+      "sell": false,
+      "long": false,
+      "shrt": true,
+      "last_buy_price": 9000.0,
+      "last_sell_price": 8000.0
     },
     {
       "symbol": "ABR",
@@ -693,7 +848,7 @@
       "reason": "volume_filter",
       "last_date": "16/07/2026",
       "last_close": 13800.0,
-      "last_volume": 0.0
+      "last_volume": 100.0
     },
     {
       "symbol": "AMC",
@@ -741,10 +896,21 @@
         "Volume"
       ],
       "has_ohlcv": true,
-      "reason": "volume_filter",
+      "reason": "no_cross_signal",
       "last_date": "16/07/2026",
       "last_close": 1400.0,
-      "last_volume": 0.0
+      "last_volume": 248600.0,
+      "bs": 1649.1058414334125,
+      "atr": 133.50310355834716,
+      "atrvalue": 267.0062071166943,
+      "up_condition": false,
+      "down_condition": false,
+      "buy": false,
+      "sell": false,
+      "long": false,
+      "shrt": true,
+      "last_buy_price": 1800.0,
+      "last_sell_price": 1900.0
     },
     {
       "symbol": "ANV",
@@ -842,10 +1008,21 @@
         "Volume"
       ],
       "has_ohlcv": true,
-      "reason": "volume_filter",
+      "reason": "no_cross_signal",
       "last_date": "16/07/2026",
       "last_close": 6100.0,
-      "last_volume": 0.0
+      "last_volume": 196100.0,
+      "bs": 5748.383848394671,
+      "atr": 239.81505652108495,
+      "atrvalue": 479.6301130421699,
+      "up_condition": false,
+      "down_condition": false,
+      "buy": false,
+      "sell": false,
+      "long": true,
+      "shrt": false,
+      "last_buy_price": 6400.0,
+      "last_sell_price": 6400.0
     },
     {
       "symbol": "APS",
@@ -859,10 +1036,21 @@
         "Volume"
       ],
       "has_ohlcv": true,
-      "reason": "volume_filter",
+      "reason": "no_cross_signal",
       "last_date": "16/07/2026",
       "last_close": 6600.0,
-      "last_volume": 0.0
+      "last_volume": 590000.0,
+      "bs": 6521.683678783444,
+      "atr": 450.65277588736103,
+      "atrvalue": 901.3055517747221,
+      "up_condition": false,
+      "down_condition": false,
+      "buy": false,
+      "sell": false,
+      "long": true,
+      "shrt": false,
+      "last_buy_price": 7200.0,
+      "last_sell_price": 6200.0
     },
     {
       "symbol": "ARM",
@@ -1014,7 +1202,7 @@
       "reason": "volume_filter",
       "last_date": "16/07/2026",
       "last_close": 11200.0,
-      "last_volume": 0.0
+      "last_volume": 12200.0
     },
     {
       "symbol": "BAF",
@@ -1107,10 +1295,21 @@
         "Volume"
       ],
       "has_ohlcv": true,
-      "reason": "volume_filter",
+      "reason": "no_cross_signal",
       "last_date": "16/07/2026",
       "last_close": 6700.0,
-      "last_volume": 0.0
+      "last_volume": 43400.0,
+      "bs": 6986.950135346654,
+      "atr": 158.47147829060765,
+      "atrvalue": 316.9429565812153,
+      "up_condition": false,
+      "down_condition": false,
+      "buy": false,
+      "sell": false,
+      "long": false,
+      "shrt": true,
+      "last_buy_price": 8200.0,
+      "last_sell_price": 7600.0
     },
     {
       "symbol": "BCE",
@@ -1346,7 +1545,7 @@
       "reason": "volume_filter",
       "last_date": "16/07/2026",
       "last_close": 18000.0,
-      "last_volume": 0.0
+      "last_volume": 8700.0
     },
     {
       "symbol": "BKG",
@@ -1616,7 +1815,7 @@
       "reason": "volume_filter",
       "last_date": "16/07/2026",
       "last_close": 4900.0,
-      "last_volume": 0.0
+      "last_volume": 900.0
     },
     {
       "symbol": "BTT",
@@ -1692,10 +1891,21 @@
         "Volume"
       ],
       "has_ohlcv": true,
-      "reason": "volume_filter",
+      "reason": "no_cross_signal",
       "last_date": "16/07/2026",
       "last_close": 33400.0,
-      "last_volume": 0.0
+      "last_volume": 2265400.0,
+      "bs": 32358.338184513446,
+      "atr": 1975.8849359677547,
+      "atrvalue": 3951.7698719355094,
+      "up_condition": false,
+      "down_condition": false,
+      "buy": false,
+      "sell": false,
+      "long": true,
+      "shrt": false,
+      "last_buy_price": 27400.0,
+      "last_sell_price": 27500.0
     },
     {
       "symbol": "BWE",
@@ -1768,7 +1978,7 @@
       "reason": "volume_filter",
       "last_date": "16/07/2026",
       "last_close": 5800.0,
-      "last_volume": 0.0
+      "last_volume": 2300.0
     },
     {
       "symbol": "CAN",
@@ -1785,7 +1995,7 @@
       "reason": "volume_filter",
       "last_date": "16/07/2026",
       "last_close": 23100.0,
-      "last_volume": 0.0
+      "last_volume": 100.0
     },
     {
       "symbol": "CAP",
@@ -1802,7 +2012,7 @@
       "reason": "volume_filter",
       "last_date": "16/07/2026",
       "last_close": 47900.0,
-      "last_volume": 0.0
+      "last_volume": 13700.0
     },
     {
       "symbol": "CAR",
@@ -1887,7 +2097,7 @@
       "reason": "volume_filter",
       "last_date": "16/07/2026",
       "last_close": 14000.0,
-      "last_volume": 0.0
+      "last_volume": 3600.0
     },
     {
       "symbol": "CDC",
@@ -1932,7 +2142,7 @@
       "reason": "volume_filter",
       "last_date": "16/07/2026",
       "last_close": 25500.0,
-      "last_volume": 0.0
+      "last_volume": 6600.0
     },
     {
       "symbol": "CEO",
@@ -1946,10 +2156,21 @@
         "Volume"
       ],
       "has_ohlcv": true,
-      "reason": "volume_filter",
+      "reason": "no_cross_signal",
       "last_date": "16/07/2026",
       "last_close": 13700.0,
-      "last_volume": 0.0
+      "last_volume": 6633900.0,
+      "bs": 15157.911513809802,
+      "atr": 628.9557569049016,
+      "atrvalue": 1257.9115138098032,
+      "up_condition": false,
+      "down_condition": true,
+      "buy": false,
+      "sell": false,
+      "long": false,
+      "shrt": true,
+      "last_buy_price": 29000.0,
+      "last_sell_price": 27100.0
     },
     {
       "symbol": "CET",
@@ -2000,7 +2221,7 @@
       "reason": "volume_filter",
       "last_date": "16/07/2026",
       "last_close": 9500.0,
-      "last_volume": 0.0
+      "last_volume": 11200.0
     },
     {
       "symbol": "CIG",
@@ -2113,7 +2334,7 @@
       "reason": "volume_filter",
       "last_date": "16/07/2026",
       "last_close": 20000.0,
-      "last_volume": 0.0
+      "last_volume": 3400.0
     },
     {
       "symbol": "CLL",
@@ -2181,7 +2402,7 @@
       "reason": "volume_filter",
       "last_date": "16/07/2026",
       "last_close": 9100.0,
-      "last_volume": 0.0
+      "last_volume": 4000.0
     },
     {
       "symbol": "CMG",
@@ -2223,10 +2444,21 @@
         "Volume"
       ],
       "has_ohlcv": true,
-      "reason": "volume_filter",
+      "reason": "no_cross_signal",
       "last_date": "16/07/2026",
       "last_close": 6200.0,
-      "last_volume": 0.0
+      "last_volume": 28600.0,
+      "bs": 7013.885064532942,
+      "atr": 306.94253226647095,
+      "atrvalue": 613.8850645329419,
+      "up_condition": false,
+      "down_condition": true,
+      "buy": false,
+      "sell": false,
+      "long": false,
+      "shrt": true,
+      "last_buy_price": 6500.0,
+      "last_sell_price": 6100.0
     },
     {
       "symbol": "CMV",
@@ -2395,7 +2627,7 @@
       "reason": "volume_filter",
       "last_date": "16/07/2026",
       "last_close": 11400.0,
-      "last_volume": 0.0
+      "last_volume": 14500.0
     },
     {
       "symbol": "CSM",
@@ -2440,7 +2672,7 @@
       "reason": "volume_filter",
       "last_date": "16/07/2026",
       "last_close": 10200.0,
-      "last_volume": 0.0
+      "last_volume": 10000.0
     },
     {
       "symbol": "CSV",
@@ -2611,10 +2843,21 @@
         "Volume"
       ],
       "has_ohlcv": true,
-      "reason": "volume_filter",
+      "reason": "no_cross_signal",
       "last_date": "16/07/2026",
       "last_close": 7500.0,
-      "last_volume": 0.0
+      "last_volume": 144700.0,
+      "bs": 8792.31323504056,
+      "atr": 633.9109843006137,
+      "atrvalue": 1267.8219686012274,
+      "up_condition": false,
+      "down_condition": false,
+      "buy": false,
+      "sell": false,
+      "long": false,
+      "shrt": true,
+      "last_buy_price": 8800.0,
+      "last_sell_price": 7600.0
     },
     {
       "symbol": "CTR",
@@ -2701,10 +2944,21 @@
         "Volume"
       ],
       "has_ohlcv": true,
-      "reason": "volume_filter",
+      "reason": "no_cross_signal",
       "last_date": "16/07/2026",
       "last_close": 1500.0,
-      "last_volume": 0.0
+      "last_volume": 282600.0,
+      "bs": 1338.4618782686148,
+      "atr": 186.37097162929513,
+      "atrvalue": 372.74194325859025,
+      "up_condition": false,
+      "down_condition": false,
+      "buy": false,
+      "sell": false,
+      "long": true,
+      "shrt": false,
+      "last_buy_price": 1600.0,
+      "last_sell_price": 2600.0
     },
     {
       "symbol": "CVT",
@@ -2738,7 +2992,7 @@
       "reason": "volume_filter",
       "last_date": "16/07/2026",
       "last_close": 15000.0,
-      "last_volume": 0.0
+      "last_volume": 100.0
     },
     {
       "symbol": "DAE",
@@ -2932,10 +3186,21 @@
         "Volume"
       ],
       "has_ohlcv": true,
-      "reason": "volume_filter",
+      "reason": "no_cross_signal",
       "last_date": "16/07/2026",
       "last_close": 1100.0,
-      "last_volume": 0.0
+      "last_volume": 981200.0,
+      "bs": 876.2748483051031,
+      "atr": 155.64562145805547,
+      "atrvalue": 311.29124291611095,
+      "up_condition": false,
+      "down_condition": false,
+      "buy": false,
+      "sell": false,
+      "long": true,
+      "shrt": false,
+      "last_buy_price": 1100.0,
+      "last_sell_price": 2500.0
     },
     {
       "symbol": "DGC",
@@ -3098,7 +3363,7 @@
       "reason": "volume_filter",
       "last_date": "16/07/2026",
       "last_close": 10300.0,
-      "last_volume": 0.0
+      "last_volume": 900.0
     },
     {
       "symbol": "DHT",
@@ -3115,7 +3380,7 @@
       "reason": "volume_filter",
       "last_date": "16/07/2026",
       "last_close": 62200.0,
-      "last_volume": 0.0
+      "last_volume": 6300.0
     },
     {
       "symbol": "DIG",
@@ -3160,7 +3425,7 @@
       "reason": "volume_filter",
       "last_date": "16/07/2026",
       "last_close": 7300.0,
-      "last_volume": 0.0
+      "last_volume": 1100.0
     },
     {
       "symbol": "DLG",
@@ -3500,10 +3765,21 @@
         "Volume"
       ],
       "has_ohlcv": true,
-      "reason": "volume_filter",
+      "reason": "no_cross_signal",
       "last_date": "16/07/2026",
       "last_close": 10400.0,
-      "last_volume": 0.0
+      "last_volume": 192600.0,
+      "bs": 9956.562673479031,
+      "atr": 1272.8075567257692,
+      "atrvalue": 2545.6151134515385,
+      "up_condition": false,
+      "down_condition": false,
+      "buy": false,
+      "sell": false,
+      "long": true,
+      "shrt": false,
+      "last_buy_price": 11900.0,
+      "last_sell_price": 10900.0
     },
     {
       "symbol": "DTA",
@@ -3534,10 +3810,21 @@
         "Volume"
       ],
       "has_ohlcv": true,
-      "reason": "volume_filter",
+      "reason": "no_cross_signal",
       "last_date": "16/07/2026",
       "last_close": 13700.0,
-      "last_volume": 0.0
+      "last_volume": 272100.0,
+      "bs": 14415.971002023038,
+      "atr": 372.19976961099945,
+      "atrvalue": 744.3995392219989,
+      "up_condition": false,
+      "down_condition": false,
+      "buy": false,
+      "sell": false,
+      "long": false,
+      "shrt": true,
+      "last_buy_price": 17200.0,
+      "last_sell_price": 15700.0
     },
     {
       "symbol": "DTG",
@@ -3554,7 +3841,7 @@
       "reason": "volume_filter",
       "last_date": "16/07/2026",
       "last_close": 16500.0,
-      "last_volume": 0.0
+      "last_volume": 100.0
     },
     {
       "symbol": "DTK",
@@ -3571,7 +3858,7 @@
       "reason": "volume_filter",
       "last_date": "16/07/2026",
       "last_close": 11100.0,
-      "last_volume": 0.0
+      "last_volume": 3700.0
     },
     {
       "symbol": "DTL",
@@ -3619,10 +3906,21 @@
         "Volume"
       ],
       "has_ohlcv": true,
-      "reason": "volume_filter",
+      "reason": "no_cross_signal",
       "last_date": "16/07/2026",
       "last_close": 6100.0,
-      "last_volume": 0.0
+      "last_volume": 84100.0,
+      "bs": 6487.464888955658,
+      "atr": 199.84317203268532,
+      "atrvalue": 399.68634406537063,
+      "up_condition": false,
+      "down_condition": false,
+      "buy": false,
+      "sell": false,
+      "long": false,
+      "shrt": true,
+      "last_buy_price": 6200.0,
+      "last_sell_price": 6900.0
     },
     {
       "symbol": "DVP",
@@ -3681,10 +3979,21 @@
         "Volume"
       ],
       "has_ohlcv": true,
-      "reason": "volume_filter",
+      "reason": "no_cross_signal",
       "last_date": "16/07/2026",
       "last_close": 12700.0,
-      "last_volume": 0.0
+      "last_volume": 81000.0,
+      "bs": 13557.744051550359,
+      "atr": 328.87202577517934,
+      "atrvalue": 657.7440515503587,
+      "up_condition": false,
+      "down_condition": true,
+      "buy": false,
+      "sell": false,
+      "long": false,
+      "shrt": true,
+      "last_buy_price": 13900.0,
+      "last_sell_price": 12800.0
     },
     {
       "symbol": "DXS",
@@ -3808,7 +4117,7 @@
       "reason": "volume_filter",
       "last_date": "16/07/2026",
       "last_close": 20000.0,
-      "last_volume": 0.0
+      "last_volume": 2900.0
     },
     {
       "symbol": "ELC",
@@ -3923,10 +4232,21 @@
         "Volume"
       ],
       "has_ohlcv": true,
-      "reason": "volume_filter",
+      "reason": "no_cross_signal",
       "last_date": "16/07/2026",
       "last_close": 5900.0,
-      "last_volume": 0.0
+      "last_volume": 540500.0,
+      "bs": 5256.160090155836,
+      "atr": 317.42873813101414,
+      "atrvalue": 634.8574762620283,
+      "up_condition": false,
+      "down_condition": false,
+      "buy": false,
+      "sell": false,
+      "long": true,
+      "shrt": false,
+      "last_buy_price": 5300.0,
+      "last_sell_price": 4800.0
     },
     {
       "symbol": "FCM",
@@ -4775,7 +5095,7 @@
       "reason": "volume_filter",
       "last_date": "16/07/2026",
       "last_close": 25800.0,
-      "last_volume": 0.0
+      "last_volume": 2300.0
     },
     {
       "symbol": "HCD",
@@ -4848,7 +5168,7 @@
       "reason": "volume_filter",
       "last_date": "16/07/2026",
       "last_close": 6600.0,
-      "last_volume": 0.0
+      "last_volume": 4200.0
     },
     {
       "symbol": "HDB",
@@ -4966,7 +5286,7 @@
       "reason": "volume_filter",
       "last_date": "16/07/2026",
       "last_close": 150500.0,
-      "last_volume": 0.0
+      "last_volume": 300.0
     },
     {
       "symbol": "HHC",
@@ -4983,7 +5303,7 @@
       "reason": "volume_filter",
       "last_date": "16/07/2026",
       "last_close": 74900.0,
-      "last_volume": 0.0
+      "last_volume": 1300.0
     },
     {
       "symbol": "HHP",
@@ -5157,7 +5477,7 @@
       "reason": "volume_filter",
       "last_date": "16/07/2026",
       "last_close": 14900.0,
-      "last_volume": 0.0
+      "last_volume": 4700.0
     },
     {
       "symbol": "HLC",
@@ -5174,7 +5494,7 @@
       "reason": "volume_filter",
       "last_date": "16/07/2026",
       "last_close": 11100.0,
-      "last_volume": 0.0
+      "last_volume": 100.0
     },
     {
       "symbol": "HLD",
@@ -5188,10 +5508,21 @@
         "Volume"
       ],
       "has_ohlcv": true,
-      "reason": "volume_filter",
+      "reason": "no_cross_signal",
       "last_date": "16/07/2026",
       "last_close": 14000.0,
-      "last_volume": 0.0
+      "last_volume": 27900.0,
+      "bs": 15799.062095333547,
+      "atr": 834.981651008814,
+      "atrvalue": 1669.963302017628,
+      "up_condition": false,
+      "down_condition": false,
+      "buy": false,
+      "sell": false,
+      "long": false,
+      "shrt": true,
+      "last_buy_price": 21900.0,
+      "last_sell_price": 21300.0
     },
     {
       "symbol": "HMC",
@@ -5253,7 +5584,7 @@
       "reason": "volume_filter",
       "last_date": "16/07/2026",
       "last_close": 9700.0,
-      "last_volume": 0.0
+      "last_volume": 800.0
     },
     {
       "symbol": "HNA",
@@ -5287,7 +5618,7 @@
       "reason": "volume_filter",
       "last_date": "16/07/2026",
       "last_close": 3900.0,
-      "last_volume": 0.0
+      "last_volume": 2000.0
     },
     {
       "symbol": "HPG",
@@ -5588,10 +5919,21 @@
         "Volume"
       ],
       "has_ohlcv": true,
-      "reason": "volume_filter",
+      "reason": "no_cross_signal",
       "last_date": "16/07/2026",
       "last_close": 15200.0,
-      "last_volume": 0.0
+      "last_volume": 2043400.0,
+      "bs": 15637.272881335406,
+      "atr": 329.81186934176077,
+      "atrvalue": 659.6237386835215,
+      "up_condition": false,
+      "down_condition": false,
+      "buy": false,
+      "sell": false,
+      "long": false,
+      "shrt": true,
+      "last_buy_price": 17100.0,
+      "last_sell_price": 15400.0
     },
     {
       "symbol": "HVH",
@@ -5664,7 +6006,7 @@
       "reason": "volume_filter",
       "last_date": "16/07/2026",
       "last_close": 25000.0,
-      "last_volume": 0.0
+      "last_volume": 5900.0
     },
     {
       "symbol": "HVX",
@@ -5681,7 +6023,7 @@
       "reason": "volume_filter",
       "last_date": "16/07/2026",
       "last_close": 2300.0,
-      "last_volume": 0.0
+      "last_volume": 18700.0
     },
     {
       "symbol": "ICG",
@@ -5698,7 +6040,7 @@
       "reason": "volume_filter",
       "last_date": "16/07/2026",
       "last_close": 15100.0,
-      "last_volume": 0.0
+      "last_volume": 10200.0
     },
     {
       "symbol": "ICT",
@@ -5729,10 +6071,21 @@
         "Volume"
       ],
       "has_ohlcv": true,
-      "reason": "volume_filter",
+      "reason": "no_cross_signal",
       "last_date": "16/07/2026",
       "last_close": 38200.0,
-      "last_volume": 0.0
+      "last_volume": 1416400.0,
+      "bs": 40945.185604067796,
+      "atr": 1322.5928020338984,
+      "atrvalue": 2645.1856040677967,
+      "up_condition": false,
+      "down_condition": true,
+      "buy": false,
+      "sell": false,
+      "long": false,
+      "shrt": true,
+      "last_buy_price": 48500.0,
+      "last_sell_price": 44800.0
     },
     {
       "symbol": "IDI",
@@ -5774,10 +6127,21 @@
         "Volume"
       ],
       "has_ohlcv": true,
-      "reason": "volume_filter",
+      "reason": "no_cross_signal",
       "last_date": "16/07/2026",
       "last_close": 4000.0,
-      "last_volume": 0.0
+      "last_volume": 609700.0,
+      "bs": 3979.321587960559,
+      "atr": 218.62772779095843,
+      "atrvalue": 437.25545558191686,
+      "up_condition": false,
+      "down_condition": false,
+      "buy": false,
+      "sell": false,
+      "long": true,
+      "shrt": false,
+      "last_buy_price": 4700.0,
+      "last_sell_price": 6600.0
     },
     {
       "symbol": "IDV",
@@ -5794,7 +6158,7 @@
       "reason": "volume_filter",
       "last_date": "16/07/2026",
       "last_close": 21500.0,
-      "last_volume": 0.0
+      "last_volume": 9100.0
     },
     {
       "symbol": "IJC",
@@ -5890,7 +6254,7 @@
       "reason": "volume_filter",
       "last_date": "16/07/2026",
       "last_close": 36700.0,
-      "last_volume": 0.0
+      "last_volume": 18700.0
     },
     {
       "symbol": "IPA",
@@ -5904,10 +6268,21 @@
         "Volume"
       ],
       "has_ohlcv": true,
-      "reason": "volume_filter",
+      "reason": "no_cross_signal",
       "last_date": "16/07/2026",
       "last_close": 15300.0,
-      "last_volume": 0.0
+      "last_volume": 44700.0,
+      "bs": 14884.86040124522,
+      "atr": 674.2435257397134,
+      "atrvalue": 1348.4870514794268,
+      "up_condition": false,
+      "down_condition": false,
+      "buy": false,
+      "sell": false,
+      "long": true,
+      "shrt": false,
+      "last_buy_price": 16000.0,
+      "last_sell_price": 18800.0
     },
     {
       "symbol": "ITC",
@@ -5966,10 +6341,21 @@
         "Volume"
       ],
       "has_ohlcv": true,
-      "reason": "volume_filter",
+      "reason": "no_cross_signal",
       "last_date": "16/07/2026",
       "last_close": 2700.0,
-      "last_volume": 0.0
+      "last_volume": 378700.0,
+      "bs": 2842.346194327979,
+      "atr": 189.73100287261246,
+      "atrvalue": 379.46200574522493,
+      "up_condition": false,
+      "down_condition": false,
+      "buy": false,
+      "sell": false,
+      "long": false,
+      "shrt": true,
+      "last_buy_price": 3000.0,
+      "last_sell_price": 2600.0
     },
     {
       "symbol": "IVS",
@@ -5983,10 +6369,21 @@
         "Volume"
       ],
       "has_ohlcv": true,
-      "reason": "volume_filter",
+      "reason": "no_cross_signal",
       "last_date": "16/07/2026",
       "last_close": 6500.0,
-      "last_volume": 0.0
+      "last_volume": 48300.0,
+      "bs": 7036.058172260618,
+      "atr": 268.02908613030905,
+      "atrvalue": 536.0581722606181,
+      "up_condition": false,
+      "down_condition": true,
+      "buy": false,
+      "sell": false,
+      "long": false,
+      "shrt": true,
+      "last_buy_price": 6800.0,
+      "last_sell_price": 6400.0
     },
     {
       "symbol": "JVC",
@@ -6112,10 +6509,21 @@
         "Volume"
       ],
       "has_ohlcv": true,
-      "reason": "volume_filter",
+      "reason": "no_cross_signal",
       "last_date": "16/07/2026",
       "last_close": 21500.0,
-      "last_volume": 0.0
+      "last_volume": 62200.0,
+      "bs": 23740.84689384872,
+      "atr": 1064.323181244757,
+      "atrvalue": 2128.646362489514,
+      "up_condition": false,
+      "down_condition": false,
+      "buy": false,
+      "sell": false,
+      "long": false,
+      "shrt": true,
+      "last_buy_price": 25900.0,
+      "last_sell_price": 27700.0
     },
     {
       "symbol": "KHG",
@@ -6177,7 +6585,7 @@
       "reason": "volume_filter",
       "last_date": "16/07/2026",
       "last_close": 12000.0,
-      "last_volume": 0.0
+      "last_volume": 3300.0
     },
     {
       "symbol": "KKC",
@@ -6329,7 +6737,7 @@
       "reason": "volume_filter",
       "last_date": "16/07/2026",
       "last_close": 4900.0,
-      "last_volume": 0.0
+      "last_volume": 2400.0
     },
     {
       "symbol": "KSF",
@@ -6343,10 +6751,21 @@
         "Volume"
       ],
       "has_ohlcv": true,
-      "reason": "volume_filter",
+      "reason": "no_cross_signal",
       "last_date": "16/07/2026",
       "last_close": 75400.0,
-      "last_volume": 0.0
+      "last_volume": 169100.0,
+      "bs": 83315.16860224718,
+      "atr": 3357.58430112359,
+      "atrvalue": 6715.16860224718,
+      "up_condition": false,
+      "down_condition": true,
+      "buy": false,
+      "sell": false,
+      "long": false,
+      "shrt": true,
+      "last_buy_price": 85000.0,
+      "last_sell_price": 79900.0
     },
     {
       "symbol": "KSQ",
@@ -6397,7 +6816,7 @@
       "reason": "volume_filter",
       "last_date": "16/07/2026",
       "last_close": 100800.0,
-      "last_volume": 0.0
+      "last_volume": 18900.0
     },
     {
       "symbol": "KTS",
@@ -6414,7 +6833,7 @@
       "reason": "volume_filter",
       "last_date": "16/07/2026",
       "last_close": 21600.0,
-      "last_volume": 0.0
+      "last_volume": 100.0
     },
     {
       "symbol": "LAF",
@@ -6445,10 +6864,21 @@
         "Volume"
       ],
       "has_ohlcv": true,
-      "reason": "volume_filter",
+      "reason": "no_cross_signal",
       "last_date": "16/07/2026",
       "last_close": 13500.0,
-      "last_volume": 0.0
+      "last_volume": 124600.0,
+      "bs": 14599.119865301625,
+      "atr": 380.77243572179464,
+      "atrvalue": 761.5448714435893,
+      "up_condition": false,
+      "down_condition": false,
+      "buy": false,
+      "sell": false,
+      "long": false,
+      "shrt": true,
+      "last_buy_price": 18800.0,
+      "last_sell_price": 16300.0
     },
     {
       "symbol": "LBE",
@@ -6462,10 +6892,21 @@
         "Volume"
       ],
       "has_ohlcv": true,
-      "reason": "volume_filter",
+      "reason": "no_cross_signal",
       "last_date": "16/07/2026",
       "last_close": 14300.0,
-      "last_volume": 0.0
+      "last_volume": 21800.0,
+      "bs": 15375.850595189395,
+      "atr": 568.679810477737,
+      "atrvalue": 1137.359620955474,
+      "up_condition": false,
+      "down_condition": false,
+      "buy": false,
+      "sell": false,
+      "long": false,
+      "shrt": true,
+      "last_buy_price": 18348.0,
+      "last_sell_price": 17161.0
     },
     {
       "symbol": "LBM",
@@ -6552,10 +6993,21 @@
         "Volume"
       ],
       "has_ohlcv": true,
-      "reason": "volume_filter",
+      "reason": "no_cross_signal",
       "last_date": "16/07/2026",
       "last_close": 8000.0,
-      "last_volume": 0.0
+      "last_volume": 38700.0,
+      "bs": 8603.216075821361,
+      "atr": 236.13399790524502,
+      "atrvalue": 472.26799581049005,
+      "up_condition": false,
+      "down_condition": false,
+      "buy": false,
+      "sell": false,
+      "long": false,
+      "shrt": true,
+      "last_buy_price": 8100.0,
+      "last_sell_price": 8000.0
     },
     {
       "symbol": "LGC",
@@ -6606,7 +7058,7 @@
       "reason": "volume_filter",
       "last_date": "16/07/2026",
       "last_close": 46300.0,
-      "last_volume": 0.0
+      "last_volume": 1100.0
     },
     {
       "symbol": "LHG",
@@ -6648,10 +7100,21 @@
         "Volume"
       ],
       "has_ohlcv": true,
-      "reason": "volume_filter",
+      "reason": "no_cross_signal",
       "last_date": "16/07/2026",
       "last_close": 3700.0,
-      "last_volume": 0.0
+      "last_volume": 82600.0,
+      "bs": 3982.635499537253,
+      "atr": 140.30505524788146,
+      "atrvalue": 280.6101104957629,
+      "up_condition": false,
+      "down_condition": false,
+      "buy": false,
+      "sell": false,
+      "long": false,
+      "shrt": true,
+      "last_buy_price": 3100.0,
+      "last_sell_price": 4800.0
     },
     {
       "symbol": "LIX",
@@ -6800,10 +7263,21 @@
         "Volume"
       ],
       "has_ohlcv": true,
-      "reason": "volume_filter",
+      "reason": "no_cross_signal",
       "last_date": "16/07/2026",
       "last_close": 2600.0,
-      "last_volume": 0.0
+      "last_volume": 274200.0,
+      "bs": 2888.855019926836,
+      "atr": 144.4275099634181,
+      "atrvalue": 288.8550199268362,
+      "up_condition": false,
+      "down_condition": true,
+      "buy": false,
+      "sell": false,
+      "long": false,
+      "shrt": true,
+      "last_buy_price": 4000.0,
+      "last_sell_price": 3900.0
     },
     {
       "symbol": "MBS",
@@ -6817,10 +7291,21 @@
         "Volume"
       ],
       "has_ohlcv": true,
-      "reason": "volume_filter",
+      "reason": "no_cross_signal",
       "last_date": "16/07/2026",
       "last_close": 20300.0,
-      "last_volume": 0.0
+      "last_volume": 15604900.0,
+      "bs": 19975.767498546313,
+      "atr": 1132.6309258379729,
+      "atrvalue": 2265.2618516759458,
+      "up_condition": false,
+      "down_condition": false,
+      "buy": false,
+      "sell": false,
+      "long": true,
+      "shrt": false,
+      "last_buy_price": 20800.0,
+      "last_sell_price": 19506.0
     },
     {
       "symbol": "MCF",
@@ -6837,7 +7322,7 @@
       "reason": "volume_filter",
       "last_date": "16/07/2026",
       "last_close": 7000.0,
-      "last_volume": 0.0
+      "last_volume": 5400.0
     },
     {
       "symbol": "MCH",
@@ -6899,7 +7384,7 @@
       "reason": "volume_filter",
       "last_date": "16/07/2026",
       "last_close": 5200.0,
-      "last_volume": 0.0
+      "last_volume": 2200.0
     },
     {
       "symbol": "MCP",
@@ -6944,7 +7429,7 @@
       "reason": "volume_filter",
       "last_date": "16/07/2026",
       "last_close": 9000.0,
-      "last_volume": 0.0
+      "last_volume": 10000.0
     },
     {
       "symbol": "MDG",
@@ -6995,7 +7480,7 @@
       "reason": "volume_filter",
       "last_date": "16/07/2026",
       "last_close": 7600.0,
-      "last_volume": 0.0
+      "last_volume": 100.0
     },
     {
       "symbol": "MHC",
@@ -7029,7 +7514,7 @@
       "reason": "volume_filter",
       "last_date": "16/07/2026",
       "last_close": 10600.0,
-      "last_volume": 0.0
+      "last_volume": 600.0
     },
     {
       "symbol": "MIG",
@@ -7074,7 +7559,7 @@
       "reason": "volume_filter",
       "last_date": "16/07/2026",
       "last_close": 18900.0,
-      "last_volume": 0.0
+      "last_volume": 200.0
     },
     {
       "symbol": "MSB",
@@ -7172,10 +7657,21 @@
         "Volume"
       ],
       "has_ohlcv": true,
-      "reason": "volume_filter",
+      "reason": "no_cross_signal",
       "last_date": "16/07/2026",
       "last_close": 10200.0,
-      "last_volume": 0.0
+      "last_volume": 2101900.0,
+      "bs": 9306.7919746942,
+      "atr": 325.6605822739143,
+      "atrvalue": 651.3211645478286,
+      "up_condition": false,
+      "down_condition": false,
+      "buy": false,
+      "sell": false,
+      "long": true,
+      "shrt": false,
+      "last_buy_price": 6400.0,
+      "last_sell_price": 5600.0
     },
     {
       "symbol": "MVB",
@@ -7290,10 +7786,21 @@
         "Volume"
       ],
       "has_ohlcv": true,
-      "reason": "volume_filter",
+      "reason": "no_cross_signal",
       "last_date": "16/07/2026",
       "last_close": 7100.0,
-      "last_volume": 0.0
+      "last_volume": 83400.0,
+      "bs": 7722.45892301325,
+      "atr": 261.22946150662466,
+      "atrvalue": 522.4589230132493,
+      "up_condition": false,
+      "down_condition": true,
+      "buy": false,
+      "sell": false,
+      "long": false,
+      "shrt": true,
+      "last_buy_price": 8500.0,
+      "last_sell_price": 7700.0
     },
     {
       "symbol": "NAP",
@@ -7310,7 +7817,7 @@
       "reason": "volume_filter",
       "last_date": "16/07/2026",
       "last_close": 9300.0,
-      "last_volume": 0.0
+      "last_volume": 2100.0
     },
     {
       "symbol": "NAV",
@@ -7369,10 +7876,21 @@
         "Volume"
       ],
       "has_ohlcv": true,
-      "reason": "volume_filter",
+      "reason": "no_cross_signal",
       "last_date": "16/07/2026",
       "last_close": 8400.0,
-      "last_volume": 0.0
+      "last_volume": 70000.0,
+      "bs": 8813.095663892827,
+      "atr": 206.54783194641385,
+      "atrvalue": 413.0956638928277,
+      "up_condition": false,
+      "down_condition": true,
+      "buy": false,
+      "sell": false,
+      "long": false,
+      "shrt": true,
+      "last_buy_price": 8900.0,
+      "last_sell_price": 9200.0
     },
     {
       "symbol": "NBP",
@@ -7389,7 +7907,7 @@
       "reason": "volume_filter",
       "last_date": "16/07/2026",
       "last_close": 7500.0,
-      "last_volume": 0.0
+      "last_volume": 100.0
     },
     {
       "symbol": "NBW",
@@ -7448,10 +7966,21 @@
         "Volume"
       ],
       "has_ohlcv": true,
-      "reason": "volume_filter",
+      "reason": "no_cross_signal",
       "last_date": "16/07/2026",
       "last_close": 10200.0,
-      "last_volume": 0.0
+      "last_volume": 124800.0,
+      "bs": 10147.865873333361,
+      "atr": 353.35423300001844,
+      "atrvalue": 706.7084660000369,
+      "up_condition": false,
+      "down_condition": false,
+      "buy": false,
+      "sell": false,
+      "long": true,
+      "shrt": false,
+      "last_buy_price": 10800.0,
+      "last_sell_price": 10700.0
     },
     {
       "symbol": "NDX",
@@ -7485,7 +8014,7 @@
       "reason": "volume_filter",
       "last_date": "16/07/2026",
       "last_close": 65300.0,
-      "last_volume": 0.0
+      "last_volume": 2000.0
     },
     {
       "symbol": "NFC",
@@ -7690,10 +8219,21 @@
         "Volume"
       ],
       "has_ohlcv": true,
-      "reason": "volume_filter",
+      "reason": "no_cross_signal",
       "last_date": "16/07/2026",
       "last_close": 5900.0,
-      "last_volume": 0.0
+      "last_volume": 687600.0,
+      "bs": 6801.848589595495,
+      "atr": 400.92429479774705,
+      "atrvalue": 801.8485895954941,
+      "up_condition": false,
+      "down_condition": true,
+      "buy": false,
+      "sell": false,
+      "long": false,
+      "shrt": true,
+      "last_buy_price": 6600.0,
+      "last_sell_price": 6300.0
     },
     {
       "symbol": "NSC",
@@ -7724,10 +8264,21 @@
         "Volume"
       ],
       "has_ohlcv": true,
-      "reason": "volume_filter",
+      "reason": "no_cross_signal",
       "last_date": "16/07/2026",
       "last_close": 4400.0,
-      "last_volume": 0.0
+      "last_volume": 21300.0,
+      "bs": 4651.1810815604,
+      "atr": 125.59054078019994,
+      "atrvalue": 251.1810815603999,
+      "up_condition": false,
+      "down_condition": true,
+      "buy": false,
+      "sell": false,
+      "long": false,
+      "shrt": true,
+      "last_buy_price": 5100.0,
+      "last_sell_price": 4700.0
     },
     {
       "symbol": "NST",
@@ -7744,7 +8295,7 @@
       "reason": "volume_filter",
       "last_date": "16/07/2026",
       "last_close": 12200.0,
-      "last_volume": 0.0
+      "last_volume": 2700.0
     },
     {
       "symbol": "NTH",
@@ -7761,7 +8312,7 @@
       "reason": "volume_filter",
       "last_date": "16/07/2026",
       "last_close": 53000.0,
-      "last_volume": 0.0
+      "last_volume": 400.0
     },
     {
       "symbol": "NTL",
@@ -7803,10 +8354,21 @@
         "Volume"
       ],
       "has_ohlcv": true,
-      "reason": "volume_filter",
+      "reason": "no_cross_signal",
       "last_date": "16/07/2026",
       "last_close": 48200.0,
-      "last_volume": 0.0
+      "last_volume": 29200.0,
+      "bs": 49993.90406315033,
+      "atr": 896.9520315751652,
+      "atrvalue": 1793.9040631503303,
+      "up_condition": false,
+      "down_condition": true,
+      "buy": false,
+      "sell": false,
+      "long": false,
+      "shrt": true,
+      "last_buy_price": 48270.0,
+      "last_sell_price": 48500.0
     },
     {
       "symbol": "NVB",
@@ -7820,10 +8382,21 @@
         "Volume"
       ],
       "has_ohlcv": true,
-      "reason": "volume_filter",
+      "reason": "no_cross_signal",
       "last_date": "16/07/2026",
       "last_close": 12400.0,
-      "last_volume": 0.0
+      "last_volume": 1058300.0,
+      "bs": 14274.780397842205,
+      "atr": 737.3901989211024,
+      "atrvalue": 1474.7803978422048,
+      "up_condition": false,
+      "down_condition": true,
+      "buy": false,
+      "sell": false,
+      "long": false,
+      "shrt": true,
+      "last_buy_price": 12800.0,
+      "last_sell_price": 13100.0
     },
     {
       "symbol": "NVL",
@@ -7910,10 +8483,21 @@
         "Volume"
       ],
       "has_ohlcv": true,
-      "reason": "volume_filter",
+      "reason": "no_cross_signal",
       "last_date": "16/07/2026",
       "last_close": 7000.0,
-      "last_volume": 0.0
+      "last_volume": 48500.0,
+      "bs": 8434.517458890943,
+      "atr": 486.22176809611875,
+      "atrvalue": 972.4435361922375,
+      "up_condition": false,
+      "down_condition": false,
+      "buy": false,
+      "sell": false,
+      "long": false,
+      "shrt": true,
+      "last_buy_price": 6100.0,
+      "last_sell_price": 6900.0
     },
     {
       "symbol": "OGC",
@@ -8076,7 +8660,7 @@
       "reason": "volume_filter",
       "last_date": "16/07/2026",
       "last_close": 11300.0,
-      "last_volume": 0.0
+      "last_volume": 1300.0
     },
     {
       "symbol": "PCE",
@@ -8124,10 +8708,21 @@
         "Volume"
       ],
       "has_ohlcv": true,
-      "reason": "volume_filter",
+      "reason": "no_cross_signal",
       "last_date": "16/07/2026",
       "last_close": 18600.0,
-      "last_volume": 0.0
+      "last_volume": 95800.0,
+      "bs": 19188.749338294074,
+      "atr": 315.8335042465492,
+      "atrvalue": 631.6670084930984,
+      "up_condition": false,
+      "down_condition": false,
+      "buy": false,
+      "sell": false,
+      "long": false,
+      "shrt": true,
+      "last_buy_price": 21100.0,
+      "last_sell_price": 20200.0
     },
     {
       "symbol": "PCT",
@@ -8144,7 +8739,7 @@
       "reason": "volume_filter",
       "last_date": "16/07/2026",
       "last_close": 10200.0,
-      "last_volume": 0.0
+      "last_volume": 3700.0
     },
     {
       "symbol": "PDB",
@@ -8161,7 +8756,7 @@
       "reason": "volume_filter",
       "last_date": "16/07/2026",
       "last_close": 19700.0,
-      "last_volume": 0.0
+      "last_volume": 12400.0
     },
     {
       "symbol": "PDN",
@@ -8330,7 +8925,7 @@
       "reason": "volume_filter",
       "last_date": "16/07/2026",
       "last_close": 5700.0,
-      "last_volume": 0.0
+      "last_volume": 12600.0
     },
     {
       "symbol": "PGS",
@@ -8347,7 +8942,7 @@
       "reason": "volume_filter",
       "last_date": "16/07/2026",
       "last_close": 55000.0,
-      "last_volume": 0.0
+      "last_volume": 400.0
     },
     {
       "symbol": "PGT",
@@ -8477,7 +9072,7 @@
       "reason": "volume_filter",
       "last_date": "16/07/2026",
       "last_close": 15400.0,
-      "last_volume": 0.0
+      "last_volume": 2600.0
     },
     {
       "symbol": "PIT",
@@ -8542,10 +9137,21 @@
         "Volume"
       ],
       "has_ohlcv": true,
-      "reason": "volume_filter",
+      "reason": "no_cross_signal",
       "last_date": "16/07/2026",
       "last_close": 20000.0,
-      "last_volume": 0.0
+      "last_volume": 175800.0,
+      "bs": 22392.139860782194,
+      "atr": 946.0699303910969,
+      "atrvalue": 1892.1398607821939,
+      "up_condition": false,
+      "down_condition": true,
+      "buy": false,
+      "sell": false,
+      "long": false,
+      "shrt": true,
+      "last_buy_price": 26000.0,
+      "last_sell_price": 27000.0
     },
     {
       "symbol": "PLP",
@@ -8618,7 +9224,7 @@
       "reason": "volume_filter",
       "last_date": "16/07/2026",
       "last_close": 10800.0,
-      "last_volume": 0.0
+      "last_volume": 400.0
     },
     {
       "symbol": "PMC",
@@ -8635,7 +9241,7 @@
       "reason": "volume_filter",
       "last_date": "16/07/2026",
       "last_close": 128000.0,
-      "last_volume": 0.0
+      "last_volume": 200.0
     },
     {
       "symbol": "PMG",
@@ -8686,7 +9292,7 @@
       "reason": "volume_filter",
       "last_date": "16/07/2026",
       "last_close": 35100.0,
-      "last_volume": 0.0
+      "last_volume": 600.0
     },
     {
       "symbol": "PNC",
@@ -8855,7 +9461,7 @@
       "reason": "volume_filter",
       "last_date": "16/07/2026",
       "last_close": 10000.0,
-      "last_volume": 0.0
+      "last_volume": 100.0
     },
     {
       "symbol": "PPT",
@@ -8869,10 +9475,21 @@
         "Volume"
       ],
       "has_ohlcv": true,
-      "reason": "volume_filter",
+      "reason": "no_cross_signal",
       "last_date": "16/07/2026",
       "last_close": 15400.0,
-      "last_volume": 0.0
+      "last_volume": 306900.0,
+      "bs": 15203.471945469488,
+      "atr": 215.9810432745686,
+      "atrvalue": 431.9620865491372,
+      "up_condition": false,
+      "down_condition": false,
+      "buy": false,
+      "sell": false,
+      "long": true,
+      "shrt": false,
+      "last_buy_price": 15300.0,
+      "last_sell_price": 15200.0
     },
     {
       "symbol": "PPY",
@@ -8889,7 +9506,7 @@
       "reason": "volume_filter",
       "last_date": "16/07/2026",
       "last_close": 6700.0,
-      "last_volume": 0.0
+      "last_volume": 2200.0
     },
     {
       "symbol": "PRC",
@@ -8906,7 +9523,7 @@
       "reason": "volume_filter",
       "last_date": "16/07/2026",
       "last_close": 10100.0,
-      "last_volume": 0.0
+      "last_volume": 2300.0
     },
     {
       "symbol": "PRE",
@@ -8920,10 +9537,21 @@
         "Volume"
       ],
       "has_ohlcv": true,
-      "reason": "volume_filter",
+      "reason": "no_cross_signal",
       "last_date": "16/07/2026",
       "last_close": 29800.0,
-      "last_volume": 0.0
+      "last_volume": 23900.0,
+      "bs": 27373.399342393855,
+      "atr": 554.2574246883484,
+      "atrvalue": 1108.5148493766967,
+      "up_condition": false,
+      "down_condition": false,
+      "buy": false,
+      "sell": false,
+      "long": true,
+      "shrt": false,
+      "last_buy_price": 22800.0,
+      "last_sell_price": 22000.0
     },
     {
       "symbol": "PSC",
@@ -8954,10 +9582,21 @@
         "Volume"
       ],
       "has_ohlcv": true,
-      "reason": "volume_filter",
+      "reason": "no_cross_signal",
       "last_date": "16/07/2026",
       "last_close": 17100.0,
-      "last_volume": 0.0
+      "last_volume": 37000.0,
+      "bs": 18128.944825287086,
+      "atr": 407.36455140234807,
+      "atrvalue": 814.7291028046961,
+      "up_condition": false,
+      "down_condition": false,
+      "buy": false,
+      "sell": false,
+      "long": false,
+      "shrt": true,
+      "last_buy_price": 18200.0,
+      "last_sell_price": 17000.0
     },
     {
       "symbol": "PSE",
@@ -8974,7 +9613,7 @@
       "reason": "volume_filter",
       "last_date": "16/07/2026",
       "last_close": 10700.0,
-      "last_volume": 0.0
+      "last_volume": 800.0
     },
     {
       "symbol": "PSH",
@@ -9016,10 +9655,21 @@
         "Volume"
       ],
       "has_ohlcv": true,
-      "reason": "volume_filter",
+      "reason": "no_cross_signal",
       "last_date": "16/07/2026",
       "last_close": 10800.0,
-      "last_volume": 0.0
+      "last_volume": 433400.0,
+      "bs": 9535.244799969834,
+      "atr": 639.8831210320844,
+      "atrvalue": 1279.7662420641689,
+      "up_condition": false,
+      "down_condition": false,
+      "buy": false,
+      "sell": false,
+      "long": true,
+      "shrt": false,
+      "last_buy_price": 9200.0,
+      "last_sell_price": 8100.0
     },
     {
       "symbol": "PSW",
@@ -9036,7 +9686,7 @@
       "reason": "volume_filter",
       "last_date": "16/07/2026",
       "last_close": 7700.0,
-      "last_volume": 0.0
+      "last_volume": 3200.0
     },
     {
       "symbol": "PTB",
@@ -9098,7 +9748,7 @@
       "reason": "volume_filter",
       "last_date": "16/07/2026",
       "last_close": 4300.0,
-      "last_volume": 0.0
+      "last_volume": 100.0
     },
     {
       "symbol": "PTI",
@@ -9160,7 +9810,7 @@
       "reason": "volume_filter",
       "last_date": "16/07/2026",
       "last_close": 8500.0,
-      "last_volume": 0.0
+      "last_volume": 2100.0
     },
     {
       "symbol": "PTX",
@@ -9191,10 +9841,21 @@
         "Volume"
       ],
       "has_ohlcv": true,
-      "reason": "volume_filter",
+      "reason": "no_cross_signal",
       "last_date": "16/07/2026",
       "last_close": 23300.0,
-      "last_volume": 0.0
+      "last_volume": 68100.0,
+      "bs": 25127.656687665833,
+      "atr": 913.8283438329162,
+      "atrvalue": 1827.6566876658324,
+      "up_condition": false,
+      "down_condition": true,
+      "buy": false,
+      "sell": false,
+      "long": false,
+      "shrt": true,
+      "last_buy_price": 41300.0,
+      "last_sell_price": 33000.0
     },
     {
       "symbol": "PVC",
@@ -9208,10 +9869,21 @@
         "Volume"
       ],
       "has_ohlcv": true,
-      "reason": "volume_filter",
+      "reason": "no_cross_signal",
       "last_date": "16/07/2026",
       "last_close": 13200.0,
-      "last_volume": 0.0
+      "last_volume": 554900.0,
+      "bs": 13833.149617089475,
+      "atr": 748.8753903618633,
+      "atrvalue": 1497.7507807237266,
+      "up_condition": false,
+      "down_condition": false,
+      "buy": false,
+      "sell": false,
+      "long": false,
+      "shrt": true,
+      "last_buy_price": 15600.0,
+      "last_sell_price": 14500.0
     },
     {
       "symbol": "PVD",
@@ -9253,10 +9925,21 @@
         "Volume"
       ],
       "has_ohlcv": true,
-      "reason": "volume_filter",
+      "reason": "no_cross_signal",
       "last_date": "16/07/2026",
       "last_close": 5600.0,
-      "last_volume": 0.0
+      "last_volume": 76400.0,
+      "bs": 6008.387795938259,
+      "atr": 163.6771916552397,
+      "atrvalue": 327.3543833104794,
+      "up_condition": false,
+      "down_condition": false,
+      "buy": false,
+      "sell": false,
+      "long": false,
+      "shrt": true,
+      "last_buy_price": 6600.0,
+      "last_sell_price": 7200.0
     },
     {
       "symbol": "PVI",
@@ -9270,10 +9953,21 @@
         "Volume"
       ],
       "has_ohlcv": true,
-      "reason": "volume_filter",
+      "reason": "no_cross_signal",
       "last_date": "16/07/2026",
       "last_close": 74400.0,
-      "last_volume": 0.0
+      "last_volume": 32800.0,
+      "bs": 76186.00483396598,
+      "atr": 1415.9274313551941,
+      "atrvalue": 2831.8548627103883,
+      "up_condition": false,
+      "down_condition": false,
+      "buy": false,
+      "sell": false,
+      "long": false,
+      "shrt": true,
+      "last_buy_price": 97900.0,
+      "last_sell_price": 95000.0
     },
     {
       "symbol": "PVP",
@@ -9315,10 +10009,21 @@
         "Volume"
       ],
       "has_ohlcv": true,
-      "reason": "volume_filter",
+      "reason": "no_cross_signal",
       "last_date": "16/07/2026",
       "last_close": 38800.0,
-      "last_volume": 0.0
+      "last_volume": 3114500.0,
+      "bs": 39388.050256184884,
+      "atr": 1651.9373223470852,
+      "atrvalue": 3303.8746446941705,
+      "up_condition": false,
+      "down_condition": false,
+      "buy": false,
+      "sell": false,
+      "long": false,
+      "shrt": true,
+      "last_buy_price": 29814.0,
+      "last_sell_price": 42200.0
     },
     {
       "symbol": "PVT",
@@ -9425,7 +10130,7 @@
       "reason": "volume_filter",
       "last_date": "16/07/2026",
       "last_close": 28500.0,
-      "last_volume": 0.0
+      "last_volume": 100.0
     },
     {
       "symbol": "QTC",
@@ -9476,7 +10181,7 @@
       "reason": "volume_filter",
       "last_date": "16/07/2026",
       "last_close": 11300.0,
-      "last_volume": 0.0
+      "last_volume": 16200.0
     },
     {
       "symbol": "REE",
@@ -9577,7 +10282,7 @@
       "reason": "volume_filter",
       "last_date": "16/07/2026",
       "last_close": 56900.0,
-      "last_volume": 0.0
+      "last_volume": 3500.0
     },
     {
       "symbol": "SAM",
@@ -9726,10 +10431,21 @@
         "Volume"
       ],
       "has_ohlcv": true,
-      "reason": "volume_filter",
+      "reason": "no_cross_signal",
       "last_date": "16/07/2026",
       "last_close": 61000.0,
-      "last_volume": 0.0
+      "last_volume": 26100.0,
+      "bs": 62128.169442630926,
+      "atr": 483.5011896989686,
+      "atrvalue": 967.0023793979371,
+      "up_condition": false,
+      "down_condition": false,
+      "buy": false,
+      "sell": false,
+      "long": false,
+      "shrt": true,
+      "last_buy_price": 64200.0,
+      "last_sell_price": 67100.0
     },
     {
       "symbol": "SCI",
@@ -9746,7 +10462,7 @@
       "reason": "volume_filter",
       "last_date": "16/07/2026",
       "last_close": 10900.0,
-      "last_volume": 0.0
+      "last_volume": 10600.0
     },
     {
       "symbol": "SCR",
@@ -9816,10 +10532,21 @@
         "Volume"
       ],
       "has_ohlcv": true,
-      "reason": "volume_filter",
+      "reason": "buy_signal",
       "last_date": "16/07/2026",
       "last_close": 2100.0,
-      "last_volume": 0.0
+      "last_volume": 57400.0,
+      "bs": 2022.9834673845762,
+      "atr": 193.55967443985224,
+      "atrvalue": 387.1193488797045,
+      "up_condition": false,
+      "down_condition": false,
+      "buy": true,
+      "sell": false,
+      "long": true,
+      "shrt": false,
+      "last_buy_price": 2100.0,
+      "last_sell_price": 2000.0
     },
     {
       "symbol": "SDC",
@@ -9921,7 +10648,7 @@
       "reason": "volume_filter",
       "last_date": "16/07/2026",
       "last_close": 15200.0,
-      "last_volume": 0.0
+      "last_volume": 2800.0
     },
     {
       "symbol": "SFC",
@@ -10040,7 +10767,7 @@
       "reason": "volume_filter",
       "last_date": "16/07/2026",
       "last_close": 17700.0,
-      "last_volume": 0.0
+      "last_volume": 100.0
     },
     {
       "symbol": "SGN",
@@ -10175,7 +10902,7 @@
       "reason": "volume_filter",
       "last_date": "16/07/2026",
       "last_close": 7400.0,
-      "last_volume": 0.0
+      "last_volume": 600.0
     },
     {
       "symbol": "SHI",
@@ -10217,10 +10944,21 @@
         "Volume"
       ],
       "has_ohlcv": true,
-      "reason": "volume_filter",
+      "reason": "no_cross_signal",
       "last_date": "16/07/2026",
       "last_close": 8800.0,
-      "last_volume": 0.0
+      "last_volume": 487000.0,
+      "bs": 6586.378587898688,
+      "atr": 756.8107060506559,
+      "atrvalue": 1513.6214121013118,
+      "up_condition": true,
+      "down_condition": false,
+      "buy": false,
+      "sell": false,
+      "long": true,
+      "shrt": false,
+      "last_buy_price": 4000.0,
+      "last_sell_price": 3900.0
     },
     {
       "symbol": "SHP",
@@ -10251,10 +10989,21 @@
         "Volume"
       ],
       "has_ohlcv": true,
-      "reason": "volume_filter",
+      "reason": "no_cross_signal",
       "last_date": "16/07/2026",
       "last_close": 16900.0,
-      "last_volume": 0.0
+      "last_volume": 23079600.0,
+      "bs": 18692.039829344754,
+      "atr": 846.0199146723778,
+      "atrvalue": 1692.0398293447556,
+      "up_condition": false,
+      "down_condition": true,
+      "buy": false,
+      "sell": false,
+      "long": false,
+      "shrt": true,
+      "last_buy_price": 18600.0,
+      "last_sell_price": 17500.0
     },
     {
       "symbol": "SIP",
@@ -10324,10 +11073,21 @@
         "Volume"
       ],
       "has_ohlcv": true,
-      "reason": "volume_filter",
+      "reason": "no_cross_signal",
       "last_date": "16/07/2026",
       "last_close": 11800.0,
-      "last_volume": 0.0
+      "last_volume": 28800.0,
+      "bs": 12517.991839838796,
+      "atr": 258.99591991939855,
+      "atrvalue": 517.9918398387971,
+      "up_condition": false,
+      "down_condition": true,
+      "buy": false,
+      "sell": false,
+      "long": false,
+      "shrt": true,
+      "last_buy_price": 18800.0,
+      "last_sell_price": 17700.0
     },
     {
       "symbol": "SJS",
@@ -10400,7 +11160,7 @@
       "reason": "volume_filter",
       "last_date": "16/07/2026",
       "last_close": 148400.0,
-      "last_volume": 0.0
+      "last_volume": 300.0
     },
     {
       "symbol": "SMA",
@@ -10507,7 +11267,7 @@
       "reason": "volume_filter",
       "last_date": "16/07/2026",
       "last_close": 11700.0,
-      "last_volume": 0.0
+      "last_volume": 200.0
     },
     {
       "symbol": "SPC",
@@ -10882,10 +11642,21 @@
         "Volume"
       ],
       "has_ohlcv": true,
-      "reason": "volume_filter",
+      "reason": "no_cross_signal",
       "last_date": "16/07/2026",
       "last_close": 2800.0,
-      "last_volume": 0.0
+      "last_volume": 589900.0,
+      "bs": 3097.801023779691,
+      "atr": 283.39883551580203,
+      "atrvalue": 566.7976710316041,
+      "up_condition": false,
+      "down_condition": false,
+      "buy": false,
+      "sell": false,
+      "long": false,
+      "shrt": true,
+      "last_buy_price": 2200.0,
+      "last_sell_price": 2300.0
     },
     {
       "symbol": "SVT",
@@ -10919,7 +11690,7 @@
       "reason": "volume_filter",
       "last_date": "16/07/2026",
       "last_close": 44100.0,
-      "last_volume": 0.0
+      "last_volume": 11500.0
     },
     {
       "symbol": "SZC",
@@ -11357,7 +12128,7 @@
       "reason": "volume_filter",
       "last_date": "16/07/2026",
       "last_close": 7100.0,
-      "last_volume": 0.0
+      "last_volume": 10500.0
     },
     {
       "symbol": "TDW",
@@ -11425,7 +12196,7 @@
       "reason": "volume_filter",
       "last_date": "16/07/2026",
       "last_close": 45100.0,
-      "last_volume": 0.0
+      "last_volume": 800.0
     },
     {
       "symbol": "THB",
@@ -11459,7 +12230,7 @@
       "reason": "volume_filter",
       "last_date": "16/07/2026",
       "last_close": 131900.0,
-      "last_volume": 0.0
+      "last_volume": 9600.0
     },
     {
       "symbol": "THG",
@@ -11521,7 +12292,7 @@
       "reason": "volume_filter",
       "last_date": "16/07/2026",
       "last_close": 7900.0,
-      "last_volume": 0.0
+      "last_volume": 18100.0
     },
     {
       "symbol": "TIG",
@@ -11535,10 +12306,21 @@
         "Volume"
       ],
       "has_ohlcv": true,
-      "reason": "volume_filter",
+      "reason": "no_cross_signal",
       "last_date": "16/07/2026",
       "last_close": 6100.0,
-      "last_volume": 0.0
+      "last_volume": 269000.0,
+      "bs": 6385.279435684225,
+      "atr": 145.6128539248174,
+      "atrvalue": 291.2257078496348,
+      "up_condition": false,
+      "down_condition": false,
+      "buy": false,
+      "sell": false,
+      "long": false,
+      "shrt": true,
+      "last_buy_price": 8100.0,
+      "last_sell_price": 7900.0
     },
     {
       "symbol": "TIP",
@@ -11600,7 +12382,7 @@
       "reason": "volume_filter",
       "last_date": "16/07/2026",
       "last_close": 8800.0,
-      "last_volume": 0.0
+      "last_volume": 2300.0
     },
     {
       "symbol": "TKU",
@@ -11718,7 +12500,7 @@
       "reason": "volume_filter",
       "last_date": "16/07/2026",
       "last_close": 50500.0,
-      "last_volume": 0.0
+      "last_volume": 2400.0
     },
     {
       "symbol": "TMC",
@@ -11803,7 +12585,7 @@
       "reason": "volume_filter",
       "last_date": "16/07/2026",
       "last_close": 8100.0,
-      "last_volume": 0.0
+      "last_volume": 400.0
     },
     {
       "symbol": "TNC",
@@ -11834,10 +12616,21 @@
         "Volume"
       ],
       "has_ohlcv": true,
-      "reason": "volume_filter",
+      "reason": "no_cross_signal",
       "last_date": "16/07/2026",
       "last_close": 17800.0,
-      "last_volume": 0.0
+      "last_volume": 992900.0,
+      "bs": 19330.678546239207,
+      "atr": 665.3392731196035,
+      "atrvalue": 1330.678546239207,
+      "up_condition": false,
+      "down_condition": true,
+      "buy": false,
+      "sell": false,
+      "long": false,
+      "shrt": true,
+      "last_buy_price": 18289.0,
+      "last_sell_price": 22069.0
     },
     {
       "symbol": "TNH",
@@ -12057,7 +12850,7 @@
       "reason": "volume_filter",
       "last_date": "16/07/2026",
       "last_close": 20200.0,
-      "last_volume": 0.0
+      "last_volume": 4800.0
     },
     {
       "symbol": "TSC",
@@ -12189,10 +12982,21 @@
         "Volume"
       ],
       "has_ohlcv": true,
-      "reason": "volume_filter",
+      "reason": "no_cross_signal",
       "last_date": "16/07/2026",
       "last_close": 2500.0,
-      "last_volume": 0.0
+      "last_volume": 371600.0,
+      "bs": 2314.190351889891,
+      "atr": 151.06127776147525,
+      "atrvalue": 302.1225555229505,
+      "up_condition": false,
+      "down_condition": false,
+      "buy": false,
+      "sell": false,
+      "long": true,
+      "shrt": false,
+      "last_buy_price": 2600.0,
+      "last_sell_price": 2500.0
     },
     {
       "symbol": "TTL",
@@ -12257,10 +13061,21 @@
         "Volume"
       ],
       "has_ohlcv": true,
-      "reason": "volume_filter",
+      "reason": "no_cross_signal",
       "last_date": "16/07/2026",
       "last_close": 8600.0,
-      "last_volume": 0.0
+      "last_volume": 35800.0,
+      "bs": 9435.88012455122,
+      "atr": 417.94006227561005,
+      "atrvalue": 835.8801245512201,
+      "up_condition": false,
+      "down_condition": true,
+      "buy": false,
+      "sell": false,
+      "long": false,
+      "shrt": true,
+      "last_buy_price": 9700.0,
+      "last_sell_price": 9500.0
     },
     {
       "symbol": "TVD",
@@ -12274,10 +13089,21 @@
         "Volume"
       ],
       "has_ohlcv": true,
-      "reason": "volume_filter",
+      "reason": "no_cross_signal",
       "last_date": "16/07/2026",
       "last_close": 9100.0,
-      "last_volume": 0.0
+      "last_volume": 43600.0,
+      "bs": 9158.69920206691,
+      "atr": 201.0983269218483,
+      "atrvalue": 402.1966538436966,
+      "up_condition": false,
+      "down_condition": false,
+      "buy": false,
+      "sell": false,
+      "long": false,
+      "shrt": true,
+      "last_buy_price": 9200.0,
+      "last_sell_price": 9100.0
     },
     {
       "symbol": "TVS",
@@ -12407,7 +13233,7 @@
       "reason": "volume_filter",
       "last_date": "16/07/2026",
       "last_close": 21500.0,
-      "last_volume": 0.0
+      "last_volume": 1000.0
     },
     {
       "symbol": "VBC",
@@ -12486,7 +13312,7 @@
       "reason": "volume_filter",
       "last_date": "16/07/2026",
       "last_close": 9500.0,
-      "last_volume": 0.0
+      "last_volume": 1800.0
     },
     {
       "symbol": "VCF",
@@ -12590,10 +13416,21 @@
         "Volume"
       ],
       "has_ohlcv": true,
-      "reason": "volume_filter",
+      "reason": "no_cross_signal",
       "last_date": "16/07/2026",
       "last_close": 34000.0,
-      "last_volume": 0.0
+      "last_volume": 48900.0,
+      "bs": 35799.78964524516,
+      "atr": 649.7879932550354,
+      "atrvalue": 1299.5759865100708,
+      "up_condition": false,
+      "down_condition": false,
+      "buy": false,
+      "sell": false,
+      "long": false,
+      "shrt": true,
+      "last_buy_price": 44100.0,
+      "last_sell_price": 43700.0
     },
     {
       "symbol": "VDL",
@@ -12686,10 +13523,21 @@
         "Volume"
       ],
       "has_ohlcv": true,
-      "reason": "volume_filter",
+      "reason": "no_cross_signal",
       "last_date": "16/07/2026",
       "last_close": 10300.0,
-      "last_volume": 0.0
+      "last_volume": 554500.0,
+      "bs": 10045.19973086435,
+      "atr": 334.1529649761827,
+      "atrvalue": 668.3059299523654,
+      "up_condition": false,
+      "down_condition": false,
+      "buy": false,
+      "sell": false,
+      "long": true,
+      "shrt": false,
+      "last_buy_price": 11100.0,
+      "last_sell_price": 12000.0
     },
     {
       "symbol": "VGC",
@@ -12731,10 +13579,21 @@
         "Volume"
       ],
       "has_ohlcv": true,
-      "reason": "volume_filter",
+      "reason": "no_cross_signal",
       "last_date": "16/07/2026",
       "last_close": 26600.0,
-      "last_volume": 0.0
+      "last_volume": 20600.0,
+      "bs": 26033.304700987952,
+      "atr": 326.8103474377836,
+      "atrvalue": 653.6206948755672,
+      "up_condition": false,
+      "down_condition": false,
+      "buy": false,
+      "sell": false,
+      "long": true,
+      "shrt": false,
+      "last_buy_price": 25300.0,
+      "last_sell_price": 26600.0
     },
     {
       "symbol": "VGS",
@@ -12748,10 +13607,21 @@
         "Volume"
       ],
       "has_ohlcv": true,
-      "reason": "volume_filter",
+      "reason": "no_cross_signal",
       "last_date": "16/07/2026",
       "last_close": 19800.0,
-      "last_volume": 0.0
+      "last_volume": 139400.0,
+      "bs": 21218.525153992465,
+      "atr": 509.2625769962321,
+      "atrvalue": 1018.5251539924642,
+      "up_condition": false,
+      "down_condition": true,
+      "buy": false,
+      "sell": false,
+      "long": false,
+      "shrt": true,
+      "last_buy_price": 24227.0,
+      "last_sell_price": 23270.0
     },
     {
       "symbol": "VHC",
@@ -12793,10 +13663,21 @@
         "Volume"
       ],
       "has_ohlcv": true,
-      "reason": "volume_filter",
+      "reason": "no_cross_signal",
       "last_date": "16/07/2026",
       "last_close": 3000.0,
-      "last_volume": 0.0
+      "last_volume": 100400.0,
+      "bs": 2953.1563069906097,
+      "atr": 126.8078954964765,
+      "atrvalue": 253.615790992953,
+      "up_condition": false,
+      "down_condition": false,
+      "buy": false,
+      "sell": false,
+      "long": true,
+      "shrt": false,
+      "last_buy_price": 3400.0,
+      "last_sell_price": 4400.0
     },
     {
       "symbol": "VHL",
@@ -12931,7 +13812,7 @@
       "reason": "volume_filter",
       "last_date": "16/07/2026",
       "last_close": 15700.0,
-      "last_volume": 0.0
+      "last_volume": 6600.0
     },
     {
       "symbol": "VIG",
@@ -12945,10 +13826,21 @@
         "Volume"
       ],
       "has_ohlcv": true,
-      "reason": "volume_filter",
+      "reason": "sell_signal",
       "last_date": "16/07/2026",
       "last_close": 4400.0,
-      "last_volume": 0.0
+      "last_volume": 144100.0,
+      "bs": 4822.295801704438,
+      "atr": 211.1479008522193,
+      "atrvalue": 422.2958017044386,
+      "up_condition": false,
+      "down_condition": true,
+      "buy": false,
+      "sell": true,
+      "long": false,
+      "shrt": true,
+      "last_buy_price": 4700.0,
+      "last_sell_price": 4400.0
     },
     {
       "symbol": "VIP",
@@ -12993,7 +13885,7 @@
       "reason": "volume_filter",
       "last_date": "16/07/2026",
       "last_close": 27700.0,
-      "last_volume": 0.0
+      "last_volume": 100.0
     },
     {
       "symbol": "VIX",
@@ -13083,7 +13975,7 @@
       "reason": "volume_filter",
       "last_date": "16/07/2026",
       "last_close": 4100.0,
-      "last_volume": 0.0
+      "last_volume": 200.0
     },
     {
       "symbol": "VMD",
@@ -13117,7 +14009,7 @@
       "reason": "volume_filter",
       "last_date": "16/07/2026",
       "last_close": 48200.0,
-      "last_volume": 0.0
+      "last_volume": 800.0
     },
     {
       "symbol": "VNC",
@@ -13134,7 +14026,7 @@
       "reason": "volume_filter",
       "last_date": "16/07/2026",
       "last_close": 35900.0,
-      "last_volume": 0.0
+      "last_volume": 1000.0
     },
     {
       "symbol": "VND",
@@ -13176,10 +14068,21 @@
         "Volume"
       ],
       "has_ohlcv": true,
-      "reason": "volume_filter",
+      "reason": "no_cross_signal",
       "last_date": "16/07/2026",
       "last_close": 2700.0,
-      "last_volume": 0.0
+      "last_volume": 454300.0,
+      "bs": 3454.911681693721,
+      "atr": 327.4558408468606,
+      "atrvalue": 654.9116816937212,
+      "up_condition": false,
+      "down_condition": true,
+      "buy": false,
+      "sell": false,
+      "long": false,
+      "shrt": true,
+      "last_buy_price": 3810.0,
+      "last_sell_price": 3650.0
     },
     {
       "symbol": "VNF",
@@ -13196,7 +14099,7 @@
       "reason": "volume_filter",
       "last_date": "16/07/2026",
       "last_close": 13000.0,
-      "last_volume": 0.0
+      "last_volume": 8600.0
     },
     {
       "symbol": "VNG",
@@ -13275,7 +14178,7 @@
       "reason": "volume_filter",
       "last_date": "16/07/2026",
       "last_close": 19600.0,
-      "last_volume": 0.0
+      "last_volume": 9600.0
     },
     {
       "symbol": "VNS",
@@ -13534,7 +14437,7 @@
       "reason": "volume_filter",
       "last_date": "16/07/2026",
       "last_close": 18200.0,
-      "last_volume": 0.0
+      "last_volume": 400.0
     },
     {
       "symbol": "VSC",
@@ -13613,7 +14516,7 @@
       "reason": "volume_filter",
       "last_date": "16/07/2026",
       "last_close": 13500.0,
-      "last_volume": 0.0
+      "last_volume": 2000.0
     },
     {
       "symbol": "VTB",
@@ -13647,7 +14550,7 @@
       "reason": "volume_filter",
       "last_date": "16/07/2026",
       "last_close": 12200.0,
-      "last_volume": 0.0
+      "last_volume": 1700.0
     },
     {
       "symbol": "VTH",
@@ -13751,10 +14654,21 @@
         "Volume"
       ],
       "has_ohlcv": true,
-      "reason": "volume_filter",
+      "reason": "no_cross_signal",
       "last_date": "16/07/2026",
       "last_close": 13700.0,
-      "last_volume": 0.0
+      "last_volume": 20500.0,
+      "bs": 14471.147087636227,
+      "atr": 520.5215100507788,
+      "atrvalue": 1041.0430201015577,
+      "up_condition": false,
+      "down_condition": false,
+      "buy": false,
+      "sell": false,
+      "long": false,
+      "shrt": true,
+      "last_buy_price": 14700.0,
+      "last_sell_price": 13700.0
     },
     {
       "symbol": "VTZ",
@@ -13768,10 +14682,21 @@
         "Volume"
       ],
       "has_ohlcv": true,
-      "reason": "volume_filter",
+      "reason": "no_cross_signal",
       "last_date": "16/07/2026",
       "last_close": 20300.0,
-      "last_volume": 0.0
+      "last_volume": 986900.0,
+      "bs": 20033.461304036853,
+      "atr": 208.95383827565226,
+      "atrvalue": 417.9076765513045,
+      "up_condition": false,
+      "down_condition": false,
+      "buy": false,
+      "sell": false,
+      "long": true,
+      "shrt": false,
+      "last_buy_price": 19000.0,
+      "last_sell_price": 18400.0
     },
     {
       "symbol": "WCS",
@@ -13792,7 +14717,7 @@
     },
     {
       "symbol": "WSS",
-      "rows": 521,
+      "rows": 522,
       "columns": [
         "TradingDate",
         "Open",
@@ -13802,10 +14727,21 @@
         "Volume"
       ],
       "has_ohlcv": true,
-      "reason": "volume_filter",
-      "last_date": "15/07/2026",
-      "last_close": 6400.0,
-      "last_volume": 8800.0
+      "reason": "buy_signal",
+      "last_date": "16/07/2026",
+      "last_close": 6500.0,
+      "last_volume": 44200.0,
+      "bs": 6477.7641292824665,
+      "atr": 294.25979374516146,
+      "atrvalue": 588.5195874903229,
+      "up_condition": false,
+      "down_condition": false,
+      "buy": true,
+      "sell": false,
+      "long": true,
+      "shrt": false,
+      "last_buy_price": 6500.0,
+      "last_sell_price": 6400.0
     },
     {
       "symbol": "YBM",
