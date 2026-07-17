@@ -68,6 +68,8 @@
     <button type="button" data-sort="position20">Gan breakout</button>
   </div>
 
+  <div id="staleWarning" style="display:none;border:1px solid rgba(255,107,107,.35);background:rgba(255,107,107,.08);border-radius:14px;padding:12px 16px;margin-bottom:14px;font-size:13px;color:#FF8A8A;"><b>Canh bao:</b> Du lieu cache OHLCV co the cu hon ngay hien thi. Diem so van tinh tu cache, can chay fetch_and_compute de cap nhat.</div>
+
   <section class="panel">
     <div class="panel-head">
       <div>
@@ -105,8 +107,13 @@ async function loadData(){
 
 function renderMeta(){
   const b = DATA.benchmark || {};
+  const cacheDate = DATA.latest_data_date || DATA.date || '';
+  const genDate = new Date(DATA.generated_at);
+  const stalenessDays = Math.floor((new Date() - genDate) / 86400000);
+  if(stalenessDays >= 2) document.getElementById('staleWarning').style.display = 'block';
   document.getElementById('meta').innerHTML = `
-    <span class="pill">Cap nhat: ${new Date(DATA.generated_at).toLocaleString('vi-VN')}</span>
+    <span class="pill">Cap nhat: ${genDate.toLocaleString('vi-VN')}</span>
+    <span class="pill">Gia moi nhat: ${cacheDate}</span>
     <span class="pill">Benchmark 20D: ${signed(b.return_20d)}%</span>
     <span class="pill">Benchmark 60D: ${signed(b.return_60d)}%</span>
     <span class="pill">DD60: ${signed(b.drawdown_60d)}%</span>`;
