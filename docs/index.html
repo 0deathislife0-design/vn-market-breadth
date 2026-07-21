@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Độ rộng thị trường — TTCK Việt Nam</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Lora:wght@600;700&display=swap" rel="stylesheet">
 <style>
   :root{
     --bg-a:#F4F1EA; --bg-b:#EFEAE0; --bg-c:#FFF8EA;
@@ -33,14 +33,14 @@
   .nav-inner{max-width:1120px;margin:0 auto;padding:13px clamp(12px,3vw,36px);display:flex;align-items:center;justify-content:space-between;gap:18px;}
   .brand{display:flex;align-items:center;gap:10px;color:#101820;text-decoration:none;}
   .brand-mark{width:34px;height:34px;border-radius:4px;background:#111;color:#D8AA5A;display:grid;place-items:center;font-size:11px;font-weight:900;letter-spacing:.12em;font-family:Georgia,serif;}
-  .brand-title{display:block;font-weight:850;font-size:14px;line-height:1.05;letter-spacing:-.02em;}.brand-sub{display:block;font-size:9px;text-transform:uppercase;letter-spacing:.18em;color:#8A8172;margin-top:3px;}
+  .brand-copy{display:flex;flex-direction:column;gap:3px;min-width:0;}.brand-title{display:block;font-weight:850;font-size:14px;line-height:1.05;letter-spacing:-.02em;}.brand-sub{display:block;font-size:9px;text-transform:uppercase;letter-spacing:.18em;color:#8A8172;line-height:1;margin:0;}
   .nav-links{display:flex;gap:22px;align-items:center;font-size:13px;font-weight:650;}.nav-links a{color:#273241;text-decoration:none;}.nav-links a:hover{color:#B88746;}
   .hero{position:relative;overflow:hidden;background:linear-gradient(180deg,#131922 0%,#090E13 100%);border:1px solid #24303B;border-radius:0 0 0 0;padding:44px clamp(26px,5vw,56px) 28px;margin:0 calc(clamp(12px,3vw,36px) * -1) 26px;box-shadow:var(--shadow-md);display:grid;grid-template-columns:minmax(0,1fr) 150px;gap:34px;align-items:center;color:#F8F4EC;}
   .hero:before{content:'';position:absolute;left:-8%;top:38%;width:120%;height:1px;background:linear-gradient(90deg,transparent,#B88746,transparent);opacity:.45;transform:rotate(-13deg);}
   .hero:after{content:'';position:absolute;inset:0;background:linear-gradient(120deg,rgba(184,135,70,.12),transparent 34%),repeating-linear-gradient(170deg,transparent 0 34px,rgba(255,255,255,.035) 35px,transparent 36px);pointer-events:none;}
   .hero-kicker{position:relative;z-index:1;display:flex;align-items:center;gap:10px;font-size:11px;font-weight:900;letter-spacing:0.22em;color:#D8AA5A;text-transform:uppercase;margin-bottom:14px;}
   .hero-kicker:before{content:'';width:28px;height:2px;background:#D8AA5A;border-radius:999px;}
-  .hero-title{position:relative;z-index:1;max-width:760px;font-family:Georgia,'Times New Roman',serif !important;font-size:clamp(38px,6vw,68px);line-height:1.08;letter-spacing:-0.04em;font-weight:800;color:#FFFDF8;margin-bottom:18px;}
+  .hero-title{position:relative;z-index:1;max-width:760px;font-family:'Lora',Georgia,'Times New Roman',serif !important;font-size:clamp(36px,5.5vw,62px);line-height:1.12;letter-spacing:-0.035em;font-weight:700;color:#FFFDF8;margin-bottom:18px;}
   .hero-desc{position:relative;z-index:1;max-width:760px;font-size:clamp(14px,1.8vw,17px);line-height:1.75;color:#C6D0DD;}
   .hero-meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px;}
   .hero-pill{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:0.12em;color:#E9D8B9;background:rgba(255,255,255,0.05);border:1px solid rgba(216,170,90,0.25);border-radius:999px;padding:6px 10px;}
@@ -265,7 +265,7 @@
   .gauge-score{text-align:center;margin-top:8px;font-size:28px;font-weight:900;letter-spacing:-.04em;color:#101820;}
   .gauge-scale{display:flex;justify-content:space-between;font-size:10px;color:var(--faint);font-weight:800;text-transform:uppercase;letter-spacing:.08em;margin-top:4px;}
   .sentiment-copy .label{font-size:10px;text-transform:uppercase;letter-spacing:.14em;color:var(--faint);font-weight:900;margin-bottom:6px;}
-  .sentiment-copy .state{font-family:Georgia,'Times New Roman',serif;font-size:28px;line-height:1.05;font-weight:800;color:#101820;margin-bottom:8px;}
+   .sentiment-copy .state{font-family:'Lora',Georgia,'Times New Roman',serif !important;font-size:28px;line-height:1.1;font-weight:700;color:#101820;margin-bottom:8px;}
   .sentiment-copy .note{font-size:12px;color:var(--muted);line-height:1.6;background:transparent;border-left:3px solid var(--accent-2);padding:0 0 0 12px;margin:0;}
   .rsi-pulse-card{border:1px solid var(--border);border-radius:6px;padding:12px;background:#fff;box-shadow:var(--shadow-sm);}
   .rsi-pulse-card .lab{font-size:9px;text-transform:uppercase;letter-spacing:0.08em;color:var(--faint);font-weight:800;}
@@ -316,7 +316,7 @@
   <div class="nav-inner">
     <a class="brand" href="./index.html">
       <span class="brand-mark">ND</span>
-      <span><span class="brand-title">NguyenDat Market Atlas</span><span class="brand-sub">Breadth · Signals · Radar</span></span>
+      <span class="brand-copy"><span class="brand-title">NguyenDat Market Atlas</span><span class="brand-sub">Breadth · Signals · Radar</span></span>
     </a>
     <div class="nav-links">
       <a href="./index.html">Dashboard</a>
