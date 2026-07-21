@@ -7,6 +7,8 @@ import requests
 from collections import deque
 from datetime import datetime, timedelta
 
+from _shared import vn_now
+
 BASE_URL = "https://fc-data.ssi.com.vn/api/v2/Market"
 
 
@@ -54,10 +56,10 @@ class SSIClient:
 
     def _get_token(self):
         # Double-checked locking cho thread safety
-        if self._token and self._token_expires_at and datetime.now() < self._token_expires_at:
+        if self._token and self._token_expires_at and vn_now() < self._token_expires_at:
             return self._token
         with self._token_lock:
-            if self._token and self._token_expires_at and datetime.now() < self._token_expires_at:
+            if self._token and self._token_expires_at and vn_now() < self._token_expires_at:
                 return self._token
             resp = requests.post(
                 BASE_URL + "/AccessToken",
@@ -70,7 +72,7 @@ class SSIClient:
             resp.raise_for_status()
             payload = resp.json()
             self._token = payload["data"]["accessToken"]
-            self._token_expires_at = datetime.now() + timedelta(hours=23)
+            self._token_expires_at = vn_now() + timedelta(hours=23)
             print("[AUTH] Token lấy thành công")
             return self._token
 

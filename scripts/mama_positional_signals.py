@@ -9,13 +9,12 @@ from __future__ import annotations
 import json
 import os
 import warnings
-from datetime import datetime, timezone, timedelta
 
 import numpy as np
 import pandas as pd
 
 from cache_utils import load_cache as _load_cache
-from _shared import tqdm, DATA_DIR, CACHE_DIR, DOCS_DATA_DIR, list_symbols, json_default as _json_default
+from _shared import tqdm, DATA_DIR, CACHE_DIR, DOCS_DATA_DIR, format_market_date, json_default as _json_default, list_symbols, signal_market_date, vn_now
 
 warnings.filterwarnings("ignore", category=FutureWarning)
 warnings.filterwarnings("ignore", category=DeprecationWarning)
@@ -358,11 +357,12 @@ def main():
     signals.sort(key=lambda x: (x["status"] == "BUY", x["last_volume"]), reverse=True)
     buys = [s for s in signals if s["mama_buy"]]
     sells = [s for s in signals if s["mama_sell"]]
-    now = datetime.now(timezone.utc) + timedelta(hours=7)
+    now = vn_now()
+    market_date = format_market_date(signal_market_date()) or now.strftime("%d/%m/%Y")
     output = {
         "mode": "ehlers_mama_positional",
         "generated_at": now.isoformat(),
-        "date": now.strftime("%d/%m/%Y"),
+        "date": market_date,
         "fast_limit": FAST_LIMIT,
         "slow_limit": SLOW_LIMIT,
         "cycle_part": CYCLE_PART,

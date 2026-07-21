@@ -8,41 +8,47 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg-a:#F8FAF7; --bg-b:#F3F6F1; --bg-c:#FFF8EA;
-    --panel:#FFFFFF; --panel-tint:#F8FAF7; --border:#E3E8EF;
-    --text:#0B132B; --muted:#556070; --faint:#8A94A6;
+    --bg-a:#F4F1EA; --bg-b:#EFEAE0; --bg-c:#FFF8EA;
+    --panel:#FFFDF8; --panel-tint:#F4EFE6; --border:#D8D0C2;
+    --text:#171717; --muted:#5F6773; --faint:#8A8172;
     --up:#16A34A; --down:#C2413B;
     --neutral:#D6A84F;
-    --accent-1:#0B132B; --accent-2:#2E7D32;
-    --accent-grad: linear-gradient(120deg, #0B132B, #2E7D32);
-    --shadow-sm: 0 2px 10px rgba(11,19,43,0.045);
-    --shadow-md: 0 14px 36px rgba(11,19,43,0.09);
+    --accent-1:#101820; --accent-2:#B88746;
+    --green:#16A34A; --blue:#2C6E9E; --red:#C2413B; --ink:#101820;
+    --accent-grad: linear-gradient(120deg, #101820, #B88746);
+    --shadow-sm: 0 2px 0 rgba(16,24,32,0.04);
+    --shadow-md: 0 18px 50px rgba(16,24,32,0.12);
     --font-all:'Inter',sans-serif;
   }
   *{box-sizing:border-box; margin:0; padding:0; font-family:'Inter',sans-serif !important;}
   html{scroll-behavior:smooth;}
   body{color:var(--text);}
   body{
-    min-height:100vh; padding:20px clamp(12px,3vw,36px) 40px;
-    background:
-      radial-gradient(900px 520px at 10% -10%, rgba(214,168,79,0.14) 0%, transparent 55%),
-      radial-gradient(850px 560px at 100% 0%, rgba(46,125,50,0.08) 0%, transparent 50%),
-      linear-gradient(180deg, var(--bg-a) 0%, #FFFFFF 68%);
+    min-height:100vh; padding:0 0 44px;
+    background:linear-gradient(180deg,#F7F4ED 0%,#F2EDE4 46%,#FBFAF6 100%);
     background-attachment:fixed;
   }
-  .wrap{max-width:1120px; margin:0 auto;}
-  .hero{position:relative;overflow:hidden;background:linear-gradient(135deg,#FFFFFF 0%,#FAFBF8 55%,#F2F6EF 100%);border:1px solid var(--border);border-radius:22px;padding:42px clamp(26px,5vw,56px);margin-bottom:18px;box-shadow:var(--shadow-md);display:grid;grid-template-columns:minmax(0,1fr) 150px;gap:34px;align-items:center;}
-  .hero:after{content:'';position:absolute;right:-100px;top:-140px;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,rgba(46,125,50,0.12),transparent 66%);}
-  .hero-kicker{display:flex;align-items:center;gap:10px;font-size:11px;font-weight:800;letter-spacing:0.18em;color:#0B132B;text-transform:uppercase;margin-bottom:14px;}
-  .hero-kicker:before{content:'';width:28px;height:2px;background:#F5A524;border-radius:999px;}
-  .hero-title{max-width:760px;font-size:clamp(34px,5.6vw,60px);line-height:0.98;letter-spacing:-0.055em;font-weight:800;color:#0B132B;margin-bottom:18px;}
-  .hero-desc{max-width:760px;font-size:clamp(14px,1.8vw,17px);line-height:1.7;color:#4B587F;}
+  .wrap{max-width:1120px; margin:0 auto; padding:0 clamp(12px,3vw,36px);}
+  .site-nav{position:sticky;top:0;z-index:80;background:rgba(247,244,237,.94);backdrop-filter:blur(14px);border-bottom:1px solid #D7D0C4;}
+  .nav-inner{max-width:1120px;margin:0 auto;padding:13px clamp(12px,3vw,36px);display:flex;align-items:center;justify-content:space-between;gap:18px;}
+  .brand{display:flex;align-items:center;gap:10px;color:#101820;text-decoration:none;}
+  .brand-mark{width:34px;height:34px;border-radius:4px;background:#111;color:#D8AA5A;display:grid;place-items:center;font-size:11px;font-weight:900;letter-spacing:.12em;font-family:Georgia,serif;}
+  .brand-title{font-weight:850;font-size:14px;line-height:1.05;letter-spacing:-.02em;}.brand-sub{font-size:9px;text-transform:uppercase;letter-spacing:.24em;color:#8A8172;margin-top:2px;}
+  .nav-links{display:flex;gap:22px;align-items:center;font-size:13px;font-weight:650;}.nav-links a{color:#273241;text-decoration:none;}.nav-links a:hover{color:#B88746;}
+  .hero{position:relative;overflow:hidden;background:linear-gradient(180deg,#131922 0%,#090E13 100%);border:1px solid #24303B;border-radius:0 0 0 0;padding:44px clamp(26px,5vw,56px) 28px;margin:0 calc(clamp(12px,3vw,36px) * -1) 26px;box-shadow:var(--shadow-md);display:grid;grid-template-columns:minmax(0,1fr) 150px;gap:34px;align-items:center;color:#F8F4EC;}
+  .hero:before{content:'';position:absolute;left:-8%;top:38%;width:120%;height:1px;background:linear-gradient(90deg,transparent,#B88746,transparent);opacity:.45;transform:rotate(-13deg);}
+  .hero:after{content:'';position:absolute;inset:0;background:linear-gradient(120deg,rgba(184,135,70,.12),transparent 34%),repeating-linear-gradient(170deg,transparent 0 34px,rgba(255,255,255,.035) 35px,transparent 36px);pointer-events:none;}
+  .hero-kicker{position:relative;z-index:1;display:flex;align-items:center;gap:10px;font-size:11px;font-weight:900;letter-spacing:0.22em;color:#D8AA5A;text-transform:uppercase;margin-bottom:14px;}
+  .hero-kicker:before{content:'';width:28px;height:2px;background:#D8AA5A;border-radius:999px;}
+  .hero-title{position:relative;z-index:1;max-width:760px;font-family:Georgia,'Times New Roman',serif !important;font-size:clamp(38px,6vw,68px);line-height:0.98;letter-spacing:-0.045em;font-weight:800;color:#FFFDF8;margin-bottom:18px;}
+  .hero-desc{position:relative;z-index:1;max-width:760px;font-size:clamp(14px,1.8vw,17px);line-height:1.75;color:#C6D0DD;}
   .hero-meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px;}
-  .hero-pill{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--accent-1);background:rgba(79,70,229,0.08);border:1px solid rgba(79,70,229,0.16);border-radius:999px;padding:6px 10px;}
-  .hero-logo{position:relative;z-index:1;justify-self:end;width:138px;height:138px;border-radius:22px;background:#fff;border:1px solid rgba(227,232,239,0.95);box-shadow:0 18px 42px rgba(11,19,43,0.10);display:flex;align-items:center;justify-content:center;padding:14px;}
+  .hero-pill{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:0.12em;color:#E9D8B9;background:rgba(255,255,255,0.05);border:1px solid rgba(216,170,90,0.25);border-radius:999px;padding:6px 10px;}
+  .hero-logo{position:relative;z-index:1;justify-self:end;width:138px;height:138px;border-radius:10px;background:#F7F4ED;border:1px solid rgba(216,170,90,0.35);box-shadow:0 18px 42px rgba(0,0,0,0.28);display:flex;align-items:center;justify-content:center;padding:14px;}
   .hero-logo img{width:100%;height:100%;object-fit:contain;display:block;}
   @media (max-width:760px){.hero{grid-template-columns:1fr;}.hero-logo{justify-self:start;width:112px;height:112px;order:-1;}}
-  @media (max-width:640px){.hero{padding:26px 20px;}.hero-title{font-size:36px;}}
+  @media (max-width:700px){.nav-inner{align-items:flex-start;}.nav-links{gap:12px;flex-wrap:wrap;justify-content:flex-end;font-size:12px;}}
+  @media (max-width:640px){.hero{padding:26px 20px;margin-left:-12px;margin-right:-12px;}.hero-title{font-size:36px;}}
   header{display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom:10px;}
   h1{font-weight:700; font-size:clamp(17px,2.2vw,23px); letter-spacing:-0.01em; color:#141834; display:inline-flex; align-items:center; gap:8px;}
   h1 small{font-size:11px; font-weight:500; color:var(--faint); letter-spacing:0; display:inline-block; margin-left:4px;}
@@ -57,12 +63,12 @@
   .market-tabs button:hover{color:var(--accent-1); background:var(--panel-tint);}
   .market-tabs button.active{background:var(--accent-grad); color:#fff; box-shadow:0 4px 12px rgba(79,70,229,0.3);}
 
-  .panel{background:var(--panel); border:1px solid var(--border); border-radius:16px; padding:20px; margin-bottom:14px; box-shadow:var(--shadow-sm);}
+  .panel{background:var(--panel); border:1px solid var(--border); border-radius:4px; padding:22px; margin-bottom:16px; box-shadow:var(--shadow-sm);overflow-x:auto;}
   .panel h2{font-family:var(--font-all); font-weight:600; font-size:12px; text-transform:uppercase; letter-spacing:0.05em; color:#3A4270; margin-bottom:12px; display:flex; align-items:center; gap:8px;}
 
   .kpi-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;}
   @media (max-width:700px){.kpi-grid{grid-template-columns:repeat(3,1fr);}}
-  .kpi-card{border:1px solid var(--border);border-radius:13px;padding:12px;text-align:center;background:var(--panel);box-shadow:var(--shadow-sm);}
+  .kpi-card{border:1px solid var(--border);border-radius:4px;padding:14px;text-align:left;background:var(--panel);box-shadow:var(--shadow-sm);}
   .kpi-card .lab{font-size:9px;text-transform:uppercase;letter-spacing:0.04em;color:var(--faint);font-weight:600;}
   .kpi-card .num{font-family:var(--font-all);font-size:20px;font-weight:700;margin-top:2px;}
   .kpi-card .sub{font-size:10px;color:var(--muted);margin-top:1px;}
@@ -86,7 +92,7 @@
   .action-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:12px 0;}
   @media (max-width:850px){.action-grid{grid-template-columns:repeat(2,1fr);}}
   @media (max-width:520px){.action-grid{grid-template-columns:1fr;}}
-  .action-card{border:1px solid var(--border);border-radius:16px;padding:16px;background:var(--panel);box-shadow:var(--shadow-sm);min-height:132px;}
+  .action-card{border:1px solid var(--border);border-radius:4px;padding:16px;background:var(--panel);box-shadow:var(--shadow-sm);min-height:132px;}
   .action-card.buy{border-color:rgba(22,163,74,0.24);background:#fff;}
   .action-card.watch{border-color:rgba(214,168,79,0.30);background:#fff;}
   .action-card.sell{border-color:rgba(194,65,59,0.24);background:#fff;}
@@ -129,7 +135,7 @@
   .btn-copy{font-family:var(--font-all);font-size:11px;padding:6px 14px;border-radius:8px;border:1px solid var(--border);background:var(--panel-tint);color:var(--muted);cursor:pointer;transition:all .15s;white-space:nowrap;}
   .btn-copy:hover{background:var(--accent-1);color:#fff;border-color:var(--accent-1);}
 
-  table{width:100%;border-collapse:collapse;font-size:12px;}
+  table{width:100%;min-width:780px;border-collapse:collapse;font-size:12px;}
   th{text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:0.06em;color:var(--faint);font-weight:700;padding:9px 8px;border-bottom:1px solid var(--border);position:sticky;top:0;background:rgba(255,255,255,0.96);z-index:2;}
   td{padding:11px 8px;border-bottom:1px solid var(--border);vertical-align:top;}
   tr:hover td{background:rgba(248,250,247,0.78);}
@@ -250,11 +256,75 @@
   .ad-dist-foot{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);font-weight:700;}
   @media (max-width:700px){.ad-bars{gap:4px;height:180px;overflow-x:auto;}.ad-bar-label{font-size:8px;writing-mode:vertical-rl;transform:rotate(180deg);}}
 
+  .rsi-pulse-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:12px;}
+  .sentiment-gauge{display:grid;grid-template-columns:260px 1fr;gap:18px;align-items:center;margin-bottom:14px;border:1px solid var(--border);background:linear-gradient(135deg,#FFFDF8,#F4EFE6);border-radius:6px;padding:16px;}
+  .gauge-face{position:relative;height:142px;border-radius:142px 142px 0 0;overflow:hidden;background:conic-gradient(from 270deg at 50% 100%,#C2413B 0deg,#D6A84F 54deg,#0F9F6E 108deg,#D6A84F 144deg,#B88746 180deg,transparent 180deg);}
+  .gauge-face:after{content:'';position:absolute;left:28px;right:28px;bottom:0;height:86px;border-radius:86px 86px 0 0;background:#FFFDF8;border:1px solid rgba(216,208,194,.65);border-bottom:none;}
+  .gauge-needle{position:absolute;left:50%;bottom:0;width:3px;height:104px;background:#101820;border-radius:999px;transform-origin:50% 100%;transform:rotate(var(--needle,-90deg));z-index:2;box-shadow:0 0 0 1px rgba(255,255,255,.5);}
+  .gauge-center{position:absolute;left:50%;bottom:-7px;transform:translateX(-50%);width:18px;height:18px;border-radius:50%;background:#101820;z-index:3;border:3px solid #FFFDF8;}
+  .gauge-score{text-align:center;margin-top:8px;font-size:28px;font-weight:900;letter-spacing:-.04em;color:#101820;}
+  .gauge-scale{display:flex;justify-content:space-between;font-size:10px;color:var(--faint);font-weight:800;text-transform:uppercase;letter-spacing:.08em;margin-top:4px;}
+  .sentiment-copy .label{font-size:10px;text-transform:uppercase;letter-spacing:.14em;color:var(--faint);font-weight:900;margin-bottom:6px;}
+  .sentiment-copy .state{font-family:Georgia,'Times New Roman',serif;font-size:28px;line-height:1.05;font-weight:800;color:#101820;margin-bottom:8px;}
+  .sentiment-copy .note{font-size:12px;color:var(--muted);line-height:1.6;background:transparent;border-left:3px solid var(--accent-2);padding:0 0 0 12px;margin:0;}
+  .rsi-pulse-card{border:1px solid var(--border);border-radius:6px;padding:12px;background:#fff;box-shadow:var(--shadow-sm);}
+  .rsi-pulse-card .lab{font-size:9px;text-transform:uppercase;letter-spacing:0.08em;color:var(--faint);font-weight:800;}
+  .rsi-pulse-card .num{font-size:22px;font-weight:850;margin-top:4px;}
+  .rsi-pulse-card .sub{font-size:10px;color:var(--muted);margin-top:2px;}
+  .rsi-pulse-card.oversold .num{color:var(--down);}
+  .rsi-pulse-card.overbought .num{color:var(--neutral);}
+  .rsi-pulse-card.bullish .num{color:var(--up);}
+  @media (max-width:700px){.rsi-pulse-grid,.sentiment-gauge{grid-template-columns:1fr;}.gauge-face{height:128px;}}
+
   .session-badge{display:inline-block;font-family:var(--font-all);font-size:10px;padding:2px 8px;border-radius:999px;font-weight:600;margin-left:6px;}
-.session-badge.close{background:rgba(79,70,229,0.12);color:var(--accent-1);}
+ .session-badge.close{background:rgba(79,70,229,0.12);color:var(--accent-1);}
+
+  .view-tabs{display:flex;gap:4px;margin-bottom:22px;background:var(--panel);border:1px solid var(--border);border-radius:999px;padding:4px;box-shadow:var(--shadow-sm);width:fit-content;}
+  .view-tab{font-family:var(--font-all);font-size:13px;font-weight:650;color:var(--muted);background:transparent;border:none;padding:8px 22px;border-radius:999px;cursor:pointer;transition:all .15s;}
+  .view-tab:hover{color:var(--accent-1);background:var(--panel-tint);}
+  .view-tab.active{background:var(--accent-grad);color:#fff;box-shadow:0 4px 12px rgba(79,70,229,0.3);}
+
+  #radarView .panel-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;padding:18px 18px 12px;border-bottom:1px solid var(--border);}
+  #radarView .panel-title{font-size:14px;font-weight:900;text-transform:uppercase;letter-spacing:.08em;}
+  #radarView .legend{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:14px 18px;border-bottom:1px solid var(--border);background:var(--panel-tint);}
+  #radarView .legend-item{border:1px solid var(--border);border-radius:4px;padding:10px;background:var(--panel);}
+  #radarView .legend-item b{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px;color:var(--ink);}
+  #radarView .legend-item span{display:block;font-size:11px;color:var(--muted);line-height:1.45;}
+  #radarView .tag.LEADER{background:rgba(40,209,124,.14);color:var(--green);}
+  #radarView .tag.WATCHLIST{background:rgba(245,185,76,.14);color:#B9760F;}
+  #radarView .tag.EARLY{background:rgba(104,168,255,.14);color:var(--blue);}
+  #radarView .tag.IGNORE{background:rgba(148,163,184,.14);color:var(--muted);}
+  #radarView .reason{font-size:10px;color:var(--muted);border:1px solid var(--border);background:var(--panel-tint);border-radius:999px;padding:2px 7px;}
+  #radarView .bar{width:100px;height:6px;background:var(--panel-tint);border-radius:999px;overflow:hidden;margin-top:4px;}
+  #radarView .bar span{display:block;height:100%;background:linear-gradient(90deg,var(--blue),var(--green));border-radius:999px;}
+  #radarView .sym{font-weight:900;font-size:14px;}
+  #radarView .toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:16px 0;}
+  #radarView .toolbar input,#radarView .toolbar select,#radarView .toolbar button{border:1px solid var(--border);background:var(--panel);color:var(--text);border-radius:4px;padding:10px 12px;font-size:13px;outline:none;}
+  #radarView .toolbar input{flex:1;min-width:180px;}
+  #radarView .toolbar button{cursor:pointer;font-weight:800;}
+  #radarView .toolbar button.active{border-color:var(--green);box-shadow:0 0 0 3px rgba(15,159,110,.12);}
+  #radarView .quick-filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;}
+  #radarView .quick-filters button{font-size:12px;border:1px solid var(--border);background:var(--panel-tint);color:var(--muted);padding:6px 14px;border-radius:999px;cursor:pointer;font-weight:700;}
+  #radarView .quick-filters button.active{color:#FFFDF8;background:var(--accent-1);border-color:var(--accent-1);}
+  #radarView .table-wrap{overflow:auto;}
+  #radarView .score{font-size:18px;font-weight:900;}
+  @media(max-width:700px){#radarView .legend{grid-template-columns:1fr;}}
 </style>
 </head>
 <body>
+<nav class="site-nav">
+  <div class="nav-inner">
+    <a class="brand" href="./index.html">
+      <span class="brand-mark">ND</span>
+      <span><span class="brand-title">NguyenDat Market Atlas</span><span class="brand-sub">Breadth · Signals · Radar</span></span>
+    </a>
+    <div class="nav-links">
+      <a href="./index.html">Dashboard</a>
+      <a href="#radar">Radar</a>
+      <a href="#dashboard" onclick="showDashboardContent(event)">Dữ liệu</a>
+    </div>
+  </div>
+</nav>
 <div class="wrap">
   <section class="hero">
     <div>
@@ -270,15 +340,31 @@
     <div class="hero-logo"><img src="./assets/logo.png" alt="NGUYENDAT INVEST logo"></div>
   </section>
 
-  <header>
-    <div>
-      <h1>Độ rộng thị trường <small>TTCK Việt Nam</small></h1>
-      <div class="sub" id="metaLine">Đang tải...</div>
-    </div>
-    <div class="market-tabs" id="marketTabs"></div>
-  </header>
+  <div class="view-tabs">
+    <button class="view-tab active" data-view="dashboard" onclick="switchView('dashboard')">Dashboard</button>
+    <button class="view-tab" data-view="radar" onclick="switchView('radar')">Accumulation Radar</button>
+  </div>
 
-  <div id="content"></div>
+  <div id="dashboardView">
+    <header>
+      <div>
+        <h1>Độ rộng thị trường <small>TTCK Việt Nam</small></h1>
+        <div class="sub" id="metaLine">Đang tải...</div>
+      </div>
+      <div class="market-tabs" id="marketTabs"></div>
+    </header>
+    <div id="content"></div>
+  </div>
+
+  <div id="radarView" style="display:none">
+    <header>
+      <div>
+        <h1>Accumulation Radar <small>Phát hiện cổ phiếu tích lũy</small></h1>
+        <div class="sub" id="radarMetaLine">Đang tải...</div>
+      </div>
+    </header>
+    <div id="radarContent"></div>
+  </div>
 
   <footer>Dữ liệu: SSI FastConnect · Cập nhật tự động qua GitHub Actions<br><span style="color:#141834;font-weight:600;">nguyendat.invest2026</span></footer>
 </div>
@@ -318,67 +404,67 @@ let ENSEMBLE_WEIGHTS = null, SIGNALS_HISTORY = null, LATEST_PRICES = null;
 
 async function loadData(){
   try {
-    const ts = Date.now();
-    const res = await fetch(`./data/breadth_latest.json?t=${ts}`);
-    if (!res.ok) throw new Error('No data');
-    LATEST = await res.json();
-
-    const h = await fetch(`./data/breadth_history.json?t=${ts}`);
-    HISTORY = h.ok ? await h.json() : [];
-
-    const c = await fetch(`./data/market_commentary.json?t=${ts}`);
-    COMMENTARY = c.ok ? await c.json() : null;
-
-    const s1 = await fetch(`./data/strategy_signals.json?t=${ts}`);
-    SIGNALS = s1.ok ? await s1.json() : null;
-
-    const s2 = await fetch(`./data/ensemble_signals.json?t=${ts}`);
-    ENSEMBLE = s2.ok ? await s2.json() : null;
-
-    const s3 = await fetch(`./data/momentum_signals.json?t=${ts}`);
-    MOMENTUM = s3.ok ? await s3.json() : null;
-
-    const lm = await fetch(`./data/luc_mach_signals.json?t=${ts}`);
-    LUC_MACH = lm.ok ? await lm.json() : null;
-
-    const k4 = await fetch(`./data/khung4_tplus_signals.json?t=${ts}`);
-    KHUNG4_TPLUS = k4.ok ? await k4.json() : null;
-
-    const mama = await fetch(`./data/mama_positional_signals.json?t=${ts}`);
-    MAMA_POSITIONAL = mama.ok ? await mama.json() : null;
-
-    const ats = await fetch(`./data/advanced_trailstop_signals.json?t=${ts}`);
-    ADVANCED_TRAILSTOP = ats.ok ? await ats.json() : null;
-
-    const w = await fetch(`./data/backtest_weights.json?t=${ts}`);
-    ENSEMBLE_WEIGHTS = w.ok ? await w.json() : null;
-
-    const bt = await fetch(`./data/backtest_momentum.json?t=${ts}`);
-    MOMENTUM_BT = bt.ok ? await bt.json() : null;
-
-    const mbt = await fetch(`./data/backtest_mama_positional.json?t=${ts}`);
-    MAMA_BT = mbt.ok ? await mbt.json() : null;
-
-    const abt = await fetch(`./data/backtest_advanced_trailstop.json?t=${ts}`);
-    ATS_BT = abt.ok ? await abt.json() : null;
-
-    const sh = await fetch(`./data/signals_history.json?t=${ts}`);
-    SIGNALS_HISTORY = sh.ok ? await sh.json() : null;
-
-    const lp = await fetch(`./data/latest_prices.json?t=${ts}`);
-    LATEST_PRICES = lp.ok ? await lp.json() : null;
+    if (typeof EMBEDDED_LATEST !== 'undefined') {
+      LATEST = EMBEDDED_LATEST;
+      HISTORY = EMBEDDED_HISTORY || [];
+      COMMENTARY = EMBEDDED_COMMENTARY;
+      SIGNALS = EMBEDDED_SIGNALS;
+      ENSEMBLE = EMBEDDED_ENSEMBLE;
+      ENSEMBLE_WEIGHTS = EMBEDDED_WEIGHTS;
+      MOMENTUM = EMBEDDED_MOMENTUM;
+      MOMENTUM_BT = EMBEDDED_MOMENTUM_BT;
+      MAMA_BT = EMBEDDED_MAMA_BT;
+      ATS_BT = EMBEDDED_ATS_BT;
+      LUC_MACH = EMBEDDED_LUC_MACH;
+      KHUNG4_TPLUS = EMBEDDED_KHUNG4_TPLUS;
+      MAMA_POSITIONAL = EMBEDDED_MAMA_POSITIONAL;
+      ADVANCED_TRAILSTOP = EMBEDDED_ADVANCED_TRAILSTOP;
+      SIGNALS_HISTORY = EMBEDDED_SIGNALS_HISTORY;
+      LATEST_PRICES = EMBEDDED_LATEST_PRICES;
+    } else {
+      const ts = Date.now();
+      const res = await fetch(`./data/breadth_latest.json?t=${ts}`);
+      if (!res.ok) throw new Error('No data');
+      LATEST = await res.json();
+      const [h, c, s1, s2, s3, lm, k4, mama, ats, w, bt, mbt, abt, sh, lp] = await Promise.all([
+        fetch(`./data/breadth_history.json?t=${ts}`), fetch(`./data/market_commentary.json?t=${ts}`),
+        fetch(`./data/strategy_signals.json?t=${ts}`), fetch(`./data/ensemble_signals.json?t=${ts}`),
+        fetch(`./data/momentum_signals.json?t=${ts}`), fetch(`./data/luc_mach_signals.json?t=${ts}`),
+        fetch(`./data/khung4_tplus_signals.json?t=${ts}`), fetch(`./data/mama_positional_signals.json?t=${ts}`),
+        fetch(`./data/advanced_trailstop_signals.json?t=${ts}`), fetch(`./data/backtest_weights.json?t=${ts}`),
+        fetch(`./data/backtest_momentum.json?t=${ts}`), fetch(`./data/backtest_mama_positional.json?t=${ts}`),
+        fetch(`./data/backtest_advanced_trailstop.json?t=${ts}`), fetch(`./data/signals_history.json?t=${ts}`),
+        fetch(`./data/latest_prices.json?t=${ts}`),
+      ]);
+      HISTORY = h.ok ? await h.json() : [];
+      COMMENTARY = c.ok ? await c.json() : null;
+      SIGNALS = s1.ok ? await s1.json() : null;
+      ENSEMBLE = s2.ok ? await s2.json() : null;
+      MOMENTUM = s3.ok ? await s3.json() : null;
+      LUC_MACH = lm.ok ? await lm.json() : null;
+      KHUNG4_TPLUS = k4.ok ? await k4.json() : null;
+      MAMA_POSITIONAL = mama.ok ? await mama.json() : null;
+      ADVANCED_TRAILSTOP = ats.ok ? await ats.json() : null;
+      ENSEMBLE_WEIGHTS = w.ok ? await w.json() : null;
+      MOMENTUM_BT = bt.ok ? await bt.json() : null;
+      MAMA_BT = mbt.ok ? await mbt.json() : null;
+      ATS_BT = abt.ok ? await abt.json() : null;
+      SIGNALS_HISTORY = sh.ok ? await sh.json() : null;
+      LATEST_PRICES = lp.ok ? await lp.json() : null;
+    }
 
     document.getElementById('metaLine').innerHTML =
       `Cập nhật: ${new Date(LATEST.generated_at).toLocaleString('vi-VN')}`
-      + ` · ${LATEST.markets.ALL.date}`
-      + `<span class="session-badge close">Đóng cửa 15:10</span>`;
+      + ` · ${escapeHtml(LATEST.markets.ALL.date)}`
+      + `<span class="session-badge close">Đóng cửa 15:10</span>`
+      + staleDataBadge(LATEST.markets.ALL.date);
 
     MARKETS = ['ALL', ...Object.keys(LATEST.markets).filter(k => k !== 'ALL')];
     renderMarketTabs();
     render();
   } catch(e){
     console.error(e);
-    document.getElementById('content').innerHTML = `<div class="err">❌ Không tải được dữ liệu<br><small>${e.message}</small></div>`;
+    document.getElementById('content').innerHTML = `<div class="err">❌ Không tải được dữ liệu<br><small>${escapeHtml(e.message)}</small></div>`;
   }
 }
 
@@ -396,6 +482,27 @@ function renderMarketTabs(){
 
 function fmt1(n){ return (n === null || n === undefined) ? '\u2014' : Number(n).toFixed(1); }
 function fmtPrice(n){ return (n === null || n === undefined) ? '\u2014' : Number(n).toLocaleString('vi-VN'); }
+function escapeHtml(value){
+  return String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+function parseViDate(s){
+  const m = String(s || '').match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+  return m ? new Date(Number(m[3]), Number(m[2]) - 1, Number(m[1])) : null;
+}
+function staleDataBadge(dateStr){
+  const m = String(dateStr || '').match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+  if (!m) return '';
+  const days = staleDaysVietnam(dateStr);
+  return days >= 2 ? `<span class="session-badge" style="background:rgba(194,65,59,.12);color:var(--down);">Dữ liệu cũ ${days} ngày</span>` : '';
+}
+function staleDaysVietnam(dateStr){
+  const m = String(dateStr || '').match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+  if (!m) return 0;
+  const vnNow = new Date(Date.now() + 7 * 60 * 60 * 1000);
+  const today = Date.UTC(vnNow.getUTCFullYear(), vnNow.getUTCMonth(), vnNow.getUTCDate());
+  const dataDate = Date.UTC(Number(m[3]), Number(m[2]) - 1, Number(m[1]));
+  return Math.floor((today - dataDate) / 86400000);
+}
 function parseDisplayPrice(v){
   if (v === null || v === undefined || v === '\u2014') return null;
   if (typeof v === 'number') return Number.isFinite(v) ? v : null;
@@ -431,6 +538,7 @@ function render(){
   let summary = buildSummary(activeSignalDate);
   let actionHTML = buildActionBoard(summary);
   let adDistributionHTML = buildAdDistributionPanel(m);
+  let rsiPulseHTML = buildRsiPulsePanel(m);
   let backtestHTML = buildBacktestSnapshot();
   let radarHTML = buildStockRadar(activeSignalDate);
   let signalsHTML = buildSignalHub(activeSignalDate);
@@ -472,6 +580,8 @@ function render(){
 
     ${adDistributionHTML}
 
+    ${rsiPulseHTML}
+
     ${backtestHTML}
 
 
@@ -510,14 +620,18 @@ function render(){
   // Attach badge click filters
   document.querySelectorAll('.s-badge').forEach(b => {
     b.onclick = () => {
-      document.getElementById('filterSelect').value = b.dataset.filter;
-      activeFilter = b.dataset.filter;
-      renderSignalTable();
+      selectFilter(b.dataset.filter || 'all');
     };
   });
 
-  requestAnimationFrame(() => renderBreadthChart(m));
   populateSignalDateSelector();
+  buildFilterPopover();
+  const searchInput = document.getElementById('searchInput');
+  if (searchInput) searchInput.value = searchQuery;
+  requestAnimationFrame(() => {
+    renderBreadthChart(m);
+    renderRsiPulseChart();
+  });
 }
 
 function adRatioNote(r){
@@ -630,7 +744,7 @@ function topSymbols(rows, kind, limit=8){
     if (kind === 'watch') return r.signalType === 'watch';
     if (kind === 'sell') return r.signalType === 'sell_warning';
     return true;
-  }).slice(0, limit).map(r => `<span class="mini-symbol ${kind}">${r.symbol}</span>`).join('') || '<span class="empty-note">Không có</span>';
+  }).slice(0, limit).map(r => `<span class="mini-symbol ${kind}">${escapeHtml(r.symbol)}</span>`).join('') || '<span class="empty-note">Không có</span>';
 }
 
 function buildActionBoard(summary){
@@ -687,6 +801,56 @@ function buildAdDistributionPanel(m){
       <div class="ad-dist-foot"><span>Giảm: ${downCount.toLocaleString('vi-VN')}</span><span>Tăng: ${upCount.toLocaleString('vi-VN')}</span></div>
     </div>
   </div>`;
+}
+
+function buildRsiPulsePanel(m){
+  const p = m?.rsi_pulse;
+  if (!p) return '';
+  const total = Number(p.total) || 0;
+  const pct = v => total ? `${(Number(v || 0) / total * 100).toFixed(1)}%` : '0.0%';
+  const sentiment = rsiSentiment(p);
+  return `<div class="panel">
+    <h2>RSI Market Pulse <span style="font-size:10px;font-weight:400;color:var(--faint);text-transform:none;">RSI14 · ${total.toLocaleString('vi-VN')} mã</span></h2>
+    <div class="sentiment-gauge">
+      <div>
+        <div class="gauge-face" style="--needle:${sentiment.angle}deg"><div class="gauge-needle"></div><div class="gauge-center"></div></div>
+        <div class="gauge-score">${sentiment.score}</div>
+        <div class="gauge-scale"><span>Sợ hãi</span><span>Trung tính</span><span>Hưng phấn</span></div>
+      </div>
+      <div class="sentiment-copy">
+        <div class="label">Đồng hồ tâm lý RSI</div>
+        <div class="state">${sentiment.state}</div>
+        <div class="note">${sentiment.note}</div>
+      </div>
+    </div>
+    <div class="rsi-pulse-grid">
+      <div class="rsi-pulse-card oversold"><div class="lab">RSI dưới 30</div><div class="num">${(p.under_30 || 0).toLocaleString('vi-VN')}</div><div class="sub">Quá bán · ${pct(p.under_30)}</div></div>
+      <div class="rsi-pulse-card overbought"><div class="lab">RSI trên 70</div><div class="num">${(p.over_70 || 0).toLocaleString('vi-VN')}</div><div class="sub">Quá mua · ${pct(p.over_70)}</div></div>
+      <div class="rsi-pulse-card bullish"><div class="lab">RSI trên 50</div><div class="num">${(p.over_50 || 0).toLocaleString('vi-VN')}</div><div class="sub">Nghiêng tăng · ${pct(p.over_50)}</div></div>
+    </div>
+    <div class="chart-wrap" id="rsiPulseWrap">
+      <canvas id="rsiPulseChart"></canvas>
+      <div class="chart-tooltip" id="rsiPulseTooltip"></div>
+    </div>
+  </div>`;
+}
+
+function rsiSentiment(p){
+  const total = Number(p?.total) || 0;
+  if (!total) return {score:50, angle:0, state:'Chưa đủ dữ liệu', note:'Không có đủ mẫu RSI để đo tâm lý thị trường.'};
+  const fearPct = (Number(p.under_30 || 0) / total) * 100;
+  const greedPct = (Number(p.over_70 || 0) / total) * 100;
+  const bullishPct = (Number(p.over_50 || 0) / total) * 100;
+  const raw = 50 + (greedPct - fearPct) * 1.35 + (bullishPct - 50) * 0.35;
+  const score = Math.max(0, Math.min(100, Math.round(raw)));
+  const angle = -90 + score * 1.8;
+  let state = 'Trung tính', tone = 'RSI quá bán và quá mua đang cân bằng.';
+  if (score <= 20) { state = 'Sợ hãi cực độ'; tone = 'Tỷ lệ RSI dưới 30 áp đảo, thị trường có dấu hiệu bán quá mức trên diện rộng.'; }
+  else if (score < 40) { state = 'Sợ hãi'; tone = 'Nhóm RSI dưới 30 nổi trội hơn RSI trên 70, tâm lý đang phòng thủ.'; }
+  else if (score <= 60) { state = 'Trung tính'; tone = 'Không có phe quá bán hoặc quá mua áp đảo rõ rệt.'; }
+  else if (score < 80) { state = 'Hưng phấn'; tone = 'RSI trên 70 và RSI trên 50 đang nổi bật hơn, dòng tiền nghiêng tích cực.'; }
+  else { state = 'Hưng phấn cực độ'; tone = 'Tỷ lệ RSI trên 70 vượt trội, thị trường có dấu hiệu quá nóng trên diện rộng.'; }
+  return {score, angle, state, note:`${tone} RSI<30: ${fearPct.toFixed(1)}%, RSI>70: ${greedPct.toFixed(1)}%, RSI>50: ${bullishPct.toFixed(1)}%.`};
 }
 
 function buildBacktestSnapshot(){
@@ -766,12 +930,12 @@ function buildStockRadar(dateStr){
     const consensus = `${g.buy} Buy · ${g.watch} Watch · ${g.sell} Sell`;
     const performance = fmtBuyPerformance(g.symbol, g.priceValue ?? g.price, g.buyPrice, g.buyPriceValue);
     return `<tr>
-      <td class="mono" style="font-weight:900;font-size:13px;">${g.symbol}</td>
+      <td class="mono" style="font-weight:900;font-size:13px;">${escapeHtml(g.symbol)}</td>
       <td><span class="action-pill ${g.cls}">${g.action}</span></td>
       <td class="mono" style="font-weight:800;">${g.rows.length} hệ</td>
       <td><div class="method-tags">${methods}</div></td>
-      <td class="radar-note">${consensus}${note ? '<br>'+note : ''}</td>
-      <td class="mono">${g.price ?? '—'}</td>
+      <td class="radar-note">${escapeHtml(consensus)}${note ? '<br>'+escapeHtml(note) : ''}</td>
+      <td class="mono">${escapeHtml(g.price ?? '—')}</td>
       <td class="mono">${performance}</td>
     </tr>`;
   }).join('');
@@ -786,19 +950,11 @@ function buildSignalHub(dateStr){
   let rows = collectAllSignals(dateStr);
   if (!rows.length) return '<div class="note" style="margin-bottom:0;">Chưa có tín hiệu cho ngày này.</div>';
 
-  // Get previous signals for repeat detection
-  let prevSymbols = new Set();
-  if (SIGNALS_HISTORY && SIGNALS_HISTORY.length >= 2) {
-    const prev = SIGNALS_HISTORY[SIGNALS_HISTORY.length - 2];
-    if (prev) {
-      (prev.strategy?.all_signals || []).forEach(s => prevSymbols.add(s.symbol));
-      (prev.ensemble?.all_signals || []).forEach(s => prevSymbols.add(s.symbol));
-      (prev.momentum?.all_signals || []).forEach(s => prevSymbols.add(s.symbol));
-      (prev.luc_mach?.all_signals || []).forEach(s => prevSymbols.add(s.symbol));
-      (prev.mama_positional?.all_signals || []).forEach(s => prevSymbols.add(s.symbol));
-      (prev.advanced_trailstop?.all_signals || []).forEach(s => prevSymbols.add(s.symbol));
-    }
-  }
+  const previousDay = previousSignalHistory(dateStr);
+  const prevSymbols = new Set(previousDay ? _collectSignals(
+    previousDay.momentum, previousDay.strategy, previousDay.ensemble, previousDay.luc_mach,
+    previousDay.mama_positional, previousDay.advanced_trailstop, previousDay.khung4_tplus,
+  ).map(s => s.symbol) : []);
 
   // Load momentum backtest win rates
   let wrStrong = MOMENTUM_BT?.stats?.['strong_T+5']?.win_rate;
@@ -832,25 +988,27 @@ function buildSignalHub(dateStr){
       typeTag = r.signalType === 'valid' ? '<span class="tag str">MAMA Buy</span>' : '<span class="tag ens-w">MAMA Sell</span>';
     } else if (r.source === 'ats') {
       typeTag = r.signalType === 'valid' ? '<span class="tag str">ATS Buy</span>' : '<span class="tag ens-w">ATS Sell</span>';
+    } else if (r.source === 'khung4-tplus') {
+      typeTag = r.signalType === 'valid' ? '<span class="tag str">K4 Buy</span>' : r.signalType === 'sell_warning' ? '<span class="tag ens-w">K4 Sell</span>' : '<span class="tag wat">K4 Watch</span>';
     }
 
     let srcTags = r.strategies.map(s => {
       const cls = {hy:'hy',ma:'ma',breakout:'bo',darvas:'bo',roc_momentum:'roc',roc:'roc',pullback:'pb',ma_crossover:'ma',luc_mach:'hy',tplus:'ma',mama_positional_buy:'hy',mama_positional_sell:'ens-w',advanced_trailstop_buy:'ma',advanced_trailstop_sell:'ens-w',sell_warning:'ens-w'}[s] || '';
-      return `<span class="src-tag ${cls}">${s.replace('_momentum','').replace('_crossover','').toUpperCase()}</span>`;
+      return `<span class="src-tag ${cls}">${escapeHtml(s.replace('_momentum','').replace('_crossover','').toUpperCase())}</span>`;
     }).join('');
 
     let expl = r.expl || '';
 
     return `<tr>
-      <td class="mono" style="font-weight:700;">${r.symbol}${r.repeat}</td>
-      <td class="mono" style="font-weight:700;">${r.score}</td>
+      <td class="mono" style="font-weight:700;">${escapeHtml(r.symbol)}${r.repeat}</td>
+      <td class="mono" style="font-weight:700;">${escapeHtml(r.score)}</td>
       <td>${typeTag}${winrateStr}</td>
-      <td><div class="sig-expl">${expl}</div></td>
+      <td><div class="sig-expl">${escapeHtml(expl)}</div></td>
       <td><div class="sig-source">${srcTags}</div></td>
-      <td class="mono">${r.rsi ?? '\u2014'}</td>
-      <td class="mono">${r.adx ?? '\u2014'}</td>
-      <td class="mono">${r.vol ?? '\u2014'}</td>
-      <td class="mono">${r.price ?? '\u2014'}</td>
+      <td class="mono">${escapeHtml(r.rsi ?? '\u2014')}</td>
+      <td class="mono">${escapeHtml(r.adx ?? '\u2014')}</td>
+      <td class="mono">${escapeHtml(r.vol ?? '\u2014')}</td>
+      <td class="mono">${escapeHtml(r.price ?? '\u2014')}</td>
     </tr>`;
   }).join('');
 
@@ -865,6 +1023,20 @@ function buildSignalHub(dateStr){
 }
 
 let activeSignalDate = null; // null = hom nay
+
+function signalDateValue(dateStr){
+  const m = String(dateStr || '').match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+  return m ? Date.UTC(Number(m[3]), Number(m[2]) - 1, Number(m[1])) : null;
+}
+
+function previousSignalHistory(dateStr){
+  const currentDate = signalDateValue(dateStr || LATEST?.markets?.ALL?.date);
+  if (!currentDate || !SIGNALS_HISTORY) return null;
+  return SIGNALS_HISTORY.filter(day => {
+    const dayDate = signalDateValue(day.date);
+    return dayDate !== null && dayDate < currentDate;
+  }).sort((a, b) => signalDateValue(b.date) - signalDateValue(a.date))[0] || null;
+}
 
 function collectAllSignals(dateStr){
   if (dateStr && SIGNALS_HISTORY) {
@@ -1132,12 +1304,12 @@ function populateSignalDateSelector(){
     opt.textContent = h.date;
     sel.appendChild(opt);
   });
-  sel.value = cur;
+  sel.value = activeSignalDate || cur || '';
 }
 
 function onSignalDateChange(dateStr){
   activeSignalDate = dateStr || null;
-  renderSignalTable();
+  render();
 }
 
 function copySymbols(){
@@ -1162,7 +1334,7 @@ function renderLmRows(items, emptyText){
     if (s.buy_score != null) meta.push(`B${s.buy_score}/6`);
     if (s.sell_score != null && s.sell_score > 0) meta.push(`S${s.sell_score}/6`);
     if (s.last_volume != null) meta.push(`${Math.round(s.last_volume).toLocaleString('vi-VN')} cp`);
-    return `<div class="lm-row"><span class="lm-sym">${s.symbol}</span><span class="lm-meta">${meta.join(' · ')}</span></div>`;
+    return `<div class="lm-row"><span class="lm-sym">${escapeHtml(s.symbol)}</span><span class="lm-meta">${escapeHtml(meta.join(' · '))}</span></div>`;
   }).join('');
 }
 
@@ -1263,10 +1435,39 @@ function renderBreadthChart(m){
   cv.onmouseleave = function() { if (hi !== -1) { hi = -1; drw(-1); } };
 }
 
+function renderRsiPulseChart(){
+  const cv = document.getElementById('rsiPulseChart'), tt = document.getElementById('rsiPulseTooltip'), wr = document.getElementById('rsiPulseWrap');
+  if (!cv || !tt || !wr) return;
+  const pts = (HISTORY || []).map(h => {
+    const p = h.markets?.[activeMarket]?.rsi_pulse;
+    return p ? {date:h.date, u30:p.under_30 || 0, o70:p.over_70 || 0, o50:p.over_50 || 0} : null;
+  }).filter(Boolean);
+  if (pts.length < 2) { wr.innerHTML = '<div style="padding:36px 20px;text-align:center;color:var(--faint);font-size:12px;">Chưa đủ dữ liệu lịch sử RSI.</div>'; return; }
+  pts.sort((a,b) => { const da=a.date.split('/'), db=b.date.split('/'); return da[2]-db[2] || da[1]-db[1] || da[0]-db[0]; });
+  const dpr = window.devicePixelRatio || 1, w = wr.clientWidth || 600, h = 250;
+  cv.width = w * dpr; cv.height = h * dpr; cv.style.width = w + 'px'; cv.style.height = h + 'px';
+  const ctx = cv.getContext('2d'); ctx.scale(dpr, dpr);
+  const P = {t:28,r:18,b:36,l:48}, cw=w-P.l-P.r, ch=h-P.t-P.b;
+  const maxV = Math.max(10, ...pts.flatMap(p => [p.u30, p.o70, p.o50]));
+  const yMax = Math.ceil(maxV / 10) * 10;
+  const xp = i => P.l + (i/(pts.length-1))*cw, yp = v => P.t + ch - (v/yMax)*ch;
+  const lines = [{k:'u30',c:'#C2413B',l:'RSI < 30'}, {k:'o70',c:'#D6A84F',l:'RSI > 70'}, {k:'o50',c:'#16A34A',l:'RSI > 50'}];
+  function draw(idx){
+    ctx.clearRect(0,0,w,h);
+    [0,0.25,0.5,0.75,1].forEach(t => { const v=Math.round(yMax*t), y=yp(v); ctx.save(); ctx.strokeStyle='#E3E8EF'; ctx.setLineDash([4,4]); ctx.beginPath(); ctx.moveTo(P.l,y); ctx.lineTo(w-P.r,y); ctx.stroke(); ctx.restore(); ctx.fillStyle='#8A94A6'; ctx.font='9.5px Inter,sans-serif'; ctx.textAlign='right'; ctx.textBaseline='middle'; ctx.fillText(v, P.l-7, y); });
+    lines.forEach(s => { ctx.strokeStyle=s.c; ctx.lineWidth=2.4; ctx.lineJoin='round'; ctx.lineCap='round'; ctx.beginPath(); pts.forEach((p,i)=>{ const x=xp(i), y=yp(p[s.k]); i===0 ? ctx.moveTo(x,y) : ctx.lineTo(x,y); }); ctx.stroke(); const lx=xp(pts.length-1), ly=yp(pts[pts.length-1][s.k]); ctx.fillStyle='#fff'; ctx.strokeStyle=s.c; ctx.lineWidth=2; ctx.beginPath(); ctx.arc(lx,ly,4,0,Math.PI*2); ctx.fill(); ctx.stroke(); });
+    ctx.fillStyle='#8A94A6'; ctx.font='9px Inter,sans-serif'; ctx.textAlign='center'; ctx.textBaseline='top'; const step=Math.max(1,Math.floor(pts.length/Math.max(1,Math.floor(cw/54)))); pts.forEach((p,i)=>{ if(i%step===0 || i===pts.length-1){ const d=p.date.split('/'); ctx.fillText(d[0]+'/'+d[1], xp(i), h-P.b+8); }});
+    lines.forEach((s,i)=>{ const lx=P.l+i*116, ly=12; ctx.strokeStyle=s.c; ctx.lineWidth=3; ctx.beginPath(); ctx.moveTo(lx,ly); ctx.lineTo(lx+18,ly); ctx.stroke(); ctx.fillStyle='#0B132B'; ctx.font='10px Inter,sans-serif'; ctx.textAlign='left'; ctx.textBaseline='middle'; ctx.fillText(s.l,lx+24,ly); });
+    if(idx>=0 && idx<pts.length){ const p=pts[idx], x=xp(idx); ctx.save(); ctx.strokeStyle='rgba(11,19,43,0.15)'; ctx.setLineDash([3,4]); ctx.beginPath(); ctx.moveTo(x,P.t); ctx.lineTo(x,P.t+ch); ctx.stroke(); ctx.restore(); lines.forEach(s=>{ const y=yp(p[s.k]); ctx.fillStyle='#fff'; ctx.strokeStyle=s.c; ctx.lineWidth=2.5; ctx.beginPath(); ctx.arc(x,y,5,0,Math.PI*2); ctx.fill(); ctx.stroke(); }); tt.style.display='block'; tt.innerHTML=`<div style="font-weight:700;margin-bottom:4px;font-size:11px;">${p.date}</div><div>RSI&lt;30: <strong>${p.u30}</strong> · RSI&gt;70: <strong>${p.o70}</strong> · RSI&gt;50: <strong>${p.o50}</strong></div>`; const tw=tt.offsetWidth; let tx=Math.round(x-tw/2); if(tx<4) tx=4; if(tx+tw>w-4) tx=w-tw-4; tt.style.left=tx+'px'; tt.style.top=Math.max(4,P.t-46)+'px'; }
+    else tt.style.display='none';
+  }
+  let hi=-1; draw(-1); cv.onmousemove=e=>{ const cr=cv.getBoundingClientRect(), mx=e.clientX-cr.left; let cl=0, md=Infinity; pts.forEach((_,i)=>{ const d=Math.abs(xp(i)-mx); if(d<md){md=d; cl=i;} }); if(cl!==hi){hi=cl; draw(cl);} }; cv.onmouseleave=()=>{ if(hi!==-1){hi=-1; draw(-1);} };
+}
+
 // --- Commentary ---
 function buildCommentarySection(){
   if (!COMMENTARY || !COMMENTARY.content) return '';
-  const md = COMMENTARY.content;
+  const md = escapeHtml(COMMENTARY.content);
   const html = md.replace(/^### (.*$)/gm, '<h3>$1</h3>').replace(/^## (.*$)/gm, '<h2>$1</h2>').replace(/^# (.*$)/gm, '<h2>$1</h2>').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>');
   return `<div class="panel">
     <h2 class="accordion collapsed" onclick="toggleAccordion(this)">Nhận định phiên</h2>
@@ -1297,6 +1498,21 @@ function buildHistorySection(){
         signals.push({symbol:s.symbol, source:'LM', type:type, score:s.score});
       });
     }
+    if (day.mama_positional && day.mama_positional.all_signals) {
+      day.mama_positional.all_signals.forEach(s => {
+        signals.push({symbol:s.symbol, source:'MAMA', type:s.mama_buy ? 'Buy' : 'Sell', score:s.score});
+      });
+    }
+    if (day.advanced_trailstop && day.advanced_trailstop.all_signals) {
+      day.advanced_trailstop.all_signals.forEach(s => {
+        signals.push({symbol:s.symbol, source:'ATS', type:s.ats_buy ? 'Buy' : 'Sell', score:s.score});
+      });
+    }
+    if (day.khung4_tplus && day.khung4_tplus.all_signals) {
+      day.khung4_tplus.all_signals.forEach(s => {
+        signals.push({symbol:s.symbol, source:'K4', type:s.khung4_tplus_buy ? 'Buy' : s.khung4_tplus_sell ? 'Sell' : 'Watch', score:s.score});
+      });
+    }
     rows.push({date: day.date, signals});
   });
   if (!rows.length) return '';
@@ -1304,9 +1520,9 @@ function buildHistorySection(){
   let tbody = rows.map(r => {
     let total = r.signals.length;
     let strong = r.signals.filter(s => s.type==='Strong'||s.type==='Manh').length;
-    let detail = r.signals.map(s => `<tr><td>${s.symbol}</td><td>${s.source}</td><td>${s.type}</td><td>${s.score}</td></tr>`).join('');
+    let detail = r.signals.map(s => `<tr><td>${escapeHtml(s.symbol)}</td><td>${escapeHtml(s.source)}</td><td>${escapeHtml(s.type)}</td><td>${escapeHtml(s.score)}</td></tr>`).join('');
     return `<tr onclick="toggleHistoryDetail(this)" style="cursor:pointer;">
-      <td style="font-weight:600;">${fmt(r.date)}</td>
+      <td style="font-weight:600;">${escapeHtml(fmt(r.date))}</td>
       <td>${total}</td>
       <td>${strong}</td>
       <td style="color:var(--muted);font-size:10px;">▼</td>
@@ -1314,17 +1530,17 @@ function buildHistorySection(){
     <tr class="hist-detail" style="display:none;">
       <td colspan="4" style="padding:0;">
         <table style="margin:4px 0;font-size:11px;">
-          <thead><tr><th>Ma</th><th>Nguon</th><th>Loai</th><th>Score</th></tr></thead>
-          <tbody>${detail || '<tr><td colspan="4" style="text-align:center;color:var(--faint);">Khong co</td></tr>'}</tbody>
+          <thead><tr><th>Mã</th><th>Nguồn</th><th>Loại</th><th>Score</th></tr></thead>
+          <tbody>${detail || '<tr><td colspan="4" style="text-align:center;color:var(--faint);">Không có</td></tr>'}</tbody>
         </table>
       </td>
     </tr>`;
   }).join('');
   return `<div class="panel">
-    <h2 class="accordion collapsed" onclick="toggleAccordion(this)">Lich su tin hieu</h2>
+    <h2 class="accordion collapsed" onclick="toggleAccordion(this)">Lịch sử tín hiệu</h2>
     <div class="accordion-body collapsed">
       <table>
-        <thead><tr><th>Ngay</th><th>Tong</th><th>Manh</th><th></th></tr></thead>
+        <thead><tr><th>Ngày</th><th>Tổng</th><th>Mạnh</th><th></th></tr></thead>
         <tbody>${tbody}</tbody>
       </table>
     </div>
@@ -1378,7 +1594,166 @@ function buildAppendixSection(m){
   </div>`;
 }
 
+// --- View switching (Dashboard / Accumulation Radar) ---
+let radarDataLoaded = false;
+let radarData = null;
+let activeRadarFilters = new Set();
+let radarSortKey = 'score';
+
+function switchView(view){
+  document.querySelectorAll('.view-tab').forEach(t => t.classList.toggle('active', t.dataset.view === view));
+  document.getElementById('dashboardView').style.display = view === 'dashboard' ? '' : 'none';
+  document.getElementById('radarView').style.display = view === 'radar' ? '' : 'none';
+  if (window.location.hash !== `#${view}`) history.pushState(null, '', `#${view}`);
+  if (view === 'radar' && !radarDataLoaded) loadRadarData();
+}
+
+function showDashboardContent(event){
+  event.preventDefault();
+  switchView('dashboard');
+  requestAnimationFrame(() => document.getElementById('dashboardView').scrollIntoView({behavior:'smooth', block:'start'}));
+}
+
+window.addEventListener('hashchange', () => {
+  const v = window.location.hash.replace('#', '') || 'dashboard';
+  if (v === 'radar' || v === 'dashboard') switchView(v);
+});
+
+const RADAR_FMT = (v, d=1) => v==null||v===undefined?'-':Number(v).toFixed(d);
+const RADAR_SIGNED = (v, d=2) => v==null||v===undefined?'-':`${v>=0?'+':''}${Number(v).toFixed(d)}`;
+const RADAR_REASONS = {
+  'RS20 vuot benchmark':'RS20 vượt benchmark','RS20 dang cai thien':'RS20 đang cải thiện',
+  'giu tren MA50':'Giữ trên MA50','giu tren MA20':'Giữ trên MA20',
+  'volume phien tang tot':'Volume phiên tăng tốt','nen gia co hep':'Nền giá co hẹp',
+  'gan dinh nen 20 phien':'Gần đỉnh nền 20 phiên','volume can o gan dinh':'Volume cạn ở gần đỉnh'
+};
+
+function radarLabelReason(x){ return RADAR_REASONS[x] || x; }
+function radarScoreBar(v){ const w=Math.max(0,Math.min(100,Number(v)||0)); return `<div class="bar"><span style="width:${w}%"></span></div>`; }
+function radarStatusClass(status){ return ['LEADER', 'WATCHLIST', 'EARLY', 'IGNORE'].includes(status) ? status : 'IGNORE'; }
+
+async function loadRadarData(){
+  const el = document.getElementById('radarContent');
+  el.innerHTML = '<div class="loading">Đang tải dữ liệu Accumulation Radar...</div>';
+  try {
+    if (typeof EMBEDDED_ACCUMULATION_RADAR !== 'undefined') {
+      radarData = EMBEDDED_ACCUMULATION_RADAR;
+    } else {
+      const res = await fetch('./data/accumulation_radar.json', {cache:'no-store'});
+      if (!res.ok) throw new Error('HTTP '+res.status);
+      radarData = await res.json();
+    }
+    radarDataLoaded = true;
+    renderRadarContent();
+  } catch(e) {
+    el.innerHTML = `<div class="err">Không tải được: ${escapeHtml(e.message)}</div>`;
+  }
+}
+
+function renderRadarContent(){
+  const b = radarData.benchmark || {};
+  const cacheDate = radarData.latest_data_date || radarData.date || '';
+  const genDate = radarData.generated_at ? new Date(radarData.generated_at) : null;
+  const staleDays = staleDaysVietnam(cacheDate);
+  document.getElementById('radarMetaLine').innerHTML = `
+    Cập nhật: ${genDate?genDate.toLocaleString('vi-VN'):'...'} · Giá mới nhất: ${escapeHtml(cacheDate)}
+    ${staleDays>=2?`<span class="session-badge" style="background:rgba(194,65,59,.12);color:var(--down);">Dữ liệu cũ ${staleDays} ngày</span>`:''}
+  `;
+  const rows = radarData.all_candidates || [];
+  document.getElementById('radarContent').innerHTML = `
+    <div class="kpi-grid" style="margin-bottom:14px;">
+      <div class="kpi-card primary"><div class="lab">Đủ điều kiện</div><div class="num">${radarData.total_symbols_analyzed||0}</div><div class="sub">Cổ phiếu phân tích</div></div>
+      <div class="kpi-card up"><div class="lab">Leader</div><div class="num">${radarData.leader_count||0}</div><div class="sub">Score ≥ 80</div></div>
+      <div class="kpi-card"><div class="lab">Watchlist</div><div class="num" style="color:#B9760F">${radarData.watchlist_count||0}</div><div class="sub">Score 65–79.9</div></div>
+      <div class="kpi-card"><div class="lab">Early</div><div class="num" style="color:var(--blue)">${radarData.early_count||0}</div><div class="sub">Score 50–64.9</div></div>
+    </div>
+    <div class="toolbar">
+      <input id="radarSearch" placeholder="Tìm mã...">
+      <select id="radarStatusFilter"><option value="ALL">Tất cả</option><option value="LEADER">Leader</option><option value="WATCHLIST">Watchlist</option><option value="EARLY">Early</option></select>
+      <button type="button" class="active" data-sort="score">Score</button>
+      <button type="button" data-sort="rs20">RS20</button>
+      <button type="button" data-sort="position20">Gần breakout</button>
+    </div>
+    <div class="quick-filters" id="radarQuickFilters">
+      <button type="button" data-filter="rsStrong">RS > 80</button>
+      <button type="button" data-filter="volumeStrong">Volume > 70</button>
+      <button type="button" data-filter="baseTight">Nền giá > 70</button>
+      <button type="button" data-filter="nearBreakout">Gần breakout</button>
+      <button type="button" data-filter="clear">Xóa lọc</button>
+    </div>
+    <div class="panel" style="margin-bottom:0;">
+      <div class="panel-head"><div><div class="panel-title">Top Accumulation Candidates</div><div class="sub">Benchmark proxy equal-weight từ cache, không phụ thuộc VNINDEX.</div></div><div class="sub" id="radarCount">${rows.length} mã</div></div>
+      <div class="legend">
+        <div class="legend-item"><b>Score</b><span>RS 30%, sức bền 20%, volume 20%, nền giá 15%, breakout 15%.</span></div>
+        <div class="legend-item"><b>RS</b><span>RS20/RS60 so benchmark. Trend dương = sức mạnh cải thiện.</span></div>
+        <div class="legend-item"><b>Sức bền</b><span>DD60, giữ MA20/MA50, vị trí range 20 phiên.</span></div>
+        <div class="legend-item"><b>Volume</b><span>Up/Down vol, ngày tích lũy/phân phối, dry-up gần đỉnh.</span></div>
+        <div class="legend-item"><b>Nền giá</b><span>Range20/Range60 co hẹp = nền chặt, rủi ro thấp.</span></div>
+        <div class="legend-item"><b>Breakout</b><span>Pos20 cao + range hẹp + vol cạn = sẵn sàng breakout.</span></div>
+      </div>
+      <div class="table-wrap" id="radarTable"><div class="loading">Xử lý...</div></div>
+    </div>`;
+  document.getElementById('radarSearch').addEventListener('input', renderRadarTable);
+  document.getElementById('radarStatusFilter').addEventListener('change', renderRadarTable);
+  document.querySelectorAll('#radarQuickFilters button[data-filter]').forEach(btn => btn.addEventListener('click', () => {
+    const k = btn.dataset.filter;
+    if (k === 'clear') activeRadarFilters.clear();
+    else if (activeRadarFilters.has(k)) activeRadarFilters.delete(k);
+    else activeRadarFilters.add(k);
+    document.querySelectorAll('#radarQuickFilters button[data-filter]').forEach(b => b.classList.toggle('active', b.dataset.filter !== 'clear' && activeRadarFilters.has(b.dataset.filter)));
+    renderRadarTable();
+  }));
+  document.querySelectorAll('#radarView button[data-sort]').forEach(btn => btn.addEventListener('click', () => {
+    radarSortKey = btn.dataset.sort;
+    document.querySelectorAll('#radarView button[data-sort]').forEach(b => b.classList.toggle('active', b === btn));
+    renderRadarTable();
+  }));
+  renderRadarTable();
+}
+
+function filteredRadarRows(){
+  const rows = radarData.all_candidates || [];
+  const q = (document.getElementById('radarSearch')?.value||'').trim().toUpperCase();
+  const st = document.getElementById('radarStatusFilter')?.value||'ALL';
+  return rows.filter(r => !q || String(r.symbol || '').toUpperCase().includes(q)).filter(r => st==='ALL'||r.status===st).filter(r => {
+    const sc = r.component_scores||{};
+    if (activeRadarFilters.has('rsStrong')&&Number(sc.relative_strength||0)<80) return false;
+    if (activeRadarFilters.has('volumeStrong')&&Number(sc.volume||0)<70) return false;
+    if (activeRadarFilters.has('baseTight')&&Number(sc.contraction||0)<70) return false;
+    if (activeRadarFilters.has('nearBreakout')&&Number(r.position20||0)<80) return false;
+    return true;
+  }).sort((a,b)=>(Number(b[radarSortKey])||0)-(Number(a[radarSortKey])||0));
+}
+
+function renderRadarTable(){
+  const out = filteredRadarRows();
+  document.getElementById('radarCount').textContent = `${out.length} mã hiển thị`;
+  if (!out.length) { document.getElementById('radarTable').innerHTML = '<div class="loading">Không có ứng viên phù hợp bộ lọc.</div>'; return; }
+  document.getElementById('radarTable').innerHTML = `<table><thead><tr>
+    <th>Mã</th><th>Trạng thái</th><th>Score</th><th>RS</th><th>Sức bền</th><th>Volume</th><th>Nền giá</th><th>Breakout</th><th>Lý do</th>
+  </tr></thead><tbody>${out.map(r => {
+    const c = r.component_scores||{};
+    return `<tr>
+      <td><div class="sym">${escapeHtml(r.symbol)}</div><div class="sub">${RADAR_FMT(r.last_price,0)} - ${escapeHtml(r.last_date || '')}</div></td>
+      <td><span class="tag ${radarStatusClass(r.status)}">${escapeHtml(r.status)}</span></td>
+      <td><div class="score">${RADAR_FMT(r.score)}</div>${radarScoreBar(r.score)}</td>
+      <td><b style="color:${r.rs20>=0?'var(--green)':'var(--red)'}">RS20 ${RADAR_SIGNED(r.rs20)}</b><div class="sub">RS60 ${RADAR_SIGNED(r.rs60)} | Trend ${RADAR_SIGNED(r.rs_trend)}</div></td>
+      <td><div>DD60 ${RADAR_SIGNED(r.drawdown60)}%</div><div class="sub">Return20 ${RADAR_SIGNED(r.return20)}%</div></td>
+      <td><div>U/D ${RADAR_FMT(r.up_down_volume_ratio,2)}</div><div class="sub">Dry-up ${RADAR_FMT(r.vol_dry_ratio,2)} | A ${RADAR_FMT(r.accumulation_days,0)} / D ${RADAR_FMT(r.distribution_days,0)}</div></td>
+      <td><div>R20 ${RADAR_FMT(r.range20)}%</div><div class="sub">R60 ${RADAR_FMT(r.range60)}%</div></td>
+      <td><div>Pos20 ${RADAR_FMT(r.position20)}%</div>${radarScoreBar(r.position20)}</td>
+      <td><div style="display:flex;gap:4px;flex-wrap:wrap;max-width:240px;">${(r.reasons||[]).map(x => `<span class="reason">${escapeHtml(radarLabelReason(x))}</span>`).join('')}</div></td>
+    </tr>`;
+  }).join('')}</tbody></table>`;
+}
+
 loadData();
+
+// Initial hash routing
+(function(){
+  const h = window.location.hash.replace('#', '') || 'dashboard';
+  if (h === 'radar') switchView('radar');
+})();
 </script>
 </body>
 </html>

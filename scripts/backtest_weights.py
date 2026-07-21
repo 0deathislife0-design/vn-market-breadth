@@ -8,14 +8,14 @@ from __future__ import annotations
 
 import json
 import warnings
-from datetime import datetime, timezone, timedelta
 from pathlib import Path
 
 import numpy as np
 import pandas as pd
 
-from cache_utils import load_cache as _load_cache
-from _shared import CACHE_DIR, DATA_DIR, DOCS_DATA_DIR
+from cache_utils import load_cache as _load_cache, compute_rsi_wilder_series
+from ensemble_signals import compute_breakout_signal_series, compute_momentum_signal_series
+from _shared import CACHE_DIR, DATA_DIR, DOCS_DATA_DIR, vn_now
 
 warnings.filterwarnings("ignore", category=FutureWarning)
 warnings.filterwarnings("ignore", category=DeprecationWarning)
@@ -41,9 +41,6 @@ def get_filtered_symbols() -> list[str]:
         df = _load_cache(sym, CACHE_DIR)
         if len(df) < MIN_SYMBOL_HISTORY:
             continue
-        vol_avg = df["Volume"].dropna().iloc[-20:].mean()
-        if pd.isna(vol_avg) or vol_avg < MIN_AVG_VOLUME:
-            continue
         symbols.append(sym)
     return symbols
 
@@ -55,7 +52,7 @@ def backtest_symbol(symbol: str) -> dict | None:
         return None
 
     close: pd.Series = df["Close"]
-    volume: pd.Series = df["Volume"].fillna(0)
+    volume: pd.Series = df["Volume"]
     n = len(close)
 
     # --- Indicators (vectorized) ---
@@ -63,26 +60,10 @@ def backtest_symbol(symbol: str) -> dict | None:
     ma50 = close.rolling(50).mean()
     ma200 = close.rolling(200).mean()
 
-    # RSI Wilder
-    delta = close.diff()
-    gain = delta.clip(lower=0)
-    loss = -delta.clip(upper=0)
-    avg_gain = gain.ewm(alpha=1 / 14, adjust=False).mean()
-    avg_loss = loss.ewm(alpha=1 / 14, adjust=False).mean()
-    rs = avg_gain / avg_loss
-    rsi = 100 - (100 / (1 + rs))
-
-    # ROC
-    roc10 = close.pct_change(10) * 100
-    roc20 = close.pct_change(20) * 100
+    rsi = compute_rsi_wilder_series(close, 14)
 
     # Breakout
-    high_20 = close.rolling(20).max().shift(1)
     vol_avg20 = volume.rolling(20).mean()
-
-    # Volume slope: compare recent 5-day avg vs prior 5-day avg
-    vol_ma5 = volume.rolling(5).mean()
-    vol_slope = vol_ma5 / vol_ma5.shift(5) - 1
 
     # Forward return
     fwd_price = close.shift(-LOOKFORWARD)
@@ -93,8 +74,9 @@ def backtest_symbol(symbol: str) -> dict | None:
     sig_ma = (ma10 > ma50) & (close > ma10) & (rsi > 50)
     near_ma50 = (close / ma50 >= 0.93) & (close / ma50 <= 1.00) & (ma50 > 0)
     sig_pb = (close > ma200) & near_ma50 & (rsi > 45)
-    sig_bo = (close > high_20) & (volume > vol_avg20 * 1.5)
-    sig_mo = (roc10 > roc20) & (vol_slope > 0)
+    sig_bo = compute_breakout_signal_series(close, volume)
+    sig_mo, _ = compute_momentum_signal_series(close, volume)
+    liquidity_ok = vol_avg20 >= MIN_AVG_VOLUME
 
     # Valid range: we need enough leading history AND forward data available
     valid_start = MIN_SYMBOL_HISTORY - 1
@@ -107,7 +89,7 @@ def backtest_symbol(symbol: str) -> dict | None:
         ("breakout", sig_bo),
         ("momentum", sig_mo),
     ]:
-        triggered = sig.iloc[valid_start:valid_end]
+        triggered = sig.iloc[valid_start:valid_end] & liquidity_ok.iloc[valid_start:valid_end]
         wins = (triggered & is_win.iloc[valid_start:valid_end]).sum()
         total = triggered.sum()
         results[name] = {"wins": int(wins), "total": int(total)}
@@ -142,7 +124,7 @@ def main():
     print("=" * 60)
 
     symbols = get_filtered_symbols()
-    print(f"\nTesting {len(symbols)} symbols (history >= {MIN_SYMBOL_HISTORY}, vol >= {MIN_AVG_VOLUME:,})...\n")
+    print(f"\nTesting {len(symbols)} symbols (history >= {MIN_SYMBOL_HISTORY}; liquidity evaluated per date)...\n")
 
     # Aggregate per-signal stats across all symbols
     agg_stats = {
@@ -182,7 +164,7 @@ def main():
             "win_rate": wr,
         }
 
-    now = datetime.now(timezone.utc) + timedelta(hours=7)
+    now = vn_now()
     output = {
         "generated_at": now.isoformat(),
         "date": now.strftime("%d/%m/%Y"),

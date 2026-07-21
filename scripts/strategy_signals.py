@@ -11,12 +11,11 @@ from __future__ import annotations
 
 import json
 import warnings
-from datetime import datetime, timezone, timedelta
 from cache_utils import load_cache as _load_cache, compute_rsi_numpy
 
 import numpy as np
 import pandas as pd
-from _shared import tqdm, DATA_DIR, CACHE_DIR, DOCS_DATA_DIR
+from _shared import tqdm, DATA_DIR, CACHE_DIR, DOCS_DATA_DIR, format_market_date, signal_market_date, vn_now
 
 warnings.filterwarnings("ignore", category=FutureWarning)
 warnings.filterwarnings("ignore", category=DeprecationWarning)
@@ -65,13 +64,15 @@ def detect_base_quality(df: pd.DataFrame) -> dict:
     # 3. Volume contraction trend (20%)
     # Volume trend: linear regression slope normalized
     valid_vol = ~np.isnan(base_vol)
+    vol_score = 0.0
     if np.sum(valid_vol) >= 15:
-        x = np.arange(len(base_vol))[valid_vol]
-        y = base_vol[valid_vol]
-        slope = np.polyfit(x, y, 1)[0] / np.mean(y) if np.mean(y) > 0 else 0
-        vol_score = max(0, min(1, -slope * 20))  # slope am = volume co hẹp
-    else:
-        vol_score = 0.0
+        try:
+            x = np.arange(len(base_vol))[valid_vol]
+            y = base_vol[valid_vol]
+            slope = np.polyfit(x, y, 1)[0] / np.mean(y) if np.mean(y) > 0 else 0
+            vol_score = max(0, min(1, -slope * 20))
+        except np.linalg.LinAlgError:
+            vol_score = 0.0
 
     # 4. OBV trend trong base (10%)
     # OBV calculation
@@ -257,13 +258,14 @@ def main():
 
     signals.sort(key=lambda x: x["composite_score"], reverse=True)
 
-    now = datetime.now(timezone.utc) + timedelta(hours=7)
+    now = vn_now()
+    market_date = format_market_date(signal_market_date()) or now.strftime("%d/%m/%Y")
     strong = [s for s in signals if s["composite_score"] >= 75]
     moderate = [s for s in signals if 60 <= s["composite_score"] < 75]
 
     output = {
         "generated_at": now.isoformat(),
-        "date": now.strftime("%d/%m/%Y"),
+        "date": market_date,
         "total_symbols_analyzed": len(symbols),
         "total_signals": len(signals),
         "strong_signals": len(strong),

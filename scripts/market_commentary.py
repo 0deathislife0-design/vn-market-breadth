@@ -5,8 +5,8 @@ Không dùng sector, news, cơ bản.
 """
 from __future__ import annotations
 import json
-from datetime import datetime, timedelta
-from _shared import DATA_DIR, CACHE_DIR as OHLC_CACHE_DIR, DOCS_DATA_DIR
+from pathlib import Path
+from _shared import DATA_DIR, CACHE_DIR as OHLC_CACHE_DIR, DOCS_DATA_DIR, vn_now
 
 LATEST_JSON = DATA_DIR / "breadth_latest.json"
 COMMENTARY_JSON = DATA_DIR / "market_commentary.json"
@@ -81,8 +81,8 @@ def vnindex_technical():
         "ma20": ma.get(20),
         "ma50": ma.get(50),
         "ma200": ma.get(200),
-        "rsi": round(rsi, 1) if rsi else None,
-        "macd_hist": round(hist, 2) if hist else None,
+        "rsi": round(rsi, 1) if rsi is not None else None,
+        "macd_hist": round(hist, 2) if hist is not None else None,
         "macd_up": (hist > 0) if hist is not None else None,
     }
 
@@ -92,7 +92,7 @@ def generate_commentary(breadth: dict) -> str:
     hose = breadth["markets"]["HOSE"]
     hnx = breadth["markets"]["HNX"]
     session = breadth.get("session", "close")
-    date = all_m.get("date", datetime.now().strftime("%d/%m/%Y"))
+    date = all_m.get("date", vn_now().strftime("%d/%m/%Y"))
 
     lines = []
 
@@ -107,10 +107,10 @@ def generate_commentary(breadth: dict) -> str:
     ma200 = all_m.get("pct_above_ma200")
 
     lines.append("## 1. Độ rộng thị trường")
-    ad_txt = f"A/D Ratio = **{ad:.2f}**" if ad else "A/D Ratio = N/A"
+    ad_txt = f"A/D Ratio = **{ad:.2f}**" if ad is not None else "A/D Ratio = N/A"
     lines.append(f"- {ad_txt} | % trên MA20 = **{ma20:.1f}%** | MA50 = **{ma50:.1f}%** | MA200 = **{ma200:.1f}%**")
 
-    if ad:
+    if ad is not None:
         if ad >= 1.5:
             lines.append("- Tiền lan tỏa rất rộng, tâm lý lạc quan.")
         elif ad >= 1.2:
@@ -176,9 +176,9 @@ def generate_commentary(breadth: dict) -> str:
     # 5. Tóm tắt hành động
     lines.append("\n## 5. Gợi ý hành động")
     action = []
-    if ad and ad > 1.2 and ma20 and ma20 > 50:
+    if ad is not None and ad > 1.2 and ma20 is not None and ma20 > 50:
         action.append("✅ Mua dần các mã leader vừa breakout MA20 + volume")
-    elif ad and ad < 0.8:
+    elif ad is not None and ad < 0.8:
         action.append("⚠️ Giảm vị thế, chờ A/D hồi về > 1.0")
     else:
         action.append("⏳ Chờ tín hiệu rõ ràng hơn (A/D hoặc MA20% breakout)")
@@ -198,7 +198,7 @@ def main():
     commentary = generate_commentary(breadth)
 
     output = {
-        "generated_at": datetime.now().isoformat(),
+        "generated_at": vn_now().isoformat(),
         "session": breadth.get("session", "close"),
         "date": breadth["markets"]["ALL"].get("date"),
         "content": commentary,

@@ -14,12 +14,11 @@ from __future__ import annotations
 
 import json
 import warnings
-from datetime import datetime, timezone, timedelta
 from cache_utils import load_cache as _load_cache, compute_rsi_numpy
 
 import numpy as np
 import pandas as pd
-from _shared import tqdm, DATA_DIR, CACHE_DIR, DOCS_DATA_DIR
+from _shared import tqdm, DATA_DIR, CACHE_DIR, DOCS_DATA_DIR, format_market_date, signal_market_date, vn_now
 from _shared import (SCORE_MA, SCORE_BREAKOUT, SCORE_ROC, SCORE_HYBRID,
                      BONUS_VOL_SURGE, BONUS_ADX_STRONG, BONUS_RSI_GOLD,
                      json_default as _json_default)
@@ -345,13 +344,14 @@ def main():
 
     signals.sort(key=lambda x: (x["signal_type"] == "strong", x["score"]), reverse=True)
 
-    now = datetime.now(timezone.utc) + timedelta(hours=7)
+    now = vn_now()
+    market_date = format_market_date(signal_market_date()) or now.strftime("%d/%m/%Y")
     strong = [s for s in signals if s["signal_type"] == "strong"]
     watch = [s for s in signals if s["signal_type"] == "watch"]
 
     output = {
         "generated_at": now.isoformat(),
-        "date": now.strftime("%d/%m/%Y"),
+        "date": market_date,
         "total_symbols_analyzed": len(symbols),
         "total_signals": len(signals),
         "strong_buy": len(strong),

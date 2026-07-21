@@ -7,14 +7,13 @@ from __future__ import annotations
 
 import json
 import warnings
-from datetime import datetime, timezone, timedelta
 
 import numpy as np
 import pandas as pd
 
 from cache_utils import load_cache as _load_cache
 from mama_positional_signals import compute_mama_positional_system
-from _shared import CACHE_DIR, DATA_DIR, DOCS_DATA_DIR, list_symbols
+from _shared import CACHE_DIR, DATA_DIR, DOCS_DATA_DIR, list_symbols, vn_now
 
 warnings.filterwarnings("ignore", category=FutureWarning)
 warnings.filterwarnings("ignore", category=DeprecationWarning)
@@ -130,7 +129,7 @@ def main():
     top_winners = sorted(trades, key=lambda r: r["return_pct"], reverse=True)[:20]
     worst_trades = sorted(trades, key=lambda r: r["return_pct"])[:20]
 
-    now = datetime.now(timezone.utc) + timedelta(hours=7)
+    now = vn_now()
     output = {
         "mode": "mama_positional_buy_t10_7pct",
         "generated_at": now.isoformat(),

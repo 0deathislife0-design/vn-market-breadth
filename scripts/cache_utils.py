@@ -46,38 +46,47 @@ def load_cache(symbol: str, cache_dir: Path) -> pd.DataFrame:
     return pd.DataFrame(columns=["TradingDate", "Open", "High", "Low", "Close", "Volume"])
 
 
+def _rsi_wilder_values(values: np.ndarray, period: int) -> np.ndarray:
+    """Return textbook Wilder RSI values, using neutral 50 before the seed."""
+    result = np.full(len(values), 50.0)
+    if len(values) < period + 1:
+        return result
+
+    deltas = np.diff(values)
+    gains = np.maximum(deltas, 0.0)
+    losses = np.maximum(-deltas, 0.0)
+    avg_gain = gains[:period].mean()
+    avg_loss = losses[:period].mean()
+
+    for i in range(period, len(values)):
+        if not np.isfinite(avg_gain) or not np.isfinite(avg_loss):
+            result[i] = 50.0
+        elif avg_loss == 0.0:
+            result[i] = 100.0 if avg_gain > 0.0 else 50.0
+        elif avg_gain == 0.0:
+            result[i] = 0.0
+        else:
+            result[i] = 100.0 - (100.0 / (1.0 + avg_gain / avg_loss))
+
+        if i < len(deltas):
+            avg_gain = (avg_gain * (period - 1) + gains[i]) / period
+            avg_loss = (avg_loss * (period - 1) + losses[i]) / period
+
+    return result
+
+
+def compute_rsi_wilder_series(close_series: pd.Series, period: int = 14) -> pd.Series:
+    """Return textbook Wilder RSI seeded from the first ``period`` deltas."""
+    values = close_series.to_numpy(dtype=float, copy=False)
+    return pd.Series(_rsi_wilder_values(values, period), index=close_series.index, dtype=float)
+
+
 def compute_rsi_wilder(close_series: pd.Series, period: int = 14) -> float:
-    """RSI Wilder (exponential smoothing) — chinh xac hon simple MA."""
-    if len(close_series) < period + 1:
-        return 50.0
-    delta = close_series.diff()
-    gain = delta.clip(lower=0)
-    loss = -delta.clip(upper=0)
-    avg_gain = gain.ewm(alpha=1/period, adjust=False).mean()
-    avg_loss = loss.ewm(alpha=1/period, adjust=False).mean()
-    rs = avg_gain / avg_loss
-    rsi = 100 - (100 / (1 + rs))
-    val = rsi.iloc[-1]
-    return float(val) if not pd.isna(val) else 50.0
+    """Return the latest textbook Wilder RSI for a pandas close series."""
+    return float(compute_rsi_wilder_series(close_series, period).iloc[-1]) if len(close_series) else 50.0
 
 
 def compute_rsi_numpy(series: np.ndarray, period: int = 14) -> float:
-    """RSI Wilder cho numpy array — dung chung voi ensemble_signals."""
-    if len(series) < period + 1:
-        return 50.0
-    deltas = np.diff(series)
-    gains = np.where(deltas > 0, deltas, 0.0)
-    losses = np.where(deltas < 0, -deltas, 0.0)
-
-    # Wilder smoothing (alpha = 1/period)
-    alpha = 1.0 / period
-    avg_gain = gains[0]
-    avg_loss = losses[0]
-    for i in range(1, len(gains)):
-        avg_gain = avg_gain * (1 - alpha) + gains[i] * alpha
-        avg_loss = avg_loss * (1 - alpha) + losses[i] * alpha
-
-    if avg_loss == 0:
-        return 100.0
-    rs = avg_gain / avg_loss
-    return 100.0 - (100.0 / (1.0 + rs))
+    """Return the latest textbook Wilder RSI for a NumPy close array."""
+    values = np.asarray(series, dtype=float)
+    return float(_rsi_wilder_values(values, period)[-1]) if len(values) else 50.0

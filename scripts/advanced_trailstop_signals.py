@@ -9,13 +9,16 @@ from __future__ import annotations
 import json
 import os
 import warnings
-from datetime import datetime, timezone, timedelta
 
 import numpy as np
 import pandas as pd
 
 from cache_utils import load_cache as _load_cache
-from _shared import tqdm, DATA_DIR, CACHE_DIR, DOCS_DATA_DIR, list_symbols, json_default as _json_default
+from _shared import (
+    tqdm, DATA_DIR, CACHE_DIR, DOCS_DATA_DIR, format_market_date,
+    is_market_data_fresh, json_default as _json_default, list_symbols,
+    signal_market_date, vn_now,
+)
 
 warnings.filterwarnings("ignore", category=FutureWarning)
 warnings.filterwarnings("ignore", category=DeprecationWarning)
@@ -162,7 +165,7 @@ def compute_advanced_trailstop(df: pd.DataFrame, mult: float = MULT, aper: int =
     }
 
 
-def audit_symbol(symbol: str) -> tuple[dict | None, dict]:
+def audit_symbol(symbol: str, reference_date=None) -> tuple[dict | None, dict]:
     df = _load_cache(symbol, CACHE_DIR).sort_values("TradingDate").reset_index(drop=True)
     audit = {
         "symbol": symbol,
@@ -184,6 +187,10 @@ def audit_symbol(symbol: str) -> tuple[dict | None, dict]:
         "last_close": _num(last.get("Close")),
         "last_volume": _num(last_volume),
     })
+    if not is_market_data_fresh(last.get("TradingDate"), reference_date):
+        audit["reason"] = "stale_quote"
+        audit["reference_date"] = format_market_date(reference_date)
+        return None, audit
     if pd.isna(last_volume) or float(last_volume) <= MIN_VOLUME:
         audit["reason"] = "volume_filter"
         return None, audit
@@ -254,24 +261,31 @@ def main():
     signals = []
     audit = []
     skipped_ohlc = 0
+    skipped_stale = 0
+    reference_date = signal_market_date()
     bar = tqdm(symbols, desc="[ATS] Trailstop", unit="sym")
     for sym in bar:
         bar.set_postfix_str(sym, refresh=True)
-        result, item_audit = audit_symbol(sym)
+        result, item_audit = audit_symbol(sym, reference_date)
         audit.append(item_audit)
         if result:
             signals.append(result)
         elif item_audit["reason"] == "missing_ohlcv_or_history":
             skipped_ohlc += 1
+        elif item_audit["reason"] == "stale_quote":
+            skipped_stale += 1
 
     signals.sort(key=lambda x: (x["status"] == "BUY", x["last_volume"]), reverse=True)
     buys = [s for s in signals if s["ats_buy"]]
     sells = [s for s in signals if s["ats_sell"]]
-    now = datetime.now(timezone.utc) + timedelta(hours=7)
+    now = vn_now()
+    market_date = format_market_date(reference_date) or now.strftime("%d/%m/%Y")
     output = {
         "mode": "diep_advanced_trailstop",
         "generated_at": now.isoformat(),
-        "date": now.strftime("%d/%m/%Y"),
+        "date": market_date,
+        "market_date": market_date,
+        "freshness_reference_date": market_date,
         "mult": MULT,
         "atr_period": APER,
         "min_volume": MIN_VOLUME,
@@ -281,6 +295,7 @@ def main():
         "buy_count": len(buys),
         "sell_count": len(sells),
         "skipped_missing_ohlc": skipped_ohlc,
+        "skipped_stale_quotes": skipped_stale,
         "buy": buys,
         "sell": sells,
         "all_signals": signals,
@@ -296,6 +311,8 @@ def main():
     tqdm.write(f"Tin hieu ATS: {len(signals)} (Buy: {len(buys)}, Sell: {len(sells)})")
     if skipped_ohlc:
         tqdm.write(f"Bo qua {skipped_ohlc} ma do cache chua co OHLCV day du.")
+    if skipped_stale:
+        tqdm.write(f"Bo qua {skipped_stale} ma do quote cu hon nguong freshness.")
 
 
 if __name__ == "__main__":

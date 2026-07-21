@@ -8,13 +8,16 @@ from __future__ import annotations
 import json
 import os
 import warnings
-from datetime import datetime, timezone, timedelta
 
 import numpy as np
 import pandas as pd
 
 from cache_utils import load_cache as _load_cache
-from _shared import tqdm, DATA_DIR, CACHE_DIR, DOCS_DATA_DIR, list_symbols, json_default as _json_default
+from _shared import (
+    tqdm, DATA_DIR, CACHE_DIR, DOCS_DATA_DIR, format_market_date,
+    is_market_data_fresh, json_default as _json_default, list_symbols,
+    signal_market_date, vn_now,
+)
 
 warnings.filterwarnings("ignore", category=FutureWarning)
 warnings.filterwarnings("ignore", category=DeprecationWarning)
@@ -97,7 +100,7 @@ def compute_khung4_tplus(df: pd.DataFrame) -> dict:
     }
 
 
-def audit_symbol(symbol: str) -> tuple[dict | None, dict]:
+def audit_symbol(symbol: str, reference_date=None) -> tuple[dict | None, dict]:
     df = _load_cache(symbol, CACHE_DIR).sort_values("TradingDate").reset_index(drop=True)
     audit = {
         "symbol": symbol,
@@ -115,6 +118,7 @@ def audit_symbol(symbol: str) -> tuple[dict | None, dict]:
 
     last_volume = df["Volume"].iloc[-1]
     last = df.iloc[-1]
+    last_date = last.get("TradingDate")
     i = len(df) - 1
     recent_high = df["High"].iloc[i - 4:i].max() if i >= 4 else np.nan
     recent_low = df["Low"].iloc[i - 4:i].min() if i >= 4 else np.nan
@@ -131,6 +135,11 @@ def audit_symbol(symbol: str) -> tuple[dict | None, dict]:
         "break_up": bool(last.get("Close") > recent_high) if not pd.isna(recent_high) else False,
         "break_down": bool(last.get("Close") < recent_low) if not pd.isna(recent_low) else False,
     })
+
+    if not is_market_data_fresh(last_date, reference_date):
+        audit["reason"] = "stale_quote"
+        audit["reference_date"] = format_market_date(reference_date)
+        return None, audit
 
     if pd.isna(last_volume) or float(last_volume) <= MIN_VOLUME:
         audit["reason"] = "volume_filter"
@@ -193,28 +202,36 @@ def main():
     signals = []
     audit = []
     skipped_ohlc = 0
+    skipped_stale = 0
+    reference_date = signal_market_date()
     bar = tqdm(symbols, desc="[K4] Khung4/Tplus", unit="sym")
     for sym in bar:
         bar.set_postfix_str(sym, refresh=True)
-        result, item_audit = audit_symbol(sym)
+        result, item_audit = audit_symbol(sym, reference_date)
         audit.append(item_audit)
         if result:
             signals.append(result)
         else:
             if item_audit["reason"] == "missing_ohlcv_or_history":
                 skipped_ohlc += 1
+            elif item_audit["reason"] == "stale_quote":
+                skipped_stale += 1
 
     signals.sort(key=lambda x: (x["score"], x["last_volume"]), reverse=True)
-    now = datetime.now(timezone.utc) + timedelta(hours=7)
+    now = vn_now()
+    market_date = format_market_date(reference_date) or now.strftime("%d/%m/%Y")
     output = {
         "mode": "khung4_tplus_original",
         "generated_at": now.isoformat(),
-        "date": now.strftime("%d/%m/%Y"),
+        "date": market_date,
+        "market_date": market_date,
+        "freshness_reference_date": market_date,
         "min_volume": MIN_VOLUME,
         "min_history": MIN_HISTORY,
         "total_symbols_analyzed": len(symbols),
         "total_signals": len(signals),
         "skipped_missing_ohlc": skipped_ohlc,
+        "skipped_stale_quotes": skipped_stale,
         "buy": signals,
         "all_signals": signals,
         "audit": audit,
@@ -229,6 +246,8 @@ def main():
     tqdm.write(f"Tin hieu mua Khung4/Tplus: {len(signals)}")
     if skipped_ohlc:
         tqdm.write(f"Bo qua {skipped_ohlc} ma do cache chua co OHLCV day du.")
+    if skipped_stale:
+        tqdm.write(f"Bo qua {skipped_stale} ma do quote cu hon nguong freshness.")
 
 
 if __name__ == "__main__":

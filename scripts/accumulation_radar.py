@@ -9,13 +9,13 @@ from __future__ import annotations
 
 import json
 import warnings
-from datetime import datetime, timedelta, timezone
+from datetime import datetime
 
 import numpy as np
 import pandas as pd
 
 from cache_utils import load_cache as _load_cache
-from _shared import CACHE_DIR, DATA_DIR, DOCS_DATA_DIR, json_default, list_symbols, tqdm
+from _shared import CACHE_DIR, DATA_DIR, DOCS_DATA_DIR, format_market_date, json_default, list_symbols, signal_market_date, tqdm, vn_now
 
 
 warnings.filterwarnings("ignore", category=FutureWarning)
@@ -309,7 +309,8 @@ def main() -> None:
     watchlist = [row for row in rows if 65 <= row["score"] < 80]
     early = [row for row in rows if 50 <= row["score"] < 65]
 
-    now = datetime.now(timezone(timedelta(hours=7)))
+    now = vn_now()
+    market_date = format_market_date(signal_market_date()) or now.strftime("%d/%m/%Y")
     parsed_dates = []
     for v in latest_prices.values():
         d = v.get("date", "") if isinstance(v, dict) else ""
@@ -322,7 +323,7 @@ def main() -> None:
 
     output = {
         "generated_at": now.isoformat(),
-        "date": now.strftime("%d/%m/%Y"),
+        "date": market_date,
         "latest_data_date": latest_data_date,
         "method": "equal_weight_liquid_market_proxy",
         "benchmark": benchmark,

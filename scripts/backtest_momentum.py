@@ -7,13 +7,12 @@ from __future__ import annotations
 
 import json
 import warnings
-from datetime import datetime, timezone, timedelta
 
 import numpy as np
 import pandas as pd
 
-from cache_utils import load_cache as _load_cache
-from _shared import CACHE_DIR, DATA_DIR, DOCS_DATA_DIR, MIN_SYMBOL_HISTORY
+from cache_utils import load_cache as _load_cache, compute_rsi_wilder_series
+from _shared import CACHE_DIR, DATA_DIR, DOCS_DATA_DIR, MIN_SYMBOL_HISTORY, vn_now
 from _shared import (SCORE_MA, SCORE_BREAKOUT, SCORE_ROC, SCORE_HYBRID,
                      BONUS_VOL_SURGE, BONUS_ADX_STRONG, BONUS_RSI_GOLD)
 
@@ -166,13 +165,7 @@ def backtest_symbol(symbol: str) -> dict | None:
     ma200 = close.rolling(200).mean()
     trend_ok = (close > ma50) & (ma50 > ma200)
 
-    delta = close.diff()
-    gain = delta.clip(lower=0)
-    loss = -delta.clip(upper=0)
-    avg_gain = gain.ewm(alpha=1 / 14, adjust=False).mean()
-    avg_loss = loss.ewm(alpha=1 / 14, adjust=False).mean()
-    rs = avg_gain / avg_loss
-    rsi = 100 - (100 / (1 + rs))
+    rsi = compute_rsi_wilder_series(close, 14)
 
     adx = compute_adx_series(close, 14)
     common_ok = trend_ok & (adx >= 20) & (rsi >= 48) & (rsi <= 72)
@@ -196,9 +189,9 @@ def backtest_symbol(symbol: str) -> dict | None:
              + bonuses["bonus_total"])
 
     # Categorize
-    is_strong = (score >= 60).astype(int)
-    is_watch = ((score >= 30) & (score < 60)).astype(int)
-    has_signal = (score >= 30).astype(int)
+    is_strong = (strategy_ok & (score >= 60)).astype(int)
+    is_watch = (strategy_ok & (score >= 30) & (score < 60)).astype(int)
+    has_signal = (strategy_ok & (score >= 30)).astype(int)
 
     # Forward returns
     results = {}
@@ -234,12 +227,12 @@ def backtest_symbol(symbol: str) -> dict | None:
             results[f"{sig_name}_T+{lf}"] = {"wins": int(sig_wins), "total": int(sig_total)}
 
     # Score distribution stats
-    valid_scores = score.iloc[MIN_SYMBOL_HISTORY:n - max(LOOKFORWARD_OPTIONS)]
+    valid_scores = score.iloc[MIN_SYMBOL_HISTORY:n - max(LOOKFORWARD_OPTIONS)][strategy_ok.iloc[MIN_SYMBOL_HISTORY:n - max(LOOKFORWARD_OPTIONS)]]
     results["score_distribution"] = {
-        "mean": round(float(valid_scores.mean()), 2),
-        "median": round(float(valid_scores.median()), 2),
-        "pct_strong": round(float((valid_scores >= 60).mean() * 100), 2),
-        "pct_watch": round(float(((valid_scores >= 30) & (valid_scores < 60)).mean() * 100), 2),
+        "mean": round(float(valid_scores.mean()), 2) if not valid_scores.empty else None,
+        "median": round(float(valid_scores.median()), 2) if not valid_scores.empty else None,
+        "pct_strong": round(float((valid_scores >= 60).mean() * 100), 2) if not valid_scores.empty else None,
+        "pct_watch": round(float(((valid_scores >= 30) & (valid_scores < 60)).mean() * 100), 2) if not valid_scores.empty else None,
     }
 
     return results
@@ -259,10 +252,10 @@ def aggregate_results(all_results: list[dict]) -> dict:
             if not dists:
                 continue
             combined["score_distribution"] = {
-                "mean_mean": round(np.mean([d["mean"] for d in dists]), 2),
-                "mean_median": round(np.mean([d["median"] for d in dists]), 2),
-                "mean_pct_strong": round(np.mean([d["pct_strong"] for d in dists]), 2),
-                "mean_pct_watch": round(np.mean([d["pct_watch"] for d in dists]), 2),
+                "mean_mean": round(np.mean([d["mean"] for d in dists if d["mean"] is not None]), 2) if any(d["mean"] is not None for d in dists) else None,
+                "mean_median": round(np.mean([d["median"] for d in dists if d["median"] is not None]), 2) if any(d["median"] is not None for d in dists) else None,
+                "mean_pct_strong": round(np.mean([d["pct_strong"] for d in dists if d["pct_strong"] is not None]), 2) if any(d["pct_strong"] is not None for d in dists) else None,
+                "mean_pct_watch": round(np.mean([d["pct_watch"] for d in dists if d["pct_watch"] is not None]), 2) if any(d["pct_watch"] is not None for d in dists) else None,
             }
             continue
 
@@ -306,7 +299,8 @@ def main():
             if key in stats:
                 d = stats[key]
                 wr = d["win_rate"]
-                print(f"  {bracket:12s}: {d['wins']:6d} / {d['total']:6d} ({wr:.1%})")
+                wr_str = f"{wr:.1%}" if wr is not None else "N/A"
+                print(f"  {bracket:12s}: {d['wins']:6d} / {d['total']:6d} ({wr_str})")
         print()
 
         for sig in ["ma_crossover", "breakout", "roc_momentum", "hybrid"]:
@@ -325,7 +319,7 @@ def main():
         print(f"  % Strong (>=60): {sd['mean_pct_strong']}%")
         print(f"  % Watch (35-59): {sd['mean_pct_watch']}%")
 
-    now = datetime.now(timezone.utc) + timedelta(hours=7)
+    now = vn_now()
     output = {
         "generated_at": now.isoformat(),
         "date": now.strftime("%d/%m/%Y"),

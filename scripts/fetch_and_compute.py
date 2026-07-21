@@ -14,18 +14,20 @@ import json
 import os
 import time
 import warnings
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timedelta
 
 import pandas as pd
-from _shared import tqdm
+from _shared import (
+    CACHE_DIR, DATA_DIR, DOCS_DATA_DIR, DATE_FMT, format_market_date,
+    is_market_date_stale, parse_market_date, tqdm, vn_now,
+)
 
 # Suppress pandas FutureWarning va Python DeprecationWarning
 warnings.filterwarnings("ignore", category=FutureWarning)
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 
 from ssi_client import SSIClient
-from cache_utils import load_cache as _load_cache
-from _shared import DATA_DIR, CACHE_DIR, DOCS_DATA_DIR
+from cache_utils import compute_rsi_wilder, load_cache as _load_cache
 from market_commentary import generate_commentary
 from strategy_signals import main as run_strategy_signals
 from ensemble_signals import main as run_ensemble_signals
@@ -36,6 +38,8 @@ from luc_mach_signals import main as run_luc_mach_signals
 from khung4_tplus_signals import main as run_khung4_tplus_signals
 from mama_positional_signals import main as run_mama_positional_signals
 from advanced_trailstop_signals import main as run_advanced_trailstop_signals
+from backtest_mama_positional import main as run_backtest_mama_positional
+from backtest_advanced_trailstop import main as run_backtest_advanced_trailstop
 from accumulation_radar import main as run_accumulation_radar
 
 LATEST_JSON = DATA_DIR / "breadth_latest.json"
@@ -45,6 +49,7 @@ DOCS_COMMENTARY_JSON = DOCS_DATA_DIR / "market_commentary.json"
 SIGNALS_HISTORY_JSON = DATA_DIR / "signals_history.json"
 DOCS_SIGNALS_HISTORY_JSON = DOCS_DATA_DIR / "signals_history.json"
 LATEST_PRICES_JSON = DATA_DIR / "latest_prices.json"
+SYMBOL_UNIVERSES_JSON = DATA_DIR / "symbol_universes.json"
 
 MARKETS = ["HOSE", "HNX"]
 MARKET_INDEX_ID = {
@@ -55,8 +60,9 @@ MA_WINDOWS = [20, 50, 200]
 HISTORY_DAYS_LOOKBACK = 800   # du ~500 phien, giup ZeroLagTEMA(65) on dinh hon cho Luc Mach
 INCREMENTAL_LOOKBACK = 21     # lay 21 ngay gan nhat neu da co cache (tranh thieu sau ky nghi dai)
 REQUEST_SLEEP_SEC = 0.5       # cho giua cac lan goi API de tranh rate limit                                                         
-DATE_FMT = "%d/%m/%Y"
 MIN_AVG_VOLUME = 300_000      # loc thanh khoan: TB 20 phien >= 300,000 cp
+CLOSE_HOUR = 15
+CLOSE_MINUTE = 10
 
 
 AD_BUCKETS = [
@@ -79,7 +85,7 @@ def _empty_ad_distribution() -> list[dict]:
 
 
 def _ad_bucket_index(pct_change: float) -> int:
-    if pct_change < -7:
+    if pct_change <= -7:
         return 0
     if pct_change < -5:
         return 1
@@ -97,13 +103,20 @@ def _ad_bucket_index(pct_change: float) -> int:
         return 7
     if pct_change <= 5:
         return 8
-    if pct_change <= 7:
+    if pct_change < 7:
         return 9
     return 10
 
 
 def vn_today() -> datetime:
-    return datetime.now(timezone.utc).replace(tzinfo=None) + timedelta(hours=7)
+    return vn_now()
+
+
+def should_run_close_pipeline(now: datetime) -> bool:
+    """Avoid publishing intraday bars as the daily close after a code push."""
+    if os.environ.get("ALLOW_PRE_CLOSE_RUN") == "1":
+        return True
+    return now.weekday() >= 5 or (now.hour, now.minute) >= (CLOSE_HOUR, CLOSE_MINUTE)
 
 
 # --- Cache OHLC ---------------------------------------------------------------
@@ -162,19 +175,12 @@ def update_ohlc(client: SSIClient, symbol: str, today: datetime) -> pd.DataFrame
         cached = cached.dropna(subset=["TradingDate"])
         if not {"Open", "High", "Low"}.issubset(cached.columns) or cached[["Open", "High", "Low"]].tail(80).isna().any().any():
             cached = pd.DataFrame()
-    cached_historical = pd.DataFrame()
     if cached.empty:
         from_date = today - timedelta(days=HISTORY_DAYS_LOOKBACK)
     else:
-        latest_cached = cached["TradingDate"].max()
-        if pd.isna(latest_cached):
-            from_date = today - timedelta(days=HISTORY_DAYS_LOOKBACK)
-        elif latest_cached.date() >= today.date():
-            cached.attrs["api_called"] = False
-            return cached
-        else:
-            cached_historical = cached[cached["TradingDate"].dt.date < today.date()]
-            from_date = today - timedelta(days=INCREMENTAL_LOOKBACK)
+        # Always re-fetch the overlap. Daily bars can be preliminary or corrected
+        # after their first appearance, including the current session.
+        from_date = today - timedelta(days=INCREMENTAL_LOOKBACK)
 
     rows = client.daily_ohlc(
         symbol,
@@ -216,21 +222,21 @@ def update_ohlc(client: SSIClient, symbol: str, today: datetime) -> pd.DataFrame
                     new_df[col] = float("nan")
             new_df = new_df.dropna(subset=["Close"])
 
-            # Align columns truoc khi concat
+            # Align columns before concat. Keep the API copy for duplicate dates.
             for col in ["Open", "High", "Low", "Volume"]:
-                if col in cached_historical.columns and col not in new_df.columns:
+                if col in cached.columns and col not in new_df.columns:
                     new_df[col] = float("nan")
-                if col in new_df.columns and col not in cached_historical.columns:
-                    cached_historical[col] = float("nan")
+                if col in new_df.columns and col not in cached.columns:
+                    cached[col] = float("nan")
 
-            merged = pd.concat([cached_historical, new_df], ignore_index=True)
+            merged = pd.concat([cached, new_df], ignore_index=True)
         else:
             tqdm.write(f"  [WARN] {symbol}: khong tim thay cot TradingDate/Close")
             merged = cached
     else:
         merged = cached
 
-    merged = merged.sort_values("TradingDate").drop_duplicates("TradingDate").reset_index(drop=True)
+    merged = merged.sort_values("TradingDate").drop_duplicates("TradingDate", keep="last").reset_index(drop=True)
     merged.attrs["api_called"] = True
     save_cache(symbol, merged)
     return merged
@@ -239,15 +245,18 @@ def update_ohlc(client: SSIClient, symbol: str, today: datetime) -> pd.DataFrame
 # --- Tinh MA ------------------------------------------------------------------
 def compute_ma_breadth(client: SSIClient, symbols: list[str], today: datetime, market: str) -> dict:
     counts = {w: 0 for w in MA_WINDOWS}
+    eligible = {w: 0 for w in MA_WINDOWS}
     above_syms = {w: [] for w in MA_WINDOWS}
     newly_above = {20: [], 50: []}
     newly_below = {20: [], 50: []}
     volume_breakout = []
     ad_distribution = _empty_ad_distribution()
     total_distribution = 0
+    rsi_pulse = {"under_30": 0, "over_70": 0, "over_50": 0, "total": 0, "period": 14}
     total_valid = 0
     skipped_volume = 0
     skipped_data = 0
+    latest_dates = []
     volume_threshold = float(os.environ.get("VOLUME_BREAKOUT_CLOSE", "1.3"))
 
     bar = tqdm(
@@ -284,16 +293,30 @@ def compute_ma_breadth(client: SSIClient, symbols: list[str], today: datetime, m
                 skipped_volume += 1
                 continue
 
+        latest_date = pd.to_datetime(df["TradingDate"].iloc[-1], errors="coerce")
+        if not pd.isna(latest_date):
+            latest_dates.append(latest_date)
+
         close = df["Close"].values
         last_close = close[-1]
         if len(close) >= 2 and close[-2] > 0:
             pct_change = (last_close / close[-2] - 1) * 100
             ad_distribution[_ad_bucket_index(round(float(pct_change), 6))]["count"] += 1
             total_distribution += 1
+        if len(close) >= 15:
+            rsi14 = compute_rsi_wilder(pd.Series(close), period=14)
+            rsi_pulse["total"] += 1
+            if rsi14 < 30:
+                rsi_pulse["under_30"] += 1
+            if rsi14 > 70:
+                rsi_pulse["over_70"] += 1
+            if rsi14 > 50:
+                rsi_pulse["over_50"] += 1
         total_valid += 1
 
         for w in MA_WINDOWS:
             if len(close) >= w:
+                eligible[w] += 1
                 ma_val = close[-w:].mean()
                 is_above = last_close >= ma_val
 
@@ -316,7 +339,7 @@ def compute_ma_breadth(client: SSIClient, symbols: list[str], today: datetime, m
     bar.close()
 
     pct = {
-        w: round(counts[w] / total_valid * 100, 1) if total_valid > 0 else 0.0
+        w: round(counts[w] / eligible[w] * 100, 1) if eligible[w] > 0 else 0.0
         for w in MA_WINDOWS
     }
 
@@ -326,6 +349,7 @@ def compute_ma_breadth(client: SSIClient, symbols: list[str], today: datetime, m
 
     return {
         "ma_total_symbols":   total_valid,
+        "ma_eligible_symbols": {str(w): eligible[w] for w in MA_WINDOWS},
         "above_ma20_count":   counts[20],
         "above_ma50_count":   counts[50],
         "above_ma200_count":  counts[200],
@@ -343,6 +367,8 @@ def compute_ma_breadth(client: SSIClient, symbols: list[str], today: datetime, m
         "volume_breakout_count": len(volume_breakout),
         "ad_distribution": ad_distribution,
         "ad_distribution_total": total_distribution,
+        "rsi_pulse": rsi_pulse,
+        "latest_ohlc_date": format_market_date(max(latest_dates)) if latest_dates else "",
     }
 
 
@@ -360,7 +386,9 @@ def get_advance_decline(client: SSIClient, market: str, today: datetime) -> dict
         print(f"[{market}] WARN: daily_index tra ve rong")
         return {"advances": 0, "declines": 0, "unchanged": 0, "ad_ratio": None}
 
-    latest = rows[-1]
+    dated_rows = [(parse_market_date(r.get("TradingDate") or r.get("tradingDate")), r) for r in rows]
+    dated_rows = [(date, row) for date, row in dated_rows if date is not None]
+    latest = max(dated_rows, key=lambda item: item[0])[1] if dated_rows else rows[-1]
     print(f"[{market}] DailyIndex: {latest}")
 
     adv = int(float(latest.get("Advances") or latest.get("advances") or 0))
@@ -376,26 +404,54 @@ def get_advance_decline(client: SSIClient, market: str, today: datetime) -> dict
         "declines": dec,
         "unchanged": unc,
         "ad_ratio": ad_ratio,
-        "trading_date": latest.get("TradingDate") or latest.get("tradingDate"),
+        "trading_date": format_market_date(latest.get("TradingDate") or latest.get("tradingDate")),
     }
 
 
 # --- Snapshot moi san ---------------------------------------------------------
+
+def _load_exchange_universe(market: str) -> list[str]:
+    """Load only the persisted symbols that belong to the requested exchange."""
+    if not SYMBOL_UNIVERSES_JSON.exists():
+        return []
+    try:
+        payload = json.loads(SYMBOL_UNIVERSES_JSON.read_text(encoding="utf-8"))
+        entry = payload.get("exchanges", {}).get(market, {})
+        symbols = entry.get("symbols", [])
+        return sorted({str(symbol).upper() for symbol in symbols if str(symbol).isalpha() and len(str(symbol)) <= 3})
+    except (OSError, ValueError, TypeError, AttributeError):
+        return []
+
+
+def _save_exchange_universe(market: str, symbols: list[str]) -> None:
+    try:
+        payload = json.loads(SYMBOL_UNIVERSES_JSON.read_text(encoding="utf-8")) if SYMBOL_UNIVERSES_JSON.exists() else {}
+    except (OSError, ValueError, TypeError):
+        payload = {}
+    exchanges = payload.setdefault("exchanges", {})
+    exchanges[market] = {
+        "symbols": sorted(set(symbols)),
+        "updated_at": vn_now().isoformat(),
+    }
+    _write_json(SYMBOL_UNIVERSES_JSON, payload)
+
 
 def build_snapshot(client: SSIClient, market: str, today: datetime) -> dict:
     print(f"\n{'='*50}")
     print(f"[{market}] Bat dau xu ly...")
 
     symbols = client.common_stock_symbols(market)
+    universe_source = "api"
+    if symbols:
+        _save_exchange_universe(market, symbols)
     if not symbols:
-        print(f"[{market}] WARN: API Securities tra ve 0 ma, fallback sang cache...")
-        from _shared import list_symbols as _list_symbols
-        cached = _list_symbols(CACHE_DIR, min_history=20)
-        symbols = [s for s in cached if not any(c.isdigit() for c in s) and len(s) <= 3]
+        print(f"[{market}] WARN: API Securities tra ve 0 ma, fallback universe rieng cua san...")
+        symbols = _load_exchange_universe(market)
+        universe_source = "exchange_cache" if symbols else "unavailable"
         if symbols:
-            print(f"[{market}] Fallback: lay {len(symbols)} ma tu cache")
+            print(f"[{market}] Fallback: lay {len(symbols)} ma tu universe cache {market}")
         else:
-            print(f"[{market}] WARN: cache cung khong co ma hop le!")
+            print(f"[{market}] WARN: khong co universe cache rieng cho {market}!")
 
     ad = get_advance_decline(client, market, today)
     print(f"[{market}] A/D: adv={ad['advances']} dec={ad['declines']} unc={ad['unchanged']}")
@@ -403,10 +459,34 @@ def build_snapshot(client: SSIClient, market: str, today: datetime) -> dict:
     ma = compute_ma_breadth(client, symbols, today, market)
 
     total_ad = ad["advances"] + ad["declines"] + ad["unchanged"]
+    authoritative_date = parse_market_date(ad.get("trading_date"))
+    latest_ohlc_date = parse_market_date(ma.get("latest_ohlc_date"))
+    snapshot_date = authoritative_date or latest_ohlc_date
+    status_details = []
+    if universe_source == "unavailable":
+        status_details.append("symbol_universe_unavailable")
+    if authoritative_date is None:
+        status_details.append("advance_decline_unavailable")
+    if authoritative_date and latest_ohlc_date and latest_ohlc_date < authoritative_date:
+        status_details.append("ohlc_lags_authoritative_date")
+    if snapshot_date is None:
+        data_status = "unavailable"
+    elif is_market_date_stale(snapshot_date):
+        data_status = "stale"
+    elif status_details:
+        data_status = "partial"
+    else:
+        data_status = "current"
 
     return {
         "exchange":        market,
-        "date":            today.strftime(DATE_FMT),
+        "date":            format_market_date(snapshot_date),
+        "authoritative_trading_date": format_market_date(authoritative_date),
+        "latest_ohlc_date": format_market_date(latest_ohlc_date),
+        "data_status": data_status,
+        "status_details": status_details,
+        "universe_source": universe_source,
+        "universe_available": bool(symbols),
         "total_symbols":   total_ad or ma["ma_total_symbols"],
         "advances":        ad["advances"],
         "declines":        ad["declines"],
@@ -422,6 +502,7 @@ def build_snapshot(client: SSIClient, market: str, today: datetime) -> dict:
         "above_ma50_count":   ma["above_ma50_count"],
         "above_ma200_count":  ma["above_ma200_count"],
         "ma_total_symbols":   ma["ma_total_symbols"],
+        "ma_eligible_symbols": ma.get("ma_eligible_symbols", {}),
         "above_ma20_symbols":  ma["above_ma20_symbols"],
         "above_ma50_symbols":  ma["above_ma50_symbols"],
         "above_ma200_symbols": ma["above_ma200_symbols"],
@@ -433,17 +514,22 @@ def build_snapshot(client: SSIClient, market: str, today: datetime) -> dict:
         "volume_breakout_count": ma["volume_breakout_count"],
         "ad_distribution": ma.get("ad_distribution", _empty_ad_distribution()),
         "ad_distribution_total": ma.get("ad_distribution_total", 0),
+        "rsi_pulse": ma.get("rsi_pulse", {"under_30": 0, "over_70": 0, "over_50": 0, "total": 0, "period": 14}),
     }
 
 
 # --- Gop ALL ------------------------------------------------------------------
 
-def combine_all(snapshots: list[dict], today: datetime) -> dict:
+def combine_all(snapshots: list[dict], today: datetime | None = None) -> dict:
     ad_distribution = _empty_ad_distribution()
+    rsi_pulse = {"under_30": 0, "over_70": 0, "over_50": 0, "total": 0, "period": 14}
     for snap in snapshots:
         for idx, bucket in enumerate(snap.get("ad_distribution", [])):
             if idx < len(ad_distribution):
                 ad_distribution[idx]["count"] += int(bucket.get("count", 0) or 0)
+        snap_rsi = snap.get("rsi_pulse", {})
+        for key in ("under_30", "over_70", "over_50", "total"):
+            rsi_pulse[key] += int(snap_rsi.get(key, 0) or 0)
     ad_distribution_total = sum(b["count"] for b in ad_distribution)
 
     adv  = sum(s["advances"] for s in snapshots)
@@ -454,6 +540,11 @@ def combine_all(snapshots: list[dict], today: datetime) -> dict:
     ma50  = sum(s["above_ma50_count"] for s in snapshots)
     ma200 = sum(s["above_ma200_count"] for s in snapshots)
     ma_tot = sum(s["ma_total_symbols"] for s in snapshots)
+    ma_eligible = {
+        20: sum(int(s.get("ma_eligible_symbols", {}).get("20", s["ma_total_symbols"]) or 0) for s in snapshots),
+        50: sum(int(s.get("ma_eligible_symbols", {}).get("50", s["ma_total_symbols"]) or 0) for s in snapshots),
+        200: sum(int(s.get("ma_eligible_symbols", {}).get("200", s["ma_total_symbols"]) or 0) for s in snapshots),
+    }
 
     def merge(key):
         out = []
@@ -462,10 +553,24 @@ def combine_all(snapshots: list[dict], today: datetime) -> dict:
         return sorted(out)
 
     volume_breakout = merge("volume_breakout_symbols")
+    snapshot_dates = [parse_market_date(snapshot.get("date")) for snapshot in snapshots]
+    snapshot_dates = [date for date in snapshot_dates if date is not None]
+    latest_date = max(snapshot_dates) if snapshot_dates else None
+    statuses = {snapshot.get("data_status", "unavailable") for snapshot in snapshots}
+    if not latest_date or "unavailable" in statuses:
+        data_status = "unavailable" if not latest_date else "partial"
+    elif is_market_date_stale(latest_date):
+        data_status = "stale"
+    elif statuses == {"current"}:
+        data_status = "current"
+    else:
+        data_status = "partial"
 
     return {
         "exchange":        "ALL",
-        "date":            today.strftime(DATE_FMT),
+        "date":            format_market_date(latest_date),
+        "data_status": data_status,
+        "status_details": sorted(statuses),
         "total_symbols":   total,
         "advances":        adv,
         "declines":        dec,
@@ -474,13 +579,14 @@ def combine_all(snapshots: list[dict], today: datetime) -> dict:
         "declines_pct":    round(dec / total * 100, 1) if total else 0.0,
         "unchanged_pct":   round(unc / total * 100, 1) if total else 0.0,
         "ad_ratio":        round(adv / dec, 2) if dec else None,
-        "pct_above_ma20":  round(ma20 / ma_tot * 100, 1) if ma_tot else 0.0,
-        "pct_above_ma50":  round(ma50 / ma_tot * 100, 1) if ma_tot else 0.0,
-        "pct_above_ma200": round(ma200 / ma_tot * 100, 1) if ma_tot else 0.0,
+        "pct_above_ma20":  round(ma20 / ma_eligible[20] * 100, 1) if ma_eligible[20] else 0.0,
+        "pct_above_ma50":  round(ma50 / ma_eligible[50] * 100, 1) if ma_eligible[50] else 0.0,
+        "pct_above_ma200": round(ma200 / ma_eligible[200] * 100, 1) if ma_eligible[200] else 0.0,
         "above_ma20_count":   ma20,
         "above_ma50_count":   ma50,
         "above_ma200_count":  ma200,
         "ma_total_symbols":   ma_tot,
+        "ma_eligible_symbols": {str(w): ma_eligible[w] for w in MA_WINDOWS},
         "above_ma20_symbols":  merge("above_ma20_symbols"),
         "above_ma50_symbols":  merge("above_ma50_symbols"),
         "above_ma200_symbols": merge("above_ma200_symbols"),
@@ -490,6 +596,9 @@ def combine_all(snapshots: list[dict], today: datetime) -> dict:
         "newly_below_ma50":   merge("newly_below_ma50"),
         "volume_breakout_symbols": volume_breakout,
         "volume_breakout_count": len(volume_breakout),
+        "ad_distribution": ad_distribution,
+        "ad_distribution_total": ad_distribution_total,
+        "rsi_pulse": rsi_pulse,
     }
 
 
@@ -500,10 +609,13 @@ def _write_json(path: Path, data) -> None:
     path.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
 
 
-def _sync_docs_data():
+def _sync_docs_data(include_signal_outputs: bool = True):
     """Dong bo du lieu sang docs/data/ cho GitHub Pages."""
     DOCS_DATA_DIR.mkdir(parents=True, exist_ok=True)
-    for f in ("breadth_latest.json", "breadth_history.json", "market_commentary.json", "strategy_signals.json", "ensemble_signals.json", "backtest_weights.json", "momentum_signals.json", "backtest_momentum.json", "backtest_mama_positional.json", "backtest_advanced_trailstop.json", "luc_mach_signals.json", "khung4_tplus_signals.json", "mama_positional_signals.json", "advanced_trailstop_signals.json", "accumulation_radar.json", "latest_prices.json"):
+    files = ["breadth_latest.json", "breadth_history.json", "market_commentary.json", "backtest_weights.json", "backtest_momentum.json", "backtest_mama_positional.json", "backtest_advanced_trailstop.json", "latest_prices.json"]
+    if include_signal_outputs:
+        files.extend(["strategy_signals.json", "ensemble_signals.json", "momentum_signals.json", "luc_mach_signals.json", "khung4_tplus_signals.json", "mama_positional_signals.json", "advanced_trailstop_signals.json", "accumulation_radar.json", "signals_history.json"])
+    for f in files:
         src = DATA_DIR / f
         dst = DOCS_DATA_DIR / f
         if src.exists():
@@ -526,7 +638,7 @@ def append_history(markets_dict: dict) -> None:
     _write_json(HISTORY_JSON, history)
 
 
-def append_signals_history() -> None:
+def append_signals_history(expected_date: str) -> None:
     strategy_path = DATA_DIR / "strategy_signals.json"
     ensemble_path = DATA_DIR / "ensemble_signals.json"
     momentum_path = DATA_DIR / "momentum_signals.json"
@@ -534,7 +646,7 @@ def append_signals_history() -> None:
     khung4_path = DATA_DIR / "khung4_tplus_signals.json"
     mama_path = DATA_DIR / "mama_positional_signals.json"
     ats_path = DATA_DIR / "advanced_trailstop_signals.json"
-    if not strategy_path.exists() and not ensemble_path.exists() and not momentum_path.exists() and not luc_mach_path.exists() and not khung4_path.exists() and not mama_path.exists() and not ats_path.exists():
+    if not expected_date:
         return
 
     history = []
@@ -544,42 +656,32 @@ def append_signals_history() -> None:
         except Exception:
             history = []
 
-    entry = {"date": "", "strategy": None, "ensemble": None, "momentum": None, "luc_mach": None, "khung4_tplus": None, "mama_positional": None, "advanced_trailstop": None}
-    if strategy_path.exists():
-        data = json.loads(strategy_path.read_text(encoding="utf-8"))
-        entry["date"] = data.get("date", "")
-        entry["strategy"] = data
-    if ensemble_path.exists():
-        data = json.loads(ensemble_path.read_text(encoding="utf-8"))
-        entry["date"] = entry["date"] or data.get("date", "")
-        entry["ensemble"] = data
+    entry = {"date": expected_date, "strategy": None, "ensemble": None, "momentum": None, "luc_mach": None, "khung4_tplus": None, "mama_positional": None, "advanced_trailstop": None}
+    artifacts = {
+        "strategy": strategy_path,
+        "ensemble": ensemble_path,
+        "momentum": momentum_path,
+        "luc_mach": luc_mach_path,
+        "khung4_tplus": khung4_path,
+        "mama_positional": mama_path,
+        "advanced_trailstop": ats_path,
+    }
+    matched = 0
+    for key, path in artifacts.items():
+        if not path.exists():
+            continue
+        try:
+            data = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, ValueError, TypeError):
+            print(f"Bo qua {path.name}: JSON khong hop le.")
+            continue
+        if data.get("date") != expected_date:
+            print(f"Bo qua {path.name}: date={data.get('date')!r}, expected={expected_date!r}.")
+            continue
+        entry[key] = data
+        matched += 1
 
-    if momentum_path.exists():
-        data = json.loads(momentum_path.read_text(encoding="utf-8"))
-        entry["date"] = entry["date"] or data.get("date", "")
-        entry["momentum"] = data
-
-    if luc_mach_path.exists():
-        data = json.loads(luc_mach_path.read_text(encoding="utf-8"))
-        entry["date"] = entry["date"] or data.get("date", "")
-        entry["luc_mach"] = data
-
-    if khung4_path.exists():
-        data = json.loads(khung4_path.read_text(encoding="utf-8"))
-        entry["date"] = entry["date"] or data.get("date", "")
-        entry["khung4_tplus"] = data
-
-    if mama_path.exists():
-        data = json.loads(mama_path.read_text(encoding="utf-8"))
-        entry["date"] = entry["date"] or data.get("date", "")
-        entry["mama_positional"] = data
-
-    if ats_path.exists():
-        data = json.loads(ats_path.read_text(encoding="utf-8"))
-        entry["date"] = entry["date"] or data.get("date", "")
-        entry["advanced_trailstop"] = data
-
-    if not entry["date"]:
+    if not matched:
         return
 
     history = [h for h in history if h.get("date") != entry["date"]]
@@ -597,6 +699,9 @@ def append_signals_history() -> None:
 def main():
     client = SSIClient()
     today = vn_today()
+    if not should_run_close_pipeline(today):
+        print(f"Bo qua pipeline close truoc {CLOSE_HOUR:02d}:{CLOSE_MINUTE:02d} gio VN. Dat ALLOW_PRE_CLOSE_RUN=1 de override.")
+        return
     print(f"Ngay xu ly: {today.strftime(DATE_FMT)}")
     print(f"Nguong thanh khoan: TB 20 phien >= {MIN_AVG_VOLUME:,} cp\n")
 
@@ -608,28 +713,26 @@ def main():
         markets_dict[market] = snap
         all_list.append(snap)
 
-    all_snap = combine_all(all_list, today)
+    all_snap = combine_all(all_list)
     markets_dict["ALL"] = all_snap
 
     output = {
-        "generated_at": today.isoformat(),
+        "generated_at": vn_now().isoformat(),
         "session": "close",
         "markets": markets_dict,
     }
     _write_json(LATEST_JSON, output)
     generate_latest_prices()
-    _sync_docs_data()
     print(f"\nDa ghi: {LATEST_JSON}")
 
     append_history(markets_dict)
-    _sync_docs_data()
     print(f"Da cap nhat history.")
 
     # Generate market commentary
     try:
         commentary_text = generate_commentary(output)
         commentary_output = {
-            "generated_at": datetime.now().isoformat(),
+            "generated_at": vn_now().isoformat(),
             "session": "close",
             "date": output["markets"]["ALL"]["date"],
             "content": commentary_text,
@@ -640,13 +743,6 @@ def main():
     except Exception as e:
         print(f"Loi sinh nhan xet: {e}")
 
-    # Generate strategy signals
-    try:
-        run_strategy_signals()
-        print(f"Da ghi tin hieu pre-breakout.\n")
-    except Exception as e:
-        print(f"Loi sinh tin hieu pre-breakout: {e}")
-
     try:
         run_backtest_weights()
         print(f"Da cap nhat backtest weights.\n")
@@ -654,54 +750,48 @@ def main():
         print(f"Loi backtest weights: {e}")
 
     try:
-        run_ensemble_signals()
-        print(f"Da ghi tin hieu ensemble.\n")
-    except Exception as e:
-        print(f"Loi sinh tin hieu ensemble: {e}")
-
-    try:
-        run_momentum_signals()
-        print(f"Da ghi tin hieu momentum.\n")
-    except Exception as e:
-        print(f"Loi sinh tin hieu momentum: {e}")
-
-    try:
-        run_luc_mach_signals()
-        print(f"Da ghi tin hieu Luc Mach.\n")
-    except Exception as e:
-        print(f"Loi sinh tin hieu Luc Mach: {e}")
-
-    try:
-        run_khung4_tplus_signals()
-        print(f"Da ghi tin hieu Khung4/Tplus.\n")
-    except Exception as e:
-        print(f"Loi sinh tin hieu Khung4/Tplus: {e}")
-
-    try:
-        run_mama_positional_signals()
-        print(f"Da ghi tin hieu MAMA Positional.\n")
-    except Exception as e:
-        print(f"Loi sinh tin hieu MAMA Positional: {e}")
-
-    try:
-        run_advanced_trailstop_signals()
-        print(f"Da ghi tin hieu Advanced Trailstop.\n")
-    except Exception as e:
-        print(f"Loi sinh tin hieu Advanced Trailstop: {e}")
-
-    try:
-        run_accumulation_radar()
-        print(f"Da ghi Accumulation Radar.\n")
-    except Exception as e:
-        print(f"Loi sinh Accumulation Radar: {e}")
-
-    try:
         run_backtest_momentum()
         print(f"Da ghi backtest momentum.\n")
     except Exception as e:
         print(f"Loi backtest momentum: {e}")
 
-    append_signals_history()
+    try:
+        run_backtest_mama_positional()
+        print(f"Da ghi backtest MAMA Positional.\n")
+    except Exception as e:
+        print(f"Loi backtest MAMA Positional: {e}")
+
+    try:
+        run_backtest_advanced_trailstop()
+        print(f"Da ghi backtest Advanced Trailstop.\n")
+    except Exception as e:
+        print(f"Loi backtest Advanced Trailstop: {e}")
+
+    # A partial breadth snapshot can contain an unknown/stale subset. Do not let
+    # any generator label those cached quotes as a current market signal.
+    signals_allowed = all_snap["data_status"] == "current"
+    if signals_allowed:
+        for label, generator in (
+            ("pre-breakout", run_strategy_signals),
+            ("ensemble", run_ensemble_signals),
+            ("momentum", run_momentum_signals),
+            ("Luc Mach", run_luc_mach_signals),
+            ("Khung4/Tplus", run_khung4_tplus_signals),
+            ("MAMA Positional", run_mama_positional_signals),
+            ("Advanced Trailstop", run_advanced_trailstop_signals),
+            ("Accumulation Radar", run_accumulation_radar),
+        ):
+            try:
+                generator()
+                print(f"Da ghi tin hieu {label}.\n")
+            except Exception as e:
+                print(f"Loi sinh tin hieu {label}: {e}")
+        append_signals_history(all_snap["date"])
+    else:
+        print(f"Bo qua sinh tin hieu: du lieu thi truong {all_snap['data_status']} ({all_snap['date'] or 'khong co ngay'}).")
+
+    # This is deliberately last so Pages never sees a mixture of old and new outputs.
+    _sync_docs_data(include_signal_outputs=signals_allowed)
 
     print("\nHoan tat.")
 

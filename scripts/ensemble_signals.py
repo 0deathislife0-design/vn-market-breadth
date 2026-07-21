@@ -10,12 +10,11 @@ from __future__ import annotations
 
 import json
 import warnings
-from datetime import datetime, timezone, timedelta
 from cache_utils import load_cache as _load_cache, compute_rsi_numpy
 
 import numpy as np
 import pandas as pd
-from _shared import tqdm, CACHE_DIR, DATA_DIR, DOCS_DATA_DIR, DEFAULT_WEIGHTS, WEIGHTS_PATH
+from _shared import tqdm, CACHE_DIR, DATA_DIR, DOCS_DATA_DIR, DEFAULT_WEIGHTS, WEIGHTS_PATH, format_market_date, signal_market_date, vn_now
 
 warnings.filterwarnings("ignore", category=FutureWarning)
 warnings.filterwarnings("ignore", category=DeprecationWarning)
@@ -24,6 +23,37 @@ SIGNALS_JSON = DATA_DIR / "ensemble_signals.json"
 DOCS_SIGNALS_JSON = DOCS_DATA_DIR / "ensemble_signals.json"
 
 MIN_AVG_VOLUME = 300_000
+
+
+def compute_breakout_signal_series(close: pd.Series, volume: pd.Series) -> pd.Series:
+    """Breakout predicate using the prior 20 sessions for both price and volume."""
+    high_20 = close.rolling(20).max().shift(1)
+    vol_avg_20 = volume.rolling(20, min_periods=10).mean().shift(1)
+    return (close > high_20) & (volume > vol_avg_20 * 1.5)
+
+
+def _normalized_volume_slope(values: np.ndarray) -> float:
+    valid = ~np.isnan(values)
+    if valid.sum() < 5:
+        return 0.0
+    try:
+        x = np.where(valid)[0]
+        y = values[valid]
+        return float(np.polyfit(x, y, 1)[0] / np.mean(y)) if np.mean(y) > 0 else 0.0
+    except np.linalg.LinAlgError:
+        return 0.0
+
+
+def compute_momentum_signal_series(close: pd.Series, volume: pd.Series) -> tuple[pd.Series, pd.Series]:
+    """ROC/volume-momentum predicate and its 10-session normalized slope."""
+    close_10 = close.shift(10)
+    close_20 = close.shift(20)
+    roc10 = ((close - close_10) / close_10 * 100).where(close_10 > 0, 0.0)
+    roc20 = ((close - close_20) / close_20 * 100).where(close_20 > 0, 0.0)
+    vol_slope = volume.rolling(10, min_periods=5).apply(_normalized_volume_slope, raw=True)
+    signal = (roc10 > roc20) & (vol_slope > 0)
+    signal.iloc[:24] = False
+    return signal, vol_slope
 
 
 def _load_weights() -> dict:
@@ -73,7 +103,7 @@ def compute_breakout(df: pd.DataFrame) -> dict:
     high_20 = close[-21:-1].max()  # 20 phien truoc (khong tinh hom nay)
     vol_avg_20 = volume[-21:-1].mean() if np.sum(~np.isnan(volume[-21:-1])) >= 10 else 0
     vol_ratio = volume[-1] / vol_avg_20 if vol_avg_20 > 0 else 0
-    signal = 1 if (close[-1] > high_20 and vol_ratio > 1.5) else 0
+    signal = int(compute_breakout_signal_series(df["Close"], df["Volume"]).iloc[-1])
     return {"signal": signal, "high_20": round(high_20, 1), "vol_ratio": round(vol_ratio, 2)}
 
 
@@ -85,13 +115,10 @@ def compute_momentum(df: pd.DataFrame) -> dict:
         return {"signal": 0, "roc10": None, "roc20": None}
     roc10 = (close[-1] - close[-11]) / close[-11] * 100 if close[-11] > 0 else 0
     roc20 = (close[-1] - close[-21]) / close[-21] * 100 if close[-21] > 0 else 0
-    vol_valid = ~np.isnan(volume[-10:])
-    vol_slope = 0
-    if np.sum(vol_valid) >= 5:
-        x = np.where(vol_valid)[0]
-        y = volume[-10:][vol_valid]
-        vol_slope = np.polyfit(x, y, 1)[0] / np.mean(y) if np.mean(y) > 0 else 0
-    signal = 1 if (roc10 > roc20 and vol_slope > 0) else 0
+    signal_series, vol_slope_series = compute_momentum_signal_series(df["Close"], df["Volume"])
+    vol_slope = vol_slope_series.iloc[-1]
+    vol_slope = float(vol_slope) if pd.notna(vol_slope) else 0.0
+    signal = int(signal_series.iloc[-1])
     return {"signal": signal, "roc10": round(roc10, 2), "roc20": round(roc20, 2), "vol_slope": round(vol_slope, 4)}
 
 
@@ -157,13 +184,14 @@ def main():
 
     signals.sort(key=lambda x: x["total_score"], reverse=True)
 
-    now = datetime.now(timezone.utc) + timedelta(hours=7)
+    now = vn_now()
+    market_date = format_market_date(signal_market_date()) or now.strftime("%d/%m/%Y")
     strong = [s for s in signals if s["total_score"] >= 0.65]
     weak = [s for s in signals if s["total_score"] >= 0.35 and s["total_score"] < 0.65]
 
     output = {
         "generated_at": now.isoformat(),
-        "date": now.strftime("%d/%m/%Y"),
+        "date": market_date,
         "total_symbols_analyzed": len(symbols),
         "total_signals": len(signals),
         "strong_buy": len(strong),

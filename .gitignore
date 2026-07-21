@@ -5,3 +5,7 @@ __pycache__/
 venv/
 data/ohlc_cache/*.csv
 !data/ohlc_cache/.gitkeep
+.pytest_cache/
+Thumbs.db
+.DS_Store
+*.pyo

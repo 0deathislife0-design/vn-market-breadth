@@ -15,6 +15,7 @@ from momentum_signals import (
     compute_roc_momentum, compute_hybrid, check_common_filters,
     compute_bonuses,
 )
+from ensemble_signals import compute_breakout_signal_series, compute_momentum_signal_series
 from khung4_tplus_signals import compute_khung4_tplus
 from mama_positional_signals import compute_mama_positional_system
 from advanced_trailstop_signals import compute_advanced_trailstop
@@ -56,7 +57,7 @@ class TestRSI:
 
     def test_rsi_numpy_constant(self):
         arr = np.full(20, 50.0)
-        assert compute_rsi_numpy(arr, 14) == 100.0  # avg_loss = 0
+        assert compute_rsi_numpy(arr, 14) == 50.0
 
     def test_rsi_numpy_up_trend(self):
         arr = np.arange(50, 75, dtype=float)
@@ -67,6 +68,38 @@ class TestRSI:
         arr = np.array([50.0] * 5)
         assert compute_rsi_numpy(arr, 14) == 50.0
         assert compute_rsi_wilder(pd.Series(arr), 14) == 50.0
+
+    def test_rsi_uses_wilder_seed_and_implementations_agree(self):
+        # First 14 deltas: eight +2 gains and six -1 losses; then one -1 loss.
+        deltas = [2.0] * 8 + [-1.0] * 7
+        close = np.array([100.0] + list(100.0 + np.cumsum(deltas)))
+        expected = 100.0 * 52.0 / 75.0
+
+        assert compute_rsi_numpy(close, 14) == pytest.approx(expected)
+        assert compute_rsi_wilder(pd.Series(close), 14) == pytest.approx(expected)
+
+    @pytest.mark.parametrize("deltas, expected", [([1.0] * 14, 100.0), ([-1.0] * 14, 0.0)])
+    def test_rsi_handles_one_sided_moves(self, deltas, expected):
+        close = np.array([100.0] + list(100.0 + np.cumsum(deltas)))
+        assert compute_rsi_numpy(close, 14) == expected
+        assert compute_rsi_wilder(pd.Series(close), 14) == expected
+
+
+class TestEnsembleVolumeConditions:
+    def test_breakout_uses_the_prior_twenty_session_volume_average(self):
+        close = pd.Series([100.0] * 24 + [101.0])
+        volume = pd.Series([100.0] * 24 + [151.0])
+
+        assert bool(compute_breakout_signal_series(close, volume).iloc[-1]) is True
+
+    def test_momentum_uses_live_normalized_linear_volume_slope(self):
+        close = pd.Series([120.0] * 5 + [100.0] * 10 + list(np.linspace(105.0, 150.0, 10)))
+        volume = pd.Series([100.0] * 15 + [100.0] * 5 + [1000.0, 0.0, 0.0, 0.0, 0.0])
+
+        signal, volume_slope = compute_momentum_signal_series(close, volume)
+
+        assert volume_slope.iloc[-1] < 0
+        assert bool(signal.iloc[-1]) is False
 
 
 class TestADX:

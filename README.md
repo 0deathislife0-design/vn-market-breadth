@@ -14,7 +14,6 @@ lấy dữ liệu từ SSI FastConnect Data API, tự động cập nhật qua G
 - **Lục Mạch Signals**: bản core theo Diệp gốc, gồm VUDD 13/20/35/55/65 + Tplus
 - **Khung4/Tplus Signals**: hub mua riêng theo state Khung4/Tplus, có giá mua tại phiên phát tín hiệu
 - **Market Commentary**: Nhận định thị trường tự động (breadth + kỹ thuật VN-Index)
-- **Session Compare**: So sánh phiên sáng vs đóng cửa
 - **Accumulation Radar**: hub riêng phát hiện cổ phiếu khỏe âm thầm trong thị trường xấu
 
 ## Cấu trúc repo
@@ -38,7 +37,6 @@ scripts/
 data/
   breadth_latest.json     # snapshot breadth mới nhất
   breadth_history.json    # lịch sử ~120 phiên
-  breadth_midday.json     # snapshot phiên sáng
   strategy_signals.json   # tín hiệu pre-breakout
   ensemble_signals.json   # tín hiệu ensemble
   momentum_signals.json   # tín hiệu momentum
@@ -52,7 +50,7 @@ data/
 docs/
   index.html              # dashboard source (fetch JSON từ data/)
   accumulation-radar.html # hub riêng Accumulation Radar
-  dashboard.html          # embedded version (mở trực tiếp không cần server)
+  dashboard.html          # embedded version, dùng được cả Dashboard và Radar qua file://
   data/                   # JSON copies cho GitHub Pages
 .github/workflows/update.yml  # cron: 15:10 VN (T2-T6)
 ```
@@ -68,6 +66,8 @@ export SSI_CONSUMER_SECRET="..."
 python fetch_and_compute.py
 ```
 
+Pipeline chỉ xuất snapshot đóng cửa từ 15:10 giờ Việt Nam; dùng `ALLOW_PRE_CLOSE_RUN=1` chỉ khi chủ động cần chạy trước giờ đóng cửa.
+
 Sau khi chạy:
 - `data/breadth_latest.json` — breadth snapshot
 - `data/strategy_signals.json` — pre-breakout signals
@@ -81,7 +81,7 @@ Sau khi chạy:
 
 Mở `docs/index.html` qua Live Server (VSCode) hoặc `python -m http.server`.
 Mở `docs/accumulation-radar.html` qua Live Server để xem hub Accumulation Radar.
-Mở `docs/dashboard.html` trực tiếp bằng double-click (file://) — đã embed data.
+Mở `docs/dashboard.html` trực tiếp bằng double-click (`file://`) để dùng Dashboard và Accumulation Radar offline. `docs/index.html` và `docs/accumulation-radar.html` vẫn cần được phục vụ qua HTTP để tải JSON.
 
 ## Dashboard tabs
 
