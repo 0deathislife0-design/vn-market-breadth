@@ -1,44 +1,47 @@
 {
-  "generated_at": "2026-07-22T20:21:48.850575+07:00",
+  "generated_at": "2026-07-23T20:25:14.959006+07:00",
   "session": "close",
   "run_mode": "scheduled_close",
-  "as_of_date": "22/07/2026",
+  "as_of_date": "23/07/2026",
   "markets": {
     "HOSE": {
       "exchange": "HOSE",
-      "date": "22/07/2026",
-      "authoritative_trading_date": "22/07/2026",
-      "latest_ohlc_date": "22/07/2026",
+      "date": "23/07/2026",
+      "authoritative_trading_date": "23/07/2026",
+      "latest_ohlc_date": "23/07/2026",
       "data_status": "current",
       "status_details": [],
       "universe_source": "api",
       "universe_available": true,
-      "total_symbols": 347,
-      "advances": 68,
-      "declines": 234,
-      "unchanged": 45,
-      "advances_pct": 19.6,
-      "declines_pct": 67.4,
-      "unchanged_pct": 13.0,
-      "ad_ratio": 0.29,
-      "pct_above_ma20": 6.1,
-      "pct_above_ma50": 12.9,
-      "pct_above_ma200": 15.2,
-      "above_ma20_count": 8,
-      "above_ma50_count": 17,
-      "above_ma200_count": 20,
-      "ma_total_symbols": 132,
+      "total_symbols": 359,
+      "advances": 189,
+      "declines": 122,
+      "unchanged": 48,
+      "advances_pct": 52.6,
+      "declines_pct": 34.0,
+      "unchanged_pct": 13.4,
+      "ad_ratio": 1.55,
+      "pct_above_ma20": 8.2,
+      "pct_above_ma50": 13.4,
+      "pct_above_ma200": 16.4,
+      "above_ma20_count": 11,
+      "above_ma50_count": 18,
+      "above_ma200_count": 22,
+      "ma_total_symbols": 134,
       "ma_eligible_symbols": {
-        "20": 132,
-        "50": 132,
-        "200": 132
+        "20": 134,
+        "50": 134,
+        "200": 134
       },
       "above_ma20_symbols": [
+        "ABS",
         "CSM",
         "HCM",
         "HHP",
+        "HSL",
         "LPB",
         "NVL",
+        "STB",
         "TNI",
         "VNM",
         "VPI"
@@ -47,6 +50,7 @@
         "ABS",
         "ACB",
         "CSM",
+        "HCM",
         "HHP",
         "HSL",
         "LPB",
@@ -59,10 +63,11 @@
         "TNI",
         "TVS",
         "VIC",
-        "VNM",
+        "VND",
         "VPI"
       ],
       "above_ma200_symbols": [
+        "ABS",
         "ACB",
         "BSR",
         "CSM",
@@ -70,6 +75,7 @@
         "HCM",
         "HDB",
         "HHP",
+        "HSL",
         "LPB",
         "MSB",
         "NAB",
@@ -84,34 +90,28 @@
         "VIC",
         "VPI"
       ],
-      "newly_above_ma20": [],
-      "newly_below_ma20": [
+      "newly_above_ma20": [
         "ABS",
-        "ACB",
-        "CTF",
-        "DCL",
-        "GMD",
-        "HDB",
-        "MSB",
-        "NAF",
+        "HCM",
+        "HSL",
         "STB"
       ],
+      "newly_below_ma20": [],
       "newly_above_ma50": [
-        "TVS"
-      ],
-      "newly_below_ma50": [
-        "GMD",
         "HCM",
-        "HDB",
         "VND"
       ],
+      "newly_below_ma50": [
+        "VNM"
+      ],
       "volume_breakout_symbols": [
-        "LPB",
+        "HCM",
         "NVL",
-        "VNM",
+        "STB",
+        "TNI",
         "VPI"
       ],
-      "volume_breakout_count": 4,
+      "volume_breakout_count": 5,
       "ad_distribution": [
         {
           "bucket": "<=-7%",
@@ -120,47 +120,47 @@
         },
         {
           "bucket": "-7~-5%",
-          "count": 14,
+          "count": 5,
           "side": "down"
         },
         {
           "bucket": "-5~-3%",
-          "count": 22,
+          "count": 3,
           "side": "down"
         },
         {
           "bucket": "-3~-1%",
-          "count": 37,
+          "count": 10,
           "side": "down"
         },
         {
           "bucket": "-1~0%",
-          "count": 21,
+          "count": 14,
           "side": "down"
         },
         {
           "bucket": "0%",
-          "count": 10,
+          "count": 12,
           "side": "neutral"
         },
         {
           "bucket": "0~1%",
-          "count": 14,
+          "count": 30,
           "side": "up"
         },
         {
           "bucket": "1~3%",
-          "count": 8,
+          "count": 40,
           "side": "up"
         },
         {
           "bucket": "3~5%",
-          "count": 3,
+          "count": 13,
           "side": "up"
         },
         {
           "bucket": "5~7%",
-          "count": 3,
+          "count": 7,
           "side": "up"
         },
         {
@@ -169,38 +169,38 @@
           "side": "up"
         }
       ],
-      "ad_distribution_total": 132,
+      "ad_distribution_total": 134,
       "rsi_pulse": {
-        "under_30": 76,
+        "under_30": 65,
         "over_70": 1,
-        "over_50": 12,
-        "total": 132,
+        "over_50": 14,
+        "total": 134,
         "period": 14
       }
     },
     "HNX": {
       "exchange": "HNX",
-      "date": "22/07/2026",
-      "authoritative_trading_date": "22/07/2026",
-      "latest_ohlc_date": "22/07/2026",
+      "date": "23/07/2026",
+      "authoritative_trading_date": "23/07/2026",
+      "latest_ohlc_date": "23/07/2026",
       "data_status": "current",
       "status_details": [],
       "universe_source": "api",
       "universe_available": true,
       "total_symbols": 178,
-      "advances": 39,
-      "declines": 94,
-      "unchanged": 45,
-      "advances_pct": 21.9,
-      "declines_pct": 52.8,
-      "unchanged_pct": 25.3,
-      "ad_ratio": 0.41,
+      "advances": 72,
+      "declines": 52,
+      "unchanged": 54,
+      "advances_pct": 40.4,
+      "declines_pct": 29.2,
+      "unchanged_pct": 30.3,
+      "ad_ratio": 1.38,
       "pct_above_ma20": 10.3,
-      "pct_above_ma50": 24.1,
-      "pct_above_ma200": 21.4,
+      "pct_above_ma50": 20.7,
+      "pct_above_ma200": 25.0,
       "above_ma20_count": 3,
-      "above_ma50_count": 7,
-      "above_ma200_count": 6,
+      "above_ma50_count": 6,
+      "above_ma200_count": 7,
       "ma_total_symbols": 29,
       "ma_eligible_symbols": {
         "20": 29,
@@ -213,7 +213,6 @@
         "SHN"
       ],
       "above_ma50_symbols": [
-        "BVS",
         "CVN",
         "EVS",
         "MST",
@@ -223,6 +222,7 @@
       ],
       "above_ma200_symbols": [
         "AAV",
+        "EVS",
         "MST",
         "PSI",
         "SHN",
@@ -230,37 +230,34 @@
         "VTZ"
       ],
       "newly_above_ma20": [],
-      "newly_below_ma20": [
-        "DDG",
-        "SVN"
-      ],
+      "newly_below_ma20": [],
       "newly_above_ma50": [],
-      "newly_below_ma50": [],
-      "volume_breakout_symbols": [
-        "EVS",
-        "MST",
-        "SHN"
+      "newly_below_ma50": [
+        "BVS"
       ],
-      "volume_breakout_count": 3,
+      "volume_breakout_symbols": [
+        "MST"
+      ],
+      "volume_breakout_count": 1,
       "ad_distribution": [
         {
           "bucket": "<=-7%",
-          "count": 3,
+          "count": 2,
           "side": "down"
         },
         {
           "bucket": "-7~-5%",
-          "count": 1,
+          "count": 0,
           "side": "down"
         },
         {
           "bucket": "-5~-3%",
-          "count": 1,
+          "count": 4,
           "side": "down"
         },
         {
           "bucket": "-3~-1%",
-          "count": 9,
+          "count": 2,
           "side": "down"
         },
         {
@@ -270,27 +267,27 @@
         },
         {
           "bucket": "0%",
-          "count": 8,
+          "count": 7,
           "side": "neutral"
         },
         {
           "bucket": "0~1%",
-          "count": 0,
+          "count": 2,
           "side": "up"
         },
         {
           "bucket": "1~3%",
-          "count": 4,
+          "count": 7,
           "side": "up"
         },
         {
           "bucket": "3~5%",
-          "count": 0,
+          "count": 3,
           "side": "up"
         },
         {
           "bucket": "5~7%",
-          "count": 1,
+          "count": 0,
           "side": "up"
         },
         {
@@ -301,49 +298,52 @@
       ],
       "ad_distribution_total": 29,
       "rsi_pulse": {
-        "under_30": 5,
-        "over_70": 1,
-        "over_50": 4,
+        "under_30": 3,
+        "over_70": 0,
+        "over_50": 3,
         "total": 29,
         "period": 14
       }
     },
     "ALL": {
       "exchange": "ALL",
-      "date": "22/07/2026",
+      "date": "23/07/2026",
       "data_status": "current",
       "status_details": [
         "current"
       ],
-      "total_symbols": 525,
-      "advances": 107,
-      "declines": 328,
-      "unchanged": 90,
-      "advances_pct": 20.4,
-      "declines_pct": 62.5,
-      "unchanged_pct": 17.1,
-      "ad_ratio": 0.33,
-      "pct_above_ma20": 6.8,
-      "pct_above_ma50": 14.9,
-      "pct_above_ma200": 16.2,
-      "above_ma20_count": 11,
+      "total_symbols": 537,
+      "advances": 261,
+      "declines": 174,
+      "unchanged": 102,
+      "advances_pct": 48.6,
+      "declines_pct": 32.4,
+      "unchanged_pct": 19.0,
+      "ad_ratio": 1.5,
+      "pct_above_ma20": 8.6,
+      "pct_above_ma50": 14.7,
+      "pct_above_ma200": 17.9,
+      "above_ma20_count": 14,
       "above_ma50_count": 24,
-      "above_ma200_count": 26,
-      "ma_total_symbols": 161,
+      "above_ma200_count": 29,
+      "ma_total_symbols": 163,
       "ma_eligible_symbols": {
-        "20": 161,
-        "50": 161,
-        "200": 160
+        "20": 163,
+        "50": 163,
+        "200": 162
       },
       "above_ma20_symbols": [
+        "ABS",
         "CSM",
         "EVS",
         "HCM",
         "HHP",
+        "HSL",
         "LPB",
         "MST",
         "NVL",
         "SHN",
+        "STB",
         "TNI",
         "VNM",
         "VPI"
@@ -351,10 +351,10 @@
       "above_ma50_symbols": [
         "ABS",
         "ACB",
-        "BVS",
         "CSM",
         "CVN",
         "EVS",
+        "HCM",
         "HHP",
         "HSL",
         "LPB",
@@ -371,18 +371,21 @@
         "TNI",
         "TVS",
         "VIC",
-        "VNM",
+        "VND",
         "VPI"
       ],
       "above_ma200_symbols": [
         "AAV",
+        "ABS",
         "ACB",
         "BSR",
         "CSM",
+        "EVS",
         "GMD",
         "HCM",
         "HDB",
         "HHP",
+        "HSL",
         "LPB",
         "MSB",
         "MST",
@@ -402,88 +405,79 @@
         "VPI",
         "VTZ"
       ],
-      "newly_above_ma20": [],
-      "newly_below_ma20": [
+      "newly_above_ma20": [
         "ABS",
-        "ACB",
-        "CTF",
-        "DCL",
-        "DDG",
-        "GMD",
-        "HDB",
-        "MSB",
-        "NAF",
-        "STB",
-        "SVN"
-      ],
-      "newly_above_ma50": [
-        "TVS"
-      ],
-      "newly_below_ma50": [
-        "GMD",
         "HCM",
-        "HDB",
+        "HSL",
+        "STB"
+      ],
+      "newly_below_ma20": [],
+      "newly_above_ma50": [
+        "HCM",
         "VND"
       ],
+      "newly_below_ma50": [
+        "BVS",
+        "VNM"
+      ],
       "volume_breakout_symbols": [
-        "EVS",
-        "LPB",
+        "HCM",
         "MST",
         "NVL",
-        "SHN",
-        "VNM",
+        "STB",
+        "TNI",
         "VPI"
       ],
-      "volume_breakout_count": 7,
+      "volume_breakout_count": 6,
       "ad_distribution": [
         {
           "bucket": "<=-7%",
-          "count": 3,
+          "count": 2,
           "side": "down"
         },
         {
           "bucket": "-7~-5%",
-          "count": 15,
+          "count": 5,
           "side": "down"
         },
         {
           "bucket": "-5~-3%",
-          "count": 23,
+          "count": 7,
           "side": "down"
         },
         {
           "bucket": "-3~-1%",
-          "count": 46,
+          "count": 12,
           "side": "down"
         },
         {
           "bucket": "-1~0%",
-          "count": 23,
+          "count": 16,
           "side": "down"
         },
         {
           "bucket": "0%",
-          "count": 18,
+          "count": 19,
           "side": "neutral"
         },
         {
           "bucket": "0~1%",
-          "count": 14,
+          "count": 32,
           "side": "up"
         },
         {
           "bucket": "1~3%",
-          "count": 12,
+          "count": 47,
           "side": "up"
         },
         {
           "bucket": "3~5%",
-          "count": 3,
+          "count": 16,
           "side": "up"
         },
         {
           "bucket": "5~7%",
-          "count": 4,
+          "count": 7,
           "side": "up"
         },
         {
@@ -492,12 +486,12 @@
           "side": "up"
         }
       ],
-      "ad_distribution_total": 161,
+      "ad_distribution_total": 163,
       "rsi_pulse": {
-        "under_30": 81,
-        "over_70": 2,
-        "over_50": 16,
-        "total": 161,
+        "under_30": 68,
+        "over_70": 1,
+        "over_50": 17,
+        "total": 163,
         "period": 14
       }
     }

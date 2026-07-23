@@ -1,144 +1,14 @@
 {
-  "generated_at": "2026-07-22T20:23:50.008906+07:00",
-  "date": "22/07/2026",
+  "generated_at": "2026-07-23T20:26:08.562623+07:00",
+  "date": "23/07/2026",
   "total_symbols_analyzed": 127,
-  "total_signals": 3,
+  "total_signals": 1,
   "strong_buy": 0,
-  "watch_count": 3,
+  "watch_count": 1,
   "strong": [],
   "watch": [
     {
-      "symbol": "SHN",
-      "score": 55,
-      "signal_type": "watch",
-      "strategies": [
-        "ma_crossover"
-      ],
-      "bonuses": [
-        "vol_surge",
-        "adx_strong"
-      ],
-      "base_score": 30,
-      "bonus_score": 25,
-      "details": {
-        "ma_crossover": {
-          "signal": 1,
-          "ma10": 8590.0,
-          "ma50": 5028.0,
-          "rsi14": 70.7,
-          "adx14": 44.7,
-          "vol_ratio": 2.32
-        },
-        "breakout": {
-          "signal": 0,
-          "high_20": 10500.0,
-          "rsi14": 70.7,
-          "vol_ratio": 2.32
-        },
-        "roc_momentum": {
-          "signal": 0,
-          "roc10": 58.33,
-          "roc20": 156.76,
-          "rsi14": 70.7,
-          "vol_slope": 1
-        },
-        "hybrid": {
-          "signal": 0,
-          "ma10": 8590.0,
-          "ma50": 5028.0,
-          "rsi14": 70.7,
-          "adx14": 44.7,
-          "vol_ratio": 2.32,
-          "nh20": 0
-        }
-      },
-      "bonus_details": {
-        "vol_surge": {
-          "active": 1,
-          "ratio": 2.32
-        },
-        "adx_strong": {
-          "active": 1,
-          "adx": 44.7
-        },
-        "rsi_gold": {
-          "active": 0,
-          "rsi": 70.7
-        }
-      },
-      "rsi14": 70.7,
-      "adx14": 44.7,
-      "vol_ratio": 2.32,
-      "last_price": 9500.0,
-      "last_volume": 1160700.0
-    },
-    {
       "symbol": "MST",
-      "score": 50,
-      "signal_type": "watch",
-      "strategies": [
-        "ma_crossover"
-      ],
-      "bonuses": [
-        "adx_strong",
-        "rsi_gold"
-      ],
-      "base_score": 30,
-      "bonus_score": 20,
-      "details": {
-        "ma_crossover": {
-          "signal": 1,
-          "ma10": 9950.0,
-          "ma50": 8884.0,
-          "rsi14": 66.7,
-          "adx14": 31.5,
-          "vol_ratio": 1.96
-        },
-        "breakout": {
-          "signal": 0,
-          "high_20": 10200.0,
-          "rsi14": 66.7,
-          "vol_ratio": 1.96
-        },
-        "roc_momentum": {
-          "signal": 0,
-          "roc10": 11.11,
-          "roc20": 12.36,
-          "rsi14": 66.7,
-          "vol_slope": 1
-        },
-        "hybrid": {
-          "signal": 0,
-          "ma10": 9950.0,
-          "ma50": 8884.0,
-          "rsi14": 66.7,
-          "adx14": 31.5,
-          "vol_ratio": 1.96,
-          "nh20": 0
-        }
-      },
-      "bonus_details": {
-        "vol_surge": {
-          "active": 0,
-          "ratio": 1.96
-        },
-        "adx_strong": {
-          "active": 1,
-          "adx": 31.5
-        },
-        "rsi_gold": {
-          "active": 1,
-          "rsi": 66.7
-        }
-      },
-      "rsi14": 66.7,
-      "adx14": 31.5,
-      "vol_ratio": 1.96,
-      "last_price": 10000.0,
-      "last_volume": 3298700.0
-    },
-    {
-      "symbol": "MSB",
       "score": 35,
       "signal_type": "watch",
       "strategies": [],
@@ -152,189 +22,59 @@
       "details": {
         "ma_crossover": {
           "signal": 0,
-          "ma10": 16115.0,
-          "ma50": 14170.0,
-          "rsi14": 59.8,
-          "adx14": 42.5,
-          "vol_ratio": 2.74
+          "ma10": 9940.0,
+          "ma50": 8906.0,
+          "rsi14": 52.8,
+          "adx14": 29.6,
+          "vol_ratio": 2.29
         },
         "breakout": {
           "signal": 0,
-          "high_20": 16350.0,
-          "rsi14": 59.8,
-          "vol_ratio": 2.74
+          "high_20": 10200.0,
+          "rsi14": 52.8,
+          "vol_ratio": 2.29
         },
         "roc_momentum": {
           "signal": 0,
-          "roc10": -0.62,
-          "roc20": 2.25,
-          "rsi14": 59.8,
+          "roc10": -1.04,
+          "roc20": 10.47,
+          "rsi14": 52.8,
           "vol_slope": 1
         },
         "hybrid": {
           "signal": 0,
-          "ma10": 16115.0,
-          "ma50": 14170.0,
-          "rsi14": 59.8,
-          "adx14": 42.5,
-          "vol_ratio": 2.74,
+          "ma10": 9940.0,
+          "ma50": 8906.0,
+          "rsi14": 52.8,
+          "adx14": 29.6,
+          "vol_ratio": 2.29,
           "nh20": 0
         }
       },
       "bonus_details": {
         "vol_surge": {
           "active": 1,
-          "ratio": 2.74
+          "ratio": 2.29
         },
         "adx_strong": {
           "active": 1,
-          "adx": 42.5
+          "adx": 29.6
         },
         "rsi_gold": {
           "active": 1,
-          "rsi": 59.8
+          "rsi": 52.8
         }
       },
-      "rsi14": 59.8,
-      "adx14": 42.5,
-      "vol_ratio": 2.74,
-      "last_price": 15900.0,
-      "last_volume": 21176000.0
+      "rsi14": 52.8,
+      "adx14": 29.6,
+      "vol_ratio": 2.29,
+      "last_price": 9500.0,
+      "last_volume": 4275600.0
     }
   ],
   "all_signals": [
     {
-      "symbol": "SHN",
-      "score": 55,
-      "signal_type": "watch",
-      "strategies": [
-        "ma_crossover"
-      ],
-      "bonuses": [
-        "vol_surge",
-        "adx_strong"
-      ],
-      "base_score": 30,
-      "bonus_score": 25,
-      "details": {
-        "ma_crossover": {
-          "signal": 1,
-          "ma10": 8590.0,
-          "ma50": 5028.0,
-          "rsi14": 70.7,
-          "adx14": 44.7,
-          "vol_ratio": 2.32
-        },
-        "breakout": {
-          "signal": 0,
-          "high_20": 10500.0,
-          "rsi14": 70.7,
-          "vol_ratio": 2.32
-        },
-        "roc_momentum": {
-          "signal": 0,
-          "roc10": 58.33,
-          "roc20": 156.76,
-          "rsi14": 70.7,
-          "vol_slope": 1
-        },
-        "hybrid": {
-          "signal": 0,
-          "ma10": 8590.0,
-          "ma50": 5028.0,
-          "rsi14": 70.7,
-          "adx14": 44.7,
-          "vol_ratio": 2.32,
-          "nh20": 0
-        }
-      },
-      "bonus_details": {
-        "vol_surge": {
-          "active": 1,
-          "ratio": 2.32
-        },
-        "adx_strong": {
-          "active": 1,
-          "adx": 44.7
-        },
-        "rsi_gold": {
-          "active": 0,
-          "rsi": 70.7
-        }
-      },
-      "rsi14": 70.7,
-      "adx14": 44.7,
-      "vol_ratio": 2.32,
-      "last_price": 9500.0,
-      "last_volume": 1160700.0
-    },
-    {
       "symbol": "MST",
-      "score": 50,
-      "signal_type": "watch",
-      "strategies": [
-        "ma_crossover"
-      ],
-      "bonuses": [
-        "adx_strong",
-        "rsi_gold"
-      ],
-      "base_score": 30,
-      "bonus_score": 20,
-      "details": {
-        "ma_crossover": {
-          "signal": 1,
-          "ma10": 9950.0,
-          "ma50": 8884.0,
-          "rsi14": 66.7,
-          "adx14": 31.5,
-          "vol_ratio": 1.96
-        },
-        "breakout": {
-          "signal": 0,
-          "high_20": 10200.0,
-          "rsi14": 66.7,
-          "vol_ratio": 1.96
-        },
-        "roc_momentum": {
-          "signal": 0,
-          "roc10": 11.11,
-          "roc20": 12.36,
-          "rsi14": 66.7,
-          "vol_slope": 1
-        },
-        "hybrid": {
-          "signal": 0,
-          "ma10": 9950.0,
-          "ma50": 8884.0,
-          "rsi14": 66.7,
-          "adx14": 31.5,
-          "vol_ratio": 1.96,
-          "nh20": 0
-        }
-      },
-      "bonus_details": {
-        "vol_surge": {
-          "active": 0,
-          "ratio": 1.96
-        },
-        "adx_strong": {
-          "active": 1,
-          "adx": 31.5
-        },
-        "rsi_gold": {
-          "active": 1,
-          "rsi": 66.7
-        }
-      },
-      "rsi14": 66.7,
-      "adx14": 31.5,
-      "vol_ratio": 1.96,
-      "last_price": 10000.0,
-      "last_volume": 3298700.0
-    },
-    {
-      "symbol": "MSB",
       "score": 35,
       "signal_type": "watch",
       "strategies": [],
@@ -348,54 +88,54 @@
       "details": {
         "ma_crossover": {
           "signal": 0,
-          "ma10": 16115.0,
-          "ma50": 14170.0,
-          "rsi14": 59.8,
-          "adx14": 42.5,
-          "vol_ratio": 2.74
+          "ma10": 9940.0,
+          "ma50": 8906.0,
+          "rsi14": 52.8,
+          "adx14": 29.6,
+          "vol_ratio": 2.29
         },
         "breakout": {
           "signal": 0,
-          "high_20": 16350.0,
-          "rsi14": 59.8,
-          "vol_ratio": 2.74
+          "high_20": 10200.0,
+          "rsi14": 52.8,
+          "vol_ratio": 2.29
         },
         "roc_momentum": {
           "signal": 0,
-          "roc10": -0.62,
-          "roc20": 2.25,
-          "rsi14": 59.8,
+          "roc10": -1.04,
+          "roc20": 10.47,
+          "rsi14": 52.8,
           "vol_slope": 1
         },
         "hybrid": {
           "signal": 0,
-          "ma10": 16115.0,
-          "ma50": 14170.0,
-          "rsi14": 59.8,
-          "adx14": 42.5,
-          "vol_ratio": 2.74,
+          "ma10": 9940.0,
+          "ma50": 8906.0,
+          "rsi14": 52.8,
+          "adx14": 29.6,
+          "vol_ratio": 2.29,
           "nh20": 0
         }
       },
       "bonus_details": {
         "vol_surge": {
           "active": 1,
-          "ratio": 2.74
+          "ratio": 2.29
         },
         "adx_strong": {
           "active": 1,
-          "adx": 42.5
+          "adx": 29.6
         },
         "rsi_gold": {
           "active": 1,
-          "rsi": 59.8
+          "rsi": 52.8
         }
       },
-      "rsi14": 59.8,
-      "adx14": 42.5,
-      "vol_ratio": 2.74,
-      "last_price": 15900.0,
-      "last_volume": 21176000.0
+      "rsi14": 52.8,
+      "adx14": 29.6,
+      "vol_ratio": 2.29,
+      "last_price": 9500.0,
+      "last_volume": 4275600.0
     }
   ]
 }

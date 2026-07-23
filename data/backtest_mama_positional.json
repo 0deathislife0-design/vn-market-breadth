@@ -1,7 +1,7 @@
 {
   "mode": "mama_positional_buy_t10_7pct",
-  "generated_at": "2026-07-22T20:22:38.553890+07:00",
-  "date": "22/07/2026",
+  "generated_at": "2026-07-23T20:25:37.871797+07:00",
+  "date": "23/07/2026",
   "lookforward_days": 10,
   "success_threshold_pct": 7.000000000000001,
   "min_history": 90,
@@ -9,19 +9,19 @@
   "num_symbols_tested": 637,
   "stats_all": {
     "wins": 399,
-    "total": 2952,
-    "win_rate": 0.1352,
-    "avg_return_pct": 0.45,
+    "total": 2955,
+    "win_rate": 0.135,
+    "avg_return_pct": 0.43,
     "median_return_pct": -0.67,
     "best_return_pct": 250.0,
-    "worst_return_pct": -31.67
+    "worst_return_pct": -34.95
   },
   "stats_liquid_300k": {
     "wins": 118,
-    "total": 814,
-    "win_rate": 0.145,
-    "avg_return_pct": -0.1,
-    "median_return_pct": -0.91,
+    "total": 816,
+    "win_rate": 0.1446,
+    "avg_return_pct": -0.13,
+    "median_return_pct": -0.95,
     "best_return_pct": 38.35,
     "worst_return_pct": -23.25
   },
@@ -46,12 +46,12 @@
     },
     "2026": {
       "wins": 48,
-      "total": 559,
-      "win_rate": 0.0859,
-      "avg_return_pct": -2.45,
-      "median_return_pct": -2.42,
+      "total": 562,
+      "win_rate": 0.0854,
+      "avg_return_pct": -2.53,
+      "median_return_pct": -2.46,
       "best_return_pct": 73.92,
-      "worst_return_pct": -29.88
+      "worst_return_pct": -34.95
     }
   },
   "top_winners": [
@@ -378,6 +378,22 @@
   ],
   "worst_trades": [
     {
+      "symbol": "VDP",
+      "date": "29/06/2026",
+      "exit_date": "21/07/2026",
+      "entry_price": 57800.0,
+      "exit_price_t10": 37600.0,
+      "return_pct": -34.95,
+      "win_7pct": false,
+      "volume": 3400.0,
+      "avg_volume20": 3320.0,
+      "liquid_300k": false,
+      "mama": 54236.63,
+      "fama": 54202.74,
+      "period": 17.9,
+      "buy_setup_value": 54900.0
+    },
+    {
       "symbol": "KDM",
       "date": "02/04/2025",
       "exit_date": "17/04/2025",
@@ -680,22 +696,6 @@
       "fama": 15587.51,
       "period": 32.21,
       "buy_setup_value": 16650.0
-    },
-    {
-      "symbol": "DTL",
-      "date": "25/10/2024",
-      "exit_date": "08/11/2024",
-      "entry_price": 13800.0,
-      "exit_price_t10": 10650.0,
-      "return_pct": -22.83,
-      "win_7pct": false,
-      "volume": 10900.0,
-      "avg_volume20": 12890.0,
-      "liquid_300k": false,
-      "mama": 12431.67,
-      "fama": 12380.02,
-      "period": 19.08,
-      "buy_setup_value": 12900.0
     }
   ]
 }
